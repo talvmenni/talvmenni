@@ -2,14 +2,11 @@ package org.forritan.talvmenni.ui;
 
 import java.awt.*;
 import javax.swing.*;
-import java.awt.event.*;
 
-
-/* FrameDemo.java requires no other files. */
 public class DebugWindow {
 
-   public static JFrame        vindeyga;
-   public static JTextArea     tekstur;
+   public static JFrame        DebugWindow;
+   public static JTextArea     MessageText;
    private final static String newline = "\n";
 
    /**
@@ -21,28 +18,25 @@ public class DebugWindow {
       //decorate all windows. This must be invoked before
       //creating the JFrame. Native look and feels will
       //ignore this hint.
-      JFrame.setDefaultLookAndFeelDecorated(true);
+      
+     // JFrame.setDefaultLookAndFeelDecorated(true);
 
       //Create and set up the window.
-      vindeyga= new JFrame(
-            "Talvmenni JFrame");
-      vindeyga.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+      DebugWindow= new JFrame("Talvmenni JFrame");
+      DebugWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-      tekstur= new JTextArea(
-            "");
-      tekstur.setPreferredSize(new Dimension(
-            300,
-            300));
-      vindeyga.getContentPane().add(
-            tekstur,
-            BorderLayout.CENTER);
-
+      MessageText= new JTextArea("");
+      MessageText.setLineWrap(true);
+      
+      JScrollPane scroller = new JScrollPane(MessageText);
+      scroller.setPreferredSize (new Dimension (400, 300));
+      
+      DebugWindow.getContentPane().add(scroller, BorderLayout.CENTER);
+      
       //Display the window.
-      vindeyga.setLocation(
-            650,
-            50);
-      vindeyga.pack();
-      vindeyga.setVisible(true);
+      DebugWindow.setLocation(650, 50);
+      DebugWindow.pack();
+      DebugWindow.setVisible(true);
 
    }
 
@@ -56,18 +50,14 @@ public class DebugWindow {
       });
    }
 
-   /**
-    * @param string
-    */
-   public static void updateTekst(
-         String message) {
+   public static void updateTekst(String message) {
 
-      tekstur.append(message
+      MessageText.append(message
             + newline);
 
       //Make sure the new text is visible, even if there
       //was a selection in the text area.
-      tekstur.setCaretPosition(tekstur.getDocument().getLength());
+      MessageText.setCaretPosition(MessageText.getDocument().getLength());
 
    }
 

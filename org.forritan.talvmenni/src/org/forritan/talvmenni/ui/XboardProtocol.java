@@ -78,7 +78,8 @@ public class XboardProtocol extends UiProtocolBase {
          Move move= this.protocol.makeRandomMove();
          theOutput+= "move "
                + move.toString();
-
+      } else if (theInput.equalsIgnoreCase("force")) {
+         this.protocol.setGo(false );
       } else if (theInput.equalsIgnoreCase("draw")) {
          theOutput+= "offer draw";
       } else if (theInput.equalsIgnoreCase("new")) {
