@@ -3,6 +3,7 @@ package org.forritan.talvmenni.core;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.concurrent.Executors;
@@ -22,7 +23,7 @@ import org.forritan.talvmenni.ui.XboardProtocol;
 public class ChessEngine extends Observable implements Runnable {
 
    private boolean             running;
-   private Protocol            protocol;
+   private ProtocolImpl        protocol;
    private ThreadFactory       threadFactory;
    private LinkedBlockingQueue<String> inMessages;
    private LinkedBlockingQueue<String> outMessages;
@@ -58,6 +59,7 @@ public class ChessEngine extends Observable implements Runnable {
 
    public synchronized void addObserver(Observer observer) {
       this.protocolHandler.addObserver(observer);
+      this.protocol.addObserver(observer);
    }
    
    public interface Protocol {
@@ -75,7 +77,7 @@ public class ChessEngine extends Observable implements Runnable {
       public Move makeMove(long fromSquare, long toSquare, int promotionPiece);
    }
 
-   private class ProtocolImpl implements Protocol {
+   private class ProtocolImpl extends Observable implements Protocol {
 
       private UiProtocol uiProtocol;
       private Position   currentPosition;
@@ -105,7 +107,7 @@ public class ChessEngine extends Observable implements Runnable {
 
       public void stop() {
          currentRules= null;
-         currentPosition= null;
+         this.setCurrentPosition(null);
          this.go= false;
          ChessEngine.this.running= false;
          try {
@@ -116,7 +118,7 @@ public class ChessEngine extends Observable implements Runnable {
       }
 
       public void newGame() {
-         this.currentPosition= Position.createInitial();
+         this.setCurrentPosition(Position.createInitial());
          MoveHistory.getInstance().reset();
          this.WhiteToMove = true;
          this.go= true;
@@ -138,15 +140,28 @@ public class ChessEngine extends Observable implements Runnable {
       public Rules getCurrentRules() {
          return this.currentRules;
       }
+
       public Position getCurrentPosition() {
          return this.currentPosition;
       }
+
+      public void setCurrentPosition(Position position) {
+         this.currentPosition= position;
+         this.setChanged();
+         if(this.WhiteToMove) {
+            List<Position.Move> moves= this.currentPosition.white.getPossibleMoves();
+            this.notifyObservers(moves.size() + " possible moves for white: " + moves.toString());            
+         } else {
+            List<Position.Move> moves= this.currentPosition.black.getPossibleMoves();
+            this.notifyObservers(moves.size() + " possible moves for black: " + moves.toString());            
+         }
+      }
       
       public Move makeMove(long fromSquare, long toSquare, int promotionPiece) {
-         Move move= new Move(this.currentPosition, fromSquare, toSquare, promotionPiece);
+         Move move= new Move(this.getCurrentPosition(), fromSquare, toSquare, promotionPiece);
          MoveHistory.getInstance().add(move);
-         this.currentPosition = move.toPosition;
          this.WhiteToMove= !this.WhiteToMove;
+         this.setCurrentPosition(move.toPosition);
          return move;
       }
 

@@ -9,6 +9,8 @@ import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
+import org.forritan.talvmenni.game.Position;
+
 public class DebugWindow implements Observer {
 
    public static JFrame        DebugWindow;
