@@ -63,7 +63,9 @@ public interface Evaluation extends Serializable {
 
    public static final int POSITION_GUARD_REWARD= 17;
    public static final int CHECK_REWARD = 31;
-   
+
+   public static final int KING_CENTER_PENALTY = -30;
+
 // Experimental freak values...          
 //   public static final int QUEEN= 4;
 //   public static final int ROOK= 3;

@@ -67,6 +67,11 @@ public class SimpleMaterialAndPositionalEvaluation implements Evaluation {
          it.next();
          result += Evaluation.POSITION_OUTER_BORDER;         
       }
+      
+      for (Iterator it= new BitboardIterator(((position.getWhite().kings ) & Board._KING_CENTER_SQUARES)); it.hasNext();) {
+         it.next();
+         result += Evaluation.KING_CENTER_PENALTY;         
+      }
 
       for (Iterator it= new BitboardIterator((position.getWhite().getAllCaptureMovesAttackedSquares() & position.getWhite().allPieces)); it.hasNext();) {
          it.next();
@@ -120,6 +125,11 @@ public class SimpleMaterialAndPositionalEvaluation implements Evaluation {
       for (Iterator it= new BitboardIterator(((position.getBlack().allPieces & ~(position.getBlack().kings | position.getBlack().queens )) & Board._OUTER_BORDER)); it.hasNext();) {
          it.next();
          result -= Evaluation.POSITION_OUTER_BORDER;         
+      }
+      
+      for (Iterator it= new BitboardIterator(((position.getBlack().kings ) & Board._KING_CENTER_SQUARES)); it.hasNext();) {
+         it.next();
+         result -= Evaluation.KING_CENTER_PENALTY;         
       }
       
       for (Iterator it= new BitboardIterator((position.getBlack().getAllCaptureMovesAttackedSquares() & position.getBlack().allPieces)); it.hasNext();) {
