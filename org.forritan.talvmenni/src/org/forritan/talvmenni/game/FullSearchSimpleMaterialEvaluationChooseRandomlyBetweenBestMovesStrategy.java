@@ -8,7 +8,7 @@ import java.util.Random;
 import org.forritan.talvmenni.evaluation.Evaluation;
 import org.forritan.talvmenni.evaluation.SimpleMaterialEvaluation;
 import org.forritan.talvmenni.game.Position.Move;
-import org.forritan.talvmenni.search.FullSearch;
+import org.forritan.talvmenni.search.MiniMaxSearch;
 import org.forritan.talvmenni.search.Search;
 
 public class FullSearchSimpleMaterialEvaluationChooseRandomlyBetweenBestMovesStrategy implements Strategy {
@@ -17,7 +17,7 @@ public class FullSearchSimpleMaterialEvaluationChooseRandomlyBetweenBestMovesStr
    private Evaluation evaluation;
    
    public FullSearchSimpleMaterialEvaluationChooseRandomlyBetweenBestMovesStrategy(int searchDepth) {
-      this.search= new FullSearch(searchDepth);
+      this.search= new MiniMaxSearch(searchDepth);
       this.evaluation= new SimpleMaterialEvaluation();
    }
    
