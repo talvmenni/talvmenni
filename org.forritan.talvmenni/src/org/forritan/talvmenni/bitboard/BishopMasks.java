@@ -19,23 +19,19 @@ public class BishopMasks implements BishopMask {
    }
 
    public long getNorthWest2SouthEastMaskFrom(long square) {
-      return BishopMasks.northWest2SouthEastBitmaps[Long
-            .numberOfLeadingZeros(square)];
+      return BishopMasks.northWest2SouthEastBitmaps[Square.Util.index(square)];
    }
 
    public long getNorthEast2SouthWestMaskFrom(long square) {
-      return BishopMasks.northEast2SouthWestBitmaps[Long
-            .numberOfLeadingZeros(square)];
+      return BishopMasks.northEast2SouthWestBitmaps[Square.Util.index(square)];
    }
 
    public long getSouthEast2NorthWestMaskFrom(long square) {
-      return BishopMasks.southEast2NorthWestBitmaps[Long
-            .numberOfLeadingZeros(square)];
+      return BishopMasks.southEast2NorthWestBitmaps[Square.Util.index(square)];
    }
 
    public long getSouthWest2NorthEastMaskFrom(long square) {
-      return BishopMasks.southWest2NorthEastBitmaps[Long
-            .numberOfLeadingZeros(square)];
+      return BishopMasks.southWest2NorthEastBitmaps[Square.Util.index(square)];
    }
 
    static {

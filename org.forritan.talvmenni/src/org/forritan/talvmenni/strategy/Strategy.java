@@ -8,7 +8,7 @@ import org.forritan.talvmenni.game.PositionFactory;
 import org.forritan.talvmenni.game.TheoryBook;
 import org.forritan.talvmenni.game.Position.Move;
 import org.forritan.talvmenni.search.Search;
-import org.forritan.talvmenni.search.Search.DebugInfo;
+import org.forritan.talvmenni.strategy.AbstractStrategy.DebugInfo;
 
 public interface Strategy {
    
@@ -20,13 +20,5 @@ public interface Strategy {
 
    public DebugInfo getDebugInfo();
    
-   public class DebugInfo extends Observable {
-      public void postText(String text) {
-         this.setChanged();
-         this.notifyObservers(text);
-      }
-   }
-
-
    
 }

@@ -1,5 +1,7 @@
 package org.forritan.talvmenni.bitboard.paths;
 
+import org.forritan.talvmenni.bitboard.Square;
+
 public class Bishops implements BlackBishop, WhiteBishop {
 
    private static Bishops      instance;
@@ -17,7 +19,7 @@ public class Bishops implements BlackBishop, WhiteBishop {
 
    public long getPathsFrom(
          long square) {
-      return Bishops.bitmaps[Long.numberOfLeadingZeros(square)];
+      return Bishops.bitmaps[Square.Util.index(square)];
    }
 
    static {

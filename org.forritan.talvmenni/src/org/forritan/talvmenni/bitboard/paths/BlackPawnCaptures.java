@@ -1,5 +1,7 @@
 package org.forritan.talvmenni.bitboard.paths;
 
+import org.forritan.talvmenni.bitboard.Square;
+
 public class BlackPawnCaptures implements BlackPawnCapture {
 
    private static BlackPawnCaptures instance;
@@ -17,7 +19,7 @@ public class BlackPawnCaptures implements BlackPawnCapture {
 
    public long getPathsFrom(
          long square) {
-      return BlackPawnCaptures.bitmaps[Long.numberOfLeadingZeros(square)];
+      return BlackPawnCaptures.bitmaps[Square.Util.index(square)];
    }
 
    static {

@@ -20,22 +20,22 @@ public class RookMasks implements RookMask {
 
    public long getEast2WestMaskFrom(
          long square) {
-      return RookMasks.east2WestBitmaps[Long.numberOfLeadingZeros(square)];
+      return RookMasks.east2WestBitmaps[Square.Util.index(square)];
    }
 
    public long getWest2EastMaskFrom(
          long square) {
-      return RookMasks.west2EastBitmaps[Long.numberOfLeadingZeros(square)];
+      return RookMasks.west2EastBitmaps[Square.Util.index(square)];
    }
 
    public long getNorth2SouthMaskFrom(
          long square) {
-      return RookMasks.north2SouthBitmaps[Long.numberOfLeadingZeros(square)];
+      return RookMasks.north2SouthBitmaps[Square.Util.index(square)];
    }
 
    public long getSouth2NorthMaskFrom(
          long square) {
-      return RookMasks.south2NorthBitmaps[Long.numberOfLeadingZeros(square)];
+      return RookMasks.south2NorthBitmaps[Square.Util.index(square)];
    }
 
    static {

@@ -1,5 +1,7 @@
 package org.forritan.talvmenni.bitboard.paths;
 
+import org.forritan.talvmenni.bitboard.Square;
+
 public class Queens implements Queen {
 
    private static Queens       instance;
@@ -17,7 +19,7 @@ public class Queens implements Queen {
 
    public long getPathsFrom(
          long square) {
-      return Queens.bitmaps[Long.numberOfLeadingZeros(square)];
+      return Queens.bitmaps[Square.Util.index(square)];
    }
 
    static {

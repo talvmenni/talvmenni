@@ -43,7 +43,7 @@ public class SimpleMaterialAndPositionalEvaluationTest extends TestCase {
             Square._EMPTY_BOARD // blackEnpassant
             );
       Evaluation e= new SimpleMaterialAndPositionalEvaluation();
-      Assert.assertEquals(4332, e.getScore(p));
+      Assert.assertEquals(4320, e.getScore(p));
    }
    
    public void testGetScoreAllBlackPiecesOnlyWhiteKing() {
@@ -72,7 +72,7 @@ public class SimpleMaterialAndPositionalEvaluationTest extends TestCase {
             Square._EMPTY_BOARD // blackEnpassant
              );
       Evaluation e= new SimpleMaterialAndPositionalEvaluation();
-      Assert.assertEquals(-4332, e.getScore(p));
+      Assert.assertEquals(-4320, e.getScore(p));
    }
    
 }

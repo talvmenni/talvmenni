@@ -1,5 +1,7 @@
 package org.forritan.talvmenni.bitboard.paths;
 
+import org.forritan.talvmenni.bitboard.Square;
+
 public class Rooks implements Rook {
 
    private static Rooks        instance;
@@ -17,7 +19,7 @@ public class Rooks implements Rook {
 
    public long getPathsFrom(
          long square) {
-      return Rooks.bitmaps[Long.numberOfLeadingZeros(square)];
+      return Rooks.bitmaps[Square.Util.index(square)];
    }
 
    static {
