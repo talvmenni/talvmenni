@@ -72,7 +72,6 @@ public interface Position {
 
       private List<Move>                 possibleMoves;
       private List<Move>                 killerMoves;
-      private List<Tuple<Move, Integer>> bookMoves;
       private long                       allCaptureMovesAttackedSquares;
       private boolean                    allCaptureMovesAttackedSquaresInitialized;
       private Boolean                    kingsSideCastlingLegal;

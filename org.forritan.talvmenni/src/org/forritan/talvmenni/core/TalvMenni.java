@@ -60,11 +60,14 @@ public class TalvMenni {
             140000);
 
       final ChessEngine chessEngine= ChessEngine
-            //            .create(new MTDfStrategy(
-            //                  PLY,
-            //                  new MTDfTransposition(
-            //                        MAX_TRANSPOSITION_ENTRIES),
-            //                  book));
+
+            // Choose strategy
+
+            //      .create(new MTDfStrategy(
+            //            PLY,
+            //            new MTDfTransposition(
+            //                  MAX_TRANSPOSITION_ENTRIES),
+            //            book));
 
             .create(new IterativeDeepeningAlphaBetaWithTranspositionTableStrategy(
                   PLY,
@@ -73,14 +76,20 @@ public class TalvMenni {
                   true,
                   book));
 
-      //            .create(new IterativeDeepeningAlphaBetaStrategy(
+      //            .create(new IterativeDeepeningAndReductionAlphaBetaStrategy(
       //                  PLY,
+      //                  3,
       //                  book));
-      //
+
+      //      .create(new IterativeDeepeningAlphaBetaStrategy(
+      //            PLY,
+      //            book));
+
       //            .create(new AlphaBetaWithTranspositionTableStrategy(
       //                  PLY,
       //                  new Transposition(
       //                        MAX_TRANSPOSITION_ENTRIES),
+      //                  true,
       //                  book));
 
       //            .create(new AlphaBetaStrategy(

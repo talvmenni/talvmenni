@@ -108,21 +108,35 @@ public abstract class AbstractStrategy implements Strategy {
    public Position.Move getNextMove(
          Position position,
          boolean whiteToMove) {
-         
-            Move result= getPossibleBookMove(
-                  position,
-                  whiteToMove);
-         
-            if (result != null) { return result; }
-         
-            List<Position.Move> bestMoves= this.search(position, whiteToMove);
-         
-            if (!bestMoves.isEmpty()) {
-               int chosenMoveIndex= new Random().nextInt(bestMoves.size());
-               return bestMoves.get(chosenMoveIndex);
-            } else {
-               return null;
-            }
-         }
+
+      Move result= getPossibleBookMove(
+            position,
+            whiteToMove);
+
+      if (result != null) { return result; }
+
+      List<Position.Move> moves;
+      if (whiteToMove) {
+         moves= position.getWhite().getPossibleMoves();
+      } else {
+         moves= position.getBlack().getPossibleMoves();
+      }
+
+      List<Position.Move> bestMoves;
+      if (moves.size() == 1) {
+         bestMoves= moves;
+      } else {
+         bestMoves= this.search(
+               position,
+               whiteToMove);
+      }
+
+      if (!bestMoves.isEmpty()) {
+         int chosenMoveIndex= new Random().nextInt(bestMoves.size());
+         return bestMoves.get(chosenMoveIndex);
+      } else {
+         return null;
+      }
+   }
 
 }

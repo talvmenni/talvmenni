@@ -5,6 +5,8 @@ import org.forritan.talvmenni.game.Position;
 
 public interface Evaluation {
    
+   public static final int CHECKMATE_SCORE = 20000;
+
    public static final int KING= 11180;
    public static final int QUEEN= 980;
    public static final int ROOK= 520;
@@ -19,6 +21,7 @@ public interface Evaluation {
 
    public static final int POSITION_GUARD_REWARD= 10;
    public static final int CHECK_REWARD = 30;
+
 
    public int getScore(Position position);
    

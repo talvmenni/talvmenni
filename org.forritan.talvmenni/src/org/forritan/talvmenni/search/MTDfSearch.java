@@ -121,7 +121,7 @@ public class MTDfSearch implements Search {
             beta= g.a.intValue();
          }
 
-         g= this.alphaBeta(
+         g= this.alphaBetaWithMemory(
                p,
                e,
                whiteMove,
@@ -139,7 +139,7 @@ public class MTDfSearch implements Search {
       return g;
    }
 
-private Tuple<Integer, List<Move>> alphaBeta(
+   private Tuple<Integer, List<Move>> alphaBetaWithMemory(
          Position p,
          Evaluation e,
          boolean whiteMove,
@@ -156,10 +156,9 @@ private Tuple<Integer, List<Move>> alphaBeta(
                .get(
                      p,
                      whiteMove);
-         
-         if(entry.b.a.intValue() >= beta)
-         
-         
+
+         if (entry.b.a.intValue() >= beta)
+
          if (entry.a.a.intValue() >= ply) {
             this.transpositionHits++;
             List<Move> moves= new ArrayList<Move>();
@@ -199,7 +198,7 @@ private Tuple<Integer, List<Move>> alphaBeta(
                if (best.a.intValue() > alpha) {
                   alpha= best.a.intValue();
                }
-               Tuple<Integer, List<Move>> value= alphaBeta(
+               Tuple<Integer, List<Move>> value= alphaBetaWithMemory(
                      p,
                      e,
                      !whiteMove,
@@ -266,4 +265,5 @@ private Tuple<Integer, List<Move>> alphaBeta(
 //            );
 
       return result;
-   }}
+   }
+}

@@ -11,17 +11,17 @@ import org.forritan.util.Tuple;
 
 public class MTDfTransposition {
 
-   // Table<Position.hashCode(), new Tuple<new ThreeTuple<ply, score, moves>>,
+   // Table<Position, new Tuple<new ThreeTuple<ply, score, moves>>,
    // new Tuple<lowerbound, upperbound>>
 
-   private Table<Integer, Tuple<ThreeTuple<Integer, Integer, List<Move>>, Tuple<Integer, Integer>>> whiteTable;
-   private Table<Integer, Tuple<ThreeTuple<Integer, Integer, List<Move>>, Tuple<Integer, Integer>>> blackTable;
+   private Table<Position, Tuple<ThreeTuple<Integer, Integer, List<Move>>, Tuple<Integer, Integer>>> whiteTable;
+   private Table<Position, Tuple<ThreeTuple<Integer, Integer, List<Move>>, Tuple<Integer, Integer>>> blackTable;
 
    public MTDfTransposition(
          int maxEntries) {
-      this.whiteTable= new Table<Integer, Tuple<ThreeTuple<Integer, Integer, List<Move>>, Tuple<Integer, Integer>>>(
+      this.whiteTable= new Table<Position, Tuple<ThreeTuple<Integer, Integer, List<Move>>, Tuple<Integer, Integer>>>(
             maxEntries);
-      this.blackTable= new Table<Integer, Tuple<ThreeTuple<Integer, Integer, List<Move>>, Tuple<Integer, Integer>>>(
+      this.blackTable= new Table<Position, Tuple<ThreeTuple<Integer, Integer, List<Move>>, Tuple<Integer, Integer>>>(
             maxEntries);
    }
 
@@ -47,9 +47,9 @@ public class MTDfTransposition {
          Position p,
          boolean white) {
       if (white) {
-         return this.whiteTable.containsKey(Integer.valueOf(p.hashCode()));
+         return this.whiteTable.containsKey(p);
       } else {
-         return this.blackTable.containsKey(Integer.valueOf(p.hashCode()));
+         return this.blackTable.containsKey(p);
       }
    }
 
@@ -57,9 +57,9 @@ public class MTDfTransposition {
          Position p,
          boolean white) {
       if (white) {
-         return this.whiteTable.get(Integer.valueOf(p.hashCode()));
+         return this.whiteTable.get(p);
       } else {
-         return this.blackTable.get(Integer.valueOf(p.hashCode()));
+         return this.blackTable.get(p);
       }
    }
 
@@ -73,9 +73,9 @@ public class MTDfTransposition {
          int upperbound) {
 
       if (white) {
-         if (this.whiteTable.containsKey(Integer.valueOf(position.hashCode()))) {
+         if (this.whiteTable.containsKey(position)) {
             Tuple<ThreeTuple<Integer, Integer, List<Move>>, Tuple<Integer, Integer>> entry= this.whiteTable
-                  .get(Integer.valueOf(position.hashCode()));
+                  .get(position);
             if (entry.a.a.intValue() < ply
                   || (entry.a.a.intValue() == ply && entry.a.b.intValue() < score)) {
                entry.a.a= Integer.valueOf(ply);
@@ -86,7 +86,7 @@ public class MTDfTransposition {
          } else {
             this.whiteTable
                   .put(
-                        Integer.valueOf(position.hashCode()),
+                        position,
                         new Tuple<ThreeTuple<Integer, Integer, List<Move>>, Tuple<Integer, Integer>>(
                               new ThreeTuple<Integer, Integer, List<Move>>(
                                     Integer.valueOf(ply),
@@ -97,9 +97,9 @@ public class MTDfTransposition {
                                     Integer.valueOf(upperbound))));
          }
       } else {
-         if (this.blackTable.containsKey(Integer.valueOf(position.hashCode()))) {
+         if (this.blackTable.containsKey(position)) {
             Tuple<ThreeTuple<Integer, Integer, List<Move>>, Tuple<Integer, Integer>> entry= this.blackTable
-                  .get(Integer.valueOf(position.hashCode()));
+                  .get(position);
             if (entry.a.a.intValue() > ply
                   || (entry.a.a.intValue() == ply && entry.a.b.intValue() > score)) {
                entry.a.a= Integer.valueOf(ply);
@@ -109,7 +109,7 @@ public class MTDfTransposition {
             }
          } else {
             this.blackTable.put(
-                  Integer.valueOf(position.hashCode()),
+                  position,
                   new Tuple<ThreeTuple<Integer, Integer, List<Move>>, Tuple<Integer, Integer>>(
                         new ThreeTuple<Integer, Integer, List<Move>>(
                               Integer.valueOf(ply),

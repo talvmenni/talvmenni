@@ -1,5 +1,6 @@
 package org.forritan.talvmenni.game;
 
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -68,17 +69,18 @@ public class Transposition {
          int score,
          int ply) {
       
-      
-
       if (white) {
          if (this.whiteTable.containsKey(position)) {
             ThreeTuple<Integer, Integer, List<Move>> entry= this.whiteTable.get(position);
-            if (entry.a.intValue() < ply
+            if ((entry.a.intValue() < ply)
                   || (entry.a.intValue() == ply && entry.b.intValue() < score)) {
-               entry.a= Integer.valueOf(ply);
-               entry.b= Integer.valueOf(score);
-               entry.c.clear();
-               entry.c.addAll(moves);
+               this.whiteTable.remove(position);
+               this.whiteTable.put(
+                     position.getImmutable(),
+                     new ThreeTuple<Integer, Integer, List<Move>>(
+                           Integer.valueOf(ply),
+                           Integer.valueOf(score),
+                           Collections.unmodifiableList(moves)));
             }
          } else {
             this.whiteTable.put(
@@ -86,17 +88,20 @@ public class Transposition {
                   new ThreeTuple<Integer, Integer, List<Move>>(
                         Integer.valueOf(ply),
                         Integer.valueOf(score),
-                        moves));
+                        Collections.unmodifiableList(moves)));
          }
       } else {
          if (this.blackTable.containsKey(position)) {
             ThreeTuple<Integer, Integer, List<Move>> entry= this.blackTable.get(position);
-            if (entry.a.intValue() > ply
-                  || (entry.a.intValue() == ply && entry.b.intValue() > score)) {
-               entry.a= Integer.valueOf(ply);;
-               entry.b= Integer.valueOf(score);
-               entry.c.clear();
-               entry.c.addAll(moves);
+            if (entry.a.intValue() < ply
+                  || (entry.a.intValue() == ply && entry.b.intValue() < score)) {
+               this.blackTable.remove(position);
+               this.blackTable.put(
+                     position.getImmutable(),
+                     new ThreeTuple<Integer, Integer, List<Move>>(
+                           Integer.valueOf(ply),
+                           Integer.valueOf(score),
+                           Collections.unmodifiableList(moves)));
             }
          } else {
             this.blackTable.put(
@@ -104,7 +109,7 @@ public class Transposition {
                   new ThreeTuple<Integer, Integer, List<Move>>(
                         Integer.valueOf(ply),
                         Integer.valueOf(score),
-                        moves));
+                        Collections.unmodifiableList(moves)));
          }
       }
    }

@@ -139,7 +139,7 @@ public class NegaMaxSearch implements Search {
             if (whiteMove ? p.getWhite().isChecked() : p.getBlack().isChecked()) {
                // Checkmate...
                result= new Tuple<Integer, List<Move>>(
-                     Integer.valueOf(((-20000 - ply))),
+                     Integer.valueOf(((-Evaluation.CHECKMATE_SCORE - ply))),
                      new ArrayList<Move>());
             } else {
                // Stalemate...

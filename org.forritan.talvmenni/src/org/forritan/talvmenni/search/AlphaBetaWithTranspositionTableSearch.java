@@ -21,7 +21,7 @@ public class AlphaBetaWithTranspositionTableSearch implements Search {
 
    private Transposition transposition;
    private int           ply;
-   private final boolean       useMoveOrdering;
+   private final boolean useMoveOrdering;
 
    private int           movesSearched;
    private int           transpositionHits;
@@ -73,7 +73,9 @@ public class AlphaBetaWithTranspositionTableSearch implements Search {
       // Integer.MIN_VALUE, because
       // Integer.MIN_VALUE ==
       // -Integer.MIN_VALUE
-      int beta= Integer.MAX_VALUE;
+      // int beta= Integer.MAX_VALUE;
+      // If checkmate there is no need to search further...
+      int beta= Evaluation.CHECKMATE_SCORE;
 
       Tuple<Integer, List<Move>> result= this.alphaBeta(
             p,
@@ -172,7 +174,11 @@ public class AlphaBetaWithTranspositionTableSearch implements Search {
                moveTime+= System.currentTimeMillis();
 
                if (value.a.intValue() > best.a.intValue()) {
-                  best= value;
+
+                  best.a= value.a;
+                  best.b.clear();
+                  best.b.addAll(value.b);
+
                   if (this.useMoveOrdering) {
                      if (whiteMove) {
                         p.getWhite().killerMove(
@@ -202,12 +208,20 @@ public class AlphaBetaWithTranspositionTableSearch implements Search {
                p.getBlack().updatePossibleMovesOrdering();
             }
 
-            result= best;
+            if (result == null) {
+               result= new Tuple<Integer, List<Move>>(
+                     Integer.valueOf(0),
+                     new ArrayList<Move>());
+            }
+            result.a= best.a;
+            result.b.clear();
+            result.b.addAll(best.b);
+
          } else {
             if (whiteMove ? p.getWhite().isChecked() : p.getBlack().isChecked()) {
                // Checkmate...
                result= new Tuple<Integer, List<Move>>(
-                     Integer.valueOf(((-20000 - ply))),
+                     Integer.valueOf(((-Evaluation.CHECKMATE_SCORE - ply))),
                      new ArrayList<Move>());
             } else {
                // Stalemate...

@@ -56,7 +56,9 @@ public class AlphaBetaSearch implements Search {
       // Integer.MIN_VALUE, because
       // Integer.MIN_VALUE ==
       // -Integer.MIN_VALUE
-      int beta= Integer.MAX_VALUE;
+      // int beta= Integer.MAX_VALUE;
+      // If checkmate there is no need to search further...
+      int beta= Evaluation.CHECKMATE_SCORE;
 
       Tuple<Integer, List<Move>> result= this.alphaBeta(
             p,
@@ -167,7 +169,7 @@ public class AlphaBetaSearch implements Search {
             if (whiteMove ? p.getWhite().isChecked() : p.getBlack().isChecked()) {
                // Checkmate...
                result= new Tuple<Integer, List<Move>>(
-                     Integer.valueOf(((-20000 - ply))),
+                     Integer.valueOf(((-Evaluation.CHECKMATE_SCORE - ply))),
                      new ArrayList<Move>());
             } else {
                // Stalemate...

@@ -2,16 +2,18 @@ package org.forritan.talvmenni.ui;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Formatter;
 import java.util.List;
 
 import org.forritan.talvmenni.bitboard.Square;
 import org.forritan.talvmenni.bitboard.Squares;
 import org.forritan.talvmenni.core.ChessEngine.Protocol;
+import org.forritan.talvmenni.core.util.ChessEngineMethods;
 import org.forritan.talvmenni.game.ImmutablePosition;
 import org.forritan.talvmenni.game.Move;
 import org.forritan.talvmenni.game.MoveHistory;
-import org.forritan.talvmenni.game.TheoryBook;
 import org.forritan.talvmenni.game.Position;
+import org.forritan.talvmenni.game.TheoryBook;
 
 
 public class ConsoleProtocol extends UiProtocolBase {
@@ -39,49 +41,44 @@ public class ConsoleProtocol extends UiProtocolBase {
 
       if ("cmd".equalsIgnoreCase(theInput)) {
          theOutput= welcomeMessage();
-      }
-
-      if ("help".equalsIgnoreCase(theInput)) {
+      } else if ("help".equalsIgnoreCase(theInput)) {
          theOutput= helpMessage();
-      }
-      if ("history".equalsIgnoreCase(theInput)) {
+      } else if ("history".equalsIgnoreCase(theInput)) {
          theOutput= printHistory();
-      }
-      if ("possible".equalsIgnoreCase(theInput)) {
+      } else if ("possible".equalsIgnoreCase(theInput)) {
          theOutput= printPossibleMoves();
-      }
-      if ("possible white".equalsIgnoreCase(theInput)) {
+      } else if ("possible white".equalsIgnoreCase(theInput)) {
          theOutput= printPossibleMoves(true);
-      }
-      if ("possible black".equalsIgnoreCase(theInput)) {
+      } else if ("possible black".equalsIgnoreCase(theInput)) {
          theOutput= printPossibleMoves(false);
-      }
-      if ("new".equalsIgnoreCase(theInput)) {
+      } else if ("new".equalsIgnoreCase(theInput)) {
          this.protocol.newGame();
          theOutput= "Setting up a new game...\n\n"
                + ConsoleProtocol.getStringBoard(
                      this.protocol.getCurrentPosition(),
                      this.getWhoIsToMove())
                + "\n";
-      }
-      if (theInput.equalsIgnoreCase("go")) {
+      } else if (theInput.equalsIgnoreCase("go")) {
          this.protocol.setGo(true);
          theOutput= "Computer-thinking on\n";
-      }
-      if (theInput.equalsIgnoreCase("force")) {
+      } else if (theInput.equalsIgnoreCase("force")) {
          this.protocol.setGo(false);
          theOutput= "Computer-thinking off\n";
-      }
-
-      if (theInput.toUpperCase().startsWith(
+      } else if (theInput.toUpperCase().startsWith(
+            "PERFT")) {
+         String plyString= theInput.substring(
+               5).trim();
+         try {
+            theOutput= this.perft(Integer.parseInt(plyString));            
+         } catch (NumberFormatException e) {
+            theOutput= "NumberFormatException: perft " + plyString;
+         }
+      } else if (theInput.toUpperCase().startsWith(
             "MOVE")) {
          String theMove= theInput.substring(
                4).trim();
-
          theOutput= makeMove(theMove); // usermove
-      }
-
-      if ((theInput.equalsIgnoreCase("?"))
+      } else if ((theInput.equalsIgnoreCase("?"))
             && (this.protocol.isGo())) {
          Move move= this.protocol.makeNextMove();
          if (move != null) {
@@ -92,17 +89,13 @@ public class ConsoleProtocol extends UiProtocolBase {
             theOutput= getWhoIsToMove()
                   + " is checkmated!\n";
          }
-      }
-
-      if ("position".equalsIgnoreCase(theInput)) {
+      } else if ("position".equalsIgnoreCase(theInput)) {
          theOutput= ConsoleProtocol.getStringBoard(
                this.protocol.getCurrentPosition(),
                this.getWhoIsToMove());
-      }
-      if ("fen".equalsIgnoreCase(theInput)) {
+      } else if ("fen".equalsIgnoreCase(theInput)) {
          theOutput= getStringFEN();
-      }
-      if (theInput.toUpperCase().startsWith(
+      } else if (theInput.toUpperCase().startsWith(
             "LOADBOOK")) {
          String fileName= theInput.substring(9);
          TheoryBook book= this.protocol.getStrategy().getTheoryBook();
@@ -123,9 +116,7 @@ public class ConsoleProtocol extends UiProtocolBase {
          } else {
             theOutput= "Current strategy doesn't support books, sorry!";
          }
-      }
-
-      if (theInput.toUpperCase().startsWith(
+      } else if (theInput.toUpperCase().startsWith(
             "SETBOARD")) {
          String theFEN= theInput.substring(8);
 
@@ -133,30 +124,23 @@ public class ConsoleProtocol extends UiProtocolBase {
          theOutput= ConsoleProtocol.getStringBoard(
                this.protocol.getCurrentPosition(),
                this.getWhoIsToMove());
-      }
-
-      if ("white".equalsIgnoreCase(theInput)) {
+      } else if ("white".equalsIgnoreCase(theInput)) {
          if (this.protocol.isWhiteToMove())
             theOutput= "White is already to move";
          else
             theOutput= "White to Move";
          this.protocol.whiteToMove();
-      }
-      if ("black".equalsIgnoreCase(theInput)) {
+      } else if ("black".equalsIgnoreCase(theInput)) {
          if (this.protocol.isWhiteToMove())
             theOutput= "Black to Move";
          else
             theOutput= "Black is already to move";
          this.protocol.blackToMove();
-      }
-
-      if ("quit".equalsIgnoreCase(theInput)) // quit and exit
+      } else if ("quit".equalsIgnoreCase(theInput)) // quit and exit
       {
          theOutput= "bye";
          this.protocol.stop();
-      }
-
-      if (theOutput == null) {
+      } else if (theOutput == null) {
          theOutput= "unknown command: "
                + theInput;
       }
@@ -313,6 +297,20 @@ public class ConsoleProtocol extends UiProtocolBase {
          return this.protocol.getCurrentPosition().getBlack()
                .getPossibleMoves().toString();
       }
+   }
+
+   private String perft(
+         int ply) {
+      long time= -System.currentTimeMillis();
+      long perftMoves= ChessEngineMethods.perft(
+            this.protocol.getCurrentPosition().getMutable(),
+            this.protocol.isWhiteToMove(),
+            ply);
+      time+= System.currentTimeMillis();
+      return "Total moves="
+            + perftMoves
+            + "  time="
+            + time;
    }
 
    private String printHistory() {
