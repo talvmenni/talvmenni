@@ -47,6 +47,9 @@ public class NewAlphaBetaSearch implements Search {
          Position p,
          Evaluation e,
          boolean whiteMove) {
+      
+      long time= -System.currentTimeMillis();
+      this.movesSearched= 0;
 
       int alpha= Integer.MIN_VALUE + 1;
       // Very important!!! Can't be
@@ -62,6 +65,17 @@ public class NewAlphaBetaSearch implements Search {
             this.ply,
             alpha,
             beta);
+      
+      time+= System.currentTimeMillis();
+      
+      this.debugInfo.postNodesPerSecond(
+            time,
+            this.movesSearched);
+      this.debugInfo.postBestMoves(result.b);
+      this.debugInfo.postPositionStatiscs();
+
+      
+
 
       return (result.b.size() > 0 ? result.b.subList(
             0,
@@ -133,7 +147,7 @@ public class NewAlphaBetaSearch implements Search {
                            (this.movesSearched - movesSearchedBefore));
                      this.thinking.postThinking(
                            ply,
-                           best.a.intValue(),
+                           (best.a.intValue() * (whiteMove?1:-1)),
                            moveTime + 1,
                            (this.movesSearched - movesSearchedBefore),
                            best.b.toString());
@@ -155,6 +169,7 @@ public class NewAlphaBetaSearch implements Search {
             }
          }
       }
+
       return result;
    }
 }
