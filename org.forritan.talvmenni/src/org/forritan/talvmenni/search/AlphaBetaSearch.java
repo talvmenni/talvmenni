@@ -22,6 +22,11 @@ public class AlphaBetaSearch implements Search {
       this.thinking= new Thinking();
       this.debugInfo= new DebugInfo();
    }
+   
+   public void setDepth(
+         int searchDepth) {
+      this.depth= searchDepth;
+   }
 
    public Thinking getThinking() {
       return this.thinking;

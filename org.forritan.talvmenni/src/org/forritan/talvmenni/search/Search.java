@@ -10,6 +10,7 @@ import org.forritan.talvmenni.game.Position.Move;
 
 public interface Search {
    
+   public void setDepth(int searchDepth);
    public List<ImmutablePosition.Move> getBestMoves(Position p, Evaluation e, boolean whiteMove);
    
    public Thinking getThinking();

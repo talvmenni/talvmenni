@@ -3,7 +3,7 @@ package org.forritan.talvmenni.core;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
 
-import org.forritan.talvmenni.game.AlphaBetaSearchSimpleMaterialAndPositionalEvaluationChooseRandomlyBetweenBestMovesStrategy;
+import org.forritan.talvmenni.game.IterativeDeepeningAlphaBetaSearchWithKillerMoveOrderingSimpleMaterialAndPositionalEvaluationChooseRandomlyBetweenBestMovesStrategy;
 import org.forritan.talvmenni.ui.DebugWindow;
 
 
@@ -31,7 +31,7 @@ public class TalvMenni {
       }
       
       final ChessEngine chessEngine=
-         ChessEngine.create(new AlphaBetaSearchSimpleMaterialAndPositionalEvaluationChooseRandomlyBetweenBestMovesStrategy(SEARCH_DEPTH));
+         ChessEngine.create(new IterativeDeepeningAlphaBetaSearchWithKillerMoveOrderingSimpleMaterialAndPositionalEvaluationChooseRandomlyBetweenBestMovesStrategy(SEARCH_DEPTH));
 
       if (Boolean.getBoolean("debug_window")) {
          Thread debugWindowThread= threadFactory.newThread(new Runnable() {

@@ -9,23 +9,22 @@ import org.forritan.talvmenni.game.ImmutablePosition;
 import org.forritan.talvmenni.game.Position;
 import org.forritan.talvmenni.game.Position.Move;
 
-public class MiniMaxSearch implements Search {
+public class AlphaBetaWithKillerMoveOrderingSearch implements Search {
    
    private Thinking thinking;
    private DebugInfo debugInfo;
-   private int depth;
+   private int depth= 0;
    
    private int movesSearched;
    
-   public MiniMaxSearch(int depth) {
-      this.depth= depth;
+   public AlphaBetaWithKillerMoveOrderingSearch() {
       this.thinking= new Thinking();
       this.debugInfo= new DebugInfo();
    }
-   
+
    public void setDepth(
-         int searchDepth) {
-      this.depth= searchDepth;
+         int depth) {
+      this.depth= depth;
    }
 
    public Thinking getThinking() {
@@ -41,6 +40,9 @@ public class MiniMaxSearch implements Search {
          Evaluation e,
          boolean whiteMove) {
       
+      int alpha= Integer.MIN_VALUE + 1; // Very important!!! Can't be Integer.MIN_VALUE, because Integer.MIN_VALUE == -Integer.MIN_VALUE
+      int beta= Integer.MAX_VALUE;
+            
       ImmutablePosition.nodes++;
       
       long time= -System.currentTimeMillis();
@@ -59,21 +61,41 @@ public class MiniMaxSearch implements Search {
       for(Move move : moves) {
          long moveTime= -System.currentTimeMillis();
          int movesSearchedBeforeMove= this.movesSearched++;
-         MoveScoreTuple score= this.getBestMove(p.move(move.from, move.to), e, !whiteMove, depth - 1);
-//         score.add(move, e.getScore(p));
+         MoveScoreTuple score= this.getBestMove(p.move(move.from, move.to), e, !whiteMove, depth - 1, alpha, beta);
          score.add(move, 0);
          this.debugInfo.postCurrentBestMove(move, score.getScore(), (this.movesSearched - movesSearchedBeforeMove));
          if(bestScore == null || (whiteMove ? score.getScore() > bestScore.getScore() : score.getScore() < bestScore.getScore())) {
             bestScore= score;
             result.clear();
             result.add(move);
+            if(whiteMove) {
+               p.getWhite().killerMove(move);         
+            } else {
+               p.getBlack().killerMove(move);         
+            }
             moveTime += System.currentTimeMillis();
             this.thinking.postThinking(depth, bestScore.getScore(), moveTime, this.movesSearched, bestScore.getMoveList().toString());
          }else if(bestScore != null && score.getScore() == bestScore.getScore()) {
             bestScore= score;
             result.add(move);
+            if(whiteMove) {
+               p.getWhite().killerMove(move);         
+            } else {
+               p.getBlack().killerMove(move);         
+            }
             this.thinking.postThinking(depth, bestScore.getScore(), moveTime, this.movesSearched, bestScore.getMoveList().toString());
          }
+         if(whiteMove) {
+            if(bestScore != null && bestScore.score > alpha) {
+               alpha= bestScore.score;
+            }
+         } else {
+            if(bestScore != null && bestScore.score < beta) {
+               beta= bestScore.score;
+            }
+         }
+         this.debugInfo.postText("Alpha: " + alpha + " and Beta: " + beta);
+
       }
       
       time += System.currentTimeMillis(); 
@@ -89,7 +111,9 @@ public class MiniMaxSearch implements Search {
          Position p,
          Evaluation e,
          boolean whiteMove,
-         int depth) {
+         int depth,
+         int alpha,
+         int beta) {
 
       ImmutablePosition.nodes++;
       
@@ -108,14 +132,24 @@ public class MiniMaxSearch implements Search {
             Move currentBestMove= null;
             for(Move move : moves) {
                this.movesSearched++;
-               MoveScoreTuple score= this.getBestMove(p.move(move.from, move.to), e, !whiteMove, depth - 1);
+               MoveScoreTuple score= this.getBestMove(p.move(move.from, move.to), e, !whiteMove, depth - 1, -beta, -alpha);
                if(bestScore == null || (whiteMove ? score.getScore() > bestScore.getScore() : score.getScore() < bestScore.getScore())) {
                   bestScore= score;
                   currentBestMove= move;
+                  if(whiteMove) {
+                     p.getWhite().killerMove(move);         
+                  } else {
+                     p.getBlack().killerMove(move);         
+                  }
                }
+               if(bestScore != null && bestScore.score > alpha) {
+                  alpha= bestScore.score;
+               }
+               if(alpha >= beta) {
+                  break;
+               }               
             }         
             result= bestScore;
-//            result.add(currentBestMove, e.getScore(p));
             result.add(currentBestMove, 0);
             
          } else {
@@ -150,6 +184,11 @@ public class MiniMaxSearch implements Search {
                if((whiteMove ? score >= bestScore : score <= bestScore)) {
                   bestScore= score;
                   result= new MoveScoreTuple(move, score);
+                  if(whiteMove) {
+                     p.getWhite().killerMove(move);         
+                  } else {
+                     p.getBlack().killerMove(move);         
+                  }
                }
             }
          } else {

@@ -558,6 +558,15 @@ public class ImmutablePosition extends PositionFactory {
                | this.pawns;
       }
       
+
+      public void killerMove(Move move) {
+         if(this.possibleMoves == null) {
+            if(this.possibleMoves.remove(move)) {
+               this.possibleMoves.add(0, move);
+            }
+         }         
+      }
+      
       public List<Move> getPossibleMoves() {
          
          if(this.possibleMoves == null) {
