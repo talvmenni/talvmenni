@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.forritan.talvmenni.core.ChessEngine;
 import org.forritan.talvmenni.evaluation.Evaluation;
 import org.forritan.talvmenni.game.ImmutablePosition;
 import org.forritan.talvmenni.game.Position;
@@ -13,7 +14,7 @@ public class AlphaBetaWithKillerMoveOrderingSearch implements Search {
    
    private Thinking thinking;
    private DebugInfo debugInfo;
-   private int depth= 0;
+   private int ply= 0;
    
    private int movesSearched;
    
@@ -22,9 +23,9 @@ public class AlphaBetaWithKillerMoveOrderingSearch implements Search {
       this.debugInfo= new DebugInfo();
    }
 
-   public void setDepth(
-         int depth) {
-      this.depth= depth;
+   public void setPly(
+         int ply) {
+      this.ply= ply;
    }
 
    public Thinking getThinking() {
@@ -61,7 +62,7 @@ public class AlphaBetaWithKillerMoveOrderingSearch implements Search {
       for(Move move : moves) {
          long moveTime= -System.currentTimeMillis();
          int movesSearchedBeforeMove= this.movesSearched++;
-         MoveScoreTuple score= this.getBestMove(p.move(move.from, move.to), e, !whiteMove, depth - 1, alpha, beta);
+         MoveScoreTuple score= this.getBestMove(p.move(move.from, move.to), e, !whiteMove, ply - 1, alpha, beta);
          score.add(move, 0);
          this.debugInfo.postCurrentBestMove(move, score.getScore(), (this.movesSearched - movesSearchedBeforeMove));
          if(bestScore == null || (whiteMove ? score.getScore() > bestScore.getScore() : score.getScore() < bestScore.getScore())) {
@@ -74,7 +75,7 @@ public class AlphaBetaWithKillerMoveOrderingSearch implements Search {
                p.getBlack().killerMove(move);         
             }
             moveTime += System.currentTimeMillis();
-            this.thinking.postThinking(depth, bestScore.getScore(), moveTime, this.movesSearched, bestScore.getMoveList().toString());
+            this.thinking.postThinking(ply, bestScore.getScore(), moveTime, this.movesSearched, bestScore.getMoveList().toString());
          }else if(bestScore != null && score.getScore() == bestScore.getScore()) {
             bestScore= score;
             result.add(move);
@@ -83,7 +84,7 @@ public class AlphaBetaWithKillerMoveOrderingSearch implements Search {
             } else {
                p.getBlack().killerMove(move);         
             }
-            this.thinking.postThinking(depth, bestScore.getScore(), moveTime, this.movesSearched, bestScore.getMoveList().toString());
+            this.thinking.postThinking(ply, bestScore.getScore(), moveTime, this.movesSearched, bestScore.getMoveList().toString());
          }
          if(whiteMove) {
             if(bestScore != null && bestScore.score > alpha) {
@@ -97,6 +98,14 @@ public class AlphaBetaWithKillerMoveOrderingSearch implements Search {
          this.debugInfo.postText("Alpha: " + alpha + " and Beta: " + beta);
 
       }
+//      this.debugInfo.postPossibleMoves(p.getWhite().getPossibleMoves());
+      p.getWhite().updatePossibleMovesOrdering();
+//      this.debugInfo.postPossibleMoves(p.getWhite().getPossibleMoves());
+
+//      this.debugInfo.postPossibleMoves(p.getBlack().getPossibleMoves());
+      p.getBlack().updatePossibleMovesOrdering();
+//      this.debugInfo.postPossibleMoves(p.getBlack().getPossibleMoves());
+
       
       time += System.currentTimeMillis(); 
       
@@ -148,7 +157,14 @@ public class AlphaBetaWithKillerMoveOrderingSearch implements Search {
                if(alpha >= beta) {
                   break;
                }               
-            }         
+            }
+//            this.debugInfo.postPossibleMoves(p.getWhite().getPossibleMoves());
+            p.getWhite().updatePossibleMovesOrdering();
+//            this.debugInfo.postPossibleMoves(p.getWhite().getPossibleMoves());
+
+//            this.debugInfo.postPossibleMoves(p.getBlack().getPossibleMoves());
+            p.getBlack().updatePossibleMovesOrdering();
+//            this.debugInfo.postPossibleMoves(p.getBlack().getPossibleMoves());
             result= bestScore;
             result.add(currentBestMove, 0);
             
@@ -191,6 +207,13 @@ public class AlphaBetaWithKillerMoveOrderingSearch implements Search {
                   }
                }
             }
+//            this.debugInfo.postPossibleMoves(p.getWhite().getPossibleMoves());
+            p.getWhite().updatePossibleMovesOrdering();
+//            this.debugInfo.postPossibleMoves(p.getWhite().getPossibleMoves());
+
+//            this.debugInfo.postPossibleMoves(p.getBlack().getPossibleMoves());
+            p.getBlack().updatePossibleMovesOrdering();
+//            this.debugInfo.postPossibleMoves(p.getBlack().getPossibleMoves());
          } else {
             if(whiteMove){
                if(p.getWhite().isChecked()) {

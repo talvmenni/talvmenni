@@ -17,7 +17,7 @@ public class MiniMaxSearchSimpleMaterialEvaluationChooseRandomlyBetweenBestMoves
    private Evaluation evaluation;
    
    public MiniMaxSearchSimpleMaterialEvaluationChooseRandomlyBetweenBestMovesStrategy(int searchDepth) {
-      this.search= new MiniMaxSearch(searchDepth);
+      this.search= new MiniMaxSearch(searchDepth * 2);
       this.evaluation= new SimpleMaterialEvaluation();
    }
    

@@ -14,7 +14,7 @@ public class TalvMenni {
 
    public static String       DEBUG_NAME;
    
-   public static int SEARCH_DEPTH= 4; // Minimum for being able to detect that we are getting checkmated... 
+   public static int SEARCH_DEPTH= 2; // Minimum for being able to detect that we are getting checkmated... 
 
    public static void main(
          String args[]) {

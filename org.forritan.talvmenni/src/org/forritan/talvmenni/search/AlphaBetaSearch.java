@@ -13,19 +13,19 @@ public class AlphaBetaSearch implements Search {
    
    private Thinking thinking;
    private DebugInfo debugInfo;
-   private int depth;
+   private int ply;
    
    private int movesSearched;
    
-   public AlphaBetaSearch(int depth) {
-      this.depth= depth;
+   public AlphaBetaSearch(int ply) {
+      this.ply= ply;
       this.thinking= new Thinking();
       this.debugInfo= new DebugInfo();
    }
    
-   public void setDepth(
-         int searchDepth) {
-      this.depth= searchDepth;
+   public void setPly(
+         int ply) {
+      this.ply= ply;
    }
 
    public Thinking getThinking() {
@@ -62,7 +62,7 @@ public class AlphaBetaSearch implements Search {
       for(Move move : moves) {
          long moveTime= -System.currentTimeMillis();
          int movesSearchedBeforeMove= this.movesSearched++;
-         MoveScoreTuple score= this.getBestMove(p.move(move.from, move.to), e, !whiteMove, depth - 1, alpha, beta);
+         MoveScoreTuple score= this.getBestMove(p.move(move.from, move.to), e, !whiteMove, ply - 1, alpha, beta);
 //       score.add(move, e.getScore(p));
          score.add(move, 0);
          this.debugInfo.postCurrentBestMove(move, score.getScore(), (this.movesSearched - movesSearchedBeforeMove));
@@ -71,11 +71,11 @@ public class AlphaBetaSearch implements Search {
             result.clear();
             result.add(move);
             moveTime += System.currentTimeMillis();
-            this.thinking.postThinking(depth, bestScore.getScore(), moveTime, this.movesSearched, bestScore.getMoveList().toString());
+            this.thinking.postThinking(ply, bestScore.getScore(), moveTime, this.movesSearched, bestScore.getMoveList().toString());
          }else if(bestScore != null && score.getScore() == bestScore.getScore()) {
             bestScore= score;
             result.add(move);
-            this.thinking.postThinking(depth, bestScore.getScore(), moveTime, this.movesSearched, bestScore.getMoveList().toString());
+            this.thinking.postThinking(ply, bestScore.getScore(), moveTime, this.movesSearched, bestScore.getMoveList().toString());
          }
          if(whiteMove) {
             if(bestScore != null && bestScore.score > alpha) {

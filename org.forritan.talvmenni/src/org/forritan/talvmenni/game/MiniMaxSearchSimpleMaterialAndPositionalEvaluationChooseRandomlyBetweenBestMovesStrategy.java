@@ -15,7 +15,7 @@ public class MiniMaxSearchSimpleMaterialAndPositionalEvaluationChooseRandomlyBet
    private Evaluation evaluation;
    
    public MiniMaxSearchSimpleMaterialAndPositionalEvaluationChooseRandomlyBetweenBestMovesStrategy(int searchDepth) {
-      this.search= new MiniMaxSearch(searchDepth);
+      this.search= new MiniMaxSearch(searchDepth * 2);
       this.evaluation= new SimpleMaterialAndPositionalEvaluation();
    }
    

@@ -21,18 +21,6 @@ public interface Position {
    public boolean isLegalMove(
          long from,
          long to);
-
-   /**
-    * @deprecated Use
-    * @link{org.forritan.talvmenni.game.Strategy.getNextMove(Position position,
-    *                                                                 boolean
-    *                                                                 whiteToMove)}
-    *                                                                 instead
-    * @param whiteMove
-    * @return
-    */
-   public Move getRandomMove(
-         boolean whiteMove);
    
    public static interface PromotionPiece {
       public final static int DEFAULT= 0;
@@ -64,8 +52,8 @@ public interface Position {
       }
       
       public boolean equals(Object obj) {
-         if(obj instanceof Position.Move) {
-            return this.equals((Position.Move) obj);
+         if(obj instanceof Move) {
+            return this.equals((Move) obj);
          } else {
             return false;
          }

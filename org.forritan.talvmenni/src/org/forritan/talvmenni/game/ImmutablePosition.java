@@ -511,6 +511,7 @@ public class ImmutablePosition extends PositionFactory {
       public final long     allPieces;
 
       private List<Move> possibleMoves;
+      private List<Move> killerMoves;
       private Long allCaptureMovesAttackedSquares;
       private Boolean kingsSideCastlingLegal;
       private Boolean queensSideCastlingLegal;
@@ -557,14 +558,24 @@ public class ImmutablePosition extends PositionFactory {
                | this.knights
                | this.pawns;
       }
-      
-
+   
       public void killerMove(Move move) {
-         if(this.possibleMoves == null) {
-            if(this.possibleMoves.remove(move)) {
-               this.possibleMoves.add(0, move);
-            }
-         }         
+         if(this.killerMoves == null) {
+           this.killerMoves= new ArrayList<Move>();
+         }
+         this.killerMoves.add(0, move);
+      }
+
+      public void updatePossibleMovesOrdering() {
+         if(this.possibleMoves != null && this.killerMoves != null) {
+            List<Move> currentPossibleMoves= new ArrayList<Move>();
+            currentPossibleMoves.addAll(this.possibleMoves);
+            this.possibleMoves= new ArrayList<Move>();
+            this.possibleMoves.addAll(this.killerMoves);
+            currentPossibleMoves.removeAll(this.killerMoves);
+            this.possibleMoves.addAll(currentPossibleMoves);
+            this.killerMoves= null;
+         }
       }
       
       public List<Move> getPossibleMoves() {

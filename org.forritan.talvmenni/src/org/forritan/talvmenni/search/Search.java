@@ -3,6 +3,7 @@ package org.forritan.talvmenni.search;
 import java.util.List;
 import java.util.Observable;
 
+import org.forritan.talvmenni.core.ChessEngine;
 import org.forritan.talvmenni.evaluation.Evaluation;
 import org.forritan.talvmenni.game.ImmutablePosition;
 import org.forritan.talvmenni.game.Position;
@@ -10,7 +11,7 @@ import org.forritan.talvmenni.game.Position.Move;
 
 public interface Search {
    
-   public void setDepth(int searchDepth);
+   public void setPly(int ply);
    public List<ImmutablePosition.Move> getBestMoves(Position p, Evaluation e, boolean whiteMove);
    
    public Thinking getThinking();
@@ -77,6 +78,14 @@ public interface Search {
          this.notifyObservers(text);
       }
       
+      public void postPossibleMoves(List<Position.Move> moves) {
+         this.setChanged();
+         this.notifyObservers(
+               moves.size() 
+               + " possible moves: "
+               + moves.toString());
+      }
+
    }
 
 }

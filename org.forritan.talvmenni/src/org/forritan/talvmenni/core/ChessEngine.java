@@ -424,7 +424,7 @@ public class ChessEngine extends Observable implements Runnable {
    
    public class DebugInfo extends Observable {
       
-      public void postPossibleMoves(List<ImmutablePosition.Move> moves) {
+      public void postPossibleMoves(List<Position.Move> moves) {
          this.setChanged();
          this.notifyObservers(
                moves.size() 
