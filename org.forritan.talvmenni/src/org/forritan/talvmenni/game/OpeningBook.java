@@ -1,4 +1,4 @@
-package org.forritan.talvmenni.ui;
+package org.forritan.talvmenni.game;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
