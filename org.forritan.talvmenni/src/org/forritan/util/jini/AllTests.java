@@ -1,9 +1,8 @@
 /**
- * deeDjinn - An ICalendar (RFC2445 & RFC2446) based distributed calendar 
- * implementet against Sun Microsystems Jini/JavaSpaces(TM).
+ * talvmenni - A distributed chess-engine implemented in Java(TM) and against
+ * Sun Microsystems Jini/JavaSpaces(TM).
  *  
- * Copyright (C) 2004  Eyðun Lamhauge, Eyðun Nielsen
- *                     og Dánjal Salberg Thomsen
+ * Copyright (C) 2004  Eyðun Lamhauge and Eyðun Nielsen
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
