@@ -1,5 +1,7 @@
 package org.forritan.talvmenni.ui;
 
+import org.forritan.talvmenni.bitboard.Square;
+import org.forritan.talvmenni.bitboard.Squares;
 import org.forritan.talvmenni.core.ChessEngine.Protocol;
 
 
@@ -34,14 +36,30 @@ public class ConsoleProtocol extends UiProtocolBase {
          this.protocol.newGame();
       }
 
+      if (theInput.startsWith("move")) {
+         String move= theInput.substring(
+               4).trim();
+
+         theOutput=move;
+         //this.protocol.makeMove(move);
+      }
+
       if ("position".equalsIgnoreCase(theInput)) {
          theOutput= boardPosition();
       }
       if ("white".equalsIgnoreCase(theInput)) {
-         theOutput= "White to Move";
+         if (this.protocol.isWhiteToMove())
+            theOutput= "White is already to move";
+         else
+            theOutput= "White to Move";
+         this.protocol.whiteToMove();
       }
       if ("black".equalsIgnoreCase(theInput)) {
-         theOutput= "Black to Move";
+         if (this.protocol.isWhiteToMove())
+            theOutput= "Black to Move";
+         else
+            theOutput= "Black is already to move";
+         this.protocol.blackToMove();
       }
 
       if ("quit".equalsIgnoreCase(theInput)) // quit and exit
@@ -59,22 +77,43 @@ public class ConsoleProtocol extends UiProtocolBase {
    }
 
    private String boardPosition() {
-      String positionString= "";
+      String positionString= "    ---------------\n";
+      Square square= Squares.create();
+      long sq;
 
-      for (int x= 7; x >= 0; x--) {
+      for (int x= 8; x > 0; x--) {
          positionString= positionString
-               + (x + 1)
-               + " ";
+               + x
+               + " | ";
          for (int y= 0; y < 8; y++) {
+            sq= square.getSquare(64
+                  - (x * 8)
+                  + y);
             positionString= positionString
-                  + ". ";
+                  + this.protocol.getStringPiece(sq)
+                  + " ";
          }
          positionString= positionString
-               + "\n";
+               + "|\n";
       }
       positionString= positionString
-            + "  a b c d e f g h\n";
+            + "    ---------------\n";
+      positionString= positionString
+            + "    a b c d e f g h\n";
+      positionString= positionString
+            + "    ["
+            + whoisToMove()
+            + " to move]";
+
       return positionString;
+
+   }
+
+   private String whoisToMove() {
+      if (this.protocol.isWhiteToMove())
+         return "White";
+      else
+         return "Black";
    }
 
    private String helpMessage() {
@@ -90,20 +129,24 @@ public class ConsoleProtocol extends UiProtocolBase {
             + "- \n";
       message= message
             + "- HELP: This help screen \n";
-      message= message
-            + "- \n";
+      //      message= message
+      //            + "- \n";
       message= message
             + "- MOVELIST: Show the move-history \n";
-      message= message
-            + "- \n";
+      //      message= message
+      //            + "- \n";
       message= message
             + "- POSITION: Display current position on prompt \n";
-      message= message
-            + "- \n";
+      //      message= message
+      //            + "- \n";
       message= message
             + "- NEW: Start a new game \n";
       message= message
-            + "- \n";
+      + "- MOVE: Make move. Format: 'MOVE fftt' \n";
+      message= message
+            + "- WHITE: Give white the move \n";
+      message= message
+            + "- BLACK: Give black the move \n";
       message= message
             + "- QUIT: Quit and leave the program \n";
       message= message
