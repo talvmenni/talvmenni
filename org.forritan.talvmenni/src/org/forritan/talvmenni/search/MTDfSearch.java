@@ -78,7 +78,6 @@ public class MTDfSearch implements Search {
       this.debugInfo.postBestMoves(result.b.size() > 0 ? result.b.subList(
             0,
             1) : result.b);
-      this.debugInfo.postPositionStatiscs();
 
       return (result.b.size() > 0 ? result.b.subList(
             0,
@@ -149,8 +148,6 @@ private Tuple<Integer, List<Move>> alphaBeta(
          int beta) {
 
       Tuple<Integer, List<Move>> result= null;
-
-      PositionFactory.nodes++;
 
       if (this.transposition.contains(
             p,
@@ -260,13 +257,13 @@ private Tuple<Integer, List<Move>> alphaBeta(
          }
       }
 
-      this.transposition.update(
-            p,
-            whiteMove,
-            result.b,
-            result.a.intValue(),
-            ply,
-            );
+//      this.transposition.update(
+//            p,
+//            whiteMove,
+//            result.b,
+//            result.a.intValue(),
+//            ply
+//            );
 
       return result;
    }}

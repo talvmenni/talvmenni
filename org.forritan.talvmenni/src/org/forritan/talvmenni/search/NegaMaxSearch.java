@@ -63,10 +63,6 @@ public class NegaMaxSearch implements Search {
             time,
             this.movesSearched);
       this.debugInfo.postBestMoves(result.b);
-      this.debugInfo.postPositionStatiscs();
-
-      
-
 
       return (result.b.size() > 0 ? result.b.subList(
             0,
@@ -80,8 +76,6 @@ public class NegaMaxSearch implements Search {
          int ply) {
 
       Tuple<Integer, List<Move>> result= null;
-
-      PositionFactory.nodes++;
 
       if (ply == 0) {
          result= new Tuple<Integer, List<Move>>(

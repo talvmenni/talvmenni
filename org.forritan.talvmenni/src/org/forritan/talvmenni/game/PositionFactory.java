@@ -14,15 +14,8 @@ import org.forritan.util.Tuple;
 
 public abstract class PositionFactory implements Position {
 
-   public static int  positionsCreated;
-   public static int  nodes = 1;
    protected Bitboard white;
    protected Bitboard black;
-
-   protected PositionFactory() {
-      // Statistics...
-      PositionFactory.positionsCreated++;
-   }
 
    protected PositionFactory(
          long whiteKings,
@@ -41,7 +34,6 @@ public abstract class PositionFactory implements Position {
          long blackPawns,
          long blackCastling,
          long blackEnpassant) {
-      this();
       this.white= new Bitboard(
             true,
             this,
@@ -69,7 +61,6 @@ public abstract class PositionFactory implements Position {
    protected PositionFactory(
          Bitboard white,
          Bitboard black) {
-      this();
       this.white= new Bitboard(
             true,
             this,

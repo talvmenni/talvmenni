@@ -85,7 +85,6 @@ public class AlphaBetaWithTranspositionTableSearch implements Search {
       this.debugInfo.postBestMoves(result.b.size() > 0 ? result.b.subList(
             0,
             1) : result.b);
-      this.debugInfo.postPositionStatiscs();
       this.debugInfo.postTranspositionHits(this.transpositionHits);
 
       
@@ -106,8 +105,6 @@ public class AlphaBetaWithTranspositionTableSearch implements Search {
 
       Tuple<Integer, List<Move>> result= null;
 
-      PositionFactory.nodes++;
-      
       if(this.transposition.contains(p, whiteMove)) {
          ThreeTuple<Integer, Integer, List<Move>> entry= this.transposition.get(p, whiteMove);
          if(entry.a.intValue() >= ply) {
@@ -138,7 +135,11 @@ public class AlphaBetaWithTranspositionTableSearch implements Search {
 
          if (moves.size() > 0) {
             for (Move move : moves) {
-               if (best.a.intValue() >= beta) break;
+               if (best.a.intValue() >= beta) {
+//                  this.debugInfo.postText("*** break at " + move.toString() + " - " + ply + " ply...");
+//                  this.debugInfo.postText("*** break: " + best.b.toString());
+                  break;
+               }
                this.movesSearched++;
 
                int movesSearchedBefore= this.movesSearched;
@@ -166,11 +167,11 @@ public class AlphaBetaWithTranspositionTableSearch implements Search {
 
                if (value.a.intValue() > best.a.intValue()) {
                   best= value;
-                  if(whiteMove) {
-                     p.getWhite().killerMove(move);         
-                  } else {
-                     p.getBlack().killerMove(move);         
-                  }
+//                  if(whiteMove) {
+//                     p.getWhite().killerMove(move);         
+//                  } else {
+//                     p.getBlack().killerMove(move);         
+//                  }
                   if (ply == this.ply) {
                      this.debugInfo.postCurrentBestMove(
                            move,
@@ -186,8 +187,8 @@ public class AlphaBetaWithTranspositionTableSearch implements Search {
                }
             }
 
-            p.getWhite().updatePossibleMovesOrdering();
-            p.getBlack().updatePossibleMovesOrdering();
+//            p.getWhite().updatePossibleMovesOrdering();
+//            p.getBlack().updatePossibleMovesOrdering();
 
             result= best;
          } else {

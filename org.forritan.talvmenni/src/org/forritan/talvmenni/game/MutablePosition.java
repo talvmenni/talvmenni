@@ -8,8 +8,6 @@ public class MutablePosition extends PositionFactory {
    Stack<Bitboard> whiteBitboards;
    Stack<Bitboard> blackBitboards;
    
-//   int pushMoves;
-
    /**
     * 
     * @param whiteKings
@@ -85,16 +83,6 @@ public class MutablePosition extends PositionFactory {
          Bitboard white,
          Bitboard black) {
       
-//      String pre= "";
-//      
-//      this.pushMoves++;
-//
-//      for (int i= 0; i < this.pushMoves; i++) {
-//         pre += ">";
-//      }
-//      System.err.println(pre);
-
-      PositionFactory.positionsCreated++;
       this.whiteBitboards.push(this.white);
       this.blackBitboards.push(this.black);
       this.white= white;
@@ -105,16 +93,6 @@ public class MutablePosition extends PositionFactory {
    public Position popMove() {
       this.white= this.whiteBitboards.pop();
       this.black= this.blackBitboards.pop();
-
-//      String pre= "";
-//
-//      for (int i= 0; i < this.pushMoves; i++) {
-//         pre += "<";
-//      }
-//      System.err.println(pre);
-//      
-//      this.pushMoves--;
-
       return this;
    }
 

@@ -5,7 +5,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
 
 import org.forritan.talvmenni.game.TheoryBook;
-import org.forritan.talvmenni.strategy.AlphaBetaStrategy;
+import org.forritan.talvmenni.strategy.IterativeDeepeningAlphaBetaStrategy;
 import org.forritan.talvmenni.ui.DebugWindow;
 import org.forritan.util.debug.ExceptionLoggingWindowHandler;
 import org.forritan.util.debug.ObjectStatisticsWindow;
@@ -45,9 +45,7 @@ public class TalvMenni {
 
       DEBUG_NAME= System.getProperty("debug_name");
       if (DEBUG_NAME == null) {
-         DEBUG_NAME= "NewAlphaBeta ["
-               + PLY
-               + " ply]";
+         DEBUG_NAME= "";
       }
 
       String MaxTranpositionEntries= System
@@ -61,25 +59,33 @@ public class TalvMenni {
             140000);
 
       final ChessEngine chessEngine= ChessEngine
-      //            .create(new MTDfStrategy(
+            //            .create(new MTDfStrategy(
             //                  PLY,
             //                  new MTDfTransposition(
             //                        MAX_TRANSPOSITION_ENTRIES),
             //                  book));
-            //            .create(new
+
+            //      .create(new
             // IterativeDeepeningAlphaBetaWithTranspositionTableStrategy(
-            //                  PLY,
-            //                  new Transposition(
-            //                        MAX_TRANSPOSITION_ENTRIES),
-            //                  book));
-            //            .create(new AlphaBetaWithTranspositionTableStrategy(
-            //                  PLY,
-            //                  new Transposition(
-            //                        MAX_TRANSPOSITION_ENTRIES),
-            //                  book));
-            .create(new AlphaBetaStrategy(
+            //            PLY,
+            //            new Transposition(
+            //                  MAX_TRANSPOSITION_ENTRIES),
+            //            book));
+
+            .create(new IterativeDeepeningAlphaBetaStrategy(
                   PLY,
                   book));
+
+      //            .create(new AlphaBetaWithTranspositionTableStrategy(
+      //                  PLY,
+      //                  new Transposition(
+      //                        MAX_TRANSPOSITION_ENTRIES),
+      //                  book));
+
+      //            .create(new AlphaBetaStrategy(
+      //                  PLY,
+      //                  book));
+
       //            .create(new NegaMaxStrategy(
       //                  PLY,
       //                  book));

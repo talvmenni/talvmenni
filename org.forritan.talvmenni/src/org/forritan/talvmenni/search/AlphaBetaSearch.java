@@ -47,7 +47,7 @@ public class AlphaBetaSearch implements Search {
          Position p,
          Evaluation e,
          boolean whiteMove) {
-      
+
       long time= -System.currentTimeMillis();
       this.movesSearched= 0;
 
@@ -65,17 +65,13 @@ public class AlphaBetaSearch implements Search {
             this.ply,
             alpha,
             beta);
-      
+
       time+= System.currentTimeMillis();
-      
+
       this.debugInfo.postNodesPerSecond(
             time,
             this.movesSearched);
       this.debugInfo.postBestMoves(result.b);
-      this.debugInfo.postPositionStatiscs();
-
-      
-
 
       return (result.b.size() > 0 ? result.b.subList(
             0,
@@ -91,8 +87,6 @@ public class AlphaBetaSearch implements Search {
          int beta) {
 
       Tuple<Integer, List<Move>> result= null;
-
-      PositionFactory.nodes++;
 
       if (ply == 0) {
          result= new Tuple<Integer, List<Move>>(
@@ -113,8 +107,8 @@ public class AlphaBetaSearch implements Search {
          if (moves.size() > 0) {
             for (Move move : moves) {
                if (best.a.intValue() >= beta) {
-                  this.debugInfo.postText("***break***");
-                  break;                  
+//                  this.debugInfo.postText("***break***");
+                  break;
                }
                this.movesSearched++;
 
@@ -141,10 +135,15 @@ public class AlphaBetaSearch implements Search {
                      move);
                moveTime+= System.currentTimeMillis();
 
-               
-               
                if (value.a.intValue() > best.a.intValue()) {
                   best= value;
+                  if (whiteMove) {
+                     p.getWhite().killerMove(
+                           move);
+                  } else {
+                     p.getBlack().killerMove(
+                           move);
+                  }
                   if (ply == this.ply) {
                      this.debugInfo.postCurrentBestMove(
                            move,
@@ -152,13 +151,17 @@ public class AlphaBetaSearch implements Search {
                            (this.movesSearched - movesSearchedBefore));
                      this.thinking.postThinking(
                            ply,
-                           (best.a.intValue() * (whiteMove?1:-1)),
+                           (best.a.intValue() * (whiteMove ? 1 : -1)),
                            moveTime + 1,
                            (this.movesSearched - movesSearchedBefore),
                            best.b.toString());
                   }
                }
             }
+
+            p.getWhite().updatePossibleMovesOrdering();
+            p.getBlack().updatePossibleMovesOrdering();
+
             result= best;
          } else {
             if (whiteMove ? p.getWhite().isChecked() : p.getBlack().isChecked()) {

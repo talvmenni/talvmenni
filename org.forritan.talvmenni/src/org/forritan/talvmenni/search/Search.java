@@ -60,20 +60,7 @@ public interface Search {
                + nodes 
                + " positions searched...");
       }
-      
-      public void postPositionStatiscs() {
-         this.setChanged();
-         this.notifyObservers(
-               "---------------------------\n" +
-               "Positions created: " 
-               + PositionFactory.positionsCreated 
-               + "\n"
-               + "Average possible moves: " 
-               + PositionFactory.positionsCreated / PositionFactory.nodes
-               + "\n"
-               + "---------------------------\n");
-      }
-      
+            
       public void postText(String text) {
          this.setChanged();
          this.notifyObservers(text);
