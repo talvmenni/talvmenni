@@ -75,11 +75,11 @@ public class ChessEngine implements Runnable {
 
    public void setRunning(boolean running) {
       this.running= running;
-      // FIXME: Shoudn't be necessary to System.exit(0) to quit...
-      if(!this.running) {
-         System.exit(0);
-      }
-
+      try {
+         // InStreamHandler is blocking on System.in, so we close it, so that
+         // the InStreamHandler thread gets interrupted.
+         System.in.close(); 
+      } catch (IOException e) {} // just exit quietly...
    }
 
    public void run() {
@@ -143,8 +143,8 @@ public class ChessEngine implements Runnable {
       public void stop() {
          currentRules= null;
          currentPosition= null;
-         ChessEngine.this.setRunning(false);
          this.go= false;
+         ChessEngine.this.setRunning(false);
       }
 
       public void newGame() {
