@@ -1,11 +1,12 @@
 package org.forritan.talvmenni.game;
 
 import java.util.List;
+import java.util.Observable;
 import java.util.Random;
 
 import org.forritan.talvmenni.game.Position.Move;
 
-public class RandomMoveStrategy implements Strategy {
+public class RandomMoveStrategy extends Observable implements Strategy {
 
    public Move getNextMove(Position position, boolean whiteToMove) {
          List<Move> possibleMoves;
@@ -25,6 +26,10 @@ public class RandomMoveStrategy implements Strategy {
 
    public int getPromotionPiece() {
       return Position.PromotionPiece.KNIGHT;
+   }
+
+   public Observable getObservable() {
+      return this;
    }
 
 }

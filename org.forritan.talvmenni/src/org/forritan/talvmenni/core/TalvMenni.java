@@ -3,7 +3,7 @@ package org.forritan.talvmenni.core;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
 
-import org.forritan.talvmenni.game.RandomMoveStrategy;
+import org.forritan.talvmenni.game.FullSearchSimpleMaterialEvaluationChooseRandomlyBetweenBestMovesStrategy;
 import org.forritan.talvmenni.ui.DebugWindow;
 
 
@@ -26,7 +26,8 @@ public class TalvMenni {
          DEBUG_NAME= "";
       }
 
-      final ChessEngine chessEngine= ChessEngine.create(new RandomMoveStrategy());
+      final ChessEngine chessEngine=
+         ChessEngine.create(new FullSearchSimpleMaterialEvaluationChooseRandomlyBetweenBestMovesStrategy(3));
 
       if (Boolean.getBoolean("org.forritan.talvmenni.debug_window")) {
          Thread debugWindowThread= threadFactory.newThread(new Runnable() {
