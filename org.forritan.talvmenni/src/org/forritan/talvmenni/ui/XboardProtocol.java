@@ -42,6 +42,9 @@ public class XboardProtocol extends UiProtocolBase {
                + TalvMenni.NAME
                + "-"
                + TalvMenni.VERSION
+               + "["
+               + this.protocol.getStrategy().getClass().getSimpleName()
+               + "]"
                + "\""
                + "done=1";
       } else if (theInput.toUpperCase().startsWith(
