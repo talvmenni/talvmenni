@@ -24,6 +24,10 @@ public class ExceptionLoggingWindowHandler extends Handler implements UncaughtEx
             "Exception logging window",
             400,
             200);
+      if (logger == null) {
+         logger = Logger.getLogger("ExceptionLogger");
+         logger.addHandler(this);
+      }
    }
 
    public static synchronized ExceptionLoggingWindowHandler getInstance() {
@@ -116,13 +120,14 @@ public class ExceptionLoggingWindowHandler extends Handler implements UncaughtEx
    public void uncaughtException(
          Thread t,
          Throwable e) {
-      // Initialize logger once
-      if (logger == null) {
-        logger = Logger.getLogger("ExceptionLogger");
-        logger.addHandler(this);
-      }
       logger.log(Level.WARNING, t.getName(), e);
-
+   }
+   
+   public static Logger getLogger() {
+      if (handler == null) {
+         handler= new ExceptionLoggingWindowHandler();
+      }
+      return logger;
    }
 }
 
