@@ -3,10 +3,23 @@ package org.forritan.talvmenni.core;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Random;
 import java.util.concurrent.Executors;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadFactory;
 
+import org.forritan.talvmenni.bitboard.BitboardIterator;
+import org.forritan.talvmenni.bitboard.attacks.Bishop;
+import org.forritan.talvmenni.bitboard.attacks.BlackPawn;
+import org.forritan.talvmenni.bitboard.attacks.King;
+import org.forritan.talvmenni.bitboard.attacks.Knight;
+import org.forritan.talvmenni.bitboard.attacks.Queen;
+import org.forritan.talvmenni.bitboard.attacks.Rook;
+import org.forritan.talvmenni.bitboard.attacks.WhitePawn;
+import org.forritan.talvmenni.bitboard.paths.WhitePawnMoves;
 import org.forritan.talvmenni.game.Move;
 import org.forritan.talvmenni.game.MoveHistory;
 import org.forritan.talvmenni.game.Position;
@@ -86,7 +99,8 @@ public class ChessEngine implements Runnable {
       public boolean isWhiteToMove();
       public Position getCurrentPosition();
       public Rules getCurrentRules();
-      public void makeMove(long fromSquare, long toSquare);
+      public Move makeMove(long fromSquare, long toSquare);
+      public Move makeRandomMove();
    }
 
    private class ProtocolImpl implements Protocol {
@@ -153,11 +167,115 @@ public class ChessEngine implements Runnable {
          return this.currentPosition;
       }
       
-      public void makeMove(long fromSquare, long toSquare) {
+      public Move makeMove(long fromSquare, long toSquare) {
          Move move= new Move(this.currentPosition, fromSquare, toSquare);
          MoveHistory.getInstance().add(move);
          this.currentPosition = move.toPosition;
          this.WhiteToMove= !this.WhiteToMove;
+         return move;
+      }
+
+      public List<Move> getPossibleMoves() {
+         List<Move> result= new ArrayList<Move>();
+
+         Position.Bitboard board;
+
+         if(isWhiteToMove()) {
+            board= this.currentPosition.white;
+         } else {
+            board= this.currentPosition.black;
+         }
+         
+         Iterator<Long> kings= board.kingsIterator();
+         while (kings.hasNext()) {
+            long fromSquare= kings.next().longValue();
+            long possibleMoves= King.attacksFrom(fromSquare, this.currentPosition);
+            Iterator<Long> moves= new BitboardIterator(possibleMoves);
+            while (moves.hasNext()) {
+               long toSquare= moves.next().longValue();
+               result.add(new Move(this.currentPosition, fromSquare, toSquare));
+            }
+            
+         }
+         
+         Iterator<Long> queens= board.queensIterator(); 
+         while (queens.hasNext()) {
+            long fromSquare= queens.next().longValue();
+            long possibleMoves= Queen.attacksFrom(fromSquare, this.currentPosition);
+            Iterator<Long> moves= new BitboardIterator(possibleMoves);
+            while (moves.hasNext()) {
+               long toSquare= moves.next().longValue();
+               result.add(new Move(this.currentPosition, fromSquare, toSquare));
+            }
+            
+         }
+         
+         Iterator<Long> rooks= board.rooksIterator(); 
+         while (rooks.hasNext()) {
+            long fromSquare= rooks.next().longValue();
+            long possibleMoves= Rook.attacksFrom(fromSquare, this.currentPosition);
+            Iterator<Long> moves= new BitboardIterator(possibleMoves);
+            while (moves.hasNext()) {
+               long toSquare= moves.next().longValue();
+               result.add(new Move(this.currentPosition, fromSquare, toSquare));
+            }
+            
+         }
+         
+         Iterator<Long> bishops= board.bishopsIterator(); 
+         while (bishops.hasNext()) {
+            long fromSquare= bishops.next().longValue();
+            long possibleMoves= Bishop.attacksFrom(fromSquare, this.currentPosition);
+            Iterator<Long> moves= new BitboardIterator(possibleMoves);
+            while (moves.hasNext()) {
+               long toSquare= moves.next().longValue();
+               result.add(new Move(this.currentPosition, fromSquare, toSquare));
+            }
+            
+         }
+         
+         Iterator<Long> knights= board.knightsIterator(); 
+         while (knights.hasNext()) {
+            long fromSquare= knights.next().longValue();
+            long possibleMoves= Knight.attacksFrom(fromSquare, this.currentPosition);
+            Iterator<Long> moves= new BitboardIterator(possibleMoves);
+            while (moves.hasNext()) {
+               long toSquare= moves.next().longValue();
+               result.add(new Move(this.currentPosition, fromSquare, toSquare));
+            }
+            
+         }
+         
+         Iterator<Long> pawns= board.pawnsIterator();
+         while (pawns.hasNext()) {
+            long fromSquare= pawns.next().longValue();
+            long possibleMoves;
+            if(isWhiteToMove()) {
+               possibleMoves= WhitePawn.captureMoveAttacksFrom(fromSquare, this.currentPosition) | WhitePawn.moveAttacksFrom(fromSquare, this.currentPosition);
+            } else {
+               possibleMoves= BlackPawn.captureMoveAttacksFrom(fromSquare, this.currentPosition) | BlackPawn.moveAttacksFrom(fromSquare, this.currentPosition);
+            }
+            Iterator<Long> moves= new BitboardIterator(possibleMoves);
+            while (moves.hasNext()) {
+               long toSquare= moves.next().longValue();
+               result.add(new Move(this.currentPosition, fromSquare, toSquare));
+            }
+            
+         }
+         return result;          
+      }
+
+      public Move makeRandomMove() {
+         List<Move> possibleMoves= this.getPossibleMoves();
+
+         if(!possibleMoves.isEmpty()) {
+            int chosenMoveIndex= new Random().nextInt(possibleMoves.size());
+            Move chosenMove= possibleMoves.get(chosenMoveIndex);
+            return this.makeMove(chosenMove.from, chosenMove.to);
+         } else {
+            return null;
+         }
+         
       }
 
    }

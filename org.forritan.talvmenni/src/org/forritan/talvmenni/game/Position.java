@@ -531,37 +531,37 @@ public class Position {
                | this.pawns;
       }
 
-      public Iterator allPiecesIterator() {
+      public Iterator<Long> allPiecesIterator() {
          return new BitboardIterator(
                this.allPieces);
       }
 
-      public Iterator kingsIterator() {
+      public Iterator<Long> kingsIterator() {
          return new BitboardIterator(
                this.kings);
       }
 
-      public Iterator queensIterator() {
+      public Iterator<Long> queensIterator() {
          return new BitboardIterator(
                this.queens);
       }
 
-      public Iterator rooksIterator() {
+      public Iterator<Long> rooksIterator() {
          return new BitboardIterator(
                this.rooks);
       }
 
-      public Iterator bishopsIterator() {
+      public Iterator<Long> bishopsIterator() {
          return new BitboardIterator(
                this.bishops);
       }
 
-      public Iterator knightsIterator() {
+      public Iterator<Long> knightsIterator() {
          return new BitboardIterator(
                this.knights);
       }
 
-      public Iterator pawnsIterator() {
+      public Iterator<Long> pawnsIterator() {
          return new BitboardIterator(
                this.pawns);
       }
@@ -609,56 +609,56 @@ public class Position {
       private long getAllCaptureMovesAttackedSquares() {
          long result= Squares._EMPTY_BOARD;
 
-         Iterator kings= this.kingsIterator();
+         Iterator<Long> kings= this.kingsIterator();
          while (kings.hasNext()) {
-            long square= ((Long) kings.next()).longValue();
+            long square= kings.next().longValue();
             result|= King.attacksFrom(
                   square,
                   this.parent);
          }
 
-         Iterator queens= this.queensIterator();
+         Iterator<Long> queens= this.queensIterator();
          while (queens.hasNext()) {
-            long square= ((Long) queens.next()).longValue();
+            long square= queens.next().longValue();
             result|= Queen.attacksFrom(
                   square,
                   this.parent);
          }
 
-         Iterator rooks= this.rooksIterator();
+         Iterator<Long> rooks= this.rooksIterator();
          while (rooks.hasNext()) {
-            long square= ((Long) rooks.next()).longValue();
+            long square= rooks.next().longValue();
             result|= Rook.attacksFrom(
                   square,
                   this.parent);
          }
 
-         Iterator bishops= this.bishopsIterator();
+         Iterator<Long> bishops= this.bishopsIterator();
          while (bishops.hasNext()) {
-            long square= ((Long) bishops.next()).longValue();
+            long square= bishops.next().longValue();
             result|= Bishop.attacksFrom(
                   square,
                   this.parent);
          }
 
-         Iterator knights= this.knightsIterator();
+         Iterator<Long> knights= this.knightsIterator();
          while (knights.hasNext()) {
-            long square= ((Long) knights.next()).longValue();
+            long square= knights.next().longValue();
             result|= Knight.attacksFrom(
                   square,
                   this.parent);
          }
 
-         Iterator pawns= this.pawnsIterator();
+         Iterator<Long> pawns= this.pawnsIterator();
          while (pawns.hasNext()) {
             if (this.white) {
-               long square= ((Long) pawns.next()).longValue();
-               result|= WhitePawn.captureMovesAttacksFrom(
+               long square= pawns.next().longValue();
+               result|= WhitePawn.captureMoveAttacksFrom(
                      square,
                      this.parent);
             } else {
-               long square= ((Long) pawns.next()).longValue();
-               result|= BlackPawn.captureMovesAttacksFrom(
+               long square= pawns.next().longValue();
+               result|= BlackPawn.captureMoveAttacksFrom(
                      square,
                      this.parent);
             }

@@ -1,13 +1,13 @@
 package org.forritan.talvmenni.ui;
 
+import org.forritan.talvmenni.bitboard.Squares;
 import org.forritan.talvmenni.core.ChessEngine;
+import org.forritan.talvmenni.game.Move;
 
 
 public class XboardProtocol extends UiProtocolBase {
 
    private static XboardProtocol instance;
-   private static int            moveCounter;
-   private static String         moves = "";
 
    private XboardProtocol(
          ChessEngine.Protocol protocol) {
@@ -37,49 +37,31 @@ public class XboardProtocol extends UiProtocolBase {
                + "myname=\"TALVMENNI v 0.1\""
                + "done=1";
       } else if (theInput.startsWith("usermove")) {
-
-         // Royn teg nú!!! ;-) Koyr WinBoard...
-         String move= theInput.substring(
+         String moveString= theInput.substring(
                8).trim();
+         String from= moveString.substring(
+               0,
+               2);
+         String to= moveString.substring(
+               2,
+               4);
+         
+         System.err.println("From: " + from + " - To: " + to);
 
-         moves+= move;
+         this.protocol.makeMove(
+               Squares.create().getSquare(from.toUpperCase()),
+               Squares.create().getSquare(to.toUpperCase()));
+         Move move= this.protocol.makeRandomMove();
+         theOutput= "move "
+               + move.toString();
 
-         if ("d2d3e2e3c2c4f2f4b2b3g2g3".equalsIgnoreCase(moves)) {
-            theOutput= "resign";
-         } else if (move.length() == 4) {
-
-            if ("d2d4".equalsIgnoreCase(move)) {
-               theOutput= "offer draw\n";
-            } else {
-               theOutput= "";
-            }
-
-            theOutput+= "move ".concat(move.substring(
-                  0,
-                  1).concat(
-                  Integer.toString(8 - (Integer.valueOf(
-                        move.substring(
-                              1,
-                              2)).intValue() - 1))).concat(
-                  move.substring(
-                        2,
-                        3)).concat(
-                  Integer.toString(8 - (Integer.valueOf(
-                        move.substring(
-                              3,
-                              4)).intValue() - 1))));
-            moveCounter++;
-         } else {
-            theOutput= "offer draw";
-         }
       } else if (theInput.equalsIgnoreCase("draw")) {
          theOutput= "offer draw";
+      } else if (theInput.equalsIgnoreCase("new")) {
+         this.protocol.newGame();
       } else if (theInput.equalsIgnoreCase("quit")) {
          this.protocol.stop();
       }
-
-      if (moveCounter > 10)
-            theOutput+= "\n1/2-1/2 {Draw by boredom - You are playing all my moves?!?}";
 
       return theOutput;
 
