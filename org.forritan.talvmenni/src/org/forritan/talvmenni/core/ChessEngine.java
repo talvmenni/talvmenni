@@ -266,7 +266,45 @@ public class ChessEngine extends Observable implements Runnable {
            this.whiteToMove();
         }
          
-         
+         if (st.hasMoreTokens()) {
+            String castlingString = st.nextToken();
+            
+            for (int pos = 0; pos < castlingString.length(); pos++) {
+               char activeChar = castlingString.charAt(pos);
+               if (activeChar == 'K') {
+                  whiteCastling = whiteCastling | Square._E1;
+                  whiteCastling = whiteCastling | Square._H1;
+               }
+               if (activeChar == 'Q') {
+                  whiteCastling = whiteCastling | Square._E1;
+                  whiteCastling = whiteCastling | Square._A1;
+               }
+               if (activeChar == 'k') {
+                  blackCastling = whiteCastling | Square._E8;
+                  blackCastling = blackCastling | Square._H8;
+               }
+               if (activeChar == 'q') {
+                  blackCastling = whiteCastling | Square._E8;
+                  blackCastling = blackCastling | Square._A8;
+               }
+            }
+        }
+
+         if (st.hasMoreTokens()) {
+            if (st.nextToken() != "-")
+            {
+               Square square= Squares.create();
+               if (isWhiteToMove())
+               		{
+                  	//whiteEnpassant = square.getSquare(st.nextToken().toUpperCase());
+               		}
+               else
+               		{      
+                	//blackEnpassant = square.getSquare("A3");
+               		}
+            }
+         }
+ 
          ImmutablePosition FenPosition = ImmutablePosition.create(whiteKings, whiteQueens, whiteRooks, whiteBishops,
                whiteKnights, whitePawns, whiteCastling, whiteEnpassant,
                blackKings, blackQueens, blackRooks, blackBishops,
