@@ -81,7 +81,7 @@ public interface Position {
    }
 
    public class Bitboard {
-      public final boolean  whiteToMove;
+      public final boolean  whiteBoard;
       public final Position parent;
    
       public final long     kings;
@@ -115,7 +115,7 @@ public interface Position {
        * @param enpassant
        */
       public Bitboard(
-            boolean whiteToMove,
+            boolean whiteBoard,
             Position parent,
             long kings,
             long queens,
@@ -125,7 +125,7 @@ public interface Position {
             long pawns,
             long castling,
             long enpassant) {
-         this.whiteToMove= whiteToMove;
+         this.whiteBoard= whiteBoard;
          this.parent= parent;
          this.kings= kings;
          this.queens= queens;
@@ -180,7 +180,7 @@ public interface Position {
             }
    
             if(this.isQueensSideCastlingLegal()) {
-               if(this.whiteToMove) {
+               if(this.whiteBoard) {
                   result.add(new Move(Square._E1, Square._C1));
                } else {
                   result.add(new Move(Square._E8, Square._C8));
@@ -188,7 +188,7 @@ public interface Position {
             }
    
             if(this.isKingsSideCastlingLegal()) {
-               if(this.whiteToMove) {
+               if(this.whiteBoard) {
                   result.add(new Move(Square._E1, Square._G1));
                } else {
                   result.add(new Move(Square._E8, Square._G8));
@@ -235,7 +235,7 @@ public interface Position {
             while (pawns.hasNext()) {
                 long fromSquare= pawns.next().longValue();
    
-                if(this.whiteToMove) {
+                if(this.whiteBoard) {
                     findMoves(
                           result,
                      fromSquare,
@@ -259,7 +259,7 @@ public interface Position {
          while (moves.hasNext()) {
             long toSquare= moves.next().longValue();
             Position newPosition= this.parent.move(fromSquare, toSquare, PromotionPiece.DEFAULT);
-            if(this.whiteToMove) {
+            if(this.whiteBoard) {
                if(!newPosition.getWhite().isChecked()) {
                   result.add(new Move(fromSquare, toSquare));
                } 
@@ -282,7 +282,7 @@ public interface Position {
             
          boolean piecesNotMoved;
    
-         if (whiteToMove) {
+         if (whiteBoard) {
             piecesNotMoved= (this.castling & Square._E1) != Square._EMPTY_BOARD 
             && (this.castling & Square._H1) != Square._EMPTY_BOARD;
          } else {
@@ -293,7 +293,7 @@ public interface Position {
          boolean result= false;
    
          if (piecesNotMoved) {
-            if (whiteToMove) {
+            if (whiteBoard) {
                result= ((this.parent.getBlack().getAllCaptureMovesAttackedSquares() & (Square._E1
                      | Square._F1 | Square._G1)) == Square._EMPTY_BOARD) &&
                      (( (this.allPieces | this.parent.getBlack().allPieces) & (Square._F1 | Square._G1)) == Square._EMPTY_BOARD);
@@ -317,7 +317,7 @@ public interface Position {
             
          boolean piecesNotMoved;
    
-         if (whiteToMove) {
+         if (whiteBoard) {
             piecesNotMoved= (this.castling & Square._A1) != Square._EMPTY_BOARD 
                              && (this.castling & Square._E1) != Square._EMPTY_BOARD;
          } else {
@@ -328,7 +328,7 @@ public interface Position {
          boolean result= false;
    
          if (piecesNotMoved) {
-            if (whiteToMove) {
+            if (whiteBoard) {
                result= ((this.parent.getBlack().getAllCaptureMovesAttackedSquares() & (Square._C1
                      | Square._D1 | Square._E1)) == Square._EMPTY_BOARD) &&
                      (( (this.allPieces | this.parent.getBlack().allPieces) & (Square._B1 | Square._C1 | Square._D1)) == Square._EMPTY_BOARD);
@@ -350,7 +350,7 @@ public interface Position {
    
       public boolean isChecked() {
          long allSquaresUnderAttackByOppositionPieces;
-         if(this.whiteToMove) {
+         if(this.whiteBoard) {
             allSquaresUnderAttackByOppositionPieces= this.parent.getBlack().getAllCaptureMovesAttackedSquares();
          } else {
             allSquaresUnderAttackByOppositionPieces= this.parent.getWhite().getAllCaptureMovesAttackedSquares();
@@ -481,7 +481,7 @@ public interface Position {
    
          Iterator<Long> pawns= this.pawnsIterator();
          while (pawns.hasNext()) {
-            if (this.whiteToMove) {
+            if (this.whiteBoard) {
                long square= pawns.next().longValue();
                result|= WhitePawn.captureMoveAttacksFrom(
                      square,
