@@ -1,0 +1,38 @@
+/**
+ * talvmenni - A distributed chess-engine implemented in Java(TM) and against
+ * Sun Microsystems Jini/JavaSpaces(TM).
+ *  
+ * Copyright (C) 2004  Eyðun Lamhauge and Eyðun Nielsen
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
+ * 
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ * 
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * 
+ * Or you can see it at the Free Software Foundation website on the
+ * following url: http://www.fsf.org/licenses/lgpl.html
+ */
+
+package org.forritan.util.jini;
+
+import net.jini.core.entry.Entry;
+
+public class SemaphoreEntry implements Entry {
+    public String resource;
+
+    public SemaphoreEntry() {
+    }
+    
+    public SemaphoreEntry(String resource) {
+        this.resource = resource;
+    }
+}
