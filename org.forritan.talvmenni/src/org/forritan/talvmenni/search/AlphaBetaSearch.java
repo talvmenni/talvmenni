@@ -10,7 +10,7 @@ import org.forritan.talvmenni.evaluation.Evaluation;
 import org.forritan.talvmenni.game.Position;
 import org.forritan.talvmenni.game.Position.Move;
 
-public class FullSearch implements Search {
+public class AlphaBetaSearch implements Search {
    
    private Thinking thinking;
    private DebugInfo debugInfo;
@@ -18,7 +18,7 @@ public class FullSearch implements Search {
    
    private int movesSearched;
    
-   public FullSearch(int depth) {
+   public AlphaBetaSearch(int depth) {
       this.depth= depth;
       this.thinking= new Thinking();
       this.debugInfo= new DebugInfo();
@@ -36,6 +36,9 @@ public class FullSearch implements Search {
          Position p,
          Evaluation e,
          boolean whiteMove) {
+      
+      int alpha= Integer.MIN_VALUE;
+      int beta= Integer.MAX_VALUE;
       
       Position.nodes++;
       
@@ -55,7 +58,7 @@ public class FullSearch implements Search {
       for(Move move : moves) {
          long moveTime= -System.currentTimeMillis();
          int movesSearchedBeforeMove= this.movesSearched++;
-         MoveScoreTuple score= this.getBestMove(p.move(move.from, move.to), e, !whiteMove, depth - 1);
+         MoveScoreTuple score= this.getBestMove(p.move(move.from, move.to), e, !whiteMove, depth - 1, alpha, beta);
          score.add(move, e.getScore(p));
          this.debugInfo.postCurrentBestMove(move, score.getScore(), (this.movesSearched - movesSearchedBeforeMove));
          if(bestScore == null || (whiteMove ? score.getScore() > bestScore.getScore() : score.getScore() < bestScore.getScore())) {
@@ -84,7 +87,9 @@ public class FullSearch implements Search {
          Position p,
          Evaluation e,
          boolean whiteMove,
-         int depth) {
+         int depth,
+         int alpha,
+         int beta) {
 
       Position.nodes++;
       
@@ -103,11 +108,17 @@ public class FullSearch implements Search {
             Move currentBestMove= null;
             for(Move move : moves) {
                this.movesSearched++;
-               MoveScoreTuple score= this.getBestMove(p.move(move.from, move.to), e, !whiteMove, depth - 1);
+               MoveScoreTuple score= this.getBestMove(p.move(move.from, move.to), e, !whiteMove, depth - 1, -beta, -alpha);
                if(bestScore == null || (whiteMove ? score.getScore() > bestScore.getScore() : score.getScore() < bestScore.getScore())) {
                   bestScore= score;
                   currentBestMove= move;
                }
+               if(bestScore != null && bestScore.score > alpha) {
+                  alpha= bestScore.score;
+               }
+               if(alpha >= beta) {
+                  break;
+               }               
             }         
             result= bestScore;
             result.add(currentBestMove, e.getScore(p));

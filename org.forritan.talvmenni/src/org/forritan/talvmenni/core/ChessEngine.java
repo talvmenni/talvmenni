@@ -89,19 +89,6 @@ public class ChessEngine extends Observable implements Runnable {
       public Move makeNextMove();
       public Strategy getStrategy();
       public DebugInfo getDebugInfo();
-
-      public class DebugInfo extends Observable {
-         
-         public void postPossibleMoves(List<Position.Move> moves) {
-            this.setChanged();
-            this.notifyObservers(
-                  moves.size() 
-                  + " possible moves for white: " 
-                  + moves.toString());
-         }
-   
-      }
-
    }
 
    private class ProtocolImpl implements Protocol {
@@ -394,5 +381,18 @@ public class ChessEngine extends Observable implements Runnable {
             }
          }
       }
+   }
+   
+   public class DebugInfo extends Observable {
+      
+      public void postPossibleMoves(List<Position.Move> moves) {
+         this.setChanged();
+         this.notifyObservers(
+               moves.size() 
+               + " possible moves for "
+               + (ChessEngine.this.protocol.isWhiteToMove() ? "white: " : "black: ") 
+               + moves.toString());
+      }
+
    }
 }

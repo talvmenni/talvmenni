@@ -25,6 +25,9 @@ import org.forritan.talvmenni.ui.DebugWindow;
 
 
 public class Position {
+   
+   public static int positionsCreated;
+   public static int nodes= 1;
 
    public final Bitboard white;
    public final Bitboard black;
@@ -174,6 +177,9 @@ public class Position {
             blackPawns,
             blackCastling,
             blackEnpassant);
+      
+      // Statistics...
+      Position.positionsCreated++;
    }
 
    public Position move(
@@ -455,7 +461,6 @@ public class Position {
       }
       return false;
    }
-
    
    /**
     * @deprecated Use
@@ -668,6 +673,7 @@ public class Position {
                 }
             }
          }
+         
          return this.possibleMoves;          
       }
 

@@ -57,6 +57,19 @@ public interface Search {
                + " positions searched...");
       }
       
+      public void postPositionStatiscs() {
+         this.setChanged();
+         this.notifyObservers(
+               "---------------------------\n" +
+               "Positions created: " 
+               + Position.positionsCreated 
+               + "\n"
+               + "Average possible moves: " 
+               + Position.positionsCreated / Position.nodes
+               + "\n"
+               + "---------------------------\n");
+      }
+      
    }
 
 }
