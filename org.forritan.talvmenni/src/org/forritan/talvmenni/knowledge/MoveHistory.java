@@ -21,11 +21,7 @@ public class MoveHistory {
       }
       
       public void add(Move move) {
-         this.history.add(move);         
-         //XXX: Remember to remove this crap...
-         if (this.history.size() > 998) {
-            System.out.println("offer draw"); // Stops WinBoard from crashing...
-         }
+         this.history.add(move);
       }
 
       public void reset() {

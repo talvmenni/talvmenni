@@ -3,6 +3,7 @@ package org.forritan.talvmenni.search;
 import java.util.Iterator;
 import java.util.List;
 
+import org.forritan.talvmenni.knowledge.Draw;
 import org.forritan.talvmenni.knowledge.HistoryHeuristic;
 import org.forritan.talvmenni.knowledge.Position;
 import org.forritan.talvmenni.knowledge.Transposition;
@@ -16,6 +17,12 @@ import org.forritan.talvmenni.search.PrincipalVariation.Thinking;
 
 public class AlphaBetaWithQuiescentAndTranspositionTableSearch implements
       Search {
+
+   private int lastScore;
+
+   public int getLastScore() {
+      return this.lastScore;
+   }
 
    private PrincipalVariation pv;
    private HistoryHeuristic   historyHeuristic;
@@ -51,7 +58,9 @@ public class AlphaBetaWithQuiescentAndTranspositionTableSearch implements
       this.transposition= transposition;
       this.pv= pv;
       this.historyHeuristic= HistoryHeuristic.getInstance();
-      this.quiescent= new Quiescent(this.pv, quiescentMaxDepth);
+      this.quiescent= new Quiescent(
+            this.pv,
+            quiescentMaxDepth);
    }
 
    public void setPly(
@@ -87,9 +96,9 @@ public class AlphaBetaWithQuiescentAndTranspositionTableSearch implements
       // Integer.MIN_VALUE ==
       // -Integer.MIN_VALUE
 
-      int beta= Integer.MAX_VALUE;
+      //      int beta= Integer.MAX_VALUE;
       // If checkmate there is no need to search further...
-      // int beta= Evaluation.CHECKMATE_SCORE;
+      int beta= Evaluation.CHECKMATE_SCORE;
 
       this.pv.clearPrincipalVariation();
 
@@ -104,6 +113,8 @@ public class AlphaBetaWithQuiescentAndTranspositionTableSearch implements
             this.ply,
             alpha,
             beta);
+      
+      this.lastScore= result;
 
       time+= System.currentTimeMillis();
 
@@ -198,14 +209,13 @@ public class AlphaBetaWithQuiescentAndTranspositionTableSearch implements
 
                int movesSearchedBefore= this.movesSearched;
                long moveTime= -System.currentTimeMillis();
-               p= p.move(
-                     move.from,
-                     move.to);
+               p= p.move(move);
                if (best > alpha) {
                   alpha= best;
                }
 
                this.pv.push(move);
+               //               Draw.getInstance().push(p);
 
                int score= -alphaBeta(
                      p,
@@ -215,8 +225,8 @@ public class AlphaBetaWithQuiescentAndTranspositionTableSearch implements
                      -beta,
                      -alpha);
 
+               //               Draw.getInstance().pop();
                this.pv.pop();
-
                p.popMove();
 
                moveTime+= System.currentTimeMillis();

@@ -31,19 +31,7 @@ public interface Search extends Serializable {
    
    public Thinking getThinking();
    public DebugInfo getDebugInfo();
-
-   public static class TupleScoreMoves {
-
-      public Integer score;
-      public List    moves;
-
-      public TupleScoreMoves(
-            Integer score,
-            List moves) {
-         this.score= score;
-         this.moves= moves;
-      }
-   }
    
-   
+   public int getLastScore();
+      
 }

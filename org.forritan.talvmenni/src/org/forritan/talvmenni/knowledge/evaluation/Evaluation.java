@@ -6,7 +6,9 @@ import org.forritan.talvmenni.knowledge.Position;
 
 public interface Evaluation extends Serializable {
    
-   public static final long serialVersionUID = 1L; 
+   public static final long serialVersionUID = 1L;
+   
+   public static final int  DRAW_BY_THREE_TIMES_REPETITION= 0;
          
 // Standard values... 
 //   public static final int QUEEN= 980;

@@ -154,6 +154,7 @@ public abstract class AbstractStrategy implements Strategy {
       
       if(time < TalvMenni.MINIMUM_MOVE_DELAY) {
          try {
+            this.debugInfo.postText("Whooooaaa!!! Lets wait a little...");
             Thread.sleep(TalvMenni.MINIMUM_MOVE_DELAY - time);
          } catch (InterruptedException e) {
          }

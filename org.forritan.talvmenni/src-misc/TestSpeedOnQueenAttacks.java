@@ -19,6 +19,7 @@ public class TestSpeedOnQueenAttacks {
       Position p= Position.Factory.create(
             false, 
             false,
+            Position.AuxiliaryState.NO_AUXILIARY_STATE,
             Square._E1, // whiteKings
             Square._G4, // whiteQueens
             Square._A1

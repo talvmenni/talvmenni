@@ -12,6 +12,12 @@ import org.forritan.talvmenni.search.PrincipalVariation.Thinking;
 
 
 public class NegaMaxSearch implements Search {
+   
+   private int lastScore;
+
+   public int getLastScore() {
+      return this.lastScore;
+   }
 
    private PrincipalVariation pv;
    private int                ply;
@@ -63,6 +69,8 @@ public class NegaMaxSearch implements Search {
             e,
             whiteMove,
             this.ply);
+      
+      this.lastScore= result;
 
       time+= System.currentTimeMillis();
 
@@ -103,9 +111,7 @@ public class NegaMaxSearch implements Search {
 
                int movesSearchedBefore= this.movesSearched;
                long moveTime= -System.currentTimeMillis();
-               p= p.move(
-                     move.from,
-                     move.to);
+               p= p.move(move);
 
                this.pv.push(move);
 

@@ -17,6 +17,12 @@ import org.forritan.talvmenni.search.PrincipalVariation.Thinking;
 
 public class MTDfSearch implements Search {
 
+   private int lastScore;
+
+   public int getLastScore() {
+      return this.lastScore;
+   }
+
    private PrincipalVariation pv;
    private HistoryHeuristic   historyHeuristic;
    private Transposition      transposition;
@@ -53,7 +59,9 @@ public class MTDfSearch implements Search {
       this.transposition= transposition;
       this.pv= pv;
       this.historyHeuristic= HistoryHeuristic.getInstance();
-      this.quiescent= new Quiescent(this.pv, quiescentMaxDepth);
+      this.quiescent= new Quiescent(
+            this.pv,
+            quiescentMaxDepth);
    }
 
    public void setPly(
@@ -105,6 +113,8 @@ public class MTDfSearch implements Search {
             this.firstGuess,
             ply);
 
+      this.lastScore= result;
+
       //      System.err.println("*** at ply = "
       //            + ply
       //            + " : best result = "
@@ -143,15 +153,16 @@ public class MTDfSearch implements Search {
          int d) {
       int score= f;
 
-      int upperbound= Integer.MAX_VALUE;
-      int lowerbound= Integer.MIN_VALUE + 1;
+      //      int upperbound= Integer.MAX_VALUE;
+      //      int lowerbound= Integer.MIN_VALUE + 1;
       // Very important!!! Can't be
       // Integer.MIN_VALUE, because
       // Integer.MIN_VALUE ==
       // -Integer.MIN_VALUE
 
-      // int upperbound= 2 * Evaluation.CHECKMATE_SCORE;
-      // int lowerbound= -2 * Evaluation.CHECKMATE_SCORE;
+      int upperbound= 2 * Evaluation.CHECKMATE_SCORE;
+      int lowerbound= -2
+            * Evaluation.CHECKMATE_SCORE;
 
       //      int movesSearchedBefore= this.movesSearched;
       //      long moveTime= -System.currentTimeMillis();
@@ -269,7 +280,8 @@ public class MTDfSearch implements Search {
                whiteMove,
                ply,
                alpha,
-               beta);;
+               beta);
+         ;
          this.pv.updateLastExaminedLine();
       } else {
          List moves;
@@ -300,9 +312,7 @@ public class MTDfSearch implements Search {
 
                   int movesSearchedBefore= this.movesSearched;
                   long moveTime= -System.currentTimeMillis();
-                  p= p.move(
-                        move.from,
-                        move.to);
+                  p= p.move(move);
                   this.pv.push(move);
 
                   g= Math.max(
@@ -355,9 +365,7 @@ public class MTDfSearch implements Search {
 
                   int movesSearchedBefore= this.movesSearched;
                   long moveTime= -System.currentTimeMillis();
-                  p= p.move(
-                        move.from,
-                        move.to);
+                  p= p.move(move);
                   this.pv.push(move);
 
                   g= Math.min(

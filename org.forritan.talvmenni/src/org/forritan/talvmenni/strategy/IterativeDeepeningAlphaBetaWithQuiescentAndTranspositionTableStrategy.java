@@ -2,17 +2,18 @@ package org.forritan.talvmenni.strategy;
 
 import java.util.List;
 
+import org.forritan.talvmenni.knowledge.Draw;
 import org.forritan.talvmenni.knowledge.Position;
 import org.forritan.talvmenni.knowledge.TheoryBook;
 import org.forritan.talvmenni.knowledge.Transposition;
+import org.forritan.talvmenni.knowledge.evaluation.Evaluation;
 import org.forritan.talvmenni.knowledge.evaluation.SimpleMaterialAndPositionalEvaluation;
 import org.forritan.talvmenni.search.AlphaBetaWithQuiescentAndTranspositionTableSearch;
-import org.forritan.talvmenni.search.AlphaBetaWithTranspositionTableSearch;
 import org.forritan.talvmenni.search.PrincipalVariation;
 
 
-public class IterativeDeepeningAlphaBetaWithQuiescentAndTranspositionTableStrategy extends
-      AbstractStrategy {
+public class IterativeDeepeningAlphaBetaWithQuiescentAndTranspositionTableStrategy
+      extends AbstractStrategy {
 
    public IterativeDeepeningAlphaBetaWithQuiescentAndTranspositionTableStrategy(
          int ply,
@@ -45,6 +46,9 @@ public class IterativeDeepeningAlphaBetaWithQuiescentAndTranspositionTableStrate
                mutablePosition,
                this.evaluation,
                whiteToMove);
+         if (this.search.getLastScore() >= Evaluation.CHECKMATE_SCORE) {
+            break;
+         }
       }
 
       return result;

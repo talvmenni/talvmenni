@@ -1,15 +1,14 @@
 package org.forritan.talvmenni.evaluation;
 
+import junit.framework.Assert;
+import junit.framework.TestCase;
+
 import org.forritan.talvmenni.bitboard.Rank;
 import org.forritan.talvmenni.bitboard.Square;
-import org.forritan.talvmenni.knowledge.AbstractPosition;
-import org.forritan.talvmenni.knowledge.ImmutablePosition;
+import org.forritan.talvmenni.knowledge.Draw;
 import org.forritan.talvmenni.knowledge.Position;
 import org.forritan.talvmenni.knowledge.evaluation.Evaluation;
 import org.forritan.talvmenni.knowledge.evaluation.SimpleMaterialAndPositionalEvaluation;
-
-import junit.framework.Assert;
-import junit.framework.TestCase;
 
 
 public class SimpleMaterialAndPositionalEvaluationTest extends TestCase {
@@ -28,6 +27,7 @@ public class SimpleMaterialAndPositionalEvaluationTest extends TestCase {
       Position p= Position.Factory.create(
             false,
             false,
+            Position.AuxiliaryState.NO_AUXILIARY_STATE,
             Square._E1, // whiteKings
             Square._D1, // whiteQueens
             Square._A1
@@ -72,6 +72,7 @@ public class SimpleMaterialAndPositionalEvaluationTest extends TestCase {
       Position p= Position.Factory.create(
             false,
             false,
+            Position.AuxiliaryState.NO_AUXILIARY_STATE,
             Square._E1, // whiteKings
             Square._EMPTY_BOARD, // whiteQueens
             Square._EMPTY_BOARD, // whiteRooks

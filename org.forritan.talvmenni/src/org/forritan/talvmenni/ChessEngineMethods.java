@@ -31,10 +31,7 @@ public class ChessEngineMethods {
          for (Iterator it= moves.iterator();it.hasNext();) {
             Move move= (Move)it.next();
             result+= ChessEngineMethods.perft(
-                  p.move(
-                        move.from,
-                        move.to,
-                        move.promotionPiece),
+                  p.move(move),
                   !whiteMove,
                   ply - 1);
             p.popMove();

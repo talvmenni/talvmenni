@@ -2,9 +2,11 @@ package org.forritan.talvmenni.knowledge;
 
 import org.forritan.talvmenni.knowledge.Position.Bitboard;
 
+
 public class MutablePartitionSearchPosition extends MutablePosition {
 
    public MutablePartitionSearchPosition(
+         long auxiliaryState,
          long whiteKings,
          long whiteQueens,
          long whiteRooks,
@@ -22,6 +24,7 @@ public class MutablePartitionSearchPosition extends MutablePosition {
          long blackCastling,
          long blackEnpassant) {
       super(
+            auxiliaryState,
             whiteKings,
             whiteQueens,
             whiteRooks,
@@ -41,9 +44,11 @@ public class MutablePartitionSearchPosition extends MutablePosition {
    }
 
    public MutablePartitionSearchPosition(
+         long auxiliaryState,
          Bitboard white,
          Bitboard black) {
       super(
+            auxiliaryState,
             white,
             black);
    }
@@ -66,7 +71,12 @@ public class MutablePartitionSearchPosition extends MutablePosition {
    }
 
    public Position getImmutable() {
-      return Position.Factory.create(true, false, this.getWhite(), this.getBlack());
+      return Position.Factory.create(
+            true,
+            false,
+            this.auxiliaryState,
+            this.getWhite(),
+            this.getBlack());
    }
 
 }

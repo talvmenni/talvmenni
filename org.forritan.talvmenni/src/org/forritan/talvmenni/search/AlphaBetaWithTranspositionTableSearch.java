@@ -15,6 +15,12 @@ import org.forritan.talvmenni.search.PrincipalVariation.Thinking;
 
 public class AlphaBetaWithTranspositionTableSearch implements Search {
 
+   private int lastScore;
+
+   public int getLastScore() {
+      return this.lastScore;
+   }
+
    private PrincipalVariation pv;
    private HistoryHeuristic   historyHeuristic;
    private Transposition      transposition;
@@ -79,10 +85,10 @@ public class AlphaBetaWithTranspositionTableSearch implements Search {
       // Integer.MIN_VALUE, because
       // Integer.MIN_VALUE ==
       // -Integer.MIN_VALUE
-      
-      int beta= Integer.MAX_VALUE;
+
+      // int beta= Integer.MAX_VALUE;
       // If checkmate there is no need to search further...
-      // int beta= Evaluation.CHECKMATE_SCORE;
+       int beta= Evaluation.CHECKMATE_SCORE;
 
       this.pv.clearPrincipalVariation();
 
@@ -97,6 +103,8 @@ public class AlphaBetaWithTranspositionTableSearch implements Search {
             this.ply,
             alpha,
             beta);
+
+      this.lastScore= result;
 
       time+= System.currentTimeMillis();
 
@@ -183,9 +191,7 @@ public class AlphaBetaWithTranspositionTableSearch implements Search {
 
                int movesSearchedBefore= this.movesSearched;
                long moveTime= -System.currentTimeMillis();
-               p= p.move(
-                     move.from,
-                     move.to);
+               p= p.move(move);
                if (best > alpha) {
                   alpha= best;
                }

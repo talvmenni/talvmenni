@@ -143,8 +143,8 @@ public class XboardProtocol extends UiProtocolBase {
 
       } else if (theInput.equalsIgnoreCase("force")) {
          this.protocol.setGo(false);
-      } else if (theInput.equalsIgnoreCase("draw")) {
-         theOutput+= "offer draw";
+//      } else if (theInput.equalsIgnoreCase("draw")) {
+//         theOutput+= "offer draw";
       } else if (theInput.equalsIgnoreCase("new")) {
          this.protocol.newGame();
       } else if (theInput.startsWith("result")) {

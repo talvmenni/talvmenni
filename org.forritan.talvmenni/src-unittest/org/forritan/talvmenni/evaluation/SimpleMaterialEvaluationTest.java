@@ -28,6 +28,7 @@ public class SimpleMaterialEvaluationTest extends TestCase {
       Position p= Position.Factory.create(
             false,
             false,
+            Position.AuxiliaryState.NO_AUXILIARY_STATE,
             Square._E1, // whiteKings
             Square._D1, // whiteQueens
             Square._A1
@@ -68,6 +69,7 @@ public class SimpleMaterialEvaluationTest extends TestCase {
       Position p= Position.Factory.create(
             false,
             false,
+            Position.AuxiliaryState.NO_AUXILIARY_STATE,
             Square._E1, // whiteKings
             Square._EMPTY_BOARD, // whiteQueens
             Square._EMPTY_BOARD, // whiteRooks

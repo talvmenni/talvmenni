@@ -25,7 +25,7 @@ public class TestSpeedOnMakeRandomMove {
          List moves= (whiteToMove ? p.getWhite().getPossibleMoves() : p.getBlack().getPossibleMoves());
          if(!moves.isEmpty()) {
             Move move= (Move) moves.get(rnd.nextInt(moves.size()));
-            p= p.move(move.from, move.to);
+            p= p.move(move);
          } else {
             p= Position.Factory.createInitial(false, false);
          }
@@ -42,7 +42,7 @@ public class TestSpeedOnMakeRandomMove {
          List moves= (whiteToMove ? p.getWhite().getPossibleMoves() : p.getBlack().getPossibleMoves());
          if(!moves.isEmpty()) {
             Move move= (Move) moves.get(rnd.nextInt(moves.size()));
-            p= p.move(move.from, move.to);
+            p= p.move(move);
          } else {
             p= Position.Factory.createInitial(false, true);
          }
@@ -67,7 +67,7 @@ public class TestSpeedOnMakeRandomMove {
          List moves= (whiteToMove ? p.getWhite().getPossibleMoves() : p.getBlack().getPossibleMoves());
          if(!moves.isEmpty()) {
             Move move= (Move) moves.get(new Random().nextInt(moves.size()));
-            p= p.move(move.from, move.to);
+            p= p.move(move);
          } else {
             p= Position.Factory.createInitial(false, false);
             System.out.print(".");
@@ -96,7 +96,7 @@ public class TestSpeedOnMakeRandomMove {
          List moves= (whiteToMove ? p.getWhite().getPossibleMoves() : p.getBlack().getPossibleMoves());
          if(!moves.isEmpty()) {
             Move move= (Move) moves.get(new Random().nextInt(moves.size()));
-            p= p.move(move.from, move.to);
+            p= p.move(move);
             p.popMove();
          } else {
             p= Position.Factory.createInitial(false, true);

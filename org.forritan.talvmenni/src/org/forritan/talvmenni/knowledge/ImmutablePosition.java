@@ -1,7 +1,5 @@
 package org.forritan.talvmenni.knowledge;
 
-
-
 public class ImmutablePosition extends AbstractPosition {
 
    /**
@@ -24,6 +22,7 @@ public class ImmutablePosition extends AbstractPosition {
     * @param blackEnpassant
     */
    protected ImmutablePosition(
+         long auxiliaryState,
          long whiteKings,
          long whiteQueens,
          long whiteRooks,
@@ -41,6 +40,7 @@ public class ImmutablePosition extends AbstractPosition {
          long blackCastling,
          long blackEnpassant) {
       super(
+            auxiliaryState,
             whiteKings,
             whiteQueens,
             whiteRooks,
@@ -64,19 +64,23 @@ public class ImmutablePosition extends AbstractPosition {
     * @param black
     */
    protected ImmutablePosition(
+         long auxiliaryState,
          Bitboard white,
          Bitboard black) {
       super(
+            auxiliaryState,
             white,
             black);
    }
 
    public Position pushMove(
+         long auxiliaryState,
          Bitboard white,
          Bitboard black) {
       return Position.Factory.create(
             false,
             false,
+            auxiliaryState,
             white,
             black);
    }
@@ -90,6 +94,11 @@ public class ImmutablePosition extends AbstractPosition {
    }
 
    public synchronized Position getMutable() {
-      return Position.Factory.create(false, true, this.getWhite(), this.getBlack());
+      return Position.Factory.create(
+            false,
+            true,
+            this.auxiliaryState,
+            this.getWhite(),
+            this.getBlack());
    }
 }

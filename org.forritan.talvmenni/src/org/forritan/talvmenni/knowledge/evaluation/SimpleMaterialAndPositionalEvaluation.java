@@ -4,15 +4,26 @@ import java.util.Iterator;
 
 import org.forritan.talvmenni.bitboard.BitboardIterator;
 import org.forritan.talvmenni.bitboard.evaluation.Board;
-import org.forritan.talvmenni.knowledge.ImmutablePosition;
+import org.forritan.talvmenni.knowledge.Draw;
 import org.forritan.talvmenni.knowledge.Position;
 
 public class SimpleMaterialAndPositionalEvaluation implements Evaluation { 
+   
+   private Draw draw;
+   
+   public SimpleMaterialAndPositionalEvaluation() {
+      this.draw= Draw.getInstance();
+   }
 
    public int getScore(
          Position position) {
       int result= 0;
-      
+
+//      //Draw by three times repitition
+//      if(position.isDrawByThreeTimesRepetition()) {
+//         return Evaluation.DRAW_BY_THREE_TIMES_REPETITION;
+//      }
+                  
       // White
       
       for (Iterator it= position.getWhite().kingsIterator(); it.hasNext();) {
@@ -119,7 +130,7 @@ public class SimpleMaterialAndPositionalEvaluation implements Evaluation {
       if(position.getWhite().isInCheck()) {
          result -= Evaluation.CHECK_REWARD;                  
       }
-                  
+        
       return result;
    }
 }

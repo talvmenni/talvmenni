@@ -16,22 +16,27 @@ public class TestSpeedOnPositionCreation {
             + " mutable positions...");
 
       long time= -System.currentTimeMillis();
-      Position initialPosition= Position.Factory.createInitial(false, true);
+      Position initialPosition= Position.Factory.createInitial(
+            false,
+            true);
 
       for (int i= 0; i < howMany; i++) {
          long from= 1L << (i % 32);
          long to= 1L << ((i % 32) + 16);
-         initialPosition.move(from, to);
+         initialPosition.move(new Position.Move(
+               from,
+               to,
+               Position.PromotionPiece.NONE));
          initialPosition.popMove();
-//         Move m= new Move(
-//               initialPosition,
-//               from,
-//               to, 
-//               PositionFactory.PromotionPiece.DEFAULT);
-//         if (howMany < 1001) {
-//            MoveHistory.getInstance().add(
-//                  m);
-//         }
+         //         Move m= new Move(
+         //               initialPosition,
+         //               from,
+         //               to,
+         //               PositionFactory.PromotionPiece.DEFAULT);
+         //         if (howMany < 1001) {
+         //            MoveHistory.getInstance().add(
+         //                  m);
+         //         }
       }
 
       time+= System.currentTimeMillis();
@@ -39,35 +44,43 @@ public class TestSpeedOnPositionCreation {
       System.out.println("...in "
             + time
             + " milliseconds.");
-      System.out.println("i.e. " + 1L * howMany * 1000 / time + " pr. second.");
+      System.out.println("i.e. "
+            + 1L
+            * howMany
+            * 1000
+            / time
+            + " pr. second.");
 
-
-//      System.out.println(MoveHistory.getInstance().getHistory());
-
+      //      System.out.println(MoveHistory.getInstance().getHistory());
 
       System.out.println("Creating "
             + howMany
             + " immutable positions...");
 
       time= -System.currentTimeMillis();
-      initialPosition= Position.Factory.createInitial(false, false);
+      initialPosition= Position.Factory.createInitial(
+            false,
+            false);
 
       for (int i= 0; i < howMany; i++) {
          long from= 1L << (i % 32);
          long to= 1L << ((i % 32) + 16);
 
-         initialPosition.move(from, to);
+         initialPosition.move(new Position.Move(
+               from,
+               to,
+               Position.PromotionPiece.NONE));
          initialPosition.popMove();
 
-//         Move m= new Move(
-//               initialPosition,
-//               from,
-//               to, 
-//               PositionFactory.PromotionPiece.DEFAULT);
-//         if (howMany < 1001) {
-//            MoveHistory.getInstance().add(
-//                  m);
-//         }
+         //         Move m= new Move(
+         //               initialPosition,
+         //               from,
+         //               to,
+         //               PositionFactory.PromotionPiece.DEFAULT);
+         //         if (howMany < 1001) {
+         //            MoveHistory.getInstance().add(
+         //                  m);
+         //         }
       }
 
       time+= System.currentTimeMillis();
@@ -75,10 +88,14 @@ public class TestSpeedOnPositionCreation {
       System.out.println("...in "
             + time
             + " milliseconds.");
-      System.out.println("i.e. " + 1L * howMany * 1000 / time + " pr. second.");
+      System.out.println("i.e. "
+            + 1L
+            * howMany
+            * 1000
+            / time
+            + " pr. second.");
 
-
-//      System.out.println(MoveHistory.getInstance().getHistory());
+      //      System.out.println(MoveHistory.getInstance().getHistory());
 
    }
 }

@@ -25,7 +25,9 @@ public class PositionTest extends TestCase {
    }
 
    public void testCreateInitial() {
-      Position p= Position.Factory.createInitial(false, false);
+      Position p= Position.Factory.createInitial(
+            false,
+            false);
       Assert.assertTrue(
             "White king should be on e1!",
             ((p.getWhite().kings ^ Square._E1) == 0L));
@@ -66,7 +68,9 @@ public class PositionTest extends TestCase {
    }
 
    public void testAllPiecesIterator() {
-      Position p= Position.Factory.createInitial(false, false);
+      Position p= Position.Factory.createInitial(
+            false,
+            false);
       Iterator allWhitePieces= p.getWhite().allPiecesIterator();
       long piece;
 
@@ -77,7 +81,8 @@ public class PositionTest extends TestCase {
             ((piece ^ Square._H1) == 0L));
       Assert.assertTrue(
             "And the piece should be a rook",
-            p.getWhite().isRook(piece));
+            p.getWhite().isRook(
+                  piece));
 
       Assert.assertTrue(allWhitePieces.hasNext());
       piece= ((Long) allWhitePieces.next()).longValue();
@@ -86,7 +91,8 @@ public class PositionTest extends TestCase {
             ((piece ^ Square._G1) == 0L));
       Assert.assertTrue(
             "And the piece should be a knight",
-            p.getWhite().isKnight(piece));
+            p.getWhite().isKnight(
+                  piece));
 
       Assert.assertTrue(allWhitePieces.hasNext());
       piece= ((Long) allWhitePieces.next()).longValue();
@@ -95,7 +101,8 @@ public class PositionTest extends TestCase {
             ((piece ^ Square._F1) == 0L));
       Assert.assertTrue(
             "And the piece should be a bishop",
-            p.getWhite().isBishop(piece));
+            p.getWhite().isBishop(
+                  piece));
 
       Assert.assertTrue(allWhitePieces.hasNext());
       piece= ((Long) allWhitePieces.next()).longValue();
@@ -104,7 +111,8 @@ public class PositionTest extends TestCase {
             ((piece ^ Square._E1) == 0L));
       Assert.assertTrue(
             "And the piece should be a king",
-            p.getWhite().isKing(piece));
+            p.getWhite().isKing(
+                  piece));
 
       Assert.assertTrue(allWhitePieces.hasNext());
       piece= ((Long) allWhitePieces.next()).longValue();
@@ -113,7 +121,8 @@ public class PositionTest extends TestCase {
             ((piece ^ Square._D1) == 0L));
       Assert.assertTrue(
             "And the piece should be a queen",
-            p.getWhite().isQueen(piece));
+            p.getWhite().isQueen(
+                  piece));
 
       Assert.assertTrue(allWhitePieces.hasNext());
       piece= ((Long) allWhitePieces.next()).longValue();
@@ -122,7 +131,8 @@ public class PositionTest extends TestCase {
             ((piece ^ Square._C1) == 0L));
       Assert.assertTrue(
             "And the piece should be a bishop",
-            p.getWhite().isBishop(piece));
+            p.getWhite().isBishop(
+                  piece));
 
       Assert.assertTrue(allWhitePieces.hasNext());
       piece= ((Long) allWhitePieces.next()).longValue();
@@ -131,7 +141,8 @@ public class PositionTest extends TestCase {
             ((piece ^ Square._B1) == 0L));
       Assert.assertTrue(
             "And the piece should be a knight",
-            p.getWhite().isKnight(piece));
+            p.getWhite().isKnight(
+                  piece));
 
       Assert.assertTrue(allWhitePieces.hasNext());
       piece= ((Long) allWhitePieces.next()).longValue();
@@ -140,7 +151,8 @@ public class PositionTest extends TestCase {
             ((piece ^ Square._A1) == 0L));
       Assert.assertTrue(
             "And the piece should be a rook",
-            p.getWhite().isRook(piece));
+            p.getWhite().isRook(
+                  piece));
 
       Assert.assertTrue(allWhitePieces.hasNext());
       piece= ((Long) allWhitePieces.next()).longValue();
@@ -149,7 +161,8 @@ public class PositionTest extends TestCase {
             ((piece ^ Square._H2) == 0L));
       Assert.assertTrue(
             "And the piece should be a pawn",
-            p.getWhite().isPawn(piece));
+            p.getWhite().isPawn(
+                  piece));
 
       Assert.assertTrue(allWhitePieces.hasNext());
       piece= ((Long) allWhitePieces.next()).longValue();
@@ -158,7 +171,8 @@ public class PositionTest extends TestCase {
             ((piece ^ Square._G2) == 0L));
       Assert.assertTrue(
             "And the piece should be a pawn",
-            p.getWhite().isPawn(piece));
+            p.getWhite().isPawn(
+                  piece));
 
       Assert.assertTrue(allWhitePieces.hasNext());
       piece= ((Long) allWhitePieces.next()).longValue();
@@ -167,7 +181,8 @@ public class PositionTest extends TestCase {
             ((piece ^ Square._F2) == 0L));
       Assert.assertTrue(
             "And the piece should be a pawn",
-            p.getWhite().isPawn(piece));
+            p.getWhite().isPawn(
+                  piece));
 
       Assert.assertTrue(allWhitePieces.hasNext());
       piece= ((Long) allWhitePieces.next()).longValue();
@@ -176,7 +191,8 @@ public class PositionTest extends TestCase {
             ((piece ^ Square._E2) == 0L));
       Assert.assertTrue(
             "And the piece should be a pawn",
-            p.getWhite().isPawn(piece));
+            p.getWhite().isPawn(
+                  piece));
 
       Assert.assertTrue(allWhitePieces.hasNext());
       piece= ((Long) allWhitePieces.next()).longValue();
@@ -185,7 +201,8 @@ public class PositionTest extends TestCase {
             ((piece ^ Square._D2) == 0L));
       Assert.assertTrue(
             "And the piece should be a pawn",
-            p.getWhite().isPawn(piece));
+            p.getWhite().isPawn(
+                  piece));
 
       Assert.assertTrue(allWhitePieces.hasNext());
       piece= ((Long) allWhitePieces.next()).longValue();
@@ -194,7 +211,8 @@ public class PositionTest extends TestCase {
             ((piece ^ Square._C2) == 0L));
       Assert.assertTrue(
             "And the piece should be a pawn",
-            p.getWhite().isPawn(piece));
+            p.getWhite().isPawn(
+                  piece));
 
       Assert.assertTrue(allWhitePieces.hasNext());
       piece= ((Long) allWhitePieces.next()).longValue();
@@ -203,7 +221,8 @@ public class PositionTest extends TestCase {
             ((piece ^ Square._B2) == 0L));
       Assert.assertTrue(
             "And the piece should be a pawn",
-            p.getWhite().isPawn(piece));
+            p.getWhite().isPawn(
+                  piece));
 
       Assert.assertTrue(allWhitePieces.hasNext());
       piece= ((Long) allWhitePieces.next()).longValue();
@@ -212,343 +231,468 @@ public class PositionTest extends TestCase {
             ((piece ^ Square._A2) == 0L));
       Assert.assertTrue(
             "And the piece should be a pawn",
-            p.getWhite().isPawn(piece));
+            p.getWhite().isPawn(
+                  piece));
 
       Assert.assertTrue(!allWhitePieces.hasNext());
 
    }
 
    public void testIsPawnAtInitialPosition() {
-      Position p= Position.Factory.createInitial(false, false);
+      Position p= Position.Factory.createInitial(
+            false,
+            false);
       Assert.assertTrue(
             "Should be white pawn",
-            p.getWhite().isPawn(Square._A2));
+            p.getWhite().isPawn(
+                  Square._A2));
       Assert.assertTrue(
             "Should be black pawn",
-            p.getBlack().isPawn(Square._A7));
+            p.getBlack().isPawn(
+                  Square._A7));
       Assert.assertTrue(
             "Should be white pawn",
-            p.getWhite().isPawn(Square._B2));
+            p.getWhite().isPawn(
+                  Square._B2));
       Assert.assertTrue(
             "Should be black pawn",
-            p.getBlack().isPawn(Square._B7));
+            p.getBlack().isPawn(
+                  Square._B7));
       Assert.assertTrue(
             "Should be white pawn",
-            p.getWhite().isPawn(Square._C2));
+            p.getWhite().isPawn(
+                  Square._C2));
       Assert.assertTrue(
             "Should be black pawn",
-            p.getBlack().isPawn(Square._C7));
+            p.getBlack().isPawn(
+                  Square._C7));
       Assert.assertTrue(
             "Should be white pawn",
-            p.getWhite().isPawn(Square._D2));
+            p.getWhite().isPawn(
+                  Square._D2));
       Assert.assertTrue(
             "Should be black pawn",
-            p.getBlack().isPawn(Square._D7));
+            p.getBlack().isPawn(
+                  Square._D7));
       Assert.assertTrue(
             "Should be white pawn",
-            p.getWhite().isPawn(Square._E2));
+            p.getWhite().isPawn(
+                  Square._E2));
       Assert.assertTrue(
             "Should be black pawn",
-            p.getBlack().isPawn(Square._E7));
+            p.getBlack().isPawn(
+                  Square._E7));
       Assert.assertTrue(
             "Should be white pawn",
-            p.getWhite().isPawn(Square._F2));
+            p.getWhite().isPawn(
+                  Square._F2));
       Assert.assertTrue(
             "Should be black pawn",
-            p.getBlack().isPawn(Square._F7));
+            p.getBlack().isPawn(
+                  Square._F7));
       Assert.assertTrue(
             "Should be white pawn",
-            p.getWhite().isPawn(Square._G2));
+            p.getWhite().isPawn(
+                  Square._G2));
       Assert.assertTrue(
             "Should be black pawn",
-            p.getBlack().isPawn(Square._G7));
+            p.getBlack().isPawn(
+                  Square._G7));
       Assert.assertTrue(
             "Should be white pawn",
-            p.getWhite().isPawn(Square._H2));
+            p.getWhite().isPawn(
+                  Square._H2));
       Assert.assertTrue(
             "Should be black pawn",
-            p.getBlack().isPawn(Square._H7));
+            p.getBlack().isPawn(
+                  Square._H7));
    }
 
    public void testIsKingAtInitialPosition() {
-      Position p= Position.Factory.createInitial(false, false);
+      Position p= Position.Factory.createInitial(
+            false,
+            false);
       Assert.assertTrue(
             "Should be white king",
-            p.getWhite().isKing(Square._E1));
+            p.getWhite().isKing(
+                  Square._E1));
       Assert.assertTrue(
             "Should not be white king",
-            !p.getWhite().isKing(Square._A1));
+            !p.getWhite().isKing(
+                  Square._A1));
       Assert.assertTrue(
             "Should be black king",
-            p.getBlack().isKing(Square._E8));
+            p.getBlack().isKing(
+                  Square._E8));
       Assert.assertTrue(
             "Should not be black king",
-            !p.getBlack().isKing(Square._A1));
+            !p.getBlack().isKing(
+                  Square._A1));
    }
 
    public void testIsQueenAtInitialPosition() {
-      Position p= Position.Factory.createInitial(false, false);
+      Position p= Position.Factory.createInitial(
+            false,
+            false);
       Assert.assertTrue(
             "Should be white queen",
-            p.getWhite().isQueen(Square._D1));
+            p.getWhite().isQueen(
+                  Square._D1));
       Assert.assertTrue(
             "Should not be white queen",
-            !p.getWhite().isQueen(Square._A1));
+            !p.getWhite().isQueen(
+                  Square._A1));
       Assert.assertTrue(
             "Should be black queen",
-            p.getBlack().isQueen(Square._D8));
+            p.getBlack().isQueen(
+                  Square._D8));
       Assert.assertTrue(
             "Should not be black queen",
-            !p.getBlack().isQueen(Square._A1));
+            !p.getBlack().isQueen(
+                  Square._A1));
    }
 
    public void testIsRookAtInitialPosition() {
-      Position p= Position.Factory.createInitial(false, false);
+      Position p= Position.Factory.createInitial(
+            false,
+            false);
       Assert.assertTrue(
             "Should be white rook",
-            p.getWhite().isRook(Square._A1));
+            p.getWhite().isRook(
+                  Square._A1));
       Assert.assertTrue(
             "Should be white rook",
-            p.getWhite().isRook(Square._H1));
+            p.getWhite().isRook(
+                  Square._H1));
 
       Assert.assertTrue(
             "Should be black rook",
-            p.getBlack().isRook(Square._A8));
+            p.getBlack().isRook(
+                  Square._A8));
       Assert.assertTrue(
             "Should be black rook",
-            p.getBlack().isRook(Square._H8));
+            p.getBlack().isRook(
+                  Square._H8));
    }
 
    public void testIsBishopAtInitialPosition() {
-      Position p= Position.Factory.createInitial(false, false);
+      Position p= Position.Factory.createInitial(
+            false,
+            false);
       Assert.assertTrue(
             "Should be white bishop",
-            p.getWhite().isBishop(Square._C1));
+            p.getWhite().isBishop(
+                  Square._C1));
       Assert.assertTrue(
             "Should be white bishop",
-            p.getWhite().isBishop(Square._F1));
+            p.getWhite().isBishop(
+                  Square._F1));
 
       Assert.assertTrue(
             "Should be black bishop",
-            p.getBlack().isBishop(Square._C8));
+            p.getBlack().isBishop(
+                  Square._C8));
       Assert.assertTrue(
             "Should be black bishop",
-            p.getBlack().isBishop(Square._F8));
+            p.getBlack().isBishop(
+                  Square._F8));
    }
 
    public void testIsKnightAtInitialPosition() {
-      Position p= Position.Factory.createInitial(false, false);
+      Position p= Position.Factory.createInitial(
+            false,
+            false);
       Assert.assertTrue(
             "Should be white knight",
-            p.getWhite().isKnight(Square._B1));
+            p.getWhite().isKnight(
+                  Square._B1));
       Assert.assertTrue(
             "Should be white knight",
-            p.getWhite().isKnight(Square._G1));
+            p.getWhite().isKnight(
+                  Square._G1));
 
       Assert.assertTrue(
             "Should be black knight",
-            p.getBlack().isKnight(Square._B8));
+            p.getBlack().isKnight(
+                  Square._B8));
       Assert.assertTrue(
             "Should be black knight",
-            p.getBlack().isKnight(Square._G8));
+            p.getBlack().isKnight(
+                  Square._G8));
    }
 
    public void testEnpassantAfterA2A4() {
-      Position p= Position.Factory.createInitial(false, false).move(
-            Square._A2,
-            Square._A4);
+      Position p= Position.Factory.createInitial(
+            false,
+            false).move(
+            new Position.Move(
+                  Square._A2,
+                  Square._A4,
+                  Position.PromotionPiece.NONE));
       Assert.assertTrue(
             "Should be enpassant square",
-            p.getWhite().isEnpassant(Square._A3));
+            p.getWhite().isEnpassant(
+                  Square._A3));
       Assert.assertTrue(
             "Should be enpassant square",
-            p.getWhite().isEnpassant(Square._A4));
+            p.getWhite().isEnpassant(
+                  Square._A4));
    }
 
    public void testEnpassantAfterB2B4() {
-      Position p= Position.Factory.createInitial(false, false).move(
-            Square._B2,
-            Square._B4);
+      Position p= Position.Factory.createInitial(
+            false,
+            false).move(
+            new Position.Move(
+                  Square._B2,
+                  Square._B4,
+                  Position.PromotionPiece.NONE));
       Assert.assertTrue(
             "Should be enpassant square",
-            p.getWhite().isEnpassant(Square._B3));
+            p.getWhite().isEnpassant(
+                  Square._B3));
       Assert.assertTrue(
             "Should be enpassant square",
-            p.getWhite().isEnpassant(Square._B4));
+            p.getWhite().isEnpassant(
+                  Square._B4));
    }
 
    public void testEnpassantAfterC2C4() {
-      Position p= Position.Factory.createInitial(false, false).move(
-            Square._C2,
-            Square._C4);
+      Position p= Position.Factory.createInitial(
+            false,
+            false).move(
+            new Position.Move(
+                  Square._C2,
+                  Square._C4,
+                  Position.PromotionPiece.NONE));
       Assert.assertTrue(
             "Should be enpassant square",
-            p.getWhite().isEnpassant(Square._C3));
+            p.getWhite().isEnpassant(
+                  Square._C3));
       Assert.assertTrue(
             "Should be enpassant square",
-            p.getWhite().isEnpassant(Square._C4));
+            p.getWhite().isEnpassant(
+                  Square._C4));
    }
 
    public void testEnpassantAfterD2D4() {
-      Position p= Position.Factory.createInitial(false, false).move(
-            Square._D2,
-            Square._D4);
+      Position p= Position.Factory.createInitial(
+            false,
+            false).move(
+            new Position.Move(
+                  Square._D2,
+                  Square._D4,
+                  Position.PromotionPiece.NONE));
       Assert.assertTrue(
             "Should be enpassant square",
-            p.getWhite().isEnpassant(Square._D3));
+            p.getWhite().isEnpassant(
+                  Square._D3));
       Assert.assertTrue(
             "Should be enpassant square",
-            p.getWhite().isEnpassant(Square._D4));
+            p.getWhite().isEnpassant(
+                  Square._D4));
    }
 
    public void testEnpassantAfterE2E4() {
-      Position p= Position.Factory.createInitial(false, false).move(
-            Square._E2,
-            Square._E4);
+      Position p= Position.Factory.createInitial(
+            false,
+            false).move(
+            new Position.Move(
+                  Square._E2,
+                  Square._E4,
+                  Position.PromotionPiece.NONE));
       Assert.assertTrue(
             "Should be enpassant square",
-            p.getWhite().isEnpassant(Square._E3));
+            p.getWhite().isEnpassant(
+                  Square._E3));
       Assert.assertTrue(
             "Should be enpassant square",
-            p.getWhite().isEnpassant(Square._E4));
+            p.getWhite().isEnpassant(
+                  Square._E4));
    }
 
    public void testEnpassantAfterF2F4() {
-      Position p= Position.Factory.createInitial(false, false).move(
-            Square._F2,
-            Square._F4);
+      Position p= Position.Factory.createInitial(
+            false,
+            false).move(
+            new Position.Move(
+                  Square._F2,
+                  Square._F4,
+                  Position.PromotionPiece.NONE));
       Assert.assertTrue(
             "Should be enpassant square",
-            p.getWhite().isEnpassant(Square._F3));
+            p.getWhite().isEnpassant(
+                  Square._F3));
       Assert.assertTrue(
             "Should be enpassant square",
-            p.getWhite().isEnpassant(Square._F4));
+            p.getWhite().isEnpassant(
+                  Square._F4));
    }
 
    public void testEnpassantAfterG2G4() {
-      Position p= Position.Factory.createInitial(false, false).move(
-            Square._G2,
-            Square._G4);
+      Position p= Position.Factory.createInitial(
+            false,
+            false).move(
+            new Position.Move(
+                  Square._G2,
+                  Square._G4,
+                  Position.PromotionPiece.NONE));
       Assert.assertTrue(
             "Should be enpassant square",
-            p.getWhite().isEnpassant(Square._G3));
+            p.getWhite().isEnpassant(
+                  Square._G3));
       Assert.assertTrue(
             "Should be enpassant square",
-            p.getWhite().isEnpassant(Square._G4));
+            p.getWhite().isEnpassant(
+                  Square._G4));
    }
 
    public void testEnpassantAfterH2H4() {
-      Position p= Position.Factory.createInitial(false, false).move(
-            Square._H2,
-            Square._H4);
+      Position p= Position.Factory.createInitial(
+            false,
+            false).move(
+            new Position.Move(
+                  Square._H2,
+                  Square._H4,
+                  Position.PromotionPiece.NONE));
       Assert.assertTrue(
             "Should be enpassant square",
-            p.getWhite().isEnpassant(Square._H3));
+            p.getWhite().isEnpassant(
+                  Square._H3));
       Assert.assertTrue(
             "Should be enpassant square",
-            p.getWhite().isEnpassant(Square._H4));
+            p.getWhite().isEnpassant(
+                  Square._H4));
    }
 
    public void testEnpassantAfterA7A5() {
-      Position p= Position.Factory.createInitial(false, false).move(
-            Square._A7,
-            Square._A5);
+      Position p= Position.Factory.createInitial(
+            false,
+            false).move(
+            new Position.Move(
+                  Square._A7,
+                  Square._A5,
+                  Position.PromotionPiece.NONE));
       Assert.assertTrue(
             "Should be enpassant square",
-            p.getBlack().isEnpassant(Square._A6));
+            p.getBlack().isEnpassant(
+                  Square._A6));
       Assert.assertTrue(
             "Should be enpassant square",
-            p.getBlack().isEnpassant(Square._A5));
+            p.getBlack().isEnpassant(
+                  Square._A5));
    }
 
    public void testEnpassantAfterB7B5() {
-      Position p= Position.Factory.createInitial(false, false).move(
-            Square._B7,
-            Square._B5);
+      Position p= Position.Factory.createInitial(
+            false,
+            false).move(
+            new Position.Move(
+                  Square._B7,
+                  Square._B5,
+                  Position.PromotionPiece.NONE));
       Assert.assertTrue(
             "Should be enpassant square",
-            p.getBlack().isEnpassant(Square._B6));
+            p.getBlack().isEnpassant(
+                  Square._B6));
       Assert.assertTrue(
             "Should be enpassant square",
-            p.getBlack().isEnpassant(Square._B5));
+            p.getBlack().isEnpassant(
+                  Square._B5));
    }
 
    public void testEnpassantAfterC7C5() {
-      Position p= Position.Factory.createInitial(false, false).move(
-            Square._C7,
-            Square._C5);
+      Position p= Position.Factory.createInitial(
+            false,
+            false).move(
+            new Position.Move(
+                  Square._C7,
+                  Square._C5,
+                  Position.PromotionPiece.NONE));
       Assert.assertTrue(
             "Should be enpassant square",
-            p.getBlack().isEnpassant(Square._C6));
+            p.getBlack().isEnpassant(
+                  Square._C6));
       Assert.assertTrue(
             "Should be enpassant square",
-            p.getBlack().isEnpassant(Square._C5));
+            p.getBlack().isEnpassant(
+                  Square._C5));
    }
 
    public void testEnpassantAfterD7D5() {
-      Position p= Position.Factory.createInitial(false, false).move(
-            Square._D7,
-            Square._D5);
+      Position p= Position.Factory.createInitial(
+            false,
+            false).move(
+            new Position.Move(
+                  Square._D7,
+                  Square._D5,
+                  Position.PromotionPiece.NONE));
       Assert.assertTrue(
             "Should be enpassant square",
-            p.getBlack().isEnpassant(Square._D6));
+            p.getBlack().isEnpassant(
+                  Square._D6));
       Assert.assertTrue(
             "Should be enpassant square",
-            p.getBlack().isEnpassant(Square._D5));
+            p.getBlack().isEnpassant(
+                  Square._D5));
    }
 
    public void testEnpassantAfterE7E5() {
-      Position p= Position.Factory.createInitial(false, false).move(
-            Square._E7,
-            Square._E5);
+      Position p= Position.Factory.createInitial(
+            false,
+            false).move(
+            new Position.Move(
+                  Square._E7,
+                  Square._E5,
+                  Position.PromotionPiece.NONE));
       Assert.assertTrue(
             "Should be enpassant square",
-            p.getBlack().isEnpassant(Square._E6));
+            p.getBlack().isEnpassant(
+                  Square._E6));
       Assert.assertTrue(
             "Should be enpassant square",
-            p.getBlack().isEnpassant(Square._E5));
+            p.getBlack().isEnpassant(
+                  Square._E5));
    }
 
-   public void testEnpassantAfterF7F5() {
-      Position p= Position.Factory.createInitial(false, false).move(
+public void testEnpassantAfterF7F5() {
+      Position p= Position.Factory.createInitial(false, false).move( new Position.Move(
             Square._F7,
-            Square._F5);
+            Square._F5,
+            Position.PromotionPiece.NONE));
       Assert.assertTrue(
             "Should be enpassant square",
             p.getBlack().isEnpassant(Square._F6));
       Assert.assertTrue(
             "Should be enpassant square",
             p.getBlack().isEnpassant(Square._F5));
-   }
-
-   public void testEnpassantAfterG7G5() {
-      Position p= Position.Factory.createInitial(false, false).move(
+   }public void testEnpassantAfterG7G5() {
+      Position p= Position.Factory.createInitial(false, false).move( new Position.Move(
             Square._G7,
-            Square._G5);
+            Square._G5,
+            Position.PromotionPiece.NONE));
       Assert.assertTrue(
             "Should be enpassant square",
             p.getBlack().isEnpassant(Square._G6));
       Assert.assertTrue(
             "Should be enpassant square",
             p.getBlack().isEnpassant(Square._G5));
-   }
-
-   public void testEnpassantAfterH7H5() {
-      Position p= Position.Factory.createInitial(false, false).move(
+   }public void testEnpassantAfterH7H5() {
+      Position p= Position.Factory.createInitial(false, false).move( new Position.Move(
             Square._H7,
-            Square._H5);
+            Square._H5,
+            Position.PromotionPiece.NONE));
       Assert.assertTrue(
             "Should be enpassant square",
             p.getBlack().isEnpassant(Square._H6));
       Assert.assertTrue(
             "Should be enpassant square",
             p.getBlack().isEnpassant(Square._H5));
-   }
-
-   public void testEnpassant() {
+   }public void testEnpassant() {
       Position p= Position.Factory.create(
             false, 
             false,
+            Position.AuxiliaryState.NO_AUXILIARY_STATE,
             Square._H1, // whiteKings
             Square._EMPTY_BOARD, // whiteQueens
             Square._EMPTY_BOARD, // whiteRooks
@@ -581,9 +725,10 @@ public class PositionTest extends TestCase {
             "Should not be enpassant square",
             !p.getBlack().isEnpassant(Square._D5));
 
-      p= p.move(
+      p= p.move( new Position.Move(
             Square._D7,
-            Square._D5);
+            Square._D5,
+            Position.PromotionPiece.NONE));
 
       Assert.assertTrue(
             "Should be white pawn",
@@ -599,9 +744,10 @@ public class PositionTest extends TestCase {
             "Should be enpassant square",
             p.getBlack().isEnpassant(Square._D5));
 
-      p= p.move(
+      p= p.move( new Position.Move(
             Square._C5,
-            Square._D6);
+            Square._D6,
+            Position.PromotionPiece.NONE));
 
       Assert.assertTrue(
             "Should be white pawn",
@@ -618,12 +764,12 @@ public class PositionTest extends TestCase {
             "Should not be enpassant square",
             !p.getBlack().isEnpassant(Square._D5));
 
-   }
-
-   public void testAllAttackedSquaresInitialBoard() {
+   }   public void testAllAttackedSquaresInitialBoard() {
 
       long attacks;
-      Position p= Position.Factory.createInitial(false, false);
+      Position p= Position.Factory.createInitial(
+            false,
+            false);
 
       attacks= p.getWhite().getAllCaptureMovesAttackedSquares();
       Assert.assertEquals(
@@ -675,8 +821,9 @@ public class PositionTest extends TestCase {
 
       long attacks;
       Position p= Position.Factory.create(
-            false, 
             false,
+            false,
+            Position.AuxiliaryState.NO_AUXILIARY_STATE,
             Square._F3, // whiteKings
             Square._EMPTY_BOARD, // whiteQueens
             Square._EMPTY_BOARD, // whiteRooks
@@ -743,39 +890,74 @@ public class PositionTest extends TestCase {
 
    public void testEquals() {
 
-      Position p1= Position.Factory.createInitial(false, false);
-      Position p2= Position.Factory.createInitial(false, true);
+      Position p1= Position.Factory.createInitial(
+            false,
+            false);
+      Position p2= Position.Factory.createInitial(
+            false,
+            true);
 
-      Assert.assertEquals(p1, p2);
-      Assert.assertTrue("HashCode should also be equal...", p1.hashCode() == p2.hashCode());
-      
-      p1= p1.move(Square._D2, Square._D4);
-      p2= p2.move(Square._D2, Square._D4);
-      
-      Assert.assertEquals(p1, p2);
-      Assert.assertTrue("HashCode should also be equal...", p1.hashCode() == p2.hashCode());
-      
+      Assert.assertEquals(
+            p1,
+            p2);
+      Assert.assertTrue(
+            "HashCode should also be equal...",
+            p1.hashCode() == p2.hashCode());
+
+      p1= p1.move(new Position.Move(
+            Square._D2,
+            Square._D4,
+            Position.PromotionPiece.NONE));
+      p2= p2.move(new Position.Move(
+            Square._D2,
+            Square._D4,
+            Position.PromotionPiece.NONE));
+
+      Assert.assertEquals(
+            p1,
+            p2);
+      Assert.assertTrue(
+            "HashCode should also be equal...",
+            p1.hashCode() == p2.hashCode());
+
       p1= p1.getImmutable();
       p2= p2.getImmutable();
 
-      Assert.assertEquals(p1, p2);
-      Assert.assertTrue("HashCode should also be equal...", p1.hashCode() == p2.hashCode());
-      
+      Assert.assertEquals(
+            p1,
+            p2);
+      Assert.assertTrue(
+            "HashCode should also be equal...",
+            p1.hashCode() == p2.hashCode());
+
       p1= p1.getMutable();
       p2= p2.getMutable();
 
-      Assert.assertEquals(p1, p2);
-      Assert.assertTrue("HashCode should also be equal...", p1.hashCode() == p2.hashCode());
-      
-      Assert.assertTrue("Should be equal...", p1.equals(p2));
-      Assert.assertTrue("Should be equal...", p2.equals(p1));
-      
-      
-      p1= p1.move(Square._D7, Square._D5);
-      
-      Assert.assertTrue("Should not be equal...", !p1.equals(p2));
-      Assert.assertTrue("HashCode should also not be equal...", p1.hashCode() != p2.hashCode());
-      
+      Assert.assertEquals(
+            p1,
+            p2);
+      Assert.assertTrue(
+            "HashCode should also be equal...",
+            p1.hashCode() == p2.hashCode());
+
+      Assert.assertTrue(
+            "Should be equal...",
+            p1.equals(p2));
+      Assert.assertTrue(
+            "Should be equal...",
+            p2.equals(p1));
+
+      p1= p1.move(new Position.Move(
+            Square._D7,
+            Square._D5,
+            Position.PromotionPiece.NONE));
+
+      Assert.assertTrue(
+            "Should not be equal...",
+            !p1.equals(p2));
+      Assert.assertTrue(
+            "HashCode should also not be equal...",
+            p1.hashCode() != p2.hashCode());
 
    }
 

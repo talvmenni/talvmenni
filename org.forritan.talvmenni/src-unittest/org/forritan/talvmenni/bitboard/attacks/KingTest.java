@@ -24,7 +24,9 @@ public class KingTest extends TestCase {
    }
 
    public void testWhiteKingInitial() {
-      Position initialPosition= Position.Factory.createInitial(false, false);
+      Position initialPosition= Position.Factory.createInitial(
+            false,
+            false);
       long kingAttacksFromE1= King.attacksFrom(
             Square._E1,
             initialPosition);
@@ -54,9 +56,13 @@ public class KingTest extends TestCase {
    }
 
    public void testWhiteKingAfterD2D4() {
-      Position p= Position.Factory.createInitial(false, false).move(
-            Square._D2,
-            Square._D4);
+      Position p= Position.Factory.createInitial(
+            false,
+            false).move(
+            new Position.Move(
+                  Square._D2,
+                  Square._D4,
+                  Position.PromotionPiece.NONE));
       long kingAttacksFromE1= King.attacksFrom(
             Square._E1,
             p);
@@ -86,11 +92,17 @@ public class KingTest extends TestCase {
    }
 
    public void testWhiteKingAfterD2D4_E2E4() {
-      Position p= Position.Factory.createInitial(false, false).move(
-            Square._D2,
-            Square._D4).move(
-            Square._E2,
-            Square._E4);
+      Position p= Position.Factory.createInitial(
+            false,
+            false).move(
+            new Position.Move(
+                  Square._D2,
+                  Square._D4,
+                  Position.PromotionPiece.NONE)).move(
+            new Position.Move(
+                  Square._E2,
+                  Square._E4,
+                  Position.PromotionPiece.NONE));
       long kingAttacksFromE1= King.attacksFrom(
             Square._E1,
             p);
@@ -120,13 +132,21 @@ public class KingTest extends TestCase {
    }
 
    public void testWhiteKingAfterD2D3_E2E3_F2F4() {
-      Position p= Position.Factory.createInitial(false, false).move(
-            Square._D2,
-            Square._D3).move(
-            Square._E2,
-            Square._E3).move(
-            Square._F2,
-            Square._F4);
+      Position p= Position.Factory.createInitial(
+            false,
+            false).move(
+            new Position.Move(
+                  Square._D2,
+                  Square._D3,
+                  Position.PromotionPiece.NONE)).move(
+            new Position.Move(
+                  Square._E2,
+                  Square._E3,
+                  Position.PromotionPiece.NONE)).move(
+            new Position.Move(
+                  Square._F2,
+                  Square._F4,
+                  Position.PromotionPiece.NONE));
       long kingAttacksFromE1= King.attacksFrom(
             Square._E1,
             p);
@@ -156,7 +176,9 @@ public class KingTest extends TestCase {
    }
 
    public void testBlackKingInitial() {
-      Position initialPosition= Position.Factory.createInitial(false, false);
+      Position initialPosition= Position.Factory.createInitial(
+            false,
+            false);
       long kingAttacksFromE8= King.attacksFrom(
             Square._E8,
             initialPosition);
@@ -186,11 +208,17 @@ public class KingTest extends TestCase {
    }
 
    public void testBlackKingAfterD7D5_F7F5() {
-      Position p= Position.Factory.createInitial(false, false).move(
-            Square._D7,
-            Square._D5).move(
-            Square._F7,
-            Square._F5);
+      Position p= Position.Factory.createInitial(
+            false,
+            false).move(
+            new Position.Move(
+                  Square._D7,
+                  Square._D5,
+                  Position.PromotionPiece.NONE)).move(
+            new Position.Move(
+                  Square._F7,
+                  Square._F5,
+                  Position.PromotionPiece.NONE));
       long kingAttacksFromE8= King.attacksFrom(
             Square._E8,
             p);
@@ -220,9 +248,12 @@ public class KingTest extends TestCase {
    }
 
    public void testBlackKingAfterD7D5() {
-      Position p= Position.Factory.createInitial(false, false).move(
+      Position p= Position.Factory.createInitial(
+            false,
+            false).move( new Position.Move(
             Square._D7,
-            Square._D5);
+            Square._D5,
+            Position.PromotionPiece.NONE));
       long kingAttacksFromE8= King.attacksFrom(
             Square._E8,
             p);
@@ -252,9 +283,12 @@ public class KingTest extends TestCase {
    }
 
    public void testBlackKingAfterE7E5() {
-      Position p= Position.Factory.createInitial(false, false).move(
+      Position p= Position.Factory.createInitial(
+            false,
+            false).move( new Position.Move(
             Square._E7,
-            Square._E5);
+            Square._E5,
+            Position.PromotionPiece.NONE));
       long kingAttacksFromE8= King.attacksFrom(
             Square._E8,
             p);

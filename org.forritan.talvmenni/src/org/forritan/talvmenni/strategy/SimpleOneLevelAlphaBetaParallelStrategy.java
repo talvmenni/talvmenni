@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.forritan.talvmenni.knowledge.Draw;
 import org.forritan.talvmenni.knowledge.Position;
 import org.forritan.talvmenni.knowledge.TheoryBook;
 import org.forritan.talvmenni.knowledge.Position.Move;
@@ -94,9 +95,7 @@ public class SimpleOneLevelAlphaBetaParallelStrategy extends
             for (Iterator it= moves.iterator(); it.hasNext();) {
                Move move= (Move) it.next();
                Position childPosition= this.position.move(
-                     move.from,
-                     move.to,
-                     move.promotionPiece).getImmutable();
+                     move).getImmutable();
                this.position.popMove();
                ChessEngineTask task= new SimpleOneLevelAlphaBetaTask(
                      childPosition,

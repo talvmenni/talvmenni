@@ -2,6 +2,7 @@ package org.forritan.talvmenni.strategy;
 
 import java.util.List;
 
+import org.forritan.talvmenni.knowledge.Draw;
 import org.forritan.talvmenni.knowledge.Position;
 import org.forritan.talvmenni.knowledge.TheoryBook;
 import org.forritan.talvmenni.knowledge.Transposition;

@@ -94,9 +94,7 @@ public class Quiescent {
 //               this.movesSearched++;
 //               this.pv.push(move);
 
-               p= p.move(
-                     move.from,
-                     move.to);
+               p= p.move(move);
 
                int movesSearchedBefore= this.movesSearched;
                long moveTime= -System.currentTimeMillis();

@@ -34,13 +34,16 @@ public interface Position extends Serializable {
    public Position getMutable();
 
    public Position move(
-         long from,
-         long to);
+         Move move);
 
-   public Position move(
-         long from,
-         long to,
-         int promotionPiece);
+   //   public Position move(
+   //         long from,
+   //         long to);
+   //
+   //   public Position move(
+   //         long from,
+   //         long to,
+   //         int promotionPiece);
 
    public boolean isLegalMove(
          long from,
@@ -50,7 +53,10 @@ public interface Position extends Serializable {
          long from,
          long to);
 
+   public boolean isDrawByThreeTimesRepetition();
+
    public Position pushMove(
+         long auxillaryState,
          Bitboard white,
          Bitboard black);
 
@@ -247,7 +253,7 @@ public interface Position extends Serializable {
       }
 
       public void updatePossibleMovesOrdering() {
-         this.getPossibleMoves(); // Initialize 
+         this.getPossibleMoves(); // Initialize
 
          if (this.possibleMoves != null
                && this.betterOrderMoves != null) {
@@ -260,11 +266,11 @@ public interface Position extends Serializable {
             this.betterOrderMoves= null;
          }
       }
-      
+
       public void updateMoveOrderingCapturesFirst() {
-         this.getPossibleMoves(); // Initialize 
-         this.getPossibleCaptureMoves(); // Initialize 
-         
+         this.getPossibleMoves(); // Initialize
+         this.getPossibleCaptureMoves(); // Initialize
+
          if (this.possibleMoves != null
                && this.possibleCaptureMoves != null) {
             List currentPossibleMoves= new ArrayList();
@@ -273,9 +279,8 @@ public interface Position extends Serializable {
             this.possibleMoves.addAll(this.possibleCaptureMoves);
             currentPossibleMoves.removeAll(this.possibleCaptureMoves);
             this.possibleMoves.addAll(currentPossibleMoves);
-         }         
+         }
       }
-      
 
       public List getPossibleCaptureMoves() {
          if (this.possibleCaptureMoves == null) {
@@ -283,17 +288,19 @@ public interface Position extends Serializable {
 
             long allPossibleOpponentCaptures= this
                   .getAllCaptureMovesAttackedSquares();
-            
+
             if (this.whiteBoard) {
-               allPossibleOpponentCaptures &= this.parent.getBlack().allPieces;
+               allPossibleOpponentCaptures&= this.parent.getBlack().allPieces;
             } else {
-               allPossibleOpponentCaptures &= this.parent.getWhite().allPieces;
+               allPossibleOpponentCaptures&= this.parent.getWhite().allPieces;
             }
-            
-            for(Iterator it= this.getPossibleMoves().iterator(); it.hasNext(); ) {
+
+            for (Iterator it= this.getPossibleMoves().iterator(); it.hasNext();) {
                Move move= (Move) it.next();
-               if((move.to & allPossibleOpponentCaptures) != Square._EMPTY_BOARD) {
-                  this.possibleCaptureMoves.add(0, move);
+               if ((move.to & allPossibleOpponentCaptures) != Square._EMPTY_BOARD) {
+                  this.possibleCaptureMoves.add(
+                        0,
+                        move);
                }
             }
          }
@@ -435,10 +442,10 @@ public interface Position extends Serializable {
                   fromSquare,
                   toSquare)) {
                for (int promoteTo= PromotionPiece.QUEEN; promoteTo <= PromotionPiece.KNIGHT; promoteTo++) {
-                  newPosition= this.parent.move(
+                  newPosition= this.parent.move(new Move(
                         fromSquare,
                         toSquare,
-                        promoteTo);
+                        promoteTo));
                   this.addMoveToResultIfNotInCheck(
                         result,
                         fromSquare,
@@ -448,10 +455,10 @@ public interface Position extends Serializable {
                   this.parent.popMove();
                }
             } else {
-               newPosition= this.parent.move(
+               newPosition= this.parent.move(new Move(
                      fromSquare,
                      toSquare,
-                     PromotionPiece.NONE);
+                     PromotionPiece.NONE));
                this.addMoveToResultIfNotInCheck(
                      result,
                      fromSquare,
@@ -820,6 +827,7 @@ public interface Position extends Serializable {
          if (mutable
                && !partitionSearchPosition) {
             return new MutablePosition(
+                  AuxiliaryState.NO_AUXILIARY_STATE,
                   Square._E1, // whiteKings
                   Square._D1, // whiteQueens
                   Square._A1
@@ -850,6 +858,7 @@ public interface Position extends Serializable {
          } else if (!mutable
                && !partitionSearchPosition) {
             return new ImmutablePosition(
+                  AuxiliaryState.NO_AUXILIARY_STATE,
                   Square._E1, // whiteKings
                   Square._D1, // whiteQueens
                   Square._A1
@@ -880,6 +889,7 @@ public interface Position extends Serializable {
          } else if (mutable
                && partitionSearchPosition) {
             return new MutablePartitionSearchPosition(
+                  AuxiliaryState.NO_AUXILIARY_STATE,
                   Square._E1, // whiteKings
                   Square._D1, // whiteQueens
                   Square._A1
@@ -909,6 +919,7 @@ public interface Position extends Serializable {
             );
          } else if (!mutable
                && partitionSearchPosition) { return new ImmutablePartitionSearchPosition(
+               AuxiliaryState.NO_AUXILIARY_STATE,
                Square._E1, // whiteKings
                Square._D1, // whiteQueens
                Square._A1
@@ -962,6 +973,7 @@ public interface Position extends Serializable {
       public static Position create(
             boolean partitionSearchPosition,
             boolean mutable,
+            long auxillaryState,
             long whiteKings,
             long whiteQueens,
             long whiteRooks,
@@ -981,6 +993,7 @@ public interface Position extends Serializable {
          if (mutable
                && !partitionSearchPosition) {
             return new MutablePosition(
+                  auxillaryState,
                   whiteKings,
                   whiteQueens,
                   whiteRooks,
@@ -1000,6 +1013,7 @@ public interface Position extends Serializable {
          } else if (!mutable
                && !partitionSearchPosition) {
             return new ImmutablePosition(
+                  auxillaryState,
                   whiteKings,
                   whiteQueens,
                   whiteRooks,
@@ -1019,6 +1033,7 @@ public interface Position extends Serializable {
          } else if (mutable
                && partitionSearchPosition) {
             return new MutablePartitionSearchPosition(
+                  auxillaryState,
                   whiteKings,
                   whiteQueens,
                   whiteRooks,
@@ -1037,6 +1052,7 @@ public interface Position extends Serializable {
                   blackEnpassant);
          } else if (!mutable
                && partitionSearchPosition) { return new ImmutablePartitionSearchPosition(
+               auxillaryState,
                whiteKings,
                whiteQueens,
                whiteRooks,
@@ -1059,25 +1075,30 @@ public interface Position extends Serializable {
       public static Position create(
             boolean partitionSearchPosition,
             boolean mutable,
+            long auxillaryState,
             Bitboard white,
             Bitboard black) {
          if (mutable
                && !partitionSearchPosition) {
             return new MutablePosition(
+                  auxillaryState,
                   white,
                   black);
          } else if (!mutable
                && !partitionSearchPosition) {
             return new ImmutablePosition(
+                  auxillaryState,
                   white,
                   black);
          } else if (mutable
                && partitionSearchPosition) {
             return new MutablePartitionSearchPosition(
+                  auxillaryState,
                   white,
                   black);
          } else if (!mutable
                && partitionSearchPosition) { return new ImmutablePartitionSearchPosition(
+               auxillaryState,
                white,
                black); }
 
@@ -1224,6 +1245,7 @@ public interface Position extends Serializable {
          Position fenPosition= Position.Factory.create(
                partitionSearchPosition,
                mutable,
+               AuxiliaryState.NO_AUXILIARY_STATE,
                whiteKings,
                whiteQueens,
                whiteRooks,
@@ -1260,5 +1282,87 @@ public interface Position extends Serializable {
          this.position= position;
          this.whiteToMove= whiteMove;
       }
+   }
+
+   public static interface AuxiliaryState {
+
+      /**
+       * 64 general bits for any auxiliary information regarding the position as
+       * a whole
+       */
+
+      public static final long NO_AUXILIARY_STATE             = 0L;
+      public static final long DRAW_BY_THREE_TIMES_REPETITION = 1L;
+
+      //      public static final long ___NOT_DEFINED_YET_1 = 1L << 1;
+      //      public static final long ___NOT_DEFINED_YET_2 = 1L << 2;
+      //      public static final long ___NOT_DEFINED_YET_3 = 1L << 3;
+      //      public static final long ___NOT_DEFINED_YET_4 = 1L << 4;
+      //      public static final long ___NOT_DEFINED_YET_5 = 1L << 5;
+      //      public static final long ___NOT_DEFINED_YET_6 = 1L << 6;
+      //      public static final long ___NOT_DEFINED_YET_7 = 1L << 7;
+      //      public static final long ___NOT_DEFINED_YET_8 = 1L << 8;
+      //      public static final long ___NOT_DEFINED_YET_9 = 1L << 9;
+      //
+      //      public static final long ___NOT_DEFINED_YET_10 = 1L << 10;
+      //      public static final long ___NOT_DEFINED_YET_11 = 1L << 11;
+      //      public static final long ___NOT_DEFINED_YET_12 = 1L << 12;
+      //      public static final long ___NOT_DEFINED_YET_13 = 1L << 13;
+      //      public static final long ___NOT_DEFINED_YET_14 = 1L << 14;
+      //      public static final long ___NOT_DEFINED_YET_15 = 1L << 15;
+      //      public static final long ___NOT_DEFINED_YET_16 = 1L << 16;
+      //      public static final long ___NOT_DEFINED_YET_17 = 1L << 17;
+      //      public static final long ___NOT_DEFINED_YET_18 = 1L << 18;
+      //      public static final long ___NOT_DEFINED_YET_19 = 1L << 19;
+      //
+      //      public static final long ___NOT_DEFINED_YET_20 = 1L << 20;
+      //      public static final long ___NOT_DEFINED_YET_21 = 1L << 21;
+      //      public static final long ___NOT_DEFINED_YET_22 = 1L << 22;
+      //      public static final long ___NOT_DEFINED_YET_23 = 1L << 23;
+      //      public static final long ___NOT_DEFINED_YET_24 = 1L << 24;
+      //      public static final long ___NOT_DEFINED_YET_25 = 1L << 25;
+      //      public static final long ___NOT_DEFINED_YET_26 = 1L << 26;
+      //      public static final long ___NOT_DEFINED_YET_27 = 1L << 27;
+      //      public static final long ___NOT_DEFINED_YET_28 = 1L << 28;
+      //      public static final long ___NOT_DEFINED_YET_29 = 1L << 29;
+      //
+      //      public static final long ___NOT_DEFINED_YET_30 = 1L << 30;
+      //      public static final long ___NOT_DEFINED_YET_31 = 1L << 31;
+      //      public static final long ___NOT_DEFINED_YET_32 = 1L << 32;
+      //      public static final long ___NOT_DEFINED_YET_33 = 1L << 33;
+      //      public static final long ___NOT_DEFINED_YET_34 = 1L << 34;
+      //      public static final long ___NOT_DEFINED_YET_35 = 1L << 35;
+      //      public static final long ___NOT_DEFINED_YET_36 = 1L << 36;
+      //      public static final long ___NOT_DEFINED_YET_37 = 1L << 37;
+      //      public static final long ___NOT_DEFINED_YET_38 = 1L << 38;
+      //      public static final long ___NOT_DEFINED_YET_39 = 1L << 39;
+      //
+      //      public static final long ___NOT_DEFINED_YET_40 = 1L << 40;
+      //      public static final long ___NOT_DEFINED_YET_41 = 1L << 41;
+      //      public static final long ___NOT_DEFINED_YET_42 = 1L << 42;
+      //      public static final long ___NOT_DEFINED_YET_43 = 1L << 43;
+      //      public static final long ___NOT_DEFINED_YET_44 = 1L << 44;
+      //      public static final long ___NOT_DEFINED_YET_45 = 1L << 45;
+      //      public static final long ___NOT_DEFINED_YET_46 = 1L << 46;
+      //      public static final long ___NOT_DEFINED_YET_47 = 1L << 47;
+      //      public static final long ___NOT_DEFINED_YET_48 = 1L << 48;
+      //      public static final long ___NOT_DEFINED_YET_49 = 1L << 49;
+      //
+      //      public static final long ___NOT_DEFINED_YET_50 = 1L << 50;
+      //      public static final long ___NOT_DEFINED_YET_51 = 1L << 51;
+      //      public static final long ___NOT_DEFINED_YET_52 = 1L << 52;
+      //      public static final long ___NOT_DEFINED_YET_53 = 1L << 53;
+      //      public static final long ___NOT_DEFINED_YET_54 = 1L << 54;
+      //      public static final long ___NOT_DEFINED_YET_55 = 1L << 55;
+      //      public static final long ___NOT_DEFINED_YET_56 = 1L << 56;
+      //      public static final long ___NOT_DEFINED_YET_57 = 1L << 57;
+      //      public static final long ___NOT_DEFINED_YET_58 = 1L << 58;
+      //      public static final long ___NOT_DEFINED_YET_59 = 1L << 59;
+      //
+      //      public static final long ___NOT_DEFINED_YET_60 = 1L << 60;
+      //      public static final long ___NOT_DEFINED_YET_61 = 1L << 61;
+      //      public static final long ___NOT_DEFINED_YET_62 = 1L << 62;
+      //      public static final long ___NOT_DEFINED_YET_63 = 1L << 63;
+
    }
 }

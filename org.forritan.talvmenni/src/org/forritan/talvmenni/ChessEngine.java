@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
+import org.forritan.talvmenni.knowledge.Draw;
+import org.forritan.talvmenni.knowledge.HistoryHeuristic;
 import org.forritan.talvmenni.knowledge.Move;
 import org.forritan.talvmenni.knowledge.MoveHistory;
 import org.forritan.talvmenni.knowledge.Position;
@@ -183,6 +185,8 @@ public class ChessEngine extends Observable implements Runnable {
                TalvMenni.PARTITION_SEARCH,
                false));
          MoveHistory.getInstance().reset();
+         HistoryHeuristic.getInstance().clear();
+         Draw.getInstance().clear();
          this.whiteToMove= true;
          this.go= true;
       }

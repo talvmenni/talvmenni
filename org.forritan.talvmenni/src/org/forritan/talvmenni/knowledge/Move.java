@@ -6,14 +6,14 @@ import org.forritan.talvmenni.bitboard.Squares;
 
 
 public class Move {
-   
-   public final boolean whiteMove;
+
+   public final boolean  whiteMove;
    public final long     time;
    public final Position fromPosition;
    public final Position toPosition;
    public final long     from;
    public final long     to;
-   public final int promotionPiece;
+   public final int      promotionPiece;
 
    public Move(
          Position fromPosition,
@@ -23,11 +23,12 @@ public class Move {
       this.time= System.currentTimeMillis();
       this.promotionPiece= promotionPiece;
       this.fromPosition= fromPosition.getImmutable();
-      this.whiteMove= this.fromPosition.getWhite().isAnyPieceOnPosition(fromSquare);
-      this.toPosition= fromPosition.move(
+      this.whiteMove= this.fromPosition.getWhite().isAnyPieceOnPosition(
+            fromSquare);
+      this.toPosition= fromPosition.move(new Position.Move(
             fromSquare,
-            toSquare, 
-            this.promotionPiece);
+            toSquare,
+            this.promotionPiece));
       this.from= fromSquare;
       this.to= toSquare;
    }
@@ -39,14 +40,15 @@ public class Move {
       this.time= System.currentTimeMillis();
       this.promotionPiece= Position.PromotionPiece.NONE;
       this.fromPosition= fromPosition.getImmutable();
-      this.whiteMove= this.fromPosition.getWhite().isAnyPieceOnPosition(fromSquare);
-      this.toPosition= fromPosition.move(
+      this.whiteMove= this.fromPosition.getWhite().isAnyPieceOnPosition(
+            fromSquare);
+      this.toPosition= fromPosition.move(new Position.Move(
             fromSquare,
-            toSquare);
+            toSquare,
+            this.promotionPiece));
       this.from= fromSquare;
       this.to= toSquare;
    }
-   
 
    public String toString() {
       Square sq= Squares.create();
@@ -57,12 +59,16 @@ public class Move {
 
    private String getPromotionString() {
       String result= "";
-      if(this.whiteMove) {
-         if(fromPosition.getWhite().isPawn(from) && ((from & ~Rank._7) == Square._EMPTY_BOARD)) {
+      if (this.whiteMove) {
+         if (fromPosition.getWhite().isPawn(
+               from)
+               && ((from & ~Rank._7) == Square._EMPTY_BOARD)) {
             result= Position.PromotionPiece.STRINGS[this.promotionPiece];
          }
       } else {
-         if(fromPosition.getBlack().isPawn(from) && ((from & ~Rank._2) == Square._EMPTY_BOARD)) {
+         if (fromPosition.getBlack().isPawn(
+               from)
+               && ((from & ~Rank._2) == Square._EMPTY_BOARD)) {
             result= Position.PromotionPiece.STRINGS[this.promotionPiece];
          }
       }

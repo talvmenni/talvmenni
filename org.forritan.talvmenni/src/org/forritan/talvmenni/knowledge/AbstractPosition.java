@@ -13,10 +13,13 @@ import org.forritan.talvmenni.bitboard.paths.WhitePawnMoves;
 
 public abstract class AbstractPosition implements Position {
 
+   protected long     auxiliaryState;
+
    protected Bitboard white;
    protected Bitboard black;
 
    protected AbstractPosition(
+         long auxiliaryState,
          long whiteKings,
          long whiteQueens,
          long whiteRooks,
@@ -33,6 +36,7 @@ public abstract class AbstractPosition implements Position {
          long blackPawns,
          long blackCastling,
          long blackEnpassant) {
+      this.auxiliaryState= auxiliaryState;
       this.white= new Bitboard(
             true,
             this,
@@ -58,8 +62,10 @@ public abstract class AbstractPosition implements Position {
    }
 
    protected AbstractPosition(
+         long auxiliaryState,
          Bitboard white,
          Bitboard black) {
+      this.auxiliaryState= auxiliaryState;
       this.white= new Bitboard(
             true,
             this,
@@ -85,6 +91,7 @@ public abstract class AbstractPosition implements Position {
    }
 
    public abstract Position pushMove(
+         long auxiliaryState,
          Bitboard white,
          Bitboard black);
 
@@ -115,19 +122,29 @@ public abstract class AbstractPosition implements Position {
       }
    }
 
-   public Position move(
-         long from,
-         long to) {
-      return this.move(
-            from,
-            to,
-            PromotionPiece.NONE);
-   }
+   //   public Position move(
+   //         long from,
+   //         long to) {
+   //      return this.move(new Move(
+   //            from,
+   //            to,
+   //            PromotionPiece.NONE));
+   //   }
+   //
+   //   public Position move(
+   //         long from,
+   //         long to,
+   //         int promotionPiece) {
+   //      return this.move(new Move(
+   //            from,
+   //            to,
+   //            promotionPiece));
+   //   }
 
    public Position move(
-         long from,
-         long to,
-         int promotionPiece) {
+         Move move) {
+
+      long auxiliaryState= this.auxiliaryState;
 
       long whiteKings= this.getWhite().kings;
       long whiteQueens= this.getWhite().queens;
@@ -148,17 +165,17 @@ public abstract class AbstractPosition implements Position {
       long blackEnpassant= this.getBlack().enpassant;
 
       if (this.getWhite().isAnyPieceOnPosition(
-            from)) {
+            move.from)) {
          // Move the the piece...
          if (this.getWhite().isKing(
-               from)) {
-            whiteKings&= ~from;
-            whiteKings|= to;
-            if (from == Square._E1) {
-               if (to == Square._C1) {
+               move.from)) {
+            whiteKings&= ~move.from;
+            whiteKings|= move.to;
+            if (move.from == Square._E1) {
+               if (move.to == Square._C1) {
                   whiteRooks&= ~Square._A1;
                   whiteRooks|= Square._D1;
-               } else if (to == Square._G1) {
+               } else if (move.to == Square._G1) {
                   whiteRooks&= ~Square._H1;
                   whiteRooks|= Square._F1;
                }
@@ -167,111 +184,111 @@ public abstract class AbstractPosition implements Position {
             blackEnpassant= Square._EMPTY_BOARD;
             whiteCastling= Square._EMPTY_BOARD;
          } else if (this.getWhite().isQueen(
-               from)) {
-            whiteQueens&= ~from;
-            whiteQueens|= to;
+               move.from)) {
+            whiteQueens&= ~move.from;
+            whiteQueens|= move.to;
             whiteEnpassant= Square._EMPTY_BOARD;
             blackEnpassant= Square._EMPTY_BOARD;
          } else if (this.getWhite().isRook(
-               from)) {
-            whiteRooks&= ~from;
-            whiteRooks|= to;
+               move.from)) {
+            whiteRooks&= ~move.from;
+            whiteRooks|= move.to;
             whiteEnpassant= Square._EMPTY_BOARD;
             blackEnpassant= Square._EMPTY_BOARD;
-            whiteCastling= ~(~whiteCastling | from);
+            whiteCastling= ~(~whiteCastling | move.from);
          } else if (this.getWhite().isBishop(
-               from)) {
-            whiteBishops&= ~from;
-            whiteBishops|= to;
+               move.from)) {
+            whiteBishops&= ~move.from;
+            whiteBishops|= move.to;
             whiteEnpassant= Square._EMPTY_BOARD;
             blackEnpassant= Square._EMPTY_BOARD;
          } else if (this.getWhite().isKnight(
-               from)) {
-            whiteKnights&= ~from;
-            whiteKnights|= to;
+               move.from)) {
+            whiteKnights&= ~move.from;
+            whiteKnights|= move.to;
             whiteEnpassant= Square._EMPTY_BOARD;
             blackEnpassant= Square._EMPTY_BOARD;
          } else if (this.getWhite().isPawn(
-               from)) {
+               move.from)) {
 
             // First set en passant bits...
-            if (((from & Rank._2) != Square._EMPTY_BOARD)
-                  && (to & Rank._4) != Square._EMPTY_BOARD) {
+            if (((move.from & Rank._2) != Square._EMPTY_BOARD)
+                  && (move.to & Rank._4) != Square._EMPTY_BOARD) {
                whiteEnpassant= WhitePawnMoves.create().getPathsFrom(
-                     from);
+                     move.from);
             } else {
                whiteEnpassant= Square._EMPTY_BOARD;
             }
             blackEnpassant= Square._EMPTY_BOARD;
 
-            whitePawns&= ~from;
+            whitePawns&= ~move.from;
             // Check promotion
-            if ((~Rank._7 & from) == Squares._EMPTY_BOARD) {
-               switch (promotionPiece) {
+            if ((~Rank._7 & move.from) == Squares._EMPTY_BOARD) {
+               switch (move.promotionPiece) {
                   case PromotionPiece.QUEEN:
-                     whiteQueens|= to;
+                     whiteQueens|= move.to;
                      break;
                   case PromotionPiece.ROOK:
-                     whiteRooks|= to;
+                     whiteRooks|= move.to;
                      break;
                   case PromotionPiece.BISHOP:
-                     whiteBishops|= to;
+                     whiteBishops|= move.to;
                      break;
                   case PromotionPiece.KNIGHT:
-                     whiteKnights|= to;
+                     whiteKnights|= move.to;
                      break;
                }
             } else {
-               whitePawns|= to;
+               whitePawns|= move.to;
             }
          }
 
          //... and clear any captures
          if (this.getBlack().isAnyPieceOnPosition(
-               to)) {
+               move.to)) {
             if (this.getBlack().isQueen(
-                  to)) {
-               blackQueens&= ~to;
+                  move.to)) {
+               blackQueens&= ~move.to;
             } else if (this.getBlack().isRook(
-                  to)) {
-               blackRooks&= ~to;
-               blackCastling&= ~to;
+                  move.to)) {
+               blackRooks&= ~move.to;
+               blackCastling&= ~move.to;
             } else if (this.getBlack().isBishop(
-                  to)) {
-               blackBishops&= ~to;
+                  move.to)) {
+               blackBishops&= ~move.to;
             } else if (this.getBlack().isKnight(
-                  to)) {
-               blackKnights&= ~to;
+                  move.to)) {
+               blackKnights&= ~move.to;
             } else if (this.getBlack().isPawn(
-                  to)) {
-               blackPawns&= ~to;
+                  move.to)) {
+               blackPawns&= ~move.to;
             }
          }
 
          // ... and clear any enpassant captures
          if (this.getBlack().isEnpassant(
-               to)
+               move.to)
                && this.getWhite().isPawn(
-                     from)
-               && ((to & Rank._6) != Square._EMPTY_BOARD)) {
+                     move.from)
+               && ((move.to & Rank._6) != Square._EMPTY_BOARD)) {
             blackPawns= blackPawns
                   ^ (this.getBlack().enpassant ^ (this.getBlack().enpassant & WhitePawnCaptures
                         .create().getPathsFrom(
-                              from)));
+                              move.from)));
          }
 
       } else if (this.getBlack().isAnyPieceOnPosition(
-            from)) {
+            move.from)) {
          // Move the the piece...
          if (this.getBlack().isKing(
-               from)) {
-            blackKings&= ~from;
-            blackKings|= to;
-            if (from == Square._E8) {
-               if (to == Square._C8) {
+               move.from)) {
+            blackKings&= ~move.from;
+            blackKings|= move.to;
+            if (move.from == Square._E8) {
+               if (move.to == Square._C8) {
                   blackRooks&= ~Square._A8;
                   blackRooks|= Square._D8;
-               } else if (to == Square._G8) {
+               } else if (move.to == Square._G8) {
                   blackRooks&= ~Square._H8;
                   blackRooks|= Square._F8;
                }
@@ -280,103 +297,105 @@ public abstract class AbstractPosition implements Position {
             blackEnpassant= Square._EMPTY_BOARD;
             blackCastling= Square._EMPTY_BOARD;
          } else if (this.getBlack().isQueen(
-               from)) {
-            blackQueens&= ~from;
-            blackQueens|= to;
+               move.from)) {
+            blackQueens&= ~move.from;
+            blackQueens|= move.to;
             whiteEnpassant= Square._EMPTY_BOARD;
             blackEnpassant= Square._EMPTY_BOARD;
          } else if (this.getBlack().isRook(
-               from)) {
-            blackRooks&= ~from;
-            blackRooks|= to;
+               move.from)) {
+            blackRooks&= ~move.from;
+            blackRooks|= move.to;
             whiteEnpassant= Square._EMPTY_BOARD;
             blackEnpassant= Square._EMPTY_BOARD;
-            blackCastling= ~(~blackCastling | from);
+            blackCastling= ~(~blackCastling | move.from);
          } else if (this.getBlack().isBishop(
-               from)) {
-            blackBishops&= ~from;
-            blackBishops|= to;
+               move.from)) {
+            blackBishops&= ~move.from;
+            blackBishops|= move.to;
             whiteEnpassant= Square._EMPTY_BOARD;
             blackEnpassant= Square._EMPTY_BOARD;
          } else if (this.getBlack().isKnight(
-               from)) {
-            blackKnights&= ~from;
-            blackKnights|= to;
+               move.from)) {
+            blackKnights&= ~move.from;
+            blackKnights|= move.to;
             whiteEnpassant= Square._EMPTY_BOARD;
             blackEnpassant= Square._EMPTY_BOARD;
          } else if (this.getBlack().isPawn(
-               from)) {
+               move.from)) {
 
-            if (((from & Rank._7) != Square._EMPTY_BOARD)
-                  && ((to & Rank._5) != Square._EMPTY_BOARD)) {
+            if (((move.from & Rank._7) != Square._EMPTY_BOARD)
+                  && ((move.to & Rank._5) != Square._EMPTY_BOARD)) {
                blackEnpassant= BlackPawnMoves.create().getPathsFrom(
-                     from);
+                     move.from);
             } else {
                blackEnpassant= Square._EMPTY_BOARD;
             }
             whiteEnpassant= Square._EMPTY_BOARD;
 
-            blackPawns&= ~from;
-            if ((~Rank._2 & from) == Squares._EMPTY_BOARD) {
-               switch (promotionPiece) {
+            blackPawns&= ~move.from;
+            if ((~Rank._2 & move.from) == Squares._EMPTY_BOARD) {
+               switch (move.promotionPiece) {
                   case PromotionPiece.QUEEN:
-                     blackQueens|= to;
+                     blackQueens|= move.to;
                      break;
                   case PromotionPiece.ROOK:
-                     blackRooks|= to;
+                     blackRooks|= move.to;
                      break;
                   case PromotionPiece.BISHOP:
-                     blackBishops|= to;
+                     blackBishops|= move.to;
                      break;
                   case PromotionPiece.KNIGHT:
-                     blackKnights|= to;
+                     blackKnights|= move.to;
                      break;
                }
             } else {
-               blackPawns|= to;
+               blackPawns|= move.to;
             }
          }
 
          //... and clear any captures
          if (this.getWhite().isAnyPieceOnPosition(
-               to)) {
+               move.to)) {
             if (this.getWhite().isQueen(
-                  to)) {
-               whiteQueens&= ~to;
+                  move.to)) {
+               whiteQueens&= ~move.to;
             } else if (this.getWhite().isRook(
-                  to)) {
-               whiteRooks&= ~to;
-               whiteCastling&= ~to;
+                  move.to)) {
+               whiteRooks&= ~move.to;
+               whiteCastling&= ~move.to;
             } else if (this.getWhite().isBishop(
-                  to)) {
-               whiteBishops&= ~to;
+                  move.to)) {
+               whiteBishops&= ~move.to;
             } else if (this.getWhite().isKnight(
-                  to)) {
-               whiteKnights&= ~to;
+                  move.to)) {
+               whiteKnights&= ~move.to;
             } else if (this.getWhite().isPawn(
-                  to)) {
-               whitePawns&= ~to;
+                  move.to)) {
+               whitePawns&= ~move.to;
             } else if (this.getWhite().isEnpassant(
-                  to)) {
-               whitePawns&= ~to;
+                  move.to)) {
+               whitePawns&= ~move.to;
             }
          }
 
          // ... and clear any enpassant captures
          if (this.getWhite().isEnpassant(
-               to)
+               move.to)
                && this.getBlack().isPawn(
-                     from)
-               && ((to & Rank._3) != Square._EMPTY_BOARD)) {
+                     move.from)
+               && ((move.to & Rank._3) != Square._EMPTY_BOARD)) {
             whitePawns= whitePawns
                   ^ (this.getWhite().enpassant ^ (this.getWhite().enpassant & BlackPawnCaptures
                         .create().getPathsFrom(
-                              from)));
+                              move.from)));
          }
 
       }
 
-      return this.pushMove(
+  
+      Position newPosition= this.pushMove(
+            auxiliaryState,
             new Bitboard(
                   true,
                   this,
@@ -399,6 +418,17 @@ public abstract class AbstractPosition implements Position {
                   blackPawns,
                   blackCastling,
                   blackEnpassant));
+
+      // ... and then set any auxiliary position states
+
+//      //No.1: Draw by three times repetition..
+//      if (Draw.getInstance().by3Repetitions(
+//            newPosition)) {
+//         ((AbstractPosition)newPosition).auxiliaryState&= AuxiliaryState.DRAW_BY_THREE_TIMES_REPETITION;
+//      }
+
+      return newPosition;
+   
    }
 
    public boolean isLegalMove(
@@ -430,4 +460,9 @@ public abstract class AbstractPosition implements Position {
             from)) { return ((Rank._2 & from) != Square._EMPTY_BOARD); }
       return false;
    }
+
+   public boolean isDrawByThreeTimesRepetition() {
+      return ((this.auxiliaryState & AuxiliaryState.DRAW_BY_THREE_TIMES_REPETITION) != AuxiliaryState.NO_AUXILIARY_STATE);
+   }
+
 }

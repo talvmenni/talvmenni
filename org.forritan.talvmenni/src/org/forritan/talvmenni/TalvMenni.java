@@ -2,13 +2,11 @@ package org.forritan.talvmenni;
 
 import java.io.IOException;
 
+import org.forritan.talvmenni.knowledge.Draw;
 import org.forritan.talvmenni.knowledge.TheoryBook;
 import org.forritan.talvmenni.knowledge.Transposition;
 import org.forritan.talvmenni.search.PrincipalVariation;
-import org.forritan.talvmenni.strategy.IterativeDeepeningAlphaBetaStrategy;
 import org.forritan.talvmenni.strategy.IterativeDeepeningAlphaBetaWithQuiescentAndTranspositionTableStrategy;
-import org.forritan.talvmenni.strategy.IterativeDeepeningAlphaBetaWithTranspositionTableStrategy;
-import org.forritan.talvmenni.strategy.IterativeDeepeningMTDfWithTranspositionTableStrategy;
 import org.forritan.talvmenni.ui.DebugWindow;
 
 import edu.emory.mathcs.util.concurrent.PlainThreadFactory;

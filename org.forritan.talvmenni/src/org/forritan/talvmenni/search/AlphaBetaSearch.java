@@ -14,6 +14,12 @@ import org.forritan.talvmenni.search.PrincipalVariation.Thinking;
 
 public class AlphaBetaSearch implements Search {
 
+   private int lastScore;
+
+   public int getLastScore() {
+      return this.lastScore;
+   }
+
    private PrincipalVariation pv;
    private HistoryHeuristic   historyHeuristic;
    private int                ply;
@@ -63,9 +69,9 @@ public class AlphaBetaSearch implements Search {
       // Integer.MIN_VALUE ==
       // -Integer.MIN_VALUE
 
-      int beta= Integer.MAX_VALUE;
+      // int beta= Integer.MAX_VALUE;
       // If checkmate there is no need to search further...
-      // int beta= Evaluation.CHECKMATE_SCORE;
+      int beta= Evaluation.CHECKMATE_SCORE;
 
       int result= this.alphaBeta(
             p,
@@ -74,6 +80,8 @@ public class AlphaBetaSearch implements Search {
             this.ply,
             alpha,
             beta);
+      
+      this.lastScore= result;
 
       time+= System.currentTimeMillis();
 
@@ -128,10 +136,7 @@ public class AlphaBetaSearch implements Search {
 
                int movesSearchedBefore= this.movesSearched;
                long moveTime= -System.currentTimeMillis();
-               p= p.move(
-                     move.from,
-                     move.to,
-                     move.promotionPiece);
+               p= p.move(move);
                if (best > alpha) {
                   alpha= best;
                }

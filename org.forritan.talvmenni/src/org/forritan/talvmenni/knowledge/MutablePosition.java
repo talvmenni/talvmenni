@@ -6,10 +6,11 @@ import org.forritan.talvmenni.knowledge.Position.Bitboard;
 
 
 public class MutablePosition extends AbstractPosition {
-   
+
+   Stack auxiliaryStates;
    Stack whiteBitboards;
    Stack blackBitboards;
-   
+
    /**
     * 
     * @param whiteKings
@@ -30,6 +31,7 @@ public class MutablePosition extends AbstractPosition {
     * @param blackEnpassant
     */
    protected MutablePosition(
+         long auxiliaryState,
          long whiteKings,
          long whiteQueens,
          long whiteRooks,
@@ -47,6 +49,7 @@ public class MutablePosition extends AbstractPosition {
          long blackCastling,
          long blackEnpassant) {
       super(
+            auxiliaryState,
             whiteKings,
             whiteQueens,
             whiteRooks,
@@ -63,6 +66,7 @@ public class MutablePosition extends AbstractPosition {
             blackPawns,
             blackCastling,
             blackEnpassant);
+      this.auxiliaryStates= new Stack();
       this.whiteBitboards= new Stack();
       this.blackBitboards= new Stack();
    }
@@ -72,34 +76,46 @@ public class MutablePosition extends AbstractPosition {
     * @param black
     */
    protected MutablePosition(
+         long auxiliaryState,
          Bitboard white,
          Bitboard black) {
       super(
+            auxiliaryState,
             white,
             black);
+      this.auxiliaryStates= new Stack();
       this.whiteBitboards= new Stack();
       this.blackBitboards= new Stack();
    }
 
    public Position pushMove(
+         long auxiliaryState,
          Bitboard white,
          Bitboard black) {
-      
+
+      this.auxiliaryStates.push(new Long(this.auxiliaryState));
       this.whiteBitboards.push(this.white);
       this.blackBitboards.push(this.black);
+      this.auxiliaryState= auxiliaryState;
       this.white= white;
       this.black= black;
       return this;
    }
-   
+
    public Position popMove() {
+      this.auxiliaryState= ((Long)this.auxiliaryStates.pop()).longValue();
       this.white= (Bitboard) this.whiteBitboards.pop();
       this.black= (Bitboard) this.blackBitboards.pop();
       return this;
    }
 
    public Position getImmutable() {
-      return Position.Factory.create(false, false, this.getWhite(), this.getBlack());
+      return Position.Factory.create(
+            false,
+            false,
+            this.auxiliaryState,
+            this.getWhite(),
+            this.getBlack());
    }
 
    public Position getMutable() {
