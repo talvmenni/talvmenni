@@ -195,7 +195,16 @@ public class ChessEngine implements Runnable {
             Iterator<Long> moves= new BitboardIterator(possibleMoves);
             while (moves.hasNext()) {
                long toSquare= moves.next().longValue();
-               result.add(new Move(this.currentPosition, fromSquare, toSquare));
+               Move move= new Move(this.currentPosition, fromSquare, toSquare);
+               if(this.isWhiteToMove()) {
+                  if(!move.toPosition.white.isChecked()) {
+                     result.add(move);
+                  } 
+               } else {
+                  if(!move.toPosition.black.isChecked()) {
+                     result.add(move);                  
+                  }
+               }
             }
             
          }
@@ -207,9 +216,17 @@ public class ChessEngine implements Runnable {
             Iterator<Long> moves= new BitboardIterator(possibleMoves);
             while (moves.hasNext()) {
                long toSquare= moves.next().longValue();
-               result.add(new Move(this.currentPosition, fromSquare, toSquare));
+               Move move= new Move(this.currentPosition, fromSquare, toSquare);
+               if(this.isWhiteToMove()) {
+                  if(!move.toPosition.white.isChecked()) {
+                     result.add(move);
+                  } 
+               } else {
+                  if(!move.toPosition.black.isChecked()) {
+                     result.add(move);                  
+                  }
+               }
             }
-            
          }
          
          Iterator<Long> rooks= board.rooksIterator(); 
@@ -219,9 +236,17 @@ public class ChessEngine implements Runnable {
             Iterator<Long> moves= new BitboardIterator(possibleMoves);
             while (moves.hasNext()) {
                long toSquare= moves.next().longValue();
-               result.add(new Move(this.currentPosition, fromSquare, toSquare));
+               Move move= new Move(this.currentPosition, fromSquare, toSquare);
+               if(this.isWhiteToMove()) {
+                  if(!move.toPosition.white.isChecked()) {
+                     result.add(move);
+                  } 
+               } else {
+                  if(!move.toPosition.black.isChecked()) {
+                     result.add(move);                  
+                  }
+               }
             }
-            
          }
          
          Iterator<Long> bishops= board.bishopsIterator(); 
@@ -231,9 +256,17 @@ public class ChessEngine implements Runnable {
             Iterator<Long> moves= new BitboardIterator(possibleMoves);
             while (moves.hasNext()) {
                long toSquare= moves.next().longValue();
-               result.add(new Move(this.currentPosition, fromSquare, toSquare));
+               Move move= new Move(this.currentPosition, fromSquare, toSquare);
+               if(this.isWhiteToMove()) {
+                  if(!move.toPosition.white.isChecked()) {
+                     result.add(move);
+                  } 
+               } else {
+                  if(!move.toPosition.black.isChecked()) {
+                     result.add(move);                  
+                  }
+               }
             }
-            
          }
          
          Iterator<Long> knights= board.knightsIterator(); 
@@ -243,9 +276,17 @@ public class ChessEngine implements Runnable {
             Iterator<Long> moves= new BitboardIterator(possibleMoves);
             while (moves.hasNext()) {
                long toSquare= moves.next().longValue();
-               result.add(new Move(this.currentPosition, fromSquare, toSquare));
+               Move move= new Move(this.currentPosition, fromSquare, toSquare);
+               if(this.isWhiteToMove()) {
+                  if(!move.toPosition.white.isChecked()) {
+                     result.add(move);
+                  } 
+               } else {
+                  if(!move.toPosition.black.isChecked()) {
+                     result.add(move);                  
+                  }
+               }
             }
-            
          }
          
          Iterator<Long> pawns= board.pawnsIterator();
@@ -260,9 +301,17 @@ public class ChessEngine implements Runnable {
             Iterator<Long> moves= new BitboardIterator(possibleMoves);
             while (moves.hasNext()) {
                long toSquare= moves.next().longValue();
-               result.add(new Move(this.currentPosition, fromSquare, toSquare));
+               Move move= new Move(this.currentPosition, fromSquare, toSquare);
+               if(this.isWhiteToMove()) {
+                  if(!move.toPosition.white.isChecked()) {
+                     result.add(move);
+                  } 
+               } else {
+                  if(!move.toPosition.black.isChecked()) {
+                     result.add(move);                  
+                  }
+               }
             }
-            
          }
          return result;          
       }

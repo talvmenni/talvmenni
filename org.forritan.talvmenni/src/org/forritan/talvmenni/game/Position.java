@@ -531,6 +531,16 @@ public class Position {
                | this.pawns;
       }
 
+      public boolean isChecked() {
+         long allSquaresUnderAttackByOppositionPieces;
+         if(this.white) {
+            allSquaresUnderAttackByOppositionPieces= this.parent.getAllSquaresAttackedByBlackCaptureMove();
+         } else {
+            allSquaresUnderAttackByOppositionPieces= this.parent.getAllSquaresAttackedByWhiteCaptureMove();
+         }
+         return (allSquaresUnderAttackByOppositionPieces & this.kings) != Squares._EMPTY_BOARD;
+      }
+      
       public Iterator<Long> allPiecesIterator() {
          return new BitboardIterator(
                this.allPieces);

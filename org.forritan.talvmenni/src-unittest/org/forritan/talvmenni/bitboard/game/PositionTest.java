@@ -639,7 +639,7 @@ public class PositionTest extends TestCase {
                   + // A5-H5
                   "00000000"
                   + // A4-H4
-                  "11111111"
+                  "10100101"
                   + // A3-H3
                   "00000000"
                   + // A2-H2
@@ -655,7 +655,7 @@ public class PositionTest extends TestCase {
                   + // A8-H8
                   "00000000"
                   + // A7-H7
-                  "11111111"
+                  "10100101"
                   + // A6-H6
                   "00000000"
                   + // A5-H5
