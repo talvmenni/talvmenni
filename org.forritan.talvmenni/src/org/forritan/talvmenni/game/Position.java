@@ -241,6 +241,35 @@ public class Position {
                this.pawns);
       }
 
+      public boolean isAnyPieceOnPosition(long position) {
+         return ((this.allPieces & position) != 0L);
+      }
+      
+      public boolean isKing(long position) {
+         return ((this.king & position) != 0L);
+      }
+
+      public boolean isQueen(long position) {
+         return ((this.queen & position) != 0L);
+      }
+
+      public boolean isRook(long position) {
+         return ((this.rooks & position) != 0L);
+      }
+
+      public boolean isBishop(long position) {
+         return ((this.bishops & position) != 0L);
+      }
+
+      public boolean isKnight(long position) {
+         return ((this.knights & position) != 0L);
+      }
+
+      public boolean isPawn(long position) {
+         return ((this.pawns & position) != 0L);
+      }
+
+
       private class BitboardIterator implements Iterator {
 
          private long bitboard;

@@ -66,9 +66,7 @@ public class PositionTest extends TestCase {
             ((piece ^ Square._H1) == 0L));
       Assert.assertTrue(
             "And the piece should be a rook",
-            Rules.isRook(
-                  p.white,
-                  piece));
+            p.white.isRook(piece));
 
       Assert.assertTrue(allWhitePieces.hasNext());
       piece= ((Long) allWhitePieces.next()).longValue();
@@ -77,9 +75,7 @@ public class PositionTest extends TestCase {
             ((piece ^ Square._G1) == 0L));
       Assert.assertTrue(
             "And the piece should be a knight",
-            Rules.isKnight(
-                  p.white,
-                  piece));
+            p.white.isKnight(piece));
 
       Assert.assertTrue(allWhitePieces.hasNext());
       piece= ((Long) allWhitePieces.next()).longValue();
@@ -88,9 +84,7 @@ public class PositionTest extends TestCase {
             ((piece ^ Square._F1) == 0L));
       Assert.assertTrue(
             "And the piece should be a bishop",
-            Rules.isBishop(
-                  p.white,
-                  piece));
+            p.white.isBishop(piece));
 
       Assert.assertTrue(allWhitePieces.hasNext());
       piece= ((Long) allWhitePieces.next()).longValue();
@@ -99,9 +93,7 @@ public class PositionTest extends TestCase {
             ((piece ^ Square._E1) == 0L));
       Assert.assertTrue(
             "And the piece should be a king",
-            Rules.isKing(
-                  p.white,
-                  piece));
+            p.white.isKing(piece));
 
       Assert.assertTrue(allWhitePieces.hasNext());
       piece= ((Long) allWhitePieces.next()).longValue();
@@ -110,9 +102,7 @@ public class PositionTest extends TestCase {
             ((piece ^ Square._D1) == 0L));
       Assert.assertTrue(
             "And the piece should be a queen",
-            Rules.isQueen(
-                  p.white,
-                  piece));
+            p.white.isQueen(piece));
 
       Assert.assertTrue(allWhitePieces.hasNext());
       piece= ((Long) allWhitePieces.next()).longValue();
@@ -121,9 +111,7 @@ public class PositionTest extends TestCase {
             ((piece ^ Square._C1) == 0L));
       Assert.assertTrue(
             "And the piece should be a bishop",
-            Rules.isBishop(
-                  p.white,
-                  piece));
+            p.white.isBishop(piece));
 
       Assert.assertTrue(allWhitePieces.hasNext());
       piece= ((Long) allWhitePieces.next()).longValue();
@@ -132,9 +120,7 @@ public class PositionTest extends TestCase {
             ((piece ^ Square._B1) == 0L));
       Assert.assertTrue(
             "And the piece should be a knight",
-            Rules.isKnight(
-                  p.white,
-                  piece));
+            p.white.isKnight(piece));
 
       Assert.assertTrue(allWhitePieces.hasNext());
       piece= ((Long) allWhitePieces.next()).longValue();
@@ -143,9 +129,7 @@ public class PositionTest extends TestCase {
             ((piece ^ Square._A1) == 0L));
       Assert.assertTrue(
             "And the piece should be a rook",
-            Rules.isRook(
-                  p.white,
-                  piece));
+            p.white.isRook(piece));
 
       Assert.assertTrue(allWhitePieces.hasNext());
       piece= ((Long) allWhitePieces.next()).longValue();
@@ -154,9 +138,7 @@ public class PositionTest extends TestCase {
             ((piece ^ Square._H2) == 0L));
       Assert.assertTrue(
             "And the piece should be a pawn",
-            Rules.isPawn(
-                  p.white,
-                  piece));
+            p.white.isPawn(piece));
 
       Assert.assertTrue(allWhitePieces.hasNext());
       piece= ((Long) allWhitePieces.next()).longValue();
@@ -165,9 +147,7 @@ public class PositionTest extends TestCase {
             ((piece ^ Square._G2) == 0L));
       Assert.assertTrue(
             "And the piece should be a pawn",
-            Rules.isPawn(
-                  p.white,
-                  piece));
+            p.white.isPawn(piece));
 
       Assert.assertTrue(allWhitePieces.hasNext());
       piece= ((Long) allWhitePieces.next()).longValue();
@@ -176,9 +156,7 @@ public class PositionTest extends TestCase {
             ((piece ^ Square._F2) == 0L));
       Assert.assertTrue(
             "And the piece should be a pawn",
-            Rules.isPawn(
-                  p.white,
-                  piece));
+            p.white.isPawn(piece));
 
       Assert.assertTrue(allWhitePieces.hasNext());
       piece= ((Long) allWhitePieces.next()).longValue();
@@ -187,9 +165,7 @@ public class PositionTest extends TestCase {
             ((piece ^ Square._E2) == 0L));
       Assert.assertTrue(
             "And the piece should be a pawn",
-            Rules.isPawn(
-                  p.white,
-                  piece));
+            p.white.isPawn(piece));
 
       Assert.assertTrue(allWhitePieces.hasNext());
       piece= ((Long) allWhitePieces.next()).longValue();
@@ -198,9 +174,7 @@ public class PositionTest extends TestCase {
             ((piece ^ Square._D2) == 0L));
       Assert.assertTrue(
             "And the piece should be a pawn",
-            Rules.isPawn(
-                  p.white,
-                  piece));
+            p.white.isPawn(piece));
 
       Assert.assertTrue(allWhitePieces.hasNext());
       piece= ((Long) allWhitePieces.next()).longValue();
@@ -209,9 +183,7 @@ public class PositionTest extends TestCase {
             ((piece ^ Square._C2) == 0L));
       Assert.assertTrue(
             "And the piece should be a pawn",
-            Rules.isPawn(
-                  p.white,
-                  piece));
+            p.white.isPawn(piece));
 
       Assert.assertTrue(allWhitePieces.hasNext());
       piece= ((Long) allWhitePieces.next()).longValue();
@@ -220,9 +192,7 @@ public class PositionTest extends TestCase {
             ((piece ^ Square._B2) == 0L));
       Assert.assertTrue(
             "And the piece should be a pawn",
-            Rules.isPawn(
-                  p.white,
-                  piece));
+            p.white.isPawn(piece));
 
       Assert.assertTrue(allWhitePieces.hasNext());
       piece= ((Long) allWhitePieces.next()).longValue();
@@ -231,12 +201,144 @@ public class PositionTest extends TestCase {
             ((piece ^ Square._A2) == 0L));
       Assert.assertTrue(
             "And the piece should be a pawn",
-            Rules.isPawn(
-                  p.white,
-                  piece));
+            p.white.isPawn(piece));
 
       Assert.assertTrue(!allWhitePieces.hasNext());
 
    }
 
+   public void testIsPawnAtInitialPosition() {
+      Position p= Position.createInitial();
+      Assert.assertTrue(
+            "Should be white pawn",
+            p.white.isPawn(Square._A2));
+      Assert.assertTrue(
+            "Should be black pawn",
+            p.black.isPawn(Square._A7));
+      Assert.assertTrue(
+            "Should be white pawn",
+            p.white.isPawn(Square._B2));
+      Assert.assertTrue(
+            "Should be black pawn",
+            p.black.isPawn(Square._B7));
+      Assert.assertTrue(
+            "Should be white pawn",
+            p.white.isPawn(Square._C2));
+      Assert.assertTrue(
+            "Should be black pawn",
+            p.black.isPawn(Square._C7));
+      Assert.assertTrue(
+            "Should be white pawn",
+            p.white.isPawn(Square._D2));
+      Assert.assertTrue(
+            "Should be black pawn",
+            p.black.isPawn(Square._D7));
+      Assert.assertTrue(
+            "Should be white pawn",
+            p.white.isPawn(Square._E2));
+      Assert.assertTrue(
+            "Should be black pawn",
+            p.black.isPawn(Square._E7));
+      Assert.assertTrue(
+            "Should be white pawn",
+            p.white.isPawn(Square._F2));
+      Assert.assertTrue(
+            "Should be black pawn",
+            p.black.isPawn(Square._F7));
+      Assert.assertTrue(
+            "Should be white pawn",
+            p.white.isPawn(Square._G2));
+      Assert.assertTrue(
+            "Should be black pawn",
+            p.black.isPawn(Square._G7));
+      Assert.assertTrue(
+            "Should be white pawn",
+            p.white.isPawn(Square._H2));
+      Assert.assertTrue(
+            "Should be black pawn",
+            p.black.isPawn(Square._H7));
+   }
+
+   public void testIsKingAtInitialPosition() {
+      Position p= Position.createInitial();
+      Assert.assertTrue(
+            "Should be white king",
+            p.white.isKing(Square._E1));
+      Assert.assertTrue(
+            "Should not be white king",
+            !p.white.isKing(Square._A1));
+      Assert.assertTrue(
+            "Should be black king",
+            p.black.isKing(Square._E8));
+      Assert.assertTrue(
+            "Should not be black king",
+            !p.black.isKing(Square._A1));
+   }
+
+   public void testIsQueenAtInitialPosition() {
+      Position p= Position.createInitial();
+      Assert.assertTrue(
+            "Should be white queen",
+            p.white.isQueen(Square._D1));
+      Assert.assertTrue(
+            "Should not be white queen",
+            !p.white.isQueen(Square._A1));
+      Assert.assertTrue(
+            "Should be black queen",
+            p.black.isQueen(Square._D8));
+      Assert.assertTrue(
+            "Should not be black queen",
+            !p.black.isQueen(Square._A1));
+   }
+
+   public void testIsRookAtInitialPosition() {
+      Position p= Position.createInitial();
+      Assert.assertTrue(
+            "Should be white rook",
+            p.white.isRook(Square._A1));
+      Assert.assertTrue(
+            "Should be white rook",
+            p.white.isRook(Square._H1));
+
+      Assert.assertTrue(
+            "Should be black rook",
+            p.black.isRook(Square._A8));
+      Assert.assertTrue(
+            "Should be black rook",
+            p.black.isRook(Square._H8));
+   }
+
+   public void testIsBishopAtInitialPosition() {
+      Position p= Position.createInitial();
+      Assert.assertTrue(
+            "Should be white bishop",
+            p.white.isBishop(Square._C1));
+      Assert.assertTrue(
+            "Should be white bishop",
+            p.white.isBishop(Square._F1));
+
+      Assert.assertTrue(
+            "Should be black bishop",
+            p.black.isBishop(Square._C8));
+      Assert.assertTrue(
+            "Should be black bishop",
+            p.black.isBishop(Square._F8));
+   }
+
+   public void testIsKnightAtInitialPosition() {
+      Position p= Position.createInitial();
+      Assert.assertTrue(
+            "Should be white knight",
+            p.white.isKnight(Square._B1));
+      Assert.assertTrue(
+            "Should be white knight",
+            p.white.isKnight(Square._G1));
+
+      Assert.assertTrue(
+            "Should be black knight",
+            p.black.isKnight(Square._B8));
+      Assert.assertTrue(
+            "Should be black knight",
+            p.black.isKnight(Square._G8));
+   }
 }
