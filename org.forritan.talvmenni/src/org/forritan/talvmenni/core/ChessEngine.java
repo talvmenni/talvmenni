@@ -13,7 +13,8 @@ import java.util.concurrent.ThreadFactory;
 
 import org.forritan.talvmenni.bitboard.Square;
 import org.forritan.talvmenni.bitboard.Squares;
-import org.forritan.talvmenni.game.ImmutablePosition;
+import org.forritan.talvmenni.bitboard.paths.BlackPawnMoves;
+import org.forritan.talvmenni.bitboard.paths.WhitePawnMoves;
 import org.forritan.talvmenni.game.Move;
 import org.forritan.talvmenni.game.MoveHistory;
 import org.forritan.talvmenni.game.Position;
@@ -146,7 +147,7 @@ public class ChessEngine extends Observable implements Runnable {
 //         try {
 //            // InStreamHandler is blocking on System.in, so we close it, so that
 //            // the InStreamHandler thread gets interrupted.
-//            System.in.close(); 
+//            System.in.close();
 //         } catch (IOException e) {} // just exit quietly...
       }
 
@@ -196,22 +197,22 @@ public class ChessEngine extends Observable implements Runnable {
       
       public synchronized void setPositionFromFEN(String FENString)
       {
-         long whiteKings = 0L;
-         long whiteQueens= 0L; 
-         long whiteRooks = 0L;
-         long whiteBishops = 0L;
-         long whiteKnights = 0L;
-         long whitePawns = 0L;
-         long whiteCastling = 0L;
-         long whiteEnpassant = 0L;
-         long blackKings = 0L;
-         long blackQueens = 0L;
-         long blackRooks = 0L;
-         long blackBishops = 0L;
-         long blackKnights = 0L;
-         long blackPawns = 0L;
-         long blackCastling = 0L;
-         long blackEnpassant = 0L;
+         long whiteKings = Square._EMPTY_BOARD;
+         long whiteQueens= Square._EMPTY_BOARD; 
+         long whiteRooks = Square._EMPTY_BOARD;
+         long whiteBishops = Square._EMPTY_BOARD;
+         long whiteKnights = Square._EMPTY_BOARD;
+         long whitePawns = Square._EMPTY_BOARD;
+         long whiteCastling = Square._EMPTY_BOARD;
+         long whiteEnpassant = Square._EMPTY_BOARD;
+         long blackKings = Square._EMPTY_BOARD;
+         long blackQueens = Square._EMPTY_BOARD;
+         long blackRooks = Square._EMPTY_BOARD;
+         long blackBishops = Square._EMPTY_BOARD;
+         long blackKnights = Square._EMPTY_BOARD;
+         long blackPawns = Square._EMPTY_BOARD;
+         long blackCastling = Square._EMPTY_BOARD;
+         long blackEnpassant = Square._EMPTY_BOARD;
          
          Square square2= Squares.create();
          long sq;
@@ -236,34 +237,34 @@ public class ChessEngine extends Observable implements Runnable {
              } else {
                  int square = y * 8 + x;
                  sq= square2.getSquare(square);
+                                  
+                 if (activeChar=='r') {
+                    blackRooks |= sq;
+                 } else if (activeChar=='R') {
+                    whiteRooks |= sq;
+                 } else if (activeChar=='b') {
+                    blackBishops |= sq;
+                 } else if (activeChar=='B') {
+                    whiteBishops |= sq;
+                 } else if (activeChar=='q') {
+                    blackQueens |= sq;
+                 } else if (activeChar=='Q') {
+                    whiteQueens |= sq;
+                 } else if (activeChar=='k') {
+                    blackKings |= sq;
+                 } else if (activeChar=='K') {
+                    whiteKings |= sq;
+                 } else if (activeChar=='n') {
+                    blackKnights |= sq;
+                 } else if (activeChar=='N') {
+                    whiteKnights |= sq;
+                 } else if (activeChar=='p') {
+                    blackPawns |= sq;
+                 } else if (activeChar=='P') {
+                    whitePawns |= sq;
+                 }
                  
-                 
-             if (activeChar=='r')
-             	blackRooks |= sq;
-             if (activeChar=='R')
-              	whiteRooks |= sq;
-             if (activeChar=='b')
-              	blackBishops |= sq;
-             if (activeChar=='B')
-            	whiteBishops |= sq;
-             if (activeChar=='q')
-              	blackQueens |= sq;
-             if (activeChar=='Q')
-              	whiteQueens |= sq;
-             if (activeChar=='k')
-              	blackKings |= sq;
-             if (activeChar=='K')
-              	whiteKings |= sq;
-             if (activeChar=='n')
-              	blackKnights |= sq;
-             if (activeChar=='N')
-             	whiteKnights |= sq;
-             if (activeChar=='p')
-              	blackPawns |= sq;
-             if (activeChar=='P')
-              	whitePawns |= sq;
-             
-             x++;
+                 x++;
              }           
          }         
 
@@ -271,8 +272,7 @@ public class ChessEngine extends Observable implements Runnable {
             if (st.nextToken().equals("w")) 
                this.whiteToMove();
             else
-               this.blackToMove();
-               
+               this.blackToMove();               
         } else {
            this.whiteToMove();
         }
@@ -283,45 +283,64 @@ public class ChessEngine extends Observable implements Runnable {
             for (int pos = 0; pos < castlingString.length(); pos++) {
                char activeChar = castlingString.charAt(pos);
                if (activeChar == 'K') {
-                  whiteCastling = whiteCastling | Square._E1;
-                  whiteCastling = whiteCastling | Square._H1;
+                  whiteCastling |= Square._E1;
+                  whiteCastling |= Square._H1;
                }
                if (activeChar == 'Q') {
-                  whiteCastling = whiteCastling | Square._E1;
-                  whiteCastling = whiteCastling | Square._A1;
+                  whiteCastling |= Square._E1;
+                  whiteCastling |= Square._A1;
                }
                if (activeChar == 'k') {
-                  blackCastling = whiteCastling | Square._E8;
-                  blackCastling = blackCastling | Square._H8;
+                  blackCastling |= Square._E8;
+                  blackCastling |= Square._H8;
                }
                if (activeChar == 'q') {
-                  blackCastling = whiteCastling | Square._E8;
-                  blackCastling = blackCastling | Square._A8;
+                  blackCastling |= Square._E8;
+                  blackCastling |= Square._A8;
                }
             }
         }
-
+         
          if (st.hasMoreTokens()) {
-            if (st.nextToken() != "-")
+            String targetSquareStr= st.nextToken().toUpperCase();
+            if (targetSquareStr != "-")
             {
-               Square square= Squares.create();
-               if (isWhiteToMove())
-               		{
-                  	//whiteEnpassant = square.getSquare(st.nextToken().toUpperCase());
-               		}
-               else
-               		{      
-                	//blackEnpassant = square.getSquare("A3");
-               		}
+               long targetSquare= Squares.create().getSquare(targetSquareStr);
+               if (isWhiteToMove()) {
+                     if((blackPawns & (targetSquare >> 8)) != Square._EMPTY_BOARD) {
+                        blackEnpassant=
+                           BlackPawnMoves.create().getPathsFrom(
+                                 (targetSquare << 8));
+                     }
+               } else {
+                  if((whitePawns & (targetSquare << 8)) != Square._EMPTY_BOARD) {
+                     whiteEnpassant=
+                        WhitePawnMoves.create().getPathsFrom(
+                              (targetSquare >> 8));
+                  }
+               }
             }
          }
  
-         Position FenPosition = ImmutablePosition.createImmutable(whiteKings, whiteQueens, whiteRooks, whiteBishops,
-               whiteKnights, whitePawns, whiteCastling, whiteEnpassant,
-               blackKings, blackQueens, blackRooks, blackBishops,
-               blackKnights, blackPawns, blackCastling, blackEnpassant);
-         
-         this.setCurrentPosition(FenPosition);
+         Position fenPosition = PositionFactory.createImmutable(
+               whiteKings,
+               whiteQueens,
+               whiteRooks,
+               whiteBishops,
+               whiteKnights,
+               whitePawns,
+               whiteCastling,
+               whiteEnpassant,
+               blackKings,
+               blackQueens,
+               blackRooks,
+               blackBishops,
+               blackKnights,
+               blackPawns,
+               blackCastling,
+               blackEnpassant);
+                  
+         this.setCurrentPosition(fenPosition);
       }
 
          

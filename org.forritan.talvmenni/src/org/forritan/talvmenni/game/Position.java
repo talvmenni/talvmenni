@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.forritan.talvmenni.bitboard.BitboardIterator;
+import org.forritan.talvmenni.bitboard.Rank;
 import org.forritan.talvmenni.bitboard.Square;
 import org.forritan.talvmenni.bitboard.Squares;
 import org.forritan.talvmenni.bitboard.attacks.Bishop;
@@ -14,8 +15,6 @@ import org.forritan.talvmenni.bitboard.attacks.Knight;
 import org.forritan.talvmenni.bitboard.attacks.Queen;
 import org.forritan.talvmenni.bitboard.attacks.Rook;
 import org.forritan.talvmenni.bitboard.attacks.WhitePawn;
-import org.forritan.talvmenni.core.ChessEngine;
-import org.forritan.talvmenni.ui.ConsoleProtocol;
 
 
 public interface Position {
@@ -248,6 +247,7 @@ public interface Position {
                 }
             }
          }
+        
          return this.possibleMoves;          
       }
    

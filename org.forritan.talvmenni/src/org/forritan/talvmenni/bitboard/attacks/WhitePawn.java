@@ -17,6 +17,12 @@ public class WhitePawn {
             square);
       result&= ~p.getWhite().allPieces;
       result&= p.getBlack().allPieces;
+
+      result |= ((WhitePawnCaptures.create().getPathsFrom(
+            square)
+            & p.getBlack().enpassant)
+            & Rank._6);
+
       return result;
    }
 
@@ -27,7 +33,8 @@ public class WhitePawn {
             square);
       result&= ~p.getBlack().allPieces;
       result&= ~p.getWhite().allPieces;
-      result&= ~(((p.getWhite().allPieces | p.getBlack().allPieces) & Rank._3 & (square << 8)) << 8);
+      result&= ~(((p.getWhite().allPieces | p.getBlack().allPieces)
+            & Rank._3 & (square << 8)) << 8);
       return result;
    }
 }

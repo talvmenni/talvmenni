@@ -3,6 +3,7 @@ package org.forritan.talvmenni.bitboard.attacks;
 import org.forritan.talvmenni.bitboard.Rank;
 import org.forritan.talvmenni.bitboard.paths.BlackPawnCaptures;
 import org.forritan.talvmenni.bitboard.paths.BlackPawnMoves;
+import org.forritan.talvmenni.bitboard.paths.WhitePawnCaptures;
 import org.forritan.talvmenni.game.ImmutablePosition;
 import org.forritan.talvmenni.game.Position;
 
@@ -17,6 +18,12 @@ public class BlackPawn {
             square);
       result&= ~p.getBlack().allPieces;
       result&= p.getWhite().allPieces;
+
+      result |= ((BlackPawnCaptures.create().getPathsFrom(
+            square)
+            & p.getWhite().enpassant)
+            & Rank._3);
+
       return result;
    }
 

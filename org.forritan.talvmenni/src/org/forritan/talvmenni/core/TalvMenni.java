@@ -12,7 +12,7 @@ import org.forritan.util.debug.ObjectStatisticsWindow;
 public class TalvMenni {
 
    public final static String NAME         = "Talvmenni";
-   public final static String VERSION      = "0.1";
+   public final static String VERSION      = "0.0.1";
 
    public static String       DEBUG_NAME;
 
