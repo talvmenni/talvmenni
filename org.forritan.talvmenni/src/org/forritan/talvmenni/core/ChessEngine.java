@@ -20,7 +20,8 @@ import org.forritan.talvmenni.game.MoveHistory;
 import org.forritan.talvmenni.game.Position;
 import org.forritan.talvmenni.game.PositionFactory;
 import org.forritan.talvmenni.game.Rules;
-import org.forritan.talvmenni.game.Strategy;
+import org.forritan.talvmenni.game.Transposition;
+import org.forritan.talvmenni.strategy.Strategy;
 import org.forritan.talvmenni.ui.ConsoleProtocol;
 import org.forritan.talvmenni.ui.UciProtocol;
 import org.forritan.talvmenni.ui.UiProtocol;
@@ -31,21 +32,23 @@ import org.forritan.util.debug.ObjectCreationStatistics;
 public class ChessEngine extends Observable implements Runnable {
    
    private Strategy            strategy;
+   private Transposition       transposition;
    private boolean             running;
    private Protocol            protocol;
    private ThreadFactory       threadFactory;
    private LinkedBlockingQueue<String> inMessages;
    private LinkedBlockingQueue<String> outMessages;
    private ProtocolHandler protocolHandler;
-
-   public static ChessEngine create(Strategy strategy) {
-      return new ChessEngine(strategy);
+   
+   public static ChessEngine create(Strategy strategy, Transposition transposition) {
+      return new ChessEngine(strategy, transposition);
    }
 
-   private ChessEngine(Strategy strategy) {
+   private ChessEngine(Strategy strategy, Transposition transposition) {
       this.running= false;
       this.protocol= new ProtocolImpl();
       this.strategy= strategy;
+      this.transposition= transposition;
       this.threadFactory= Executors.defaultThreadFactory();
       this.inMessages= new LinkedBlockingQueue<String>();
       this.outMessages= new LinkedBlockingQueue<String>();
@@ -92,6 +95,7 @@ public class ChessEngine extends Observable implements Runnable {
       public Move makeMove(long fromSquare, long toSquare, int promotionPiece);
       public Move makeNextMove();
       public Strategy getStrategy();
+      public Transposition getTransposition();
       public ObjectCreationStatistics getObjectCreationStatistics();
       public DebugInfo getDebugInfo();
    }
@@ -382,6 +386,10 @@ public class ChessEngine extends Observable implements Runnable {
 
       public synchronized Strategy getStrategy() {
          return ChessEngine.this.strategy;
+      }
+
+      public synchronized Transposition getTransposition() {
+         return ChessEngine.this.transposition;
       }
 
       public synchronized void postThinking(

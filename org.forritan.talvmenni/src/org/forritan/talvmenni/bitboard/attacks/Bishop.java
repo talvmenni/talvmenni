@@ -27,12 +27,11 @@ public class Bishop {
 
       //Check NorthWest from square...
       long northWestPath= Square._EMPTY_BOARD;
-      Iterator<Long> northWestPiecesIterator= new BitboardIterator((allPiecesOnPath
+      BitboardIterator northWestPiecesIterator= new BitboardIterator((allPiecesOnPath
              & ~BishopMasks.create().getNorthWest2SouthEastMaskFrom(
                       square)));
       while (northWestPiecesIterator.hasNext()) {
-           Long piece= northWestPiecesIterator.next();
-             northWestPath |= ~BishopMasks.create().getNorthWest2SouthEastMaskFrom(piece.longValue());
+             northWestPath |= ~BishopMasks.create().getNorthWest2SouthEastMaskFrom(northWestPiecesIterator.nextBitboard());
           }
       northWestPath |= ~Bishops.create().getPathsFrom(square);
       northWestPath |= BishopMasks.create().getNorthWest2SouthEastMaskFrom(square);            
@@ -40,12 +39,11 @@ public class Bishop {
 
       //Check SouthWest from square...
       long southWestPath= Square._EMPTY_BOARD;
-      Iterator<Long> southWestPiecesIterator= new BitboardIterator((allPiecesOnPath
+      BitboardIterator southWestPiecesIterator= new BitboardIterator((allPiecesOnPath
              & ~BishopMasks.create().getSouthWest2NorthEastMaskFrom(
                       square)));
       while (southWestPiecesIterator.hasNext()) {
-           Long piece= southWestPiecesIterator.next();
-           southWestPath |= ~BishopMasks.create().getSouthWest2NorthEastMaskFrom(piece.longValue());
+           southWestPath |= ~BishopMasks.create().getSouthWest2NorthEastMaskFrom(southWestPiecesIterator.nextBitboard());
           }
       southWestPath |= ~Bishops.create().getPathsFrom(square);
       southWestPath |= BishopMasks.create().getSouthWest2NorthEastMaskFrom(square);            
@@ -53,12 +51,11 @@ public class Bishop {
           
       //Check SouthEast from square...
       long southEastPath= Square._EMPTY_BOARD;
-      Iterator<Long> southEastPiecesIterator= new BitboardIterator((allPiecesOnPath
+      BitboardIterator southEastPiecesIterator= new BitboardIterator((allPiecesOnPath
              & ~BishopMasks.create().getSouthEast2NorthWestMaskFrom(
                       square)));
       while (southEastPiecesIterator.hasNext()) {
-           Long piece= southEastPiecesIterator.next();
-           southEastPath |= ~BishopMasks.create().getSouthEast2NorthWestMaskFrom(piece.longValue());
+           southEastPath |= ~BishopMasks.create().getSouthEast2NorthWestMaskFrom(southEastPiecesIterator.nextBitboard());
           }
       southEastPath |= ~Bishops.create().getPathsFrom(square);
       southEastPath |= BishopMasks.create().getSouthEast2NorthWestMaskFrom(square);            
@@ -66,12 +63,11 @@ public class Bishop {
 
       //Check NorthEast from square...
       long northEastPath= Square._EMPTY_BOARD;
-      Iterator<Long> northEastPiecesIterator= new BitboardIterator((allPiecesOnPath
+      BitboardIterator northEastPiecesIterator= new BitboardIterator((allPiecesOnPath
              & ~BishopMasks.create().getNorthEast2SouthWestMaskFrom(
                       square)));
       while (northEastPiecesIterator.hasNext()) {
-           Long piece= northEastPiecesIterator.next();
-           northEastPath |= ~BishopMasks.create().getNorthEast2SouthWestMaskFrom(piece.longValue());
+           northEastPath |= ~BishopMasks.create().getNorthEast2SouthWestMaskFrom(northEastPiecesIterator.nextBitboard());
           }
       northEastPath |= ~Bishops.create().getPathsFrom(square);
       northEastPath |= BishopMasks.create().getNorthEast2SouthWestMaskFrom(square);            

@@ -28,12 +28,11 @@ public class Rook {
 
         //Check North from square...
         long northPath= Square._EMPTY_BOARD;
-        Iterator<Long> northPiecesIterator= new BitboardIterator((allPiecesOnPath
+        BitboardIterator northPiecesIterator= new BitboardIterator((allPiecesOnPath
                & ~RookMasks.create().getNorth2SouthMaskFrom(
                         square)));
         while (northPiecesIterator.hasNext()) {
-             Long piece= northPiecesIterator.next();
-               northPath |= ~RookMasks.create().getNorth2SouthMaskFrom(piece.longValue());
+               northPath |= ~RookMasks.create().getNorth2SouthMaskFrom(northPiecesIterator.nextBitboard());
             }
         northPath |= ~Rooks.create().getPathsFrom(square);
         northPath |= RookMasks.create().getNorth2SouthMaskFrom(square);            
@@ -41,12 +40,11 @@ public class Rook {
 
         //Check South from square...
         long southPath= Square._EMPTY_BOARD;
-        Iterator<Long> southPiecesIterator= new BitboardIterator((allPiecesOnPath
+        BitboardIterator southPiecesIterator= new BitboardIterator((allPiecesOnPath
                & ~RookMasks.create().getSouth2NorthMaskFrom(
                         square)));
         while (southPiecesIterator.hasNext()) {
-             Long piece= southPiecesIterator.next();
-             southPath |= ~RookMasks.create().getSouth2NorthMaskFrom(piece.longValue());
+             southPath |= ~RookMasks.create().getSouth2NorthMaskFrom(southPiecesIterator.nextBitboard());
             }
         southPath |= ~Rooks.create().getPathsFrom(square);
         southPath |= RookMasks.create().getSouth2NorthMaskFrom(square);            
@@ -54,12 +52,11 @@ public class Rook {
             
         //Check East from square...
         long eastPath= Square._EMPTY_BOARD;
-        Iterator<Long> eastPiecesIterator= new BitboardIterator((allPiecesOnPath
+        BitboardIterator eastPiecesIterator= new BitboardIterator((allPiecesOnPath
                & ~RookMasks.create().getEast2WestMaskFrom(
                         square)));
         while (eastPiecesIterator.hasNext()) {
-             Long piece= eastPiecesIterator.next();
-             eastPath |= ~RookMasks.create().getEast2WestMaskFrom(piece.longValue());
+             eastPath |= ~RookMasks.create().getEast2WestMaskFrom(eastPiecesIterator.nextBitboard());
             }
         eastPath |= ~Rooks.create().getPathsFrom(square);
         eastPath |= RookMasks.create().getEast2WestMaskFrom(square);            
@@ -67,12 +64,11 @@ public class Rook {
 
         //Check West from square...
         long westPath= Square._EMPTY_BOARD;
-        Iterator<Long> westPiecesIterator= new BitboardIterator((allPiecesOnPath
+        BitboardIterator westPiecesIterator= new BitboardIterator((allPiecesOnPath
                & ~RookMasks.create().getWest2EastMaskFrom(
                         square)));
         while (westPiecesIterator.hasNext()) {
-             Long piece= westPiecesIterator.next();
-             westPath |= ~RookMasks.create().getWest2EastMaskFrom(piece.longValue());
+             westPath |= ~RookMasks.create().getWest2EastMaskFrom(westPiecesIterator.nextBitboard());
             }
         westPath |= ~Rooks.create().getPathsFrom(square);
         westPath |= RookMasks.create().getWest2EastMaskFrom(square);            

@@ -10,7 +10,7 @@ import org.forritan.talvmenni.game.Position;
 import org.forritan.talvmenni.game.PositionFactory;
 import org.forritan.talvmenni.game.Position.Move;
 
-public class AlphaBetaWithKillerMoveOrderingSearch implements Search {
+public class AlphaBetaUsingKillerMoveOrderingSearch implements Search {
    
    private Thinking thinking;
    private DebugInfo debugInfo;
@@ -18,7 +18,7 @@ public class AlphaBetaWithKillerMoveOrderingSearch implements Search {
    
    private int movesSearched;
    
-   public AlphaBetaWithKillerMoveOrderingSearch() {
+   public AlphaBetaUsingKillerMoveOrderingSearch() {
       this.thinking= new Thinking();
       this.debugInfo= new DebugInfo();
    }

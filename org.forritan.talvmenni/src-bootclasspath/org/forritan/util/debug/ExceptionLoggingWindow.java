@@ -8,6 +8,7 @@ import javax.swing.JTextArea;
 
 
 public class ExceptionLoggingWindow extends JFrame {
+   private static final long serialVersionUID = 1L;
    private JTextArea textArea;
 
    public ExceptionLoggingWindow(

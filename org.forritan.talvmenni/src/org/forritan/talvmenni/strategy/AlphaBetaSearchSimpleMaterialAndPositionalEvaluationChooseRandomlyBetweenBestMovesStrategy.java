@@ -1,26 +1,28 @@
-package org.forritan.talvmenni.game;
+package org.forritan.talvmenni.strategy;
 
 import java.util.List;
 import java.util.Random;
 
 import org.forritan.talvmenni.evaluation.Evaluation;
 import org.forritan.talvmenni.evaluation.SimpleMaterialAndPositionalEvaluation;
+import org.forritan.talvmenni.game.Position;
 import org.forritan.talvmenni.game.Position.Move;
-import org.forritan.talvmenni.search.MiniMaxSearch;
+import org.forritan.talvmenni.game.Position.PromotionPiece;
+import org.forritan.talvmenni.search.AlphaBetaSearch;
 import org.forritan.talvmenni.search.Search;
 
-public class MiniMaxSearchSimpleMaterialAndPositionalEvaluationChooseRandomlyBetweenBestMovesStrategy implements Strategy {
+public class AlphaBetaSearchSimpleMaterialAndPositionalEvaluationChooseRandomlyBetweenBestMovesStrategy implements Strategy {
 
    private Search search;
    private Evaluation evaluation;
    
-   public MiniMaxSearchSimpleMaterialAndPositionalEvaluationChooseRandomlyBetweenBestMovesStrategy(int ply) {
-      this.search= new MiniMaxSearch(ply);
+   public AlphaBetaSearchSimpleMaterialAndPositionalEvaluationChooseRandomlyBetweenBestMovesStrategy(int ply) {
+      this.search= new AlphaBetaSearch(ply);
       this.evaluation= new SimpleMaterialAndPositionalEvaluation();
    }
    
-   public Move getNextMove(Position position, boolean whiteToMove) {
-         List<Move> bestMoves= this.search.getBestMoves(position, this.evaluation, whiteToMove);
+   public Position.Move getNextMove(Position position, boolean whiteToMove) {
+         List<Position.Move> bestMoves= this.search.getBestMoves(position, this.evaluation, whiteToMove);
 
          if(!bestMoves.isEmpty()) {
             int chosenMoveIndex= new Random().nextInt(bestMoves.size());
@@ -31,7 +33,7 @@ public class MiniMaxSearchSimpleMaterialAndPositionalEvaluationChooseRandomlyBet
    }
 
    public int getPromotionPiece() {
-      return ImmutablePosition.PromotionPiece.DEFAULT;
+      return Position.PromotionPiece.DEFAULT;
    }
    
    public Search getSearch() {

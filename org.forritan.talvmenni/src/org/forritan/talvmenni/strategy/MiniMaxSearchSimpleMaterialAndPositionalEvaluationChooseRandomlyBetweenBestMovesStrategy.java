@@ -1,24 +1,25 @@
-package org.forritan.talvmenni.game;
+package org.forritan.talvmenni.strategy;
 
 import java.util.List;
-import java.util.Observable;
-import java.util.Observer;
 import java.util.Random;
 
 import org.forritan.talvmenni.evaluation.Evaluation;
-import org.forritan.talvmenni.evaluation.SimpleMaterialEvaluation;
+import org.forritan.talvmenni.evaluation.SimpleMaterialAndPositionalEvaluation;
+import org.forritan.talvmenni.game.Position;
+import org.forritan.talvmenni.game.PositionFactory;
 import org.forritan.talvmenni.game.Position.Move;
+import org.forritan.talvmenni.game.Position.PromotionPiece;
 import org.forritan.talvmenni.search.MiniMaxSearch;
 import org.forritan.talvmenni.search.Search;
 
-public class MiniMaxSearchSimpleMaterialEvaluationChooseRandomlyBetweenBestMovesStrategy implements Strategy {
+public class MiniMaxSearchSimpleMaterialAndPositionalEvaluationChooseRandomlyBetweenBestMovesStrategy implements Strategy {
 
    private Search search;
    private Evaluation evaluation;
    
-   public MiniMaxSearchSimpleMaterialEvaluationChooseRandomlyBetweenBestMovesStrategy(int ply) {
+   public MiniMaxSearchSimpleMaterialAndPositionalEvaluationChooseRandomlyBetweenBestMovesStrategy(int ply) {
       this.search= new MiniMaxSearch(ply);
-      this.evaluation= new SimpleMaterialEvaluation();
+      this.evaluation= new SimpleMaterialAndPositionalEvaluation();
    }
    
    public Move getNextMove(Position position, boolean whiteToMove) {
@@ -33,7 +34,7 @@ public class MiniMaxSearchSimpleMaterialEvaluationChooseRandomlyBetweenBestMoves
    }
 
    public int getPromotionPiece() {
-      return ImmutablePosition.PromotionPiece.DEFAULT;
+      return PositionFactory.PromotionPiece.DEFAULT;
    }
    
    public Search getSearch() {

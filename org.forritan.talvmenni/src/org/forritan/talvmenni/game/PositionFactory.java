@@ -294,6 +294,22 @@ public abstract class PositionFactory implements Position {
    public synchronized Bitboard getWhite() {
       return this.white;
    }
+   
+   public int hashCode() {
+      return this.getWhite().hashCode() ^ this.getBlack().hashCode();
+   }
+
+   public boolean equals(
+         Object o) {
+      if (o instanceof Position) {
+         return this.getWhite().equals(
+         ((Position) o).getWhite())
+         && this.getBlack().equals(
+               ((Position) o).getBlack());
+      } else {
+         return false;
+      }
+   }
 
    public Position move(
          long from,
@@ -415,27 +431,34 @@ public abstract class PositionFactory implements Position {
          }
 
          //... and clear any captures
-         if (this.getBlack().isAnyPieceOnPosition(to)) {
-            if (this.getBlack().isQueen(to)) {
+         if (this.getBlack().isAnyPieceOnPosition(
+               to)) {
+            if (this.getBlack().isQueen(
+                  to)) {
                blackQueens= blackQueens
                      ^ to;
-            } else if (this.getBlack().isRook(to)) {
+            } else if (this.getBlack().isRook(
+                  to)) {
                blackRooks= blackRooks
                      ^ to;
-            } else if (this.getBlack().isBishop(to)) {
+            } else if (this.getBlack().isBishop(
+                  to)) {
                blackBishops= blackBishops
                      ^ to;
-            } else if (this.getBlack().isKnight(to)) {
+            } else if (this.getBlack().isKnight(
+                  to)) {
                blackKnights= blackKnights
                      ^ to;
-            } else if (this.getBlack().isPawn(to)) {
+            } else if (this.getBlack().isPawn(
+                  to)) {
                blackPawns= blackPawns
                      ^ to;
             }
          }
 
          // ... and clear any enpassant captures
-         if (this.getBlack().isEnpassant(to)
+         if (this.getBlack().isEnpassant(
+               to)
                && this.getWhite().isPawn(
                      from)
                && ((to & Rank._6) != Square._EMPTY_BOARD)) {
@@ -445,9 +468,11 @@ public abstract class PositionFactory implements Position {
                               from)));
          }
 
-      } else if (this.getBlack().isAnyPieceOnPosition(from)) {
+      } else if (this.getBlack().isAnyPieceOnPosition(
+            from)) {
          // Move the the piece...
-         if (this.getBlack().isKing(from)) {
+         if (this.getBlack().isKing(
+               from)) {
             blackKings= blackKings
                   ^ from
                   | to;
@@ -465,32 +490,37 @@ public abstract class PositionFactory implements Position {
             whiteEnpassant= Square._EMPTY_BOARD;
             blackEnpassant= Square._EMPTY_BOARD;
             blackCastling= Square._EMPTY_BOARD;
-         } else if (this.getBlack().isQueen(from)) {
+         } else if (this.getBlack().isQueen(
+               from)) {
             blackQueens= blackQueens
                   ^ from
                   | to;
             whiteEnpassant= Square._EMPTY_BOARD;
             blackEnpassant= Square._EMPTY_BOARD;
-         } else if (this.getBlack().isRook(from)) {
+         } else if (this.getBlack().isRook(
+               from)) {
             blackRooks= blackRooks
                   ^ from
                   | to;
             whiteEnpassant= Square._EMPTY_BOARD;
             blackEnpassant= Square._EMPTY_BOARD;
             blackCastling= ~(~blackCastling | from);
-         } else if (this.getBlack().isBishop(from)) {
+         } else if (this.getBlack().isBishop(
+               from)) {
             blackBishops= blackBishops
                   ^ from
                   | to;
             whiteEnpassant= Square._EMPTY_BOARD;
             blackEnpassant= Square._EMPTY_BOARD;
-         } else if (this.getBlack().isKnight(from)) {
+         } else if (this.getBlack().isKnight(
+               from)) {
             blackKnights= blackKnights
                   ^ from
                   | to;
             whiteEnpassant= Square._EMPTY_BOARD;
             blackEnpassant= Square._EMPTY_BOARD;
-         } else if (this.getBlack().isPawn(from)) {
+         } else if (this.getBlack().isPawn(
+               from)) {
 
             if (((from & Rank._7) != Square._EMPTY_BOARD)
                   && ((to & Rank._5) != Square._EMPTY_BOARD)) {
@@ -557,7 +587,8 @@ public abstract class PositionFactory implements Position {
          // ... and clear any enpassant captures
          if (this.getWhite().isEnpassant(
                to)
-               && this.getBlack().isPawn(from)
+               && this.getBlack().isPawn(
+                     from)
                && ((to & Rank._3) != Square._EMPTY_BOARD)) {
             whitePawns= whitePawns
                   ^ (this.getWhite().enpassant ^ (this.getWhite().enpassant & BlackPawnCaptures
@@ -601,11 +632,11 @@ public abstract class PositionFactory implements Position {
                new Move(
                      from,
                      to));
-      } else if (this.getBlack().isAnyPieceOnPosition(from)) { return this.getBlack()
-            .getPossibleMoves().contains(
-                  new Move(
-                        from,
-                        to)); }
+      } else if (this.getBlack().isAnyPieceOnPosition(
+            from)) { return this.getBlack().getPossibleMoves().contains(
+            new Move(
+                  from,
+                  to)); }
       return false;
    }
 

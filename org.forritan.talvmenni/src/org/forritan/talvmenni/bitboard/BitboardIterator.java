@@ -15,12 +15,19 @@ public class BitboardIterator implements Iterator {
    public boolean hasNext() {
       return this.bitboard != 0L;
    }
-
+   
+   /**
+    * @deprecated Use nextBitboard() instead...
+    */
    public Object next() {
-      long result= Long.lowestOneBit(this.bitboard);
+      return Long.valueOf(this.nextBitboard());
+   }
+
+   public long nextBitboard() {
+      long result= this.bitboard & -this.bitboard;
       this.bitboard= this.bitboard
             ^ result;
-      return Long.valueOf(result);
+      return result;
    }
 
    public void remove() {

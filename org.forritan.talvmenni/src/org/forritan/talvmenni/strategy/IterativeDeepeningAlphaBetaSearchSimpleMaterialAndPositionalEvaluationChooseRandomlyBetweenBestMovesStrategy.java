@@ -1,22 +1,24 @@
-package org.forritan.talvmenni.game;
+package org.forritan.talvmenni.strategy;
 
 import java.util.List;
 import java.util.Random;
 
 import org.forritan.talvmenni.evaluation.Evaluation;
 import org.forritan.talvmenni.evaluation.SimpleMaterialAndPositionalEvaluation;
+import org.forritan.talvmenni.game.Position;
+import org.forritan.talvmenni.game.Position.Move;
+import org.forritan.talvmenni.game.Position.PromotionPiece;
 import org.forritan.talvmenni.search.AlphaBetaSearch;
-import org.forritan.talvmenni.search.AlphaBetaWithKillerMoveOrderingSearch;
 import org.forritan.talvmenni.search.Search;
 
-public class IterativeDeepeningAlphaBetaSearchWithKillerMoveOrderingSimpleMaterialAndPositionalEvaluationChooseRandomlyBetweenBestMovesStrategy implements Strategy {
+public class IterativeDeepeningAlphaBetaSearchSimpleMaterialAndPositionalEvaluationChooseRandomlyBetweenBestMovesStrategy implements Strategy {
 
    private Search search;
    private Evaluation evaluation;
    private int ply;
    
-   public IterativeDeepeningAlphaBetaSearchWithKillerMoveOrderingSimpleMaterialAndPositionalEvaluationChooseRandomlyBetweenBestMovesStrategy(int ply) {
-      this.search= new AlphaBetaWithKillerMoveOrderingSearch();
+   public IterativeDeepeningAlphaBetaSearchSimpleMaterialAndPositionalEvaluationChooseRandomlyBetweenBestMovesStrategy(int ply) {
+      this.search= new AlphaBetaSearch();
       this.evaluation= new SimpleMaterialAndPositionalEvaluation();
       this.ply= ply;
    }

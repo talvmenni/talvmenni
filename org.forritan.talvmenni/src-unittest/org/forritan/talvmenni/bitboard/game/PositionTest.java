@@ -10,6 +10,7 @@ import org.forritan.talvmenni.bitboard.Square;
 import org.forritan.talvmenni.bitboard.paths.King;
 import org.forritan.talvmenni.game.ImmutablePosition;
 import org.forritan.talvmenni.game.Position;
+import org.forritan.talvmenni.game.PositionFactory;
 import org.forritan.talvmenni.game.Rules;
 
 
@@ -739,4 +740,43 @@ public class PositionTest extends TestCase {
                   attacks).length() - 1] + Long.toBinaryString(attacks)));
 
    }
+
+   public void testEquals() {
+
+      Position p1= PositionFactory.createInitialImmutable();
+      Position p2= PositionFactory.createInitialMutable();
+
+      Assert.assertEquals(p1, p2);
+      Assert.assertTrue("HashCode should also be equal...", p1.hashCode() == p2.hashCode());
+      
+      p1= p1.move(Square._D2, Square._D4);
+      p2= p2.move(Square._D2, Square._D4);
+      
+      Assert.assertEquals(p1, p2);
+      Assert.assertTrue("HashCode should also be equal...", p1.hashCode() == p2.hashCode());
+      
+      p1= p1.getImmutable();
+      p2= p2.getImmutable();
+
+      Assert.assertEquals(p1, p2);
+      Assert.assertTrue("HashCode should also be equal...", p1.hashCode() == p2.hashCode());
+      
+      p1= p1.getMutable();
+      p2= p2.getMutable();
+
+      Assert.assertEquals(p1, p2);
+      Assert.assertTrue("HashCode should also be equal...", p1.hashCode() == p2.hashCode());
+      
+      Assert.assertTrue("Should be equal...", p1.equals(p2));
+      Assert.assertTrue("Should be equal...", p2.equals(p1));
+      
+      
+      p1= p1.move(Square._D7, Square._D5);
+      
+      Assert.assertTrue("Should not be equal...", !p1.equals(p2));
+      Assert.assertTrue("HashCode should also not be equal...", p1.hashCode() != p2.hashCode());
+      
+
+   }
+
 }

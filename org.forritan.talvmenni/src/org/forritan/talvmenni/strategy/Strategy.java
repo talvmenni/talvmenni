@@ -1,7 +1,9 @@
-package org.forritan.talvmenni.game;
+package org.forritan.talvmenni.strategy;
 
 import java.util.Observable;
 
+import org.forritan.talvmenni.game.Position;
+import org.forritan.talvmenni.game.Position.Move;
 import org.forritan.talvmenni.search.Search;
 
 public interface Strategy {

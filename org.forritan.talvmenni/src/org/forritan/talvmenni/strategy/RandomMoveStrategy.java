@@ -1,9 +1,12 @@
-package org.forritan.talvmenni.game;
+package org.forritan.talvmenni.strategy;
 
 import java.util.List;
 import java.util.Observable;
 import java.util.Random;
 
+import org.forritan.talvmenni.game.Position;
+import org.forritan.talvmenni.game.Position.Move;
+import org.forritan.talvmenni.game.Position.PromotionPiece;
 import org.forritan.talvmenni.search.Search;
 
 public class RandomMoveStrategy extends Observable implements Strategy {
