@@ -50,7 +50,11 @@ public class FullSearch extends Observable implements Search {
          }
       }
       
-      time += System.currentTimeMillis() + 1; // Hmmm... tricky one... add one millisecond to make sure that we don't get division by zero in notify call below :-) 
+      time += System.currentTimeMillis() + 1; // Hmmm... tricky one... add one
+                                              // millisecond to make sure that
+                                              // we don't get division by zero
+                                              // in notifyObservers call below
+                                              // :-)
       
       this.setChanged();
       this.notifyObservers(
@@ -72,7 +76,7 @@ public class FullSearch extends Observable implements Search {
          boolean whiteMove,
          int depth) {
       MoveScoreTuple result= new MoveScoreTuple(null, 0);
-      if(depth > 0) {
+      if(depth > 1) {
          List<Move> moves;
          MoveScoreTuple bestScore= null;
          
@@ -94,7 +98,7 @@ public class FullSearch extends Observable implements Search {
             }         
             result= new MoveScoreTuple(currentBestMove, bestScore.score + e.getScore(p));
          } else {
-            result= new MoveScoreTuple(null, (whiteMove ? 3900 : -3900));            
+            result= new MoveScoreTuple(null, (whiteMove ? -3900 : 3900));            
          }
       } else {
          
@@ -117,7 +121,7 @@ public class FullSearch extends Observable implements Search {
                }
             }
          } else {
-            result= new MoveScoreTuple(null, (whiteMove ? bestScore + 3900 : bestScore - 3900));            
+            result= new MoveScoreTuple(null, (whiteMove ? bestScore - 3900 : bestScore + 3900));            
          }
       }
       
