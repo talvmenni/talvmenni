@@ -87,8 +87,8 @@ public interface Evaluation extends Serializable {
    public static final int  CHECK_REWARD_IN_MIDDLE_GAME            = 30;
    public static final int  CHECK_REWARD_IN_END_GAME               = 30;
 
-   public static final int  KING_CENTER_REWARD_IN_OPENING_GAME     = -60;
-   public static final int  KING_CENTER_REWARD_IN_MIDDLE_GAME      = -30;
+   public static final int  KING_CENTER_REWARD_IN_OPENING_GAME     = -100;
+   public static final int  KING_CENTER_REWARD_IN_MIDDLE_GAME      = -50;
    public static final int  KING_CENTER_REWARD_IN_END_GAME         = 50;
 
    public static final int  PAWN_TO_PROMOTE_IN_1_IN_END_GAME       = 90;

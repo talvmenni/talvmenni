@@ -35,11 +35,5 @@ public interface Board extends Serializable {
    // Squares._D7 | Squares._E8 | Squares._E7 | Squares._F8 | Squares._F7;
    public static final long _KING_CENTER_SQUARES = File._D
                                                        | File._E
-                                                       | File._F
-                                                       | Rank._2
-                                                       | Rank._3
-                                                       | Rank._4
-                                                       | Rank._5
-                                                       | Rank._6
-                                                       | Rank._7;
+                                                       | File._F;
 }
