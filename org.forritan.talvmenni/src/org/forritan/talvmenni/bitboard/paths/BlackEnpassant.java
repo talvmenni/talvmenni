@@ -13,6 +13,7 @@ public interface BlackEnpassant extends Enpassant {
    public static final long _PATHS_FROM_F8 = 0L;
    public static final long _PATHS_FROM_G8 = 0L;
    public static final long _PATHS_FROM_H8 = 0L;
+   
    public static final long _PATHS_FROM_A7 = Square._B6
                                                  | Square._A5;
    public static final long _PATHS_FROM_B7 = Square._A6
@@ -35,6 +36,7 @@ public interface BlackEnpassant extends Enpassant {
                                                  | Square._G5;
    public static final long _PATHS_FROM_H7 = Square._G6
                                                  | Square._H5;
+   
    public static final long _PATHS_FROM_A6 = 0L;
    public static final long _PATHS_FROM_B6 = 0L;
    public static final long _PATHS_FROM_C6 = 0L;
@@ -43,6 +45,7 @@ public interface BlackEnpassant extends Enpassant {
    public static final long _PATHS_FROM_F6 = 0L;
    public static final long _PATHS_FROM_G6 = 0L;
    public static final long _PATHS_FROM_H6 = 0L;
+   
    public static final long _PATHS_FROM_A5 = 0L;
    public static final long _PATHS_FROM_B5 = 0L;
    public static final long _PATHS_FROM_C5 = 0L;
@@ -51,6 +54,7 @@ public interface BlackEnpassant extends Enpassant {
    public static final long _PATHS_FROM_F5 = 0L;
    public static final long _PATHS_FROM_G5 = 0L;
    public static final long _PATHS_FROM_H5 = 0L;
+   
    public static final long _PATHS_FROM_A4 = 0L;
    public static final long _PATHS_FROM_B4 = 0L;
    public static final long _PATHS_FROM_C4 = 0L;
@@ -59,6 +63,7 @@ public interface BlackEnpassant extends Enpassant {
    public static final long _PATHS_FROM_F4 = 0L;
    public static final long _PATHS_FROM_G4 = 0L;
    public static final long _PATHS_FROM_H4 = 0L;
+   
    public static final long _PATHS_FROM_A3 = 0L;
    public static final long _PATHS_FROM_B3 = 0L;
    public static final long _PATHS_FROM_C3 = 0L;
@@ -67,6 +72,7 @@ public interface BlackEnpassant extends Enpassant {
    public static final long _PATHS_FROM_F3 = 0L;
    public static final long _PATHS_FROM_G3 = 0L;
    public static final long _PATHS_FROM_H3 = 0L;
+   
    public static final long _PATHS_FROM_A2 = 0L;
    public static final long _PATHS_FROM_B2 = 0L;
    public static final long _PATHS_FROM_C2 = 0L;
@@ -75,6 +81,7 @@ public interface BlackEnpassant extends Enpassant {
    public static final long _PATHS_FROM_F2 = 0L;
    public static final long _PATHS_FROM_G2 = 0L;
    public static final long _PATHS_FROM_H2 = 0L;
+   
    public static final long _PATHS_FROM_A1 = 0L;
    public static final long _PATHS_FROM_B1 = 0L;
    public static final long _PATHS_FROM_C1 = 0L;
