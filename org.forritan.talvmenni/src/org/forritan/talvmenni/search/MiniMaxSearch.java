@@ -9,7 +9,7 @@ import org.forritan.talvmenni.game.ImmutablePosition;
 import org.forritan.talvmenni.game.Position;
 import org.forritan.talvmenni.game.Position.Move;
 
-public class FullSearch implements Search {
+public class MiniMaxSearch implements Search {
    
    private Thinking thinking;
    private DebugInfo debugInfo;
@@ -17,7 +17,7 @@ public class FullSearch implements Search {
    
    private int movesSearched;
    
-   public FullSearch(int depth) {
+   public MiniMaxSearch(int depth) {
       this.depth= depth;
       this.thinking= new Thinking();
       this.debugInfo= new DebugInfo();
@@ -55,7 +55,8 @@ public class FullSearch implements Search {
          long moveTime= -System.currentTimeMillis();
          int movesSearchedBeforeMove= this.movesSearched++;
          MoveScoreTuple score= this.getBestMove(p.move(move.from, move.to), e, !whiteMove, depth - 1);
-         score.add(move, e.getScore(p));
+//         score.add(move, e.getScore(p));
+         score.add(move, 0);
          this.debugInfo.postCurrentBestMove(move, score.getScore(), (this.movesSearched - movesSearchedBeforeMove));
          if(bestScore == null || (whiteMove ? score.getScore() > bestScore.getScore() : score.getScore() < bestScore.getScore())) {
             bestScore= score;
@@ -109,7 +110,8 @@ public class FullSearch implements Search {
                }
             }         
             result= bestScore;
-            result.add(currentBestMove, e.getScore(p));
+//            result.add(currentBestMove, e.getScore(p));
+            result.add(currentBestMove, 0);
             
          } else {
             if(whiteMove){

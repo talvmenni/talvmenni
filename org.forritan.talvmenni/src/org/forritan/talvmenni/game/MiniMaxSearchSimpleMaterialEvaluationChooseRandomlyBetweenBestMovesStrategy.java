@@ -11,12 +11,12 @@ import org.forritan.talvmenni.game.Position.Move;
 import org.forritan.talvmenni.search.MiniMaxSearch;
 import org.forritan.talvmenni.search.Search;
 
-public class FullSearchSimpleMaterialEvaluationChooseRandomlyBetweenBestMovesStrategy implements Strategy {
+public class MiniMaxSearchSimpleMaterialEvaluationChooseRandomlyBetweenBestMovesStrategy implements Strategy {
 
    private Search search;
    private Evaluation evaluation;
    
-   public FullSearchSimpleMaterialEvaluationChooseRandomlyBetweenBestMovesStrategy(int searchDepth) {
+   public MiniMaxSearchSimpleMaterialEvaluationChooseRandomlyBetweenBestMovesStrategy(int searchDepth) {
       this.search= new MiniMaxSearch(searchDepth);
       this.evaluation= new SimpleMaterialEvaluation();
    }

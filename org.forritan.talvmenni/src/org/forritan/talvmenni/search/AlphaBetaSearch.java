@@ -58,7 +58,8 @@ public class AlphaBetaSearch implements Search {
          long moveTime= -System.currentTimeMillis();
          int movesSearchedBeforeMove= this.movesSearched++;
          MoveScoreTuple score= this.getBestMove(p.move(move.from, move.to), e, !whiteMove, depth - 1, alpha, beta);
-         score.add(move, e.getScore(p));
+//       score.add(move, e.getScore(p));
+         score.add(move, 0);
          this.debugInfo.postCurrentBestMove(move, score.getScore(), (this.movesSearched - movesSearchedBeforeMove));
          if(bestScore == null || (whiteMove ? score.getScore() > bestScore.getScore() : score.getScore() < bestScore.getScore())) {
             bestScore= score;
@@ -131,7 +132,8 @@ public class AlphaBetaSearch implements Search {
                }               
             }         
             result= bestScore;
-            result.add(currentBestMove, e.getScore(p));
+//            result.add(currentBestMove, e.getScore(p));
+            result.add(currentBestMove, 0);
             
          } else {
             if(whiteMove){
