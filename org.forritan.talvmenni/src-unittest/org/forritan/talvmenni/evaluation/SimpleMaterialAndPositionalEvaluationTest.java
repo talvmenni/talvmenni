@@ -7,11 +7,11 @@ import org.forritan.talvmenni.game.Position;
 import junit.framework.Assert;
 import junit.framework.TestCase;
 
-public class SimpleMaterialEvaluationTest extends TestCase {
+public class SimpleMaterialAndPositionalEvaluationTest extends TestCase {
 
    public void testGetScoreOnInitialPosition() {
       Position p= Position.createInitial();
-      Evaluation e= new SimpleMaterialEvaluation();
+      Evaluation e= new SimpleMaterialAndPositionalEvaluation();
       Assert.assertEquals(0, e.getScore(p));
    }
    
@@ -39,8 +39,8 @@ public class SimpleMaterialEvaluationTest extends TestCase {
             Square._EMPTY_BOARD, // blackCastling
             Square._EMPTY_BOARD // blackEnpassant
             );
-      Evaluation e= new SimpleMaterialEvaluation();
-      Assert.assertEquals(4140, e.getScore(p));
+      Evaluation e= new SimpleMaterialAndPositionalEvaluation();
+      Assert.assertEquals(4332, e.getScore(p));
    }
    
    public void testGetScoreAllBlackPiecesOnlyWhiteKing() {
@@ -67,8 +67,8 @@ public class SimpleMaterialEvaluationTest extends TestCase {
                   | Square._H8, // blackCastling
             Square._EMPTY_BOARD // blackEnpassant
              );
-      Evaluation e= new SimpleMaterialEvaluation();
-      Assert.assertEquals(-4140, e.getScore(p));
+      Evaluation e= new SimpleMaterialAndPositionalEvaluation();
+      Assert.assertEquals(-4332, e.getScore(p));
    }
    
 }

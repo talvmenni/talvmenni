@@ -18,10 +18,11 @@ import junit.framework.TestSuite;
 public class AllTests {
 
    public static Test suite() {
-      TestSuite suite= new TestSuite(
-            "Test for org.forritan.talvmenni.evaluation");
+      TestSuite suite = new TestSuite(
+         "Test for org.forritan.talvmenni.evaluation");
       //$JUnit-BEGIN$
       suite.addTestSuite(SimpleMaterialEvaluationTest.class);
+      suite.addTestSuite(SimpleMaterialAndPositionalEvaluationTest.class);
       //$JUnit-END$
       return suite;
    }

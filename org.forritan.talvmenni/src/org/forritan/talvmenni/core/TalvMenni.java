@@ -3,6 +3,7 @@ package org.forritan.talvmenni.core;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
 
+import org.forritan.talvmenni.game.FullSearchSimpleMaterialAndPositionalEvaluationChooseRandomlyBetweenBestMovesStrategy;
 import org.forritan.talvmenni.game.FullSearchSimpleMaterialEvaluationChooseRandomlyBetweenBestMovesStrategy;
 import org.forritan.talvmenni.ui.DebugWindow;
 
@@ -31,7 +32,7 @@ public class TalvMenni {
       }
       
       final ChessEngine chessEngine=
-         ChessEngine.create(new FullSearchSimpleMaterialEvaluationChooseRandomlyBetweenBestMovesStrategy(SEARCH_DEPTH));
+         ChessEngine.create(new FullSearchSimpleMaterialAndPositionalEvaluationChooseRandomlyBetweenBestMovesStrategy(SEARCH_DEPTH));
 
       if (Boolean.getBoolean("debug_window")) {
          Thread debugWindowThread= threadFactory.newThread(new Runnable() {
