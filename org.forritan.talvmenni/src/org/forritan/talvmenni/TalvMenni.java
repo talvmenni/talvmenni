@@ -61,6 +61,13 @@ public class TalvMenni {
    public static int                 MAX_TRANSPOSITION_ENTRIES     = 50000;
 
    /**
+    * Default MAX_THEORY_BOOK_ENTRIES - Maximum number of entries in each
+    * opening book (white and black). If MAX_THEORY_BOOK_ENTRIES is reached the
+    * eldest entry will be removed before a new entry is added.
+    */
+   public static int                 MAX_THEORY_BOOK_ENTRIES       = 140000;
+
+   /**
     * Default MAX_HISTORY_HEURISTIC_ENTRIES - Maximum number of entries in the
     * history heuristic table. If MAX_HISTORY_HEURISTIC_ENTRIES is reached the
     * eldest entry will be removed before a new entry is added.
@@ -155,7 +162,7 @@ public class TalvMenni {
       }
 
       final TheoryBook book= new TheoryBook(
-            140000);
+            MAX_THEORY_BOOK_ENTRIES);
 
       final ChessEngine chessEngine= ChessEngine.create(ChoosenStrategy.get(
             STRATEGY,
@@ -224,19 +231,19 @@ public class TalvMenni {
                      PrincipalVariation.Factory.create(0));
 
             case ChoosenStrategy.NEGA_MAX:
-               new NegaMaxStrategy(
+               return new NegaMaxStrategy(
                      PLY,
                      book,
                      PrincipalVariation.Factory.create(PLY));
 
             case ChoosenStrategy.ALPHA_BETA:
-               new AlphaBetaStrategy(
+               return new AlphaBetaStrategy(
                      PLY,
                      book,
                      PrincipalVariation.Factory.create(PLY));
 
             case ChoosenStrategy.ALPHA_BETA_WITH_TRANSPOSITION_TABLE:
-               new AlphaBetaWithTranspositionTableStrategy(
+               return new AlphaBetaWithTranspositionTableStrategy(
                      PLY,
                      new Transposition(),
                      false,
@@ -258,7 +265,7 @@ public class TalvMenni {
                      PrincipalVariation.Factory.create(PLY));
 
             case ChoosenStrategy.ITERATIVE_DEEPENING_ALPHA_BETA_WITH_QUIESCENT_AND_TRANSPOSITION_TABLE:
-               new IterativeDeepeningAlphaBetaWithQuiescentAndTranspositionTableStrategy(
+               return new IterativeDeepeningAlphaBetaWithQuiescentAndTranspositionTableStrategy(
                      PLY,
                      new Transposition(),
                      false,
@@ -267,7 +274,7 @@ public class TalvMenni {
                      QUIESCENT_MAX_DEPTH);
 
             case ChoosenStrategy.ITERATIVE_DEEPENING_ALPHA_BETA_WITH_QUIESCENT_AND_NULL_MOVE_AND_TRANSPOSITION_TABLE:
-               new IterativeDeepeningAlphaBetaWithQuiescentAndNullMoveAndTranspositionTableStrategy(
+               return new IterativeDeepeningAlphaBetaWithQuiescentAndNullMoveAndTranspositionTableStrategy(
                      PLY,
                      new Transposition(),
                      true,
