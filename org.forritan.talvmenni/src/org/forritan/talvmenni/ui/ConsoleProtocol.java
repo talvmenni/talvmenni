@@ -14,8 +14,6 @@ import org.forritan.talvmenni.game.Rules;
 public class ConsoleProtocol extends UiProtocolBase {
 
    private static ConsoleProtocol instance;
-   private int                    moveCounter;
-   private String                 history = "";
 
    private ConsoleProtocol(
          Protocol protocol) {
@@ -48,8 +46,6 @@ public class ConsoleProtocol extends UiProtocolBase {
       }
 
       if ("new".equalsIgnoreCase(theInput)) {
-         this.history= "";
-         this.moveCounter= 0;
          this.protocol.newGame();
          theOutput= "Setting up a new game...\n\n"
                + this.getBoardPosition()
@@ -168,17 +164,6 @@ public class ConsoleProtocol extends UiProtocolBase {
          this.protocol.makeMove(
                square.getSquare(fromSquare),
                square.getSquare(toSquare));
-
-         if (!this.protocol.isWhiteToMove()) {
-            this.history+= ++this.moveCounter
-                  + "."
-                  + theMove;
-         } else {
-            this.history+= " "
-                  + theMove
-                  + "\n";
-         }
-
          return getBoardPosition();
       } else
          return "Illegal Move: "
