@@ -1,10 +1,8 @@
 package org.forritan.talvmenni.game;
 
-import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
+import java.util.WeakHashMap;
 
 import org.forritan.talvmenni.game.Position.Move;
 
@@ -14,7 +12,7 @@ public class Transposition {
    private Map<Position, Entry> table;
 
    public Transposition() {
-      this.table= new HashMap<Position, Entry>();
+      this.table= new WeakHashMap<Position, Entry>();
    }
 
    public static class Entry {
