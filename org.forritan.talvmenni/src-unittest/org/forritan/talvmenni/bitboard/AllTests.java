@@ -25,7 +25,7 @@ public class AllTests {
       suite.addTest(org.forritan.talvmenni.bitboard.paths.AllTests.suite());
       suite.addTest(org.forritan.talvmenni.bitboard.attacks.AllTests.suite());
       suite.addTest(org.forritan.talvmenni.bitboard.knowledge.AllTests.suite());
-      suite.addTest(org.forritan.talvmenni.bitboard.evaluation.AllTests.suite());
+      suite.addTest(org.forritan.talvmenni.bitboard.knowledge.evaluation.AllTests.suite());
 
       return suite;
    }

@@ -1,4 +1,6 @@
-package org.forritan.talvmenni.bitboard.evaluation;
+package org.forritan.talvmenni.bitboard.knowledge.evaluation;
+
+import org.forritan.talvmenni.bitboard.evaluation.Board;
 
 import junit.framework.Assert;
 import junit.framework.TestCase;

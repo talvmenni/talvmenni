@@ -11,17 +11,22 @@ import org.forritan.talvmenni.knowledge.evaluation.SimpleMaterialEvaluation;
 import junit.framework.Assert;
 import junit.framework.TestCase;
 
+
 public class SimpleMaterialEvaluationTest extends TestCase {
 
    public void testGetScoreOnInitialPosition() {
-      Position p= Position.Factory.createInitial(false, false);
+      Position p= Position.Factory.createInitial(
+            false,
+            false);
       Evaluation e= new SimpleMaterialEvaluation();
-      Assert.assertEquals(0, e.getScore(p));
+      Assert.assertEquals(
+            0,
+            e.getScore(p));
    }
-   
+
    public void testGetScoreAllWhitePiecesOnlyBlackKing() {
       Position p= Position.Factory.create(
-            false, 
+            false,
             false,
             Square._E1, // whiteKings
             Square._D1, // whiteQueens
@@ -46,12 +51,22 @@ public class SimpleMaterialEvaluationTest extends TestCase {
             Square._EMPTY_BOARD // blackEnpassant
             );
       Evaluation e= new SimpleMaterialEvaluation();
-      Assert.assertEquals(4140, e.getScore(p));
+      Assert.assertEquals(
+            8
+                  * Evaluation.PAWN
+                  + 2
+                  * Evaluation.KNIGHT
+                  + 2
+                  * Evaluation.BISHOP
+                  + 2
+                  * Evaluation.ROOK
+                  + Evaluation.QUEEN,
+            e.getScore(p));
    }
-   
+
    public void testGetScoreAllBlackPiecesOnlyWhiteKing() {
       Position p= Position.Factory.create(
-            false, 
+            false,
             false,
             Square._E1, // whiteKings
             Square._EMPTY_BOARD, // whiteQueens
@@ -74,9 +89,18 @@ public class SimpleMaterialEvaluationTest extends TestCase {
                   | Square._E8
                   | Square._H8, // blackCastling
             Square._EMPTY_BOARD // blackEnpassant
-             );
+            );
       Evaluation e= new SimpleMaterialEvaluation();
-      Assert.assertEquals(-4140, e.getScore(p));
+      Assert.assertEquals(
+            -(8
+                  * Evaluation.PAWN
+                  + 2
+                  * Evaluation.KNIGHT
+                  + 2
+                  * Evaluation.BISHOP
+                  + 2
+                  * Evaluation.ROOK + Evaluation.QUEEN),
+            e.getScore(p));
    }
-   
+
 }
