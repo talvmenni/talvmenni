@@ -50,6 +50,7 @@ public interface Position {
          Bitboard black);
 
    public Position popMove();
+   
 
    public class Bitboard {
 
@@ -74,7 +75,7 @@ public interface Position {
       public final long       allPieces;
 
       private List            possibleMoves;
-      private List            killerMoves;
+      private List            betterOrderMoves;
       private long            allCaptureMovesAttackedSquares;
       private boolean         allCaptureMovesAttackedSquaresInitialized;
       private Boolean         kingsSideCastlingLegal;
@@ -152,6 +153,7 @@ public interface Position {
                + (whiteBoard ? 0 : 1);
 
          this.hashCode= hash;
+         
       }
 
       public boolean equals(
@@ -175,26 +177,26 @@ public interface Position {
          return this.hashCode;
       }
 
-      public void killerMove(
+      public void betterMove(
             Move move) {
-         if (this.killerMoves == null) {
-            this.killerMoves= new ArrayList();
+         if (this.betterOrderMoves == null) {
+            this.betterOrderMoves= new ArrayList();
          }
-         this.killerMoves.add(
+         this.betterOrderMoves.add(
                0,
                move);
       }
 
       public void updatePossibleMovesOrdering() {
          if (this.possibleMoves != null
-               && this.killerMoves != null) {
+               && this.betterOrderMoves != null) {
             List currentPossibleMoves= new ArrayList();
             currentPossibleMoves.addAll(this.possibleMoves);
             this.possibleMoves= new ArrayList();
-            this.possibleMoves.addAll(this.killerMoves);
-            currentPossibleMoves.removeAll(this.killerMoves);
+            this.possibleMoves.addAll(this.betterOrderMoves);
+            currentPossibleMoves.removeAll(this.betterOrderMoves);
             this.possibleMoves.addAll(currentPossibleMoves);
-            this.killerMoves= null;
+            this.betterOrderMoves= null;
          }
       }
 
@@ -564,7 +566,6 @@ public interface Position {
 
       public long getAllCaptureMovesAttackedSquares() {
 
-         //         if(this.allCaptureMovesAttackedSquares == null) {
          if (!this.allCaptureMovesAttackedSquaresInitialized) {
             this.allCaptureMovesAttackedSquaresInitialized= true;
 
@@ -625,10 +626,8 @@ public interface Position {
                }
             }
             this.allCaptureMovesAttackedSquares= result;
-            //         this.allCaptureMovesAttackedSquares= Long.valueOf(result);
          }
          return this.allCaptureMovesAttackedSquares;
-         //         return this.allCaptureMovesAttackedSquares.longValue();
       }
    }
 
@@ -860,7 +859,7 @@ public interface Position {
 
       }
 
-      public static TuplePositionBoolean createPositionFromFEN(
+      public static ColorPosition createPositionFromFEN(
             boolean mutable,
             String FENString) {
 
@@ -1014,22 +1013,18 @@ public interface Position {
                blackCastling,
                blackEnpassant);
 
-         return new TuplePositionBoolean(
+         return new ColorPosition(
                fenPosition,
                whiteMove);
       }
    }
 
-   public static class TuplePositionBoolean {
+   public static class ColorPosition {
 
       public Position position;
       public Boolean  whiteToMove;
 
-      /**
-       * @param position
-       * @param whiteMove
-       */
-      public TuplePositionBoolean(
+      public ColorPosition(
             Position position,
             Boolean whiteMove) {
          this.position= position;

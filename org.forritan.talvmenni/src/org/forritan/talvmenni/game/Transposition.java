@@ -9,8 +9,6 @@ import org.forritan.talvmenni.game.Position.Move;
 
 
 public class Transposition {
-   
-   // Table<Position, new ThreeTuple<ply, score, moves>>
 
    private Table whiteTable;
    private Table blackTable;
@@ -40,73 +38,78 @@ public class Transposition {
    }
 
    public boolean contains(
-         Position p,
+         Position position,
          boolean white) {
       if (white) {
-         return this.whiteTable.containsKey(p);
+         return this.whiteTable.containsKey(position);
       } else {
-         return this.blackTable.containsKey(p);
+         return this.blackTable.containsKey(position);
       }
    }
 
-   public ThreeTuplePlyScoreMoves get(
-         Position p,
+   public Entry get(
+         Position position,
          boolean white) {
       if (white) {
-         return (ThreeTuplePlyScoreMoves) this.whiteTable.get(p);
+         return (Entry) this.whiteTable.get(position);
       } else {
-         return (ThreeTuplePlyScoreMoves) this.blackTable.get(p);
+         return (Entry) this.blackTable.get(position);
       }
    }
 
    public void update(
          Position position,
          boolean white,
-         List moves,
          int score,
-         int ply) {
+         int ply,
+         int alpha,
+         int beta) {
       
       if (white) {
          if (this.whiteTable.containsKey(position)) {
-            ThreeTuplePlyScoreMoves entry= (ThreeTuplePlyScoreMoves) this.whiteTable.get(position);
-            if ((entry.ply.intValue() < ply)
-                  || (entry.ply.intValue() == ply && entry.score.intValue() < score)) {
+            Entry entry= (Entry) this.whiteTable.get(position);
+            if ((entry.ply < ply)
+                  || (entry.ply == ply && entry.score < score)) {
                this.whiteTable.remove(position);
                this.whiteTable.put(
                      position.getImmutable(),
-                     new ThreeTuplePlyScoreMoves(
-                           new Integer(ply),
-                           new Integer(score),
-                           Collections.unmodifiableList(moves)));
+                     new Entry(
+                           score,
+                           ply,
+                           alpha,
+                           beta));
             }
          } else {
             this.whiteTable.put(
                   position.getImmutable(),
-                  new ThreeTuplePlyScoreMoves(
-                        new Integer(ply),
-                        new Integer(score),
-                        Collections.unmodifiableList(moves)));
+                  new Entry(
+                        score,
+                        ply,
+                        alpha,
+                        beta));
          }
       } else {
          if (this.blackTable.containsKey(position)) {
-            ThreeTuplePlyScoreMoves entry= (ThreeTuplePlyScoreMoves) this.blackTable.get(position);
-            if (entry.ply.intValue() < ply
-                  || (entry.ply.intValue() == ply && entry.ply.intValue() < score)) {
+            Entry entry= (Entry) this.blackTable.get(position);
+            if (entry.ply < ply
+                  || (entry.ply == ply && entry.score < score)) {
                this.blackTable.remove(position);
                this.blackTable.put(
                      position.getImmutable(),
-                     new ThreeTuplePlyScoreMoves(
-                           new Integer(ply),
-                           new Integer(score),
-                           Collections.unmodifiableList(moves)));
+                     new Entry(
+                           score,
+                           ply,
+                           alpha,
+                           beta));
             }
          } else {
             this.blackTable.put(
                   position.getImmutable(),
-                  new ThreeTuplePlyScoreMoves(
-                        new Integer(ply),
-                        new Integer(score),
-                        Collections.unmodifiableList(moves)));
+                  new Entry(
+                        score,
+                        ply,
+                        alpha,
+                        beta));
          }
       }
    }
@@ -136,21 +139,23 @@ public class Transposition {
 
    }
    
-   public static class ThreeTuplePlyScoreMoves {
+   public static class Entry {
 
-      public Integer ply;
-      public Integer score;
-      public List moves;
+      public int  score;
+      public int  ply;
+      public int  alpha;
+      public int  beta;
 
-      public ThreeTuplePlyScoreMoves(
-            Integer ply,
-            Integer score,
-            List moves) {
-         this.ply= ply;
+      public Entry(
+            int score,
+            int ply,
+            int alpha,
+            int beta) {
          this.score= score;
-         this.moves= moves;
+         this.ply= ply;
+         this.alpha= alpha;
+         this.beta= beta;
       }
-
    }
 }
 

@@ -15,7 +15,7 @@ import org.forritan.talvmenni.game.MoveHistory;
 import org.forritan.talvmenni.game.Position;
 import org.forritan.talvmenni.game.AbstractPosition;
 import org.forritan.talvmenni.game.Rules;
-import org.forritan.talvmenni.game.Position.TuplePositionBoolean;
+import org.forritan.talvmenni.game.Position.ColorPosition;
 import org.forritan.talvmenni.strategy.Strategy;
 import org.forritan.talvmenni.ui.ConsoleProtocol;
 import org.forritan.talvmenni.ui.UciProtocol;
@@ -236,7 +236,7 @@ public class ChessEngine extends Observable implements Runnable {
 
       public synchronized void setPositionFromFEN(
             String FENString) {
-         TuplePositionBoolean tuple= Position.Factory.createPositionFromFEN(false, FENString);
+         ColorPosition tuple= Position.Factory.createPositionFromFEN(false, FENString);
          if(tuple.whiteToMove.booleanValue()) {
             this.whiteToMove();
          } else {
@@ -308,7 +308,7 @@ public class ChessEngine extends Observable implements Runnable {
       public synchronized void postThinking(
             boolean observeIt) {
          if (observeIt) {
-            ChessEngine.this.strategy.getSearch().getThinking().addObserver(
+            ChessEngine.this.strategy.getThinking().addObserver(
                   new Observer() {
                      public void update(
                            Observable o,

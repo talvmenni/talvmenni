@@ -3,8 +3,8 @@ package org.forritan.talvmenni.core;
 import java.io.IOException;
 
 import org.forritan.talvmenni.game.TheoryBook;
-import org.forritan.talvmenni.game.Transposition;
-import org.forritan.talvmenni.strategy.IterativeDeepeningAlphaBetaWithTranspositionTableStrategy;
+import org.forritan.talvmenni.search.PrincipalVariation;
+import org.forritan.talvmenni.strategy.RandomMoveStrategy;
 import org.forritan.talvmenni.ui.DebugWindow;
 
 import edu.emory.mathcs.util.concurrent.PlainThreadFactory;
@@ -72,19 +72,14 @@ public class TalvMenni {
 
             // Choose strategy
 
-            //      .create(new MTDfStrategy(
-            //            PLY,
-            //            new MTDfTransposition(
-            //                  MAX_TRANSPOSITION_ENTRIES),
-            //            book));
+       .create(new RandomMoveStrategy(PrincipalVariation.Factory.create(0)));
 
-
-      .create(new IterativeDeepeningAlphaBetaWithTranspositionTableStrategy(
-            PLY,
-            new Transposition(
-                  MAX_TRANSPOSITION_ENTRIES),
-            true,
-            book));
+//      .create(new IterativeDeepeningAlphaBetaWithTranspositionTableStrategy(
+//            PLY,
+//            new Transposition(
+//                  MAX_TRANSPOSITION_ENTRIES),
+//            true,
+//            book));
 
       //            .create(new IterativeDeepeningAndReductionAlphaBetaStrategy(
       //                  PLY,

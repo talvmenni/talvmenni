@@ -3,6 +3,7 @@
 	<name>org.forritan.talvmenni</name>
 	<comment></comment>
 	<projects>
+		<project>org.forritan.talvmenni.worker</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

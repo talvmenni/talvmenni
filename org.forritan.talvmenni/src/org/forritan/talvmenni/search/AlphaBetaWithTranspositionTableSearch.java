@@ -1,17 +1,13 @@
 package org.forritan.talvmenni.search;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
 import org.forritan.talvmenni.evaluation.Evaluation;
 import org.forritan.talvmenni.game.Position;
-import org.forritan.talvmenni.game.AbstractPosition;
-import org.forritan.talvmenni.game.Transposition;
-import org.forritan.talvmenni.game.Transposition.ThreeTuplePlyScoreMoves;
 import org.forritan.talvmenni.game.Position.Move;
+import org.forritan.talvmenni.game.Transposition;
+import org.forritan.talvmenni.game.Transposition.Entry;
 import org.forritan.talvmenni.search.PrincipalVariation.DebugInfo;
 import org.forritan.talvmenni.search.PrincipalVariation.Thinking;
 
@@ -28,21 +24,24 @@ public class AlphaBetaWithTranspositionTableSearch implements Search {
 
    public AlphaBetaWithTranspositionTableSearch(
          Transposition transposition,
-         boolean useMoveOrdering) {
+         boolean useMoveOrdering,
+         PrincipalVariation pv) {
       this(
             0,
             transposition,
-            useMoveOrdering);
+            useMoveOrdering,
+            pv);
    }
 
    public AlphaBetaWithTranspositionTableSearch(
          int ply,
          Transposition transposition,
-         boolean useMoveOrdering) {
+         boolean useMoveOrdering,
+         PrincipalVariation pv) {
       this.ply= ply;
       this.useMoveOrdering= useMoveOrdering;
       this.transposition= transposition;
-      this.pv= PrincipalVariation.Factory.create(ply);
+      this.pv= pv;
    }
 
    public void setPly(
@@ -50,7 +49,7 @@ public class AlphaBetaWithTranspositionTableSearch implements Search {
       this.ply= ply;
       this.pv.setDepth(ply);
    }
-   
+
    public PrincipalVariation getPrincipalVariation() {
       return this.pv;
    }
@@ -116,18 +115,18 @@ public class AlphaBetaWithTranspositionTableSearch implements Search {
          int beta) {
 
       int result;
-      
-      if(ply < this.ply) {
+
+      if (ply < this.ply) {
          if (this.transposition.contains(
                p,
                whiteMove)) {
-            ThreeTuplePlyScoreMoves entry= this.transposition.get(
+            Entry entry= this.transposition.get(
                   p,
                   whiteMove);
-            if (entry.ply.intValue() >= ply) {
+            if (entry.ply >= ply) {
                this.transpositionHits++;
                this.pv.updateLastExaminedLine();
-               return entry.score.intValue();
+               return entry.score;
             }
          }
       }
@@ -188,10 +187,10 @@ public class AlphaBetaWithTranspositionTableSearch implements Search {
 
                   if (this.useMoveOrdering) {
                      if (whiteMove) {
-                        p.getWhite().killerMove(
+                        p.getWhite().betterMove(
                               move);
                      } else {
-                        p.getBlack().killerMove(
+                        p.getBlack().betterMove(
                               move);
                      }
                   }
@@ -219,9 +218,10 @@ public class AlphaBetaWithTranspositionTableSearch implements Search {
       this.transposition.update(
             p,
             whiteMove,
-            this.pv.getCurrentBestLine(),
             result,
-            ply);
+            ply,
+            alpha,
+            beta);
 
       return result;
    }

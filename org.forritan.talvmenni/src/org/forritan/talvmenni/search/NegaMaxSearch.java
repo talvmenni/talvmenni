@@ -18,15 +18,17 @@ public class NegaMaxSearch implements Search {
 
    private int                movesSearched;
 
-   public NegaMaxSearch() {
+   public NegaMaxSearch(PrincipalVariation pv) {
       this(
-            0);
+            0,
+            pv);
    }
 
    public NegaMaxSearch(
-         int ply) {
+         int ply,
+         PrincipalVariation pv) {
       this.ply= ply;
-      this.pv= PrincipalVariation.Factory.create(ply);
+      this.pv= pv;
    }
 
    public void setPly(

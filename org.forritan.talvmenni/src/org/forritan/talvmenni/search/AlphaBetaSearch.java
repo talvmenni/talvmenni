@@ -145,10 +145,10 @@ public class AlphaBetaSearch implements Search {
                         (this.movesSearched - movesSearchedBefore),
                         (best * (whiteMove ? 1 : -1)));
                   if (whiteMove) {
-                     p.getWhite().killerMove(
+                     p.getWhite().betterMove(
                            move);
                   } else {
-                     p.getBlack().killerMove(
+                     p.getBlack().betterMove(
                            move);
                   }
                }

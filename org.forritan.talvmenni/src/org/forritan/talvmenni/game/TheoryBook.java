@@ -12,7 +12,7 @@ import java.util.StringTokenizer;
 import org.forritan.talvmenni.bitboard.Square;
 import org.forritan.talvmenni.bitboard.Squares;
 import org.forritan.talvmenni.game.Position.Move;
-import org.forritan.talvmenni.game.Position.TuplePositionBoolean;
+import org.forritan.talvmenni.game.Position.ColorPosition;
 
 
 public class TheoryBook {
@@ -39,7 +39,7 @@ public class TheoryBook {
       int lineNumber= 0;
       boolean fenStringLine= true;
       String line= null;
-      TuplePositionBoolean p= null;
+      ColorPosition p= null;
       List bookMoves= null;
 
       while ((line= reader.readLine()) != null) {

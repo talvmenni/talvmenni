@@ -1,16 +1,13 @@
 package org.forritan.talvmenni.strategy;
 
 import java.util.List;
-import java.util.Random;
 
-import org.forritan.talvmenni.evaluation.Evaluation;
-import org.forritan.talvmenni.evaluation.SimpleMaterialAndPositionalEvaluation;
+import org.forritan.talvmenni.evaluation.MaterialAndPositionalEvaluation;
 import org.forritan.talvmenni.game.Position;
 import org.forritan.talvmenni.game.TheoryBook;
 import org.forritan.talvmenni.game.Transposition;
-import org.forritan.talvmenni.game.Position.Move;
 import org.forritan.talvmenni.search.AlphaBetaWithTranspositionTableSearch;
-import org.forritan.talvmenni.search.Search;
+import org.forritan.talvmenni.search.PrincipalVariation;
 
 
 public class IterativeDeepeningAlphaBetaWithTranspositionTableStrategy extends AbstractStrategy {
@@ -19,11 +16,12 @@ public class IterativeDeepeningAlphaBetaWithTranspositionTableStrategy extends A
          int ply,
          Transposition transposition,
          boolean useMoveOrdering,
-         TheoryBook book) {
-      super(ply, book);
+         TheoryBook book,
+         PrincipalVariation pv) {
+      super(ply, book, pv);
       this.search= new AlphaBetaWithTranspositionTableSearch(
-            transposition, useMoveOrdering);
-      this.evaluation= new SimpleMaterialAndPositionalEvaluation();
+            transposition, useMoveOrdering, pv);
+      this.evaluation= new MaterialAndPositionalEvaluation();
    }
 
    protected List search(

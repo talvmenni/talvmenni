@@ -5,11 +5,12 @@ import java.util.Random;
 
 import org.forritan.talvmenni.game.Position;
 import org.forritan.talvmenni.game.Position.Move;
+import org.forritan.talvmenni.search.PrincipalVariation;
 
 public class RandomMoveStrategy extends AbstractStrategy {
    
-   public RandomMoveStrategy() {
-      super(0, null);
+   public RandomMoveStrategy(PrincipalVariation pv) {
+      super(0, null, pv);
    }
    
    protected List search(

@@ -1,28 +1,27 @@
 package org.forritan.talvmenni.strategy;
 
 import java.util.List;
-import java.util.Random;
 
-import org.forritan.talvmenni.evaluation.Evaluation;
-import org.forritan.talvmenni.evaluation.SimpleMaterialAndPositionalEvaluation;
+import org.forritan.talvmenni.evaluation.MaterialAndPositionalEvaluation;
 import org.forritan.talvmenni.game.Position;
 import org.forritan.talvmenni.game.TheoryBook;
-import org.forritan.talvmenni.game.Position.Move;
 import org.forritan.talvmenni.search.AlphaBetaSearch;
-import org.forritan.talvmenni.search.Search;
+import org.forritan.talvmenni.search.PrincipalVariation;
 
 
 public class AlphaBetaStrategy extends AbstractStrategy {
 
    public AlphaBetaStrategy(
          int ply,
-         TheoryBook book) {
+         TheoryBook book,
+         PrincipalVariation pv) {
       super(
             ply,
-            book);
+            book,
+            pv);
       this.search= new AlphaBetaSearch(
             ply);
-      this.evaluation= new SimpleMaterialAndPositionalEvaluation();
+      this.evaluation= new MaterialAndPositionalEvaluation();
    }
 
    protected List search(

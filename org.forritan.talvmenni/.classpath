@@ -10,5 +10,7 @@
 	<classpathentry sourcepath="lib/jini-src.zip" kind="lib" path="lib/jini-core.jar"/>
 	<classpathentry sourcepath="lib/jini-src.zip" kind="lib" path="lib/jini-ext.jar"/>
 	<classpathentry sourcepath="lib/util-daily-2004-10-23.zip" kind="lib" path="lib/emory-util.jar"/>
+	<classpathentry sourcepath="lib/trove-src.zip" kind="lib" path="lib/trove.jar"/>
+	<classpathentry kind="src" path="/org.forritan.talvmenni.worker"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

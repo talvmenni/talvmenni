@@ -2,23 +2,27 @@ package org.forritan.talvmenni.strategy;
 
 import java.util.List;
 
-import org.forritan.talvmenni.evaluation.SimpleMaterialAndPositionalEvaluation;
+import org.forritan.talvmenni.evaluation.MaterialAndPositionalEvaluation;
 import org.forritan.talvmenni.game.Position;
 import org.forritan.talvmenni.game.TheoryBook;
 import org.forritan.talvmenni.search.NegaMaxSearch;
+import org.forritan.talvmenni.search.PrincipalVariation;
 
 
 public class NegaMaxStrategy extends AbstractStrategy {
 
    public NegaMaxStrategy(
          int ply,
-         TheoryBook book) {
+         TheoryBook book,
+         PrincipalVariation pv) {
       super(
             ply,
-            book);
+            book,
+            pv);
       this.search= new NegaMaxSearch(
-            ply);
-      this.evaluation= new SimpleMaterialAndPositionalEvaluation();
+            ply,
+            pv);
+      this.evaluation= new MaterialAndPositionalEvaluation();
    }
 
    protected List search(

@@ -10,21 +10,26 @@ import org.forritan.talvmenni.game.Position;
 import org.forritan.talvmenni.game.TheoryBook;
 import org.forritan.talvmenni.game.Position.Move;
 import org.forritan.talvmenni.game.TheoryBook.TupleMoveWeight;
+import org.forritan.talvmenni.search.PrincipalVariation;
 import org.forritan.talvmenni.search.Search;
+import org.forritan.talvmenni.search.PrincipalVariation.Thinking;
 
 
 public abstract class AbstractStrategy implements Strategy {
 
-   protected DebugInfo  debugInfo;
-   protected TheoryBook book;
-   protected Search     search;
-   protected Evaluation evaluation;
-   protected int        ply;
+   protected DebugInfo          debugInfo;
+   protected TheoryBook         book;
+   protected Search             search;
+   protected PrincipalVariation pv;
+   protected Evaluation         evaluation;
+   protected int                ply;
 
    public AbstractStrategy(
          int ply,
-         TheoryBook book) {
+         TheoryBook book,
+         PrincipalVariation pv) {
       this.debugInfo= new DebugInfo();
+      this.pv= pv;
       this.ply= ply;
       this.book= book;
 
@@ -88,8 +93,16 @@ public abstract class AbstractStrategy implements Strategy {
       return this.search;
    }
 
+   public PrincipalVariation getPrincipalVariation() {
+      return this.pv;
+   }
+
    public DebugInfo getDebugInfo() {
       return this.debugInfo;
+   }
+
+   public Thinking getThinking() {
+      return this.search.getThinking();
    }
 
    public TheoryBook getTheoryBook() {
@@ -125,7 +138,7 @@ public abstract class AbstractStrategy implements Strategy {
       if (moves.size() == 1) {
          bestMoves= moves;
       } else {
-         this.search.getPrincipalVariation().clearBestLine();
+         this.getPrincipalVariation().clearBestLine();
          bestMoves= this.search(
                position,
                whiteToMove);
