@@ -11,18 +11,18 @@ public class XboardProtocol implements UiProtocol {
 
    private boolean isRunning;
    ChessEngine     AChessEngine = ChessEngine.create();
-
+   
    public XboardProtocol() {
       isRunning= true;
    }
 
    public void run() {
-
+   
       BufferedReader inReader= new BufferedReader(new InputStreamReader(
             System.in));
 
       String xboardMessage= "";
-      System.out.println("feature myname=\"TALVMENNI v 0.1\" done=1");
+      System.out.println("feature myname=\"TALVMENNI v 0.2\" done=1");
 
       while (this.isRunning) {
          try {

@@ -6,7 +6,7 @@ import java.awt.event.*;
 
 
 /* FrameDemo.java requires no other files. */
-public class IoWindow {
+public class DebugWindow {
 
    public static JFrame        vindeyga;
    public static JTextArea     tekstur;
@@ -38,7 +38,7 @@ public class IoWindow {
 
    }
 
-   public IoWindow() {
+   public DebugWindow() {
       //Schedule a job for the event-dispatching thread:
       //creating and showing this application's GUI.
       javax.swing.SwingUtilities.invokeLater(new Runnable() {

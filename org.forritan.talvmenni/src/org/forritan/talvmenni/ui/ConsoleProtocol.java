@@ -7,7 +7,7 @@ import java.io.InputStreamReader;
 import org.forritan.talvmenni.core.ChessEngine;
 
 
-public class ConsoleProtocol {
+public class ConsoleProtocol implements UiProtocol{
    private String  prompt;
    private boolean isRunning;
    ChessEngine     AChessEngine = ChessEngine.create();
@@ -40,7 +40,8 @@ public class ConsoleProtocol {
    /**
     * @param input
     */
-   private void processInput(String input) {
+   public String processInput(String input) {
+      return input;
 //      if ("".equalsIgnoreCase(input)
 //            || input.matches("( )*")) {
 //         //Just ignore it...
