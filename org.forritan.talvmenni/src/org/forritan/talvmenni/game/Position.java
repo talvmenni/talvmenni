@@ -457,6 +457,11 @@ public class Position {
    }
 
    
+   /**
+    * @deprecated Use @link{org.forritan.talvmenni.game.Strategy.getNextMove(Position position, boolean whiteToMove)} instead
+    * @param whiteMove
+    * @return
+    */
    public Move getRandomMove(boolean whiteMove) {
       List<Move> possibleMoves;
       if(whiteMove) {
@@ -509,6 +514,7 @@ public class Position {
       public final static int ROOK= 1;
       public final static int BISHOP= 2;
       public final static int KNIGHT= 3;      
+      public final static String[] STRINGS= new String[] {"q", "r", "b", "n"};
    }
 
    public class Bitboard {

@@ -3,6 +3,7 @@ package org.forritan.talvmenni.ui;
 import org.forritan.talvmenni.bitboard.Squares;
 import org.forritan.talvmenni.core.ChessEngine;
 import org.forritan.talvmenni.core.TalvMenni;
+import org.forritan.talvmenni.game.Move;
 import org.forritan.talvmenni.game.Position;
 
 
@@ -57,18 +58,13 @@ public class XboardProtocol extends UiProtocolBase {
          String moveString= theInput.substring(8).trim();
 
          int promotionPiece= Position.PromotionPiece.DEFAULT;
-         ;
 
          if (moveString.length() > 4) {
-            String promoteTo= moveString.substring(4, 5);
-            if (promoteTo.equalsIgnoreCase("q")) {
-               promotionPiece= Position.PromotionPiece.QUEEN;
-            } else if (promoteTo.equalsIgnoreCase("r")) {
-               promotionPiece= Position.PromotionPiece.ROOK;
-            } else if (promoteTo.equalsIgnoreCase("b")) {
-               promotionPiece= Position.PromotionPiece.BISHOP;
-            } else if (promoteTo.equalsIgnoreCase("n")) {
-               promotionPiece= Position.PromotionPiece.KNIGHT;
+            String promoteTo= moveString.substring(4, 5);            
+            for (int i= 0; i < Position.PromotionPiece.STRINGS.length; i++) {
+               if(promoteTo.equalsIgnoreCase(Position.PromotionPiece.STRINGS[i])) {
+                  promotionPiece= i;
+               }               
             }
          }
 
@@ -78,16 +74,39 @@ public class XboardProtocol extends UiProtocolBase {
                promotionPiece);
 
          if (this.protocol.isGo()) {
-            org.forritan.talvmenni.game.Position.Move move= this.protocol
-                  .getCurrentPosition().getRandomMove(
-                        this.protocol.isWhiteToMove());
-            if (move != null) {
-               this.protocol.makeMove(move.from, move.to, promotionPiece);
-               theOutput+= "move "
-                     + move.toString();
+
+            Move move= this.protocol.makeNextMove();
+            if(move != null) {
+               
+            theOutput+= "move "
+                  + move.toString();
             } else {
-               if (this.protocol.isWhiteToMove()) {
-                  if (this.protocol.getCurrentPosition().white.isChecked()) {
+
+            if (this.protocol.isWhiteToMove()) {
+               if (this.protocol.getCurrentPosition().white.isChecked()) {
+                     theOutput+= "0-1 {Black mates}";
+                  } else {
+                     theOutput+= "1/2-1/2 {Stalemate}";
+                  }
+               } else {
+                  if (this.protocol.getCurrentPosition().black.isChecked()) {
+                     theOutput+= "1-0 {White mates}";
+                  } else {
+                     theOutput+= "1/2-1/2 {Stalemate}";
+                  }
+               }
+            }         
+         }
+
+      } else if (theInput.equalsIgnoreCase("go")) {
+         this.protocol.setGo(true);
+         Move move= this.protocol.makeNextMove();
+         if(move != null) {
+         theOutput+= "move "
+               + move.toString();
+         } else {
+            if (this.protocol.isWhiteToMove()) {
+               if (this.protocol.getCurrentPosition().white.isChecked()) {
                      theOutput+= "0-1 {Black mates}";
                   } else {
                      theOutput+= "1/2-1/2 {Stalemate}";
@@ -100,18 +119,6 @@ public class XboardProtocol extends UiProtocolBase {
                   }
                }
             }
-         }
-
-      } else if (theInput.equalsIgnoreCase("go")) {
-         this.protocol.setGo(true);
-         org.forritan.talvmenni.game.Position.Move move= this.protocol
-               .getCurrentPosition().getRandomMove(
-                     this.protocol.isWhiteToMove());
-         this.protocol.makeMove(move.from, move.to,
-               Position.PromotionPiece.DEFAULT);
-
-         theOutput+= "move "
-               + move.toString();
       } else if (theInput.equalsIgnoreCase("force")) {
          this.protocol.setGo(false);
       } else if (theInput.equalsIgnoreCase("draw")) {
@@ -123,8 +130,6 @@ public class XboardProtocol extends UiProtocolBase {
       } else if (theInput.equalsIgnoreCase("quit")) {
          this.protocol.stop();
       }
-
       return theOutput;
-
    }
 }

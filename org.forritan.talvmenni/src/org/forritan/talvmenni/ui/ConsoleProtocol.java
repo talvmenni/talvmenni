@@ -73,7 +73,7 @@ public class ConsoleProtocol extends UiProtocolBase {
                this.protocol.isWhiteToMove());
          if (move != null)
          {
-         this.protocol.makeMove(move.from, move.to, Position.PromotionPiece.DEFAULT);
+         this.protocol.makeMove(move.from, move.to);
          theOutput = getStringBoard();
          }
          else

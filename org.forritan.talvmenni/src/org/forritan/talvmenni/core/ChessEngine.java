@@ -17,6 +17,7 @@ import org.forritan.talvmenni.game.Move;
 import org.forritan.talvmenni.game.MoveHistory;
 import org.forritan.talvmenni.game.Position;
 import org.forritan.talvmenni.game.Rules;
+import org.forritan.talvmenni.game.Strategy;
 import org.forritan.talvmenni.ui.ConsoleProtocol;
 import org.forritan.talvmenni.ui.UciProtocol;
 import org.forritan.talvmenni.ui.UiProtocol;
@@ -24,7 +25,8 @@ import org.forritan.talvmenni.ui.XboardProtocol;
 
 
 public class ChessEngine extends Observable implements Runnable {
-
+   
+   private Strategy            strategy;
    private boolean             running;
    private ProtocolImpl        protocol;
    private ThreadFactory       threadFactory;
@@ -32,13 +34,14 @@ public class ChessEngine extends Observable implements Runnable {
    private LinkedBlockingQueue<String> outMessages;
    private ProtocolHandler protocolHandler;
 
-   public static ChessEngine create() {
-      return new ChessEngine();
+   public static ChessEngine create(Strategy strategy) {
+      return new ChessEngine(strategy);
    }
 
-   private ChessEngine() {
+   private ChessEngine(Strategy strategy) {
       this.running= false;
       this.protocol= new ProtocolImpl();
+      this.strategy= strategy;
       this.threadFactory= Executors.defaultThreadFactory();
       this.inMessages= new LinkedBlockingQueue<String>();
       this.outMessages= new LinkedBlockingQueue<String>();
@@ -59,6 +62,7 @@ public class ChessEngine extends Observable implements Runnable {
    public Protocol getProtocol() {
       return this.protocol;
    }
+  
 
    public synchronized void addObserver(Observer observer) {
       this.protocolHandler.addObserver(observer);
@@ -79,7 +83,10 @@ public class ChessEngine extends Observable implements Runnable {
       public void setCurrentPosition(Position position);
       public void setPositionFromFEN(String FENString);      
       public Rules getCurrentRules();
+      public Move makeMove(long fromSquare, long toSquare);
       public Move makeMove(long fromSquare, long toSquare, int promotionPiece);
+      public Move makeNextMove();
+      public Strategy getStrategy();
    }
 
    private class ProtocolImpl extends Observable implements Protocol {
@@ -162,6 +169,10 @@ public class ChessEngine extends Observable implements Runnable {
                this.notifyObservers(moves.size() + " possible moves for black: " + moves.toString());            
             }
          }
+      }
+      
+      public Move makeMove(long fromSquare, long toSquare) {
+         return this.makeMove(fromSquare, toSquare, ChessEngine.this.strategy.getPromotionPiece());
       }
       
       public void setPositionFromFEN(String FENString)
@@ -264,6 +275,19 @@ public class ChessEngine extends Observable implements Runnable {
          this.setCurrentPosition(move.toPosition);
          return move;
       }
+      
+      public Move makeNextMove() {
+         Position.Move nextMove= ChessEngine.this.strategy.getNextMove(this.getCurrentPosition(), this.WhiteToMove);
+         Move move= null;
+         if(nextMove != null) {
+            move= new Move(this.getCurrentPosition(), nextMove.from, nextMove.to, ChessEngine.this.strategy.getPromotionPiece());
+            MoveHistory.getInstance().add(move);
+            this.WhiteToMove= !this.WhiteToMove;
+            this.setCurrentPosition(move.toPosition);
+         }
+         return move;
+      }
+
 
       public boolean isGo() {
          return this.go;
@@ -271,6 +295,10 @@ public class ChessEngine extends Observable implements Runnable {
 
       public boolean setGo(boolean go) {
          return this.go= go;
+      }
+
+      public Strategy getStrategy() {
+         return ChessEngine.this.strategy;
       }
 
    }
