@@ -24,33 +24,32 @@ import org.forritan.talvmenni.knowledge.evaluation.Evaluation;
 import org.forritan.talvmenni.knowledge.evaluation.SimpleMaterialAndPositionalEvaluation;
 import org.forritan.talvmenni.masterworker.generic.Result;
 import org.forritan.talvmenni.search.AlphaBetaWithQuiescentAndTranspositionTableSearch;
+import org.forritan.talvmenni.search.AlphaBetaWithTranspositionTableSearch;
 import org.forritan.talvmenni.search.PrincipalVariation;
 import org.forritan.util.jini.ServiceLocator;
 
 
-public class ParallelIterativDeepeningAlphaBetaWithQuiescentAndTranspositionTableStrategy
+public class ParallelIterativDeepeningAlphaBetaWithTranspositionTableStrategy
       extends AbstractParallelStrategy {
 
    private Master master;
    private int    masterSearchToPly;
 
-   public ParallelIterativDeepeningAlphaBetaWithQuiescentAndTranspositionTableStrategy(
+   public ParallelIterativDeepeningAlphaBetaWithTranspositionTableStrategy(
          int ply,
          int masterSearchToPly,
          Transposition transposition,
          boolean useMoveOrdering,
          TheoryBook book,
-         PrincipalVariation pv,
-         int quiescentMaxDepth) {
+         PrincipalVariation pv) {
       super(
             ply,
             book,
             pv,
-            new AlphaBetaWithQuiescentAndTranspositionTableSearch(
+            new AlphaBetaWithTranspositionTableSearch(
                   transposition,
                   useMoveOrdering,
-                  pv,
-                  quiescentMaxDepth),
+                  pv),
             new SimpleMaterialAndPositionalEvaluation());
 
       try {
@@ -228,7 +227,6 @@ public class ParallelIterativDeepeningAlphaBetaWithQuiescentAndTranspositionTabl
             } catch (IOException e) {
                e.printStackTrace();
             }
-                        
             if (result != null) {
                if(this.whiteToMove) {
                   if (this.bestResult == null
@@ -319,7 +317,7 @@ public class ParallelIterativDeepeningAlphaBetaWithQuiescentAndTranspositionTabl
                      + this.lastWorkerId
                      + "...");
 
-         AlphaBetaWithQuiescentAndTranspositionTableSearch search= (AlphaBetaWithQuiescentAndTranspositionTableSearch) this.worker.getSearch();
+         AlphaBetaWithTranspositionTableSearch search= (AlphaBetaWithTranspositionTableSearch) this.worker.getSearch();
 
          for (int localPly= this.workerSearchedToPly.intValue() + 1; localPly <= this.ply
                .intValue(); localPly++) {

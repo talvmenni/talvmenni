@@ -1,0 +1,4 @@
+Manifest-Version: 1.0
+Class-Path: lib/generic-master-worker.jar lib/fiddler.jar lib/jini-core.jar lib/jini-ext.jar
+Main-Class: org.forritan.talvmenni.masterworker.generic.GenericWorker
+

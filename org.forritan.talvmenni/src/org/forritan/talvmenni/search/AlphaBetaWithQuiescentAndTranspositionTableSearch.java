@@ -93,14 +93,8 @@ public class AlphaBetaWithQuiescentAndTranspositionTableSearch implements
       this.movesSearched= 0;
       this.transpositionHits= 0;
 
-      int alpha= Integer.MIN_VALUE + 1;
-      // Very important!!! Can't be
-      // Integer.MIN_VALUE, because
-      // Integer.MIN_VALUE ==
-      // -Integer.MIN_VALUE
-
-      //      int beta= Integer.MAX_VALUE;
       // If checkmate there is no need to search further...
+      int alpha= -Evaluation.CHECKMATE_SCORE;      
       int beta= Evaluation.CHECKMATE_SCORE;
 
       this.pv.clearPrincipalVariation();
@@ -236,8 +230,8 @@ public class AlphaBetaWithQuiescentAndTranspositionTableSearch implements
 
                if (score > best) {
                   best= score;
-                  
-                  if(ply >= (this.ply-1) ) {
+
+                  if (ply >= (this.ply - 1)) {
                      this.pv.getDebugInfo().postText(
                            "[PLY="
                                  + ply
@@ -306,6 +300,15 @@ public class AlphaBetaWithQuiescentAndTranspositionTableSearch implements
    public void setHistoryHeuristic(
          HistoryHeuristic historyHeuristic) {
       this.historyHeuristic= historyHeuristic;
+   }
+      
+   public Transposition getTransposition() {
+      return this.transposition;
+   }
+   
+   public void setTransposition(
+         Transposition transposition) {
+      this.transposition= transposition;
    }
 
    public int getFinalAlpha() {

@@ -2,16 +2,11 @@ package org.forritan.talvmenni.search;
 
 import java.io.Serializable;
 import java.util.List;
-import java.util.Observable;
 
-import org.forritan.talvmenni.ChessEngine;
-import org.forritan.talvmenni.knowledge.AbstractPosition;
 import org.forritan.talvmenni.knowledge.HistoryHeuristic;
-import org.forritan.talvmenni.knowledge.ImmutablePosition;
 import org.forritan.talvmenni.knowledge.Position;
-import org.forritan.talvmenni.knowledge.Position.Move;
+import org.forritan.talvmenni.knowledge.Transposition;
 import org.forritan.talvmenni.knowledge.evaluation.Evaluation;
-
 import org.forritan.talvmenni.search.PrincipalVariation.DebugInfo;
 import org.forritan.talvmenni.search.PrincipalVariation.Thinking;
 
@@ -31,6 +26,10 @@ public interface Search extends Serializable {
    public PrincipalVariation getPrincipalVariation();
 
    public HistoryHeuristic getHistoryHeuristic();
+   public void setHistoryHeuristic(HistoryHeuristic historyHeuristic);
+
+   public Transposition getTransposition();
+   public void setTransposition(Transposition transposition);
 
    public Thinking getThinking();
 

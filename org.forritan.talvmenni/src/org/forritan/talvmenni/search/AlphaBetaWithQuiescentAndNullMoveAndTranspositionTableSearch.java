@@ -315,11 +315,22 @@ public List getBestMoves(
 
       return result;
    }
+   
    public HistoryHeuristic getHistoryHeuristic() {
       return this.historyHeuristic;
    }
+   
    public void setHistoryHeuristic(
          HistoryHeuristic historyHeuristic) {
       this.historyHeuristic= historyHeuristic;
+   }
+   
+   public Transposition getTransposition() {
+      return this.transposition;
+   }
+   
+   public void setTransposition(
+         Transposition transposition) {
+      this.transposition= transposition;
    }
 }

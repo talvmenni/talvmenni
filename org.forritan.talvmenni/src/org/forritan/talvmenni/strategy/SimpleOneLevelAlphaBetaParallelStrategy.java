@@ -186,7 +186,7 @@ public class SimpleOneLevelAlphaBetaParallelStrategy extends
          // If checkmate there is no need to search further...
          // int beta= Evaluation.CHECKMATE_SCORE;
 
-         int score= ((AlphaBetaSearch) this.worker.search).alphaBeta(
+         int score= ((AlphaBetaSearch) this.worker.getSearch()).alphaBeta(
                position,
                this.worker.evaluation,
                this.whiteToMove.booleanValue(),
@@ -194,7 +194,7 @@ public class SimpleOneLevelAlphaBetaParallelStrategy extends
                alpha,
                beta);
 
-         List bestMoves= this.worker.search.getBestMoves(
+         List bestMoves= this.worker.getSearch().getBestMoves(
                this.position,
                this.worker.evaluation,
                this.whiteToMove.booleanValue());
@@ -203,7 +203,7 @@ public class SimpleOneLevelAlphaBetaParallelStrategy extends
          result.score= new Integer(
                score);
          result.move= this.move;
-         result.principalVariation= this.worker.search.getPrincipalVariation()
+         result.principalVariation= this.worker.getSearch().getPrincipalVariation()
                .getCurrentBestLine();
          return result;
 

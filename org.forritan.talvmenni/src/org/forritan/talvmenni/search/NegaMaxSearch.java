@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.forritan.talvmenni.knowledge.HistoryHeuristic;
 import org.forritan.talvmenni.knowledge.Position;
+import org.forritan.talvmenni.knowledge.Transposition;
 import org.forritan.talvmenni.knowledge.Position.Move;
 import org.forritan.talvmenni.knowledge.evaluation.Evaluation;
 
@@ -154,6 +155,21 @@ public class NegaMaxSearch implements Search {
    }
 
    public HistoryHeuristic getHistoryHeuristic() {
+      throw new UnsupportedOperationException();
+   }
+
+   public void setHistoryHeuristic(
+         HistoryHeuristic historyHeuristic) {
+      throw new UnsupportedOperationException();
+   }
+   
+   
+   public Transposition getTransposition() {
+      throw new UnsupportedOperationException();
+   }
+   
+   public void setTransposition(
+         Transposition transposition) {
       throw new UnsupportedOperationException();
    }
 }

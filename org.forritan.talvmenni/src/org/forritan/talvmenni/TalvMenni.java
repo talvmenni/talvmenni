@@ -15,6 +15,7 @@ import org.forritan.talvmenni.strategy.IterativeDeepeningMTDfWithTranspositionTa
 import org.forritan.talvmenni.strategy.MTDfStrategyWithTranspositionTable;
 import org.forritan.talvmenni.strategy.NegaMaxStrategy;
 import org.forritan.talvmenni.strategy.ParallelIterativDeepeningAlphaBetaWithQuiescentAndTranspositionTableStrategy;
+import org.forritan.talvmenni.strategy.ParallelIterativDeepeningAlphaBetaWithTranspositionTableStrategy;
 import org.forritan.talvmenni.strategy.RandomMoveStrategy;
 import org.forritan.talvmenni.strategy.SimpleOneLevelAlphaBetaParallelStrategy;
 import org.forritan.talvmenni.strategy.Strategy;
@@ -122,6 +123,8 @@ public class TalvMenni {
             STRATEGY= ChoosenStrategy.MTDF_WITH_TRANSPOSITION_TABLE;
          } else if ("idmtdf".equalsIgnoreCase(strategyPropertyString)) {
             STRATEGY= ChoosenStrategy.ITERATIVE_DEEPENING_MTDF_WITH_TRANSPOSITION_TABLE;
+         } else if ("pidabtt".equalsIgnoreCase(strategyPropertyString)) {
+            STRATEGY= ChoosenStrategy.PARALLEL_ITERATIVE_DEEPENING_ALPHA_BETA_WITH_TRANSPOSITION_TABLE;
          } else if ("pidabqtt".equalsIgnoreCase(strategyPropertyString)) {
             STRATEGY= ChoosenStrategy.PARALLEL_ITERATIVE_DEEPENING_ALPHA_BETA_WITH_QUIESCENT_AND_TRANSPOSITION_TABLE;
          }
@@ -223,7 +226,8 @@ public class TalvMenni {
       public static final int ITERATIVE_DEEPENING_MTDF_WITH_TRANSPOSITION_TABLE                                   = 9;
 
       public static final int SIMPLE_ONE_LEVEL_ALPHA_BETA_PARALLEL                                                = 10;
-      public static final int PARALLEL_ITERATIVE_DEEPENING_ALPHA_BETA_WITH_QUIESCENT_AND_TRANSPOSITION_TABLE      = 11;
+      public static final int PARALLEL_ITERATIVE_DEEPENING_ALPHA_BETA_WITH_TRANSPOSITION_TABLE                    = 11;
+      public static final int PARALLEL_ITERATIVE_DEEPENING_ALPHA_BETA_WITH_QUIESCENT_AND_TRANSPOSITION_TABLE      = 12;
 
       public static Strategy get(
             int choosenOne,
@@ -310,13 +314,22 @@ public class TalvMenni {
                      book,
                      PrincipalVariation.Factory.create(PLY - 1));
 
-            case ChoosenStrategy.PARALLEL_ITERATIVE_DEEPENING_ALPHA_BETA_WITH_QUIESCENT_AND_TRANSPOSITION_TABLE:
 
-               int masterSearchToPly= 2;
+            case ChoosenStrategy.PARALLEL_ITERATIVE_DEEPENING_ALPHA_BETA_WITH_TRANSPOSITION_TABLE:
+
+               return new ParallelIterativDeepeningAlphaBetaWithTranspositionTableStrategy(
+                     PLY,
+                     2,
+                     new Transposition(),
+                     true,
+                     book,
+                     PrincipalVariation.Factory.create(PLY));
+
+            case ChoosenStrategy.PARALLEL_ITERATIVE_DEEPENING_ALPHA_BETA_WITH_QUIESCENT_AND_TRANSPOSITION_TABLE:
 
                return new ParallelIterativDeepeningAlphaBetaWithQuiescentAndTranspositionTableStrategy(
                      PLY,
-                     masterSearchToPly,
+                     2,
                      new Transposition(),
                      true,
                      book,

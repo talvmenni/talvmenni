@@ -44,6 +44,7 @@ public abstract class AbstractParallelStrategy extends AbstractStrategy {
       final ChessEngineWorker workerTemplate= new ChessEngineWorker();
       final ChessEngineWorker worker= new ChessEngineWorker();
       worker.transposition= new Transposition();
+      worker.historyHeuristic= new HistoryHeuristic();
       worker.search= search;
       worker.evaluation= evaluation;
 
@@ -186,7 +187,6 @@ public abstract class AbstractParallelStrategy extends AbstractStrategy {
                               Long.MAX_VALUE);
                   if (task != null) {
                      task.worker= this;
-
                      Result result= task.execute();
                      if (result != null) {
                         ServiceLocator.getJavaSpaceInstance().write(
@@ -219,6 +219,13 @@ public abstract class AbstractParallelStrategy extends AbstractStrategy {
             ChessEngineTask task) {
          this.task= task;
       }
+
+      public Search getSearch() {
+         this.search.setTransposition(this.transposition);
+         this.search.setHistoryHeuristic(this.historyHeuristic);
+         return this.search;
+      }
+      
    }
 
    public static class ChessEngineTask implements Entry, Command {

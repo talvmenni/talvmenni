@@ -1,11 +1,11 @@
 package org.forritan.talvmenni.search;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
 import org.forritan.talvmenni.knowledge.HistoryHeuristic;
 import org.forritan.talvmenni.knowledge.Position;
+import org.forritan.talvmenni.knowledge.Transposition;
 import org.forritan.talvmenni.knowledge.Position.Move;
 import org.forritan.talvmenni.knowledge.evaluation.Evaluation;
 import org.forritan.talvmenni.search.PrincipalVariation.DebugInfo;
@@ -195,27 +195,36 @@ public class AlphaBetaSearch implements Search {
             this.pv.updateLastExaminedLine();
          }
       }
-      
+
       this.finalAlpha= alpha;
       this.finalBeta= beta;
 
       return result;
    }
-   
+
    public HistoryHeuristic getHistoryHeuristic() {
       return this.historyHeuristic;
    }
-   
+
    public void setHistoryHeuristic(
          HistoryHeuristic historyHeuristic) {
       this.historyHeuristic= historyHeuristic;
    }
-   
+
    public int getFinalAlpha() {
       return this.finalAlpha;
    }
-   
+
    public int getFinalBeta() {
       return this.finalBeta;
+   }
+
+   public Transposition getTransposition() {
+      throw new UnsupportedOperationException();
+   }
+
+   public void setTransposition(
+         Transposition transposition) {
+      throw new UnsupportedOperationException();
    }
 }

@@ -480,4 +480,14 @@ public class MTDfSearch implements Search {
          HistoryHeuristic historyHeuristic) {
       this.historyHeuristic= historyHeuristic;
    }
+   
+   public Transposition getTransposition() {
+      return this.transposition;
+   }
+   
+   public void setTransposition(
+         Transposition transposition) {
+      this.transposition= transposition;
+   }
+
 }

@@ -16,6 +16,8 @@ import org.forritan.talvmenni.search.PrincipalVariation.Thinking;
 public class AlphaBetaWithTranspositionTableSearch implements Search {
 
    private int lastScore;
+   private int finalAlpha;
+   private int finalBeta;
 
    public int getLastScore() {
       return this.lastScore;
@@ -80,14 +82,8 @@ public class AlphaBetaWithTranspositionTableSearch implements Search {
       this.movesSearched= 0;
       this.transpositionHits= 0;
 
-      int alpha= Integer.MIN_VALUE + 1;
-      // Very important!!! Can't be
-      // Integer.MIN_VALUE, because
-      // Integer.MIN_VALUE ==
-      // -Integer.MIN_VALUE
-
-      // int beta= Integer.MAX_VALUE;
       // If checkmate there is no need to search further...
+      int alpha= -Evaluation.CHECKMATE_SCORE;      
       int beta= Evaluation.CHECKMATE_SCORE;
 
       this.pv.clearPrincipalVariation();
@@ -262,6 +258,9 @@ public class AlphaBetaWithTranspositionTableSearch implements Search {
             ply,
             Transposition.Entry.Type.EXACT);
 
+      this.finalAlpha= alpha;
+      this.finalBeta= beta;
+
       return result;
    }
 
@@ -282,4 +281,13 @@ public class AlphaBetaWithTranspositionTableSearch implements Search {
          HistoryHeuristic historyHeuristic) {
       this.historyHeuristic= historyHeuristic;
    }
+
+   public int getFinalAlpha() {
+      return this.finalAlpha;
+   }
+
+   public int getFinalBeta() {
+      return this.finalBeta;
+   }
+
 }

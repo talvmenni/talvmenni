@@ -12,32 +12,32 @@ import net.jini.space.JavaSpace;
 
 
 public class GenericWorker {
-   JavaSpace      space;
    private Thread thread;
 
    public static void main(
          String[] args) throws IOException, InterruptedException {
-      System.setProperty("java.security.policy", "policy.all");
+      System.setProperty(
+            "java.security.policy",
+            "policy.all");
       new GenericWorker().startWork();
    }
 
-   public GenericWorker() throws IOException, InterruptedException {
-         space= (JavaSpace) ServiceLocator.getService(JavaSpace.class);
+   public GenericWorker() {
    }
 
-   public void startWork() {
+   public void startWork() throws IOException, InterruptedException {
       Task taskTemplate= new Task();
 
       while (true) {
          System.out.println("Looking for new task...");
          try {
-            Task task= (Task) space.take(
+            Task task= (Task) ServiceLocator.getJavaSpaceInstance().take(
                   taskTemplate,
                   null,
-                  Lease.FOREVER);
+                  Long.MAX_VALUE);
             Result result= task.execute();
             if (result != null) {
-               space.write(
+               ServiceLocator.getJavaSpaceInstance().write(
                      result,
                      null,
                      Lease.FOREVER);
