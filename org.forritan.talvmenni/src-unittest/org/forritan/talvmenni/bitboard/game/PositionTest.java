@@ -7,11 +7,24 @@ import junit.framework.TestCase;
 
 import org.forritan.talvmenni.bitboard.Rank;
 import org.forritan.talvmenni.bitboard.Square;
+import org.forritan.talvmenni.bitboard.paths.King;
 import org.forritan.talvmenni.game.Position;
 import org.forritan.talvmenni.game.Rules;
 
 
 public class PositionTest extends TestCase {
+
+   private final String[] zeroPrefix = new String[64];
+
+   public PositionTest() {
+      for (int i= 0, j= 64; i < zeroPrefix.length; i++, j--) {
+         StringBuffer zeroes= new StringBuffer();
+         for (int k= 1; k < j; k++) {
+            zeroes.append('0');
+         }
+         zeroPrefix[i]= zeroes.toString();
+      }
+   }
 
    public void testCreateInitial() {
       Position p= Position.createInitial();
@@ -553,9 +566,7 @@ public class PositionTest extends TestCase {
             Square._EMPTY_BOARD, // blackCastling
             Square._EMPTY_BOARD // blackEnpassant
             );
-      
-      
-      
+
       Assert.assertTrue(
             "Should be white pawn",
             p.white.isPawn(Square._C5));
@@ -569,42 +580,162 @@ public class PositionTest extends TestCase {
       Assert.assertTrue(
             "Should not be enpassant square",
             !p.black.isEnpassant(Square._D5));
-      
 
-      p= p.move(Square._D7, Square._D5);
-      
+      p= p.move(
+            Square._D7,
+            Square._D5);
+
       Assert.assertTrue(
             "Should be white pawn",
             p.white.isPawn(Square._C5));
       Assert.assertTrue(
             "Should be black pawn",
             p.black.isPawn(Square._D5));
-      
+
       Assert.assertTrue(
             "Should be enpassant square",
             p.black.isEnpassant(Square._D6));
       Assert.assertTrue(
             "Should be enpassant square",
             p.black.isEnpassant(Square._D5));
-      
-      
-      p= p.move(Square._C5, Square._D6);
+
+      p= p.move(
+            Square._C5,
+            Square._D6);
 
       Assert.assertTrue(
             "Should be white pawn",
             p.white.isPawn(Square._D6));
-      
+
       Assert.assertTrue(
             "Should be no black pawn left",
             !p.black.pawnsIterator().hasNext());
-      
+
       Assert.assertTrue(
             "Should not be enpassant square",
             !p.black.isEnpassant(Square._D6));
       Assert.assertTrue(
             "Should not be enpassant square",
-            !p.black.isEnpassant(Square._D5));      
+            !p.black.isEnpassant(Square._D5));
 
    }
 
+   public void testAllAttackedSquaresInitialBoard() {
+
+      long attacks;
+      Position p= Position.createInitial();
+
+      attacks= p.getAllSquaresAttackedByWhiteKillerMove();
+      Assert.assertEquals(
+            ""
+                  + //
+                  "00000000"
+                  + // A8-H8
+                  "00000000"
+                  + // A7-H7
+                  "00000000"
+                  + // A6-H6
+                  "00000000"
+                  + // A5-H5
+                  "00000000"
+                  + // A4-H4
+                  "11111111"
+                  + // A3-H3
+                  "00000000"
+                  + // A2-H2
+                  "00000000", // A1-H1
+            (this.zeroPrefix[Long.toBinaryString(
+                  attacks).length() - 1] + Long.toBinaryString(attacks)));
+
+      attacks= p.getAllSquaresAttackedByBlackKillerMove();
+      Assert.assertEquals(
+            ""
+                  + //
+                  "00000000"
+                  + // A8-H8
+                  "00000000"
+                  + // A7-H7
+                  "11111111"
+                  + // A6-H6
+                  "00000000"
+                  + // A5-H5
+                  "00000000"
+                  + // A4-H4
+                  "00000000"
+                  + // A3-H3
+                  "00000000"
+                  + // A2-H2
+                  "00000000", // A1-H1
+            (this.zeroPrefix[Long.toBinaryString(
+                  attacks).length() - 1] + Long.toBinaryString(attacks)));
+
+   }
+
+   public void testAllAttackedSquaresKings() {
+
+      long attacks;
+      Position p= Position.create(
+            Square._F3, // whiteKings
+            Square._EMPTY_BOARD, // whiteQueens
+            Square._EMPTY_BOARD, // whiteRooks
+            Square._EMPTY_BOARD, // whiteBishops
+            Square._EMPTY_BOARD, // whiteKnights
+            Square._EMPTY_BOARD, // whitePawns
+            Square._EMPTY_BOARD, // whiteCastling
+            Square._EMPTY_BOARD, // whiteEnpassant
+            Square._C6, // blackKings
+            Square._EMPTY_BOARD, // blackQueens
+            Square._EMPTY_BOARD, // blackRooks
+            Square._EMPTY_BOARD, // blackBishops
+            Square._EMPTY_BOARD, // blackKnights
+            Square._EMPTY_BOARD, // blackPawns
+            Square._EMPTY_BOARD, // blackCastling
+            Square._EMPTY_BOARD // blackEnpassant
+            );
+
+      attacks= p.getAllSquaresAttackedByWhiteKillerMove();
+      Assert.assertEquals(
+            ""
+                  + //
+                  "00000000"
+                  + // A8-H8
+                  "00000000"
+                  + // A7-H7
+                  "00000000"
+                  + // A6-H6
+                  "00000000"
+                  + // A5-H5
+                  "00001110"
+                  + // A4-H4
+                  "00001010"
+                  + // A3-H3
+                  "00001110"
+                  + // A2-H2
+                  "00000000", // A1-H1
+            (this.zeroPrefix[Long.toBinaryString(
+                  attacks).length() - 1] + Long.toBinaryString(attacks)));
+
+      attacks= p.getAllSquaresAttackedByBlackKillerMove();
+      Assert.assertEquals(
+            ""
+                  + //
+                  "00000000"
+                  + // A8-H8
+                  "01110000"
+                  + // A7-H7
+                  "01010000"
+                  + // A6-H6
+                  "01110000"
+                  + // A5-H5
+                  "00000000"
+                  + // A4-H4
+                  "00000000"
+                  + // A3-H3
+                  "00000000"
+                  + // A2-H2
+                  "00000000", // A1-H1
+            (this.zeroPrefix[Long.toBinaryString(
+                  attacks).length() - 1] + Long.toBinaryString(attacks)));
+
+   }
 }

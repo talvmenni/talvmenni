@@ -1,28 +1,18 @@
 package org.forritan.talvmenni.bitboard.attacks;
 
-import java.util.HashMap;
-import java.util.Map;
-
+import org.forritan.talvmenni.bitboard.paths.BlackPawnKills;
+import org.forritan.talvmenni.bitboard.paths.WhitePawnKills;
 import org.forritan.talvmenni.game.Position;
 
 
 public class BlackPawn {
-   
-   private static Map[] attackMaps= new Map[64];
-   
-   static {
-      for (int i= 0; i < attackMaps.length; i++) {
-         attackMaps[i]= new HashMap();
-      }
-   }
-   
-   public static long attacksFrom(long square, Position p) {
-      long result= 0L;
 
-      Map attackMap= attackMaps[Long.numberOfLeadingZeros(square)];
-      
-      //FIXME: !!!! Implementation missing...
-      
-      return result;
+   public static long killerMovesAttacksFrom(
+         long square,
+         Position p) {
+      return BlackPawnKills.create().getPathsFrom(
+            square)
+            ^ (BlackPawnKills.create().getPathsFrom(
+                  square) & p.black.allPieces);
    }
 }

@@ -59,6 +59,11 @@ public class ChessEngine implements Runnable {
 
    public void setRunning(boolean running) {
       this.running= running;
+      // FIXME: Shoudn't be necessary to System.exit(0) to quit... 
+      if(!this.running) {
+         System.exit(0);
+      }
+
    }
 
    public void run() {
