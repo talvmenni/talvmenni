@@ -24,6 +24,8 @@ public class TheoryBook {
    public void loadBook(
          String fileName) throws IOException {
 
+      int collisions= 0;
+      
       BufferedReader reader= new BufferedReader(
             new FileReader(
                   fileName));
@@ -40,6 +42,17 @@ public class TheoryBook {
                      false,
                      line);
                if (this.containsKey(p.a)) {
+
+                  if(p.b.booleanValue()) {
+                     if(this.get(p.a).getWhite().getBookMoves().size() != 0) {
+                        collisions++;
+                     }
+                  } else {
+                     if(this.get(p.a).getBlack().getBookMoves().size() != 0) {
+                        collisions++;
+                     }
+                  }
+                  
                   p.a= this.get(p.a);
                }
             } catch (IllegalArgumentException e) {
@@ -104,6 +117,9 @@ public class TheoryBook {
                p.a);
          fenStringLine= !fenStringLine;
       }
+      
+      System.err.println("Loaded book and there where " + collisions + " collisions...");
+      
 
    }
 

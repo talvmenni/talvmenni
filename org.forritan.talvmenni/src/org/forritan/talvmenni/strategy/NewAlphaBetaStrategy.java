@@ -18,20 +18,61 @@ public class NewAlphaBetaStrategy
 
    private DebugInfo  debugInfo;
 
+   private TheoryBook book;
    private Search     search;
    private Evaluation evaluation;
 
    public NewAlphaBetaStrategy(
-         int ply) {
+         int ply,
+         TheoryBook book) {
       this.debugInfo= new DebugInfo();
       this.search= new NewAlphaBetaSearch(
             ply);
       this.evaluation= new SimpleMaterialAndPositionalEvaluation();
+      this.book= book;
    }
 
    public Position.Move getNextMove(
          Position position,
          boolean whiteToMove) {
+      
+      if (this.book.containsKey(position)) {
+         this.getDebugInfo().postText(
+               "Position found in book... [searched through "
+                     + this.book.size()
+                     + " entries]...");
+
+         Position bookPosition= this.book.get(position);
+
+         if (bookPosition != null) {
+            Position.Bitboard board;
+            if (whiteToMove) {
+               board= bookPosition.getWhite();
+            } else {
+               board= bookPosition.getBlack();
+            }
+
+            List<Tuple<Move, Integer>> moves= board.getBookMoves();
+
+            int totalWeight= 0;
+
+            for (Tuple<Move, Integer> tuple : moves) {
+               totalWeight+= tuple.b.intValue();
+            }
+
+            if (totalWeight > 0) {
+
+               int weight= new Random().nextInt(totalWeight);
+
+               for (Tuple<Move, Integer> tuple : moves) {
+                  weight-= tuple.b.intValue();
+                  if (weight < 0) { return tuple.a; }
+               }
+            }
+
+         }
+      }
+
 
       List<Position.Move> bestMoves= this.search.getBestMoves(
             position.getMutable(),
@@ -58,11 +99,7 @@ public class NewAlphaBetaStrategy
       return this.debugInfo;
    }
 
-   /* (non-Javadoc)
-    * @see org.forritan.talvmenni.strategy.Strategy#getTheoryBook()
-    */
    public TheoryBook getTheoryBook() {
-      // TODO Auto-generated method stub
-      return null;
+      return this.book;
    }
 }

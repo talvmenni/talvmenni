@@ -4,6 +4,7 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="src-unittest"/>
 	<classpathentry kind="src" path="src-misc"/>
+	<classpathentry excluding="org/" kind="src" path="src-deprecated"/>
 	<classpathentry sourcepath="JUNIT_HOME/junit.jar" kind="var" path="JUNIT_HOME/junit.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/J2SE-sdk-5.0"/>
 	<classpathentry sourcepath="lib/jini-src.zip" kind="lib" path="lib/fiddler.jar"/>

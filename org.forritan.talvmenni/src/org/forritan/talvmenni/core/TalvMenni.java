@@ -61,7 +61,8 @@ public class TalvMenni {
 
       final ChessEngine chessEngine= ChessEngine
       .create(new NewAlphaBetaStrategy(
-            PLY));
+            PLY,
+            book));
 //      .create(new MiniMaxSearchSimpleMaterialAndPositionalEvaluationChooseRandomlyBetweenBestMovesStrategy(
 //            PLY,
 //            book));
