@@ -4,7 +4,7 @@ import org.forritan.talvmenni.bitboard.Square;
 
 
 public interface King extends Piece {
-      
+
    public static final long _PATHS_FROM_A1 = Square._B1
                                                  | Square._A2
                                                  | Square._B2;
@@ -356,12 +356,12 @@ public interface King extends Piece {
    public static final long _PATHS_FROM_H6 = Square._G6
                                                  | Square._G5
                                                  | Square._H5
-                                                 | Square._G6
-                                                 | Square._H6;
+                                                 | Square._G7
+                                                 | Square._H7;
 
    public static final long _PATHS_FROM_A7 = Square._A6
                                                  | Square._B6
-                                                 | Square._B6
+                                                 | Square._B7
                                                  | Square._A8
                                                  | Square._B8;
    public static final long _PATHS_FROM_B7 = Square._A7
@@ -416,11 +416,11 @@ public interface King extends Piece {
                                                  | Square._G8
                                                  | Square._H8;
 
-   public static final long _PATHS_FROM_H7 = Square._G7
-                                                 | Square._G6
-                                                 | Square._H6
+   public static final long _PATHS_FROM_H7 = Square._G8
+                                                 | Square._H8
                                                  | Square._G7
-                                                 | Square._H7;
+                                                 | Square._G6
+                                                 | Square._H6;
 
    public static final long _PATHS_FROM_A8 = Square._B8
                                                  | Square._A7
@@ -462,5 +462,5 @@ public interface King extends Piece {
    public static final long _PATHS_FROM_H8 = Square._G8
                                                  | Square._G7
                                                  | Square._H7;
-   
+
 }
