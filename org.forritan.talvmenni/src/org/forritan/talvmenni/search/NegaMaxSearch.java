@@ -66,6 +66,8 @@ public class NegaMaxSearch implements Search {
 
       time+= System.currentTimeMillis();
 
+      System.err.println("*** at ply = " + ply + " : best result = " + result + " NegaMaxSearch ***");
+
       this.pv.getDebugInfo().postNodesPerSecond(
             time,
             this.movesSearched);
@@ -73,7 +75,7 @@ public class NegaMaxSearch implements Search {
       return (pv.getBestMoveAsList());
    }
 
-   private int negaMax(
+   public int negaMax(
          Position p,
          Evaluation e,
          boolean whiteMove,

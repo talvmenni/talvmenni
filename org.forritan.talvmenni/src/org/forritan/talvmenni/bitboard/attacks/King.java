@@ -19,11 +19,9 @@ public class King {
       long result= 0L;
 
       if (p.getWhite().isKing(square)) {
-         result= kingPaths.getPathsFrom(square)
-               ^ (kingPaths.getPathsFrom(square) & p.getWhite().allPieces);
+         result= (kingPaths.getPathsFrom(square)& ~p.getWhite().allPieces);
       } else if (p.getBlack().isKing(square)) {
-         result= kingPaths.getPathsFrom(square)
-               ^ (kingPaths.getPathsFrom(square) & p.getBlack().allPieces);
+         result= (kingPaths.getPathsFrom(square)& ~p.getBlack().allPieces);
       }
 
       return result;

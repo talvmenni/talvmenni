@@ -126,8 +126,8 @@ public interface Position extends Serializable {
                | this.knights
                | this.pawns;
 
-         int  SEED             = 17;
-         int  PRIME_FACTOR     = 37;
+         int SEED= 17;
+         int PRIME_FACTOR= 37;
          int hash= SEED;
          hash= PRIME_FACTOR
                * hash
@@ -337,48 +337,47 @@ public interface Position extends Serializable {
                                           this.parent)));
                }
             }
-         }
 
-         BitboardIterator kings= this.kingsIterator();
-         while (kings.hasNext()) {
-            long fromSquare= kings.nextBitboard();
-            findMoves(
-                  this.possibleMoves,
-                  fromSquare,
-                  new BitboardIterator(
-                        King.attacksFrom(
-                              fromSquare,
-                              this.parent)));
-         }
+            BitboardIterator kings= this.kingsIterator();
+            while (kings.hasNext()) {
+               long fromSquare= kings.nextBitboard();
+               findMoves(
+                     this.possibleMoves,
+                     fromSquare,
+                     new BitboardIterator(
+                           King.attacksFrom(
+                                 fromSquare,
+                                 this.parent)));
+            }
 
-         if (this.isQueensSideCastlingLegal()) {
-            if (this.whiteBoard) {
-               this.possibleMoves.add(new Move(
-                     Square._E1,
-                     Square._C1,
-                     PromotionPiece.NONE));
-            } else {
-               this.possibleMoves.add(new Move(
-                     Square._E8,
-                     Square._C8,
-                     PromotionPiece.NONE));
+            if (this.isQueensSideCastlingLegal()) {
+               if (this.whiteBoard) {
+                  this.possibleMoves.add(new Move(
+                        Square._E1,
+                        Square._C1,
+                        PromotionPiece.NONE));
+               } else {
+                  this.possibleMoves.add(new Move(
+                        Square._E8,
+                        Square._C8,
+                        PromotionPiece.NONE));
+               }
+            }
+
+            if (this.isKingsSideCastlingLegal()) {
+               if (this.whiteBoard) {
+                  this.possibleMoves.add(new Move(
+                        Square._E1,
+                        Square._G1,
+                        PromotionPiece.NONE));
+               } else {
+                  this.possibleMoves.add(new Move(
+                        Square._E8,
+                        Square._G8,
+                        PromotionPiece.NONE));
+               }
             }
          }
-
-         if (this.isKingsSideCastlingLegal()) {
-            if (this.whiteBoard) {
-               this.possibleMoves.add(new Move(
-                     Square._E1,
-                     Square._G1,
-                     PromotionPiece.NONE));
-            } else {
-               this.possibleMoves.add(new Move(
-                     Square._E8,
-                     Square._G8,
-                     PromotionPiece.NONE));
-            }
-         }
-
          return this.possibleMoves;
       }
 
@@ -1035,12 +1034,10 @@ public interface Position extends Serializable {
                   white,
                   black);
          } else if (!mutable
-               && partitionSearchPosition) {
-            return new ImmutablePartitionSearchPosition(
+               && partitionSearchPosition) { return new ImmutablePartitionSearchPosition(
                white,
-               black);
-         }
-         
+               black); }
+
          return null;
 
       }

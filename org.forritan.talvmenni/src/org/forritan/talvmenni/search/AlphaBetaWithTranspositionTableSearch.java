@@ -82,6 +82,8 @@ public class AlphaBetaWithTranspositionTableSearch implements Search {
 
       this.pv.clearPrincipalVariation();
 
+//      System.err.println("Possible moves: " + (whiteMove ? p.getWhite().getPossibleMoves().toString() : p.getBlack().getPossibleMoves().toString()));
+
       int result= this.alphaBeta(
             p,
             e,
@@ -91,6 +93,17 @@ public class AlphaBetaWithTranspositionTableSearch implements Search {
             beta);
 
       time+= System.currentTimeMillis();
+
+//      System.err.println("*** at ply = "
+//            + ply
+//            + " : best result = "
+//            + result
+//            + " : AlphaBetaWithTranspositionTableSearch ***");
+//
+//      System.err.println("White transposition: " + this.transposition.size(true));
+//      System.err.println("Black transposition: " + this.transposition.size(false));
+//      
+//      System.err.println();
 
       this.pv.getDebugInfo().postNodesPerSecond(
             time,
@@ -106,7 +119,7 @@ public class AlphaBetaWithTranspositionTableSearch implements Search {
 
    }
 
-   private int alphaBeta(
+   public int alphaBeta(
          Position p,
          Evaluation e,
          boolean whiteMove,
@@ -123,10 +136,18 @@ public class AlphaBetaWithTranspositionTableSearch implements Search {
             Entry entry= this.transposition.get(
                   p,
                   whiteMove);
-            if (entry.ply >= ply) {
+            if (entry.depthToLeaf >= ply) {
                this.transpositionHits++;
                this.pv.updateLastExaminedLine();
-               return entry.score;
+               if((entry.type & Transposition.Entry.Type.EXACT) != 0) {
+                  return entry.exactScore;
+               }
+               if((entry.type & Transposition.Entry.Type.LOWER_BOUND) != 0) {
+                  if (entry.lowerBound >= beta) { return beta; }
+               }
+               if((entry.type & Transposition.Entry.Type.UPPER_BOUND) != 0) {
+                  if (entry.upperBound <= alpha) { return alpha; }
+               }
             }
          }
       }
@@ -194,7 +215,6 @@ public class AlphaBetaWithTranspositionTableSearch implements Search {
                               move);
                      }
                   }
-
                }
             }
 
@@ -220,8 +240,7 @@ public class AlphaBetaWithTranspositionTableSearch implements Search {
             whiteMove,
             result,
             ply,
-            alpha,
-            beta);
+            Transposition.Entry.Type.EXACT);
 
       return result;
    }

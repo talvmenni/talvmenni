@@ -6,6 +6,7 @@ import org.forritan.talvmenni.knowledge.TheoryBook;
 import org.forritan.talvmenni.knowledge.Transposition;
 import org.forritan.talvmenni.search.PrincipalVariation;
 import org.forritan.talvmenni.strategy.IterativeDeepeningAlphaBetaWithTranspositionTableStrategy;
+import org.forritan.talvmenni.strategy.IterativeDeepeningMTDfWithTranspositionTableStrategy;
 import org.forritan.talvmenni.ui.DebugWindow;
 
 import edu.emory.mathcs.util.concurrent.PlainThreadFactory;
@@ -31,12 +32,11 @@ public class TalvMenni {
     * MAX_TRANSPOSITION_ENTRIES is reached the eldest entry will be removed
     * before a new entry is added.
     */
-   public static int                 MAX_TRANSPOSITION_ENTRIES = 42000;
+   public static int                 MAX_TRANSPOSITION_ENTRIES = 150000;
 
    /**
-    * Very experimental :)
-    * Partition search - e.g.: Entries in transposition will evaluate as equal 
-    * if the pieces - excluding pawns - are equal...
+    * Very experimental :) Partition search - e.g.: Entries in transposition
+    * will evaluate as equal if the pieces - excluding pawns - are equal...
     */
    public static final boolean       PARTITION_SEARCH          = false;
 
@@ -87,6 +87,14 @@ public class TalvMenni {
             //                  book,
             //                  PrincipalVariation.Factory.create(PLY - 1)));
 
+            //            .create(new IterativeDeepeningMTDfWithTranspositionTableStrategy(
+            //                  PLY,
+            //                  new Transposition(
+            //                        MAX_TRANSPOSITION_ENTRIES),
+            //                  true,
+            //                  book,
+            //                  PrincipalVariation.Factory.create(PLY)));
+
             .create(new IterativeDeepeningAlphaBetaWithTranspositionTableStrategy(
                   PLY,
                   new Transposition(
@@ -102,22 +110,34 @@ public class TalvMenni {
 
       //            .create(new IterativeDeepeningAlphaBetaStrategy(
       //                  PLY,
-      //                  book));
+      //                  book,
+      //                  PrincipalVariation.Factory.create(PLY)));
+
+      //            .create(new MTDfStrategy(
+      //                  PLY,
+      //                  new Transposition(
+      //                        MAX_TRANSPOSITION_ENTRIES),
+      //                  true,
+      //                  book,
+      //                  PrincipalVariation.Factory.create(PLY)));
 
       //            .create(new AlphaBetaWithTranspositionTableStrategy(
       //                  PLY,
       //                  new Transposition(
       //                        MAX_TRANSPOSITION_ENTRIES),
       //                  true,
-      //                  book));
+      //                  book,
+      //                  PrincipalVariation.Factory.create(PLY)));
 
       //                  .create(new AlphaBetaStrategy(
       //                        PLY,
-      //                        book));
+      //                        book,
+      //    PrincipalVariation.Factory.create(PLY)));
 
-      //                  .create(new NegaMaxStrategy(
-      //                        PLY,
-      //                        book));
+      //            .create(new NegaMaxStrategy(
+      //                  PLY,
+      //                  book,
+      //                  PrincipalVariation.Factory.create(PLY)));
 
       //      if (Boolean.getBoolean("exception_logging_window")) {
       //         Thread windowThread= threadFactory.newThread(new Runnable() {

@@ -72,6 +72,9 @@ public class AlphaBetaSearch implements Search {
 
       time+= System.currentTimeMillis();
 
+      System.err.println("*** at ply = " + ply + " : best result = " + result + " : AlphaBetaSearch ***");
+      
+      
       this.pv.getDebugInfo().postNodesPerSecond(
             time,
             this.movesSearched);

@@ -11,16 +11,13 @@ public class Knight {
          long square,
          Position p) {
 
-      if (p.getWhite().isKnight(square)) {
-         return Knights.create().getPathsFrom(
-               square)
-               ^ (Knights.create().getPathsFrom(
-                     square) & p.getWhite().allPieces);
-      } else if (p.getBlack().isKnight(square)) { return Knights.create()
-            .getPathsFrom(
-                  square)
-            ^ (Knights.create().getPathsFrom(
-                  square) & p.getBlack().allPieces); }
+      if (p.getWhite().isKnight(
+            square)) {
+         return (Knights.create().getPathsFrom(
+               square) & ~p.getWhite().allPieces);
+      } else if (p.getBlack().isKnight(
+            square)) { return (Knights.create().getPathsFrom(
+            square) & ~p.getBlack().allPieces); }
 
       return 0L;
    }

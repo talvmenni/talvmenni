@@ -8,17 +8,20 @@ import java.util.Map;
 
 import org.forritan.talvmenni.knowledge.Position.Move;
 
+
 public class Transposition implements Serializable {
 
    public static final long serialVersionUID = 1L;
 
-   private Table whiteTable;
-   private Table blackTable;
+   private Table            whiteTable;
+   private Table            blackTable;
 
    public Transposition(
          int maxEntries) {
-      this.whiteTable= new Table(maxEntries);
-      this.blackTable= new Table(maxEntries);
+      this.whiteTable= new Table(
+            maxEntries);
+      this.blackTable= new Table(
+            maxEntries);
    }
 
    public int size(
@@ -63,57 +66,50 @@ public class Transposition implements Serializable {
          Position position,
          boolean white,
          int score,
-         int ply,
-         int alpha,
-         int beta) {
-      
+         int depthToLeaf,
+         int entryType) {
+
+      Table table;
+
       if (white) {
-         if (this.whiteTable.containsKey(position)) {
-            Entry entry= (Entry) this.whiteTable.get(position);
-            if ((entry.ply < ply)
-                  || (entry.ply == ply && entry.score < score)) {
-               this.whiteTable.remove(position);
-               this.whiteTable.put(
-                     position.getImmutable(),
-                     new Entry(
-                           score,
-                           ply,
-                           alpha,
-                           beta));
-            }
+         table= this.whiteTable;
+      } else {
+         table= this.blackTable;
+      }
+
+      Entry entry;
+      if (table.containsKey(position)) {
+         entry= (Entry) table.get(position);
+         if ((entry.depthToLeaf < depthToLeaf)) {
+            table.remove(position);
          } else {
-            this.whiteTable.put(
-                  position.getImmutable(),
-                  new Entry(
-                        score,
-                        ply,
-                        alpha,
-                        beta));
+            switch (entryType) {
+               case Entry.Type.UPPER_BOUND:
+                  entry.upperBound= score;
+                  entry.type &= entryType;
+                  break;
+               case Entry.Type.EXACT:
+                  entry.exactScore= score;
+                  entry.type &= entryType;
+                  break;
+               case Entry.Type.LOWER_BOUND:
+                  entry.lowerBound= score;
+                  entry.type &= entryType;
+                  break;
+               default:
+                  return;
+            }
+            table.remove(position);
          }
       } else {
-         if (this.blackTable.containsKey(position)) {
-            Entry entry= (Entry) this.blackTable.get(position);
-            if (entry.ply < ply
-                  || (entry.ply == ply && entry.score < score)) {
-               this.blackTable.remove(position);
-               this.blackTable.put(
-                     position.getImmutable(),
-                     new Entry(
-                           score,
-                           ply,
-                           alpha,
-                           beta));
-            }
-         } else {
-            this.blackTable.put(
-                  position.getImmutable(),
-                  new Entry(
-                        score,
-                        ply,
-                        alpha,
-                        beta));
-         }
+         entry= new Entry(
+               score,
+               depthToLeaf,
+               entryType);
       }
+      table.put(
+            position.getImmutable(),
+            entry);
    }
 
    public void clear(
@@ -140,24 +136,43 @@ public class Transposition implements Serializable {
       }
 
    }
-   
+
    public static class Entry {
 
-      public int  score;
-      public int  ply;
-      public int  alpha;
-      public int  beta;
+      public int upperBound;
+      public int exactScore;
+      public int lowerBound;
+      public int depthToLeaf;
+      public int type;
 
       public Entry(
-            int score,
-            int ply,
-            int alpha,
-            int beta) {
-         this.score= score;
-         this.ply= ply;
-         this.alpha= alpha;
-         this.beta= beta;
+            int value,
+            int depthToLeaf,
+            int entryType) {
+         switch (entryType) {
+            case Type.LOWER_BOUND:
+               this.lowerBound= value;
+               break;
+            case Type.EXACT:
+               this.exactScore= value;
+               break;
+            case Type.UPPER_BOUND:
+               this.upperBound= value;
+               break;
+         }
+         this.depthToLeaf= depthToLeaf;
+         this.type= entryType;
       }
+
+      public static interface Type extends Serializable {
+         public static final long serialVersionUID = 1L;
+
+         public final static int  EXACT            = 1;
+         public final static int  LOWER_BOUND      = 2;
+         public final static int  UPPER_BOUND      = 4;
+      }
+
    }
+
 }
 
