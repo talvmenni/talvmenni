@@ -24,6 +24,7 @@ import org.forritan.talvmenni.ui.ConsoleProtocol;
 import org.forritan.talvmenni.ui.UciProtocol;
 import org.forritan.talvmenni.ui.UiProtocol;
 import org.forritan.talvmenni.ui.XboardProtocol;
+import org.forritan.util.debug.ObjectCreationStatistics;
 
 
 public class ChessEngine extends Observable implements Runnable {
@@ -90,11 +91,13 @@ public class ChessEngine extends Observable implements Runnable {
       public Move makeMove(long fromSquare, long toSquare, int promotionPiece);
       public Move makeNextMove();
       public Strategy getStrategy();
+      public ObjectCreationStatistics getObjectCreationStatisticsInfo();
       public DebugInfo getDebugInfo();
    }
 
    private class ProtocolImpl implements Protocol {
-
+      
+      private ObjectCreationStatistics objectCreationStatisticsInfo;
       private DebugInfo debugInfo;
       private UiProtocol uiProtocol;
       private Position   currentPosition;
@@ -104,6 +107,11 @@ public class ChessEngine extends Observable implements Runnable {
       
       public ProtocolImpl() {
          this.debugInfo= new DebugInfo();
+         this.objectCreationStatisticsInfo= new ObjectCreationStatistics();
+      }
+
+      public ObjectCreationStatistics getObjectCreationStatisticsInfo() {
+         return this.objectCreationStatisticsInfo;
       }
 
       public DebugInfo getDebugInfo() {
@@ -317,14 +325,19 @@ public class ChessEngine extends Observable implements Runnable {
          
       
       public Move makeMove(long fromSquare, long toSquare, int promotionPiece) {
+         this.objectCreationStatisticsInfo.post("ChessEngine.ProtocolImpl.makeMove(...)");
+         this.objectCreationStatisticsInfo.post(ObjectCreationStatistics.ResetObjectCreationStats);
          Move move= new Move(this.getCurrentPosition(), fromSquare, toSquare, promotionPiece);
          MoveHistory.getInstance().add(move);
          this.WhiteToMove= !this.WhiteToMove;
          this.setCurrentPosition(move.toPosition);
+         this.objectCreationStatisticsInfo.post(ObjectCreationStatistics.PrintObjectCreationStats);
          return move;
       }
       
       public Move makeNextMove() {
+         this.objectCreationStatisticsInfo.post("ChessEngine.ProtocolImpl.makeNextMove()");
+         this.objectCreationStatisticsInfo.post(ObjectCreationStatistics.ResetObjectCreationStats);
          Position.Move nextMove= ChessEngine.this.strategy.getNextMove(this.getCurrentPosition(), this.WhiteToMove);
          Move move= null;
          if(nextMove != null) {
@@ -333,6 +346,7 @@ public class ChessEngine extends Observable implements Runnable {
             this.WhiteToMove= !this.WhiteToMove;
             this.setCurrentPosition(move.toPosition);
          }
+         this.objectCreationStatisticsInfo.post(ObjectCreationStatistics.PrintObjectCreationStats);
          return move;
       }
 

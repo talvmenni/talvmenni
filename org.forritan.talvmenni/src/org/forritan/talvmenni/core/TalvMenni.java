@@ -5,12 +5,11 @@ import java.util.concurrent.ThreadFactory;
 
 import org.forritan.talvmenni.game.IterativeDeepeningAlphaBetaSearchSimpleMaterialAndPositionalEvaluationChooseRandomlyBetweenBestMovesStrategy;
 import org.forritan.talvmenni.ui.DebugWindow;
+import org.forritan.util.debug.ObjectStatisticsWindow;
 
 
 public class TalvMenni {
    
-   public final static boolean OBJECT_STATISICS= true;
-
    public final static String NAME    = "Talvmenni";
    public final static String VERSION = "0.1";
 
@@ -44,6 +43,16 @@ public class TalvMenni {
             }
          });
          debugWindowThread.start();
+      }
+
+      if (Boolean.getBoolean("object_statisics_window")) {
+         Thread windowThread= threadFactory.newThread(new Runnable() {
+            public void run() {
+               ObjectStatisticsWindow window = new ObjectStatisticsWindow(TalvMenni.NAME + " | Object creations statistics");
+               chessEngine.getProtocol().getObjectCreationStatisticsInfo().addObserver(window);
+            }
+         });
+         windowThread.start();
       }
 
       chessEngine.run();

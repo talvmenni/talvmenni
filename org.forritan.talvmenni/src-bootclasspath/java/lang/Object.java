@@ -562,7 +562,7 @@ public class Object {
     
     
     // ... only for debugging. See http://www.javaspecialists.co.za/archive/Issue038a.html
-    private static HashMap countMap = new HashMap();
+    private static HashMap<Class, Counter> countMap = new HashMap<Class, Counter>();
     private static boolean counting = true;
     private static int totalObjects = 0;
 
@@ -595,29 +595,29 @@ public class Object {
       ___printObjectCreationStats(System.out);
     }
     public synchronized static void ___printObjectCreationStats(java.io.PrintStream out) {
-      counting = false;
-      out.println("Total number of objects: " + totalObjects);
-      TreeSet sorted = new TreeSet(new Comparator() {
-        public int compare(Object o1, Object o2) {
-          int value1 = ((Counter)((Map.Entry)o1).getValue()).value;
-          int value2 = ((Counter)((Map.Entry)o2).getValue()).value;
-          int result = value2 - value1;
-          if (result == 0) {
-            String classname1 = ((Class)((Map.Entry)o1).getKey()).getName();
-            String classname2 = ((Class)((Map.Entry)o2).getKey()).getName();
-            return classname1.compareTo(classname2);
-          }
-          return result;
-        }
-      });
-      sorted.addAll(countMap.entrySet());
-      Iterator it = sorted.iterator();
-      while(it.hasNext()) {
-        Map.Entry entry = (Map.Entry)it.next();
-        out.println("\t" + ((Counter)entry.getValue()).value
-          + "\t" + ((Class)entry.getKey()).getName());
-      }
-      out.println();
-      counting = true;
-    }
-  }
+       counting = false;
+       out.println("Total number of objects: " + totalObjects);
+       TreeSet sorted = new TreeSet(new Comparator() {
+         public int compare(Object o1, Object o2) {
+           int value1 = ((Counter)((Map.Entry)o1).getValue()).value;
+           int value2 = ((Counter)((Map.Entry)o2).getValue()).value;
+           int result = value2 - value1;
+           if (result == 0) {
+             String classname1 = ((Class)((Map.Entry)o1).getKey()).getName();
+             String classname2 = ((Class)((Map.Entry)o2).getKey()).getName();
+             return classname1.compareTo(classname2);
+           }
+           return result;
+         }
+       });
+       sorted.addAll(countMap.entrySet());
+       Iterator it = sorted.iterator();
+       while(it.hasNext()) {
+         Map.Entry entry = (Map.Entry)it.next();
+         out.println("\t" + ((Counter)entry.getValue()).value
+           + "\t" + ((Class)entry.getKey()).getName());
+       }
+       out.println();
+       counting = true;
+     }
+   }

@@ -37,7 +37,7 @@ public class DebugWindow implements Observer {
       MessageText.setLineWrap(true);
       
       JScrollPane scroller = new JScrollPane(MessageText);
-      scroller.setPreferredSize (new Dimension (300, 900));
+      scroller.setPreferredSize (new Dimension (500, 1000));
       
       DebugWindow.getContentPane().add(scroller, BorderLayout.CENTER);
       
