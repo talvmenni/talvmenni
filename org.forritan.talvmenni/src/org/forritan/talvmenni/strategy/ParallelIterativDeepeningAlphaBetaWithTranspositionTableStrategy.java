@@ -23,7 +23,6 @@ import org.forritan.talvmenni.knowledge.Position.Move;
 import org.forritan.talvmenni.knowledge.evaluation.Evaluation;
 import org.forritan.talvmenni.knowledge.evaluation.SimpleMaterialAndPositionalEvaluation;
 import org.forritan.talvmenni.masterworker.generic.Result;
-import org.forritan.talvmenni.search.AlphaBetaWithQuiescentAndTranspositionTableSearch;
 import org.forritan.talvmenni.search.AlphaBetaWithTranspositionTableSearch;
 import org.forritan.talvmenni.search.PrincipalVariation;
 import org.forritan.util.jini.ServiceLocator;
@@ -52,14 +51,8 @@ public class ParallelIterativDeepeningAlphaBetaWithTranspositionTableStrategy
                   pv),
             new SimpleMaterialAndPositionalEvaluation());
 
-      try {
-         this.master= new Master();
-         this.masterSearchToPly= masterSearchToPly;
-      } catch (IOException e) {
-         e.printStackTrace();
-      } catch (InterruptedException e) {
-         e.printStackTrace();
-      }
+      this.master= new Master();
+      this.masterSearchToPly= masterSearchToPly;
    }
 
    protected List search(
@@ -108,7 +101,7 @@ public class ParallelIterativDeepeningAlphaBetaWithTranspositionTableStrategy
 
       public TaskResult bestResult;
 
-      public Master() throws IOException, InterruptedException {
+      public Master() {
          super();
       }
 
@@ -162,6 +155,7 @@ public class ParallelIterativDeepeningAlphaBetaWithTranspositionTableStrategy
          }
 
          this.numberOfTasks= moves.size();
+         int taskNumber= 0;
          if (this.numberOfTasks > 0) {
 
             // If checkmate there is no need to search further...
@@ -170,6 +164,7 @@ public class ParallelIterativDeepeningAlphaBetaWithTranspositionTableStrategy
 
             for (Iterator it= moves.iterator(); it.hasNext();) {
                Move move= (Move) it.next();
+               taskNumber++;
                Position childPosition= this.position.move(
                      move).getImmutable();
                this.position.popMove();
@@ -188,7 +183,9 @@ public class ParallelIterativDeepeningAlphaBetaWithTranspositionTableStrategy
                      new Integer(
                            0),
                      null,
-                     Boolean.TRUE);
+                     Boolean.TRUE,
+                     new Integer(
+                           taskNumber));
                try {
                   System.err.println("Writing task for move: "
                         + move);
@@ -228,8 +225,16 @@ public class ParallelIterativDeepeningAlphaBetaWithTranspositionTableStrategy
                e.printStackTrace();
             }
             if (result != null) {
-               if (this.bestResult == null
-                     || this.bestResult.score.intValue() > result.score
+               if (this.bestResult == null) {
+                  this.bestResult= result;
+               } else if (this.bestResult != null
+                     && this.bestResult.score.intValue() > result.score
+                           .intValue()) {
+                  this.bestResult= result;
+               } else if (this.bestResult != null
+                     && this.bestResult.score.intValue() == result.score
+                           .intValue()
+                     && result.movePriorityNumber.intValue() < this.bestResult.movePriorityNumber
                            .intValue()) {
                   this.bestResult= result;
                }
@@ -251,16 +256,18 @@ public class ParallelIterativDeepeningAlphaBetaWithTranspositionTableStrategy
 
       public transient int lastScore;
 
-      public Position      position;
-      public Move          move;
-      public Boolean       whiteToMove;
-      public Integer       alpha;
-      public Integer       beta;
-      public Integer       ply;
-      public Integer       masterSearchedToPly;
-      public Integer       workerSearchedToPly;
-      public String        lastWorkerId;
-      public Boolean       lastWorkerIdNull;
+      public Position      position            = null;
+      public Move          move                = null;
+      public Boolean       whiteToMove         = null;
+      public Integer       alpha               = null;
+      public Integer       beta                = null;
+      public Integer       ply                 = null;
+      public Integer       masterSearchedToPly = null;
+      public Integer       workerSearchedToPly = null;
+      public String        lastWorkerId        = null;
+      public Boolean       lastWorkerIdNull    = null;
+
+      public Integer       movePriorityNumber  = null;
 
       public Task() {
       }
@@ -275,7 +282,8 @@ public class ParallelIterativDeepeningAlphaBetaWithTranspositionTableStrategy
             Integer masterSearchedToPly,
             Integer workerSearchedToPly,
             String lastWorkerId,
-            Boolean lastWorkerIdNull) {
+            Boolean lastWorkerIdNull,
+            Integer movePriorityNumber) {
          this.position= position;
          this.move= move;
          this.whiteToMove= whiteToMove;
@@ -286,6 +294,7 @@ public class ParallelIterativDeepeningAlphaBetaWithTranspositionTableStrategy
          this.workerSearchedToPly= workerSearchedToPly;
          this.lastWorkerId= lastWorkerId;
          this.lastWorkerIdNull= lastWorkerIdNull;
+         this.movePriorityNumber= movePriorityNumber;
       }
 
       public Move getMove() {
@@ -411,6 +420,7 @@ public class ParallelIterativDeepeningAlphaBetaWithTranspositionTableStrategy
                result.score= new Integer(
                      this.worker.getSearch().getLastScore());
                result.move= this.move;
+               result.movePriorityNumber= this.movePriorityNumber;
                result.principalVariation= this.worker.getSearch()
                      .getPrincipalVariation().getCurrentBestLine();
 
@@ -617,6 +627,9 @@ public class ParallelIterativDeepeningAlphaBetaWithTranspositionTableStrategy
       public Integer score              = null;
       public Move    move               = null;
       public List    principalVariation = null;
+
+      public Integer movePriorityNumber = null;
+      public String  nodeInfo           = null;
 
       public TaskResult() {
       }

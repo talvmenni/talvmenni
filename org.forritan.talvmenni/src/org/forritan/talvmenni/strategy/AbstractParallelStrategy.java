@@ -43,8 +43,8 @@ public abstract class AbstractParallelStrategy extends AbstractStrategy {
 
       final ChessEngineWorker workerTemplate= new ChessEngineWorker();
       final ChessEngineWorker worker= new ChessEngineWorker();
-      worker.transposition= new Transposition();
-      worker.historyHeuristic= new HistoryHeuristic();
+//      worker.transposition= new Transposition();
+//      worker.historyHeuristic= new HistoryHeuristic();
       worker.search= search;
       worker.evaluation= evaluation;
 
@@ -102,7 +102,7 @@ public abstract class AbstractParallelStrategy extends AbstractStrategy {
 
    public static abstract class ChessEngineMaster implements Runnable {
 
-      public ChessEngineMaster() throws IOException, InterruptedException {
+      public ChessEngineMaster() {
       }
 
       public synchronized void run() {
