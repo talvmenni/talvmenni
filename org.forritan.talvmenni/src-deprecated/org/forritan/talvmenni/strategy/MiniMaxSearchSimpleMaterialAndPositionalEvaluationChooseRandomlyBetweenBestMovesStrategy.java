@@ -6,15 +6,17 @@ import java.util.Random;
 import org.forritan.talvmenni.evaluation.Evaluation;
 import org.forritan.talvmenni.evaluation.SimpleMaterialAndPositionalEvaluation;
 import org.forritan.talvmenni.game.Position;
+import org.forritan.talvmenni.game.PositionFactory;
 import org.forritan.talvmenni.game.TheoryBook;
-import org.forritan.talvmenni.game.Transposition;
 import org.forritan.talvmenni.game.Position.Move;
-import org.forritan.talvmenni.search.AlphaBetaWithTranspositionTableSearch;
+import org.forritan.talvmenni.game.Position.PromotionPiece;
+import org.forritan.talvmenni.search.MiniMaxSearch;
 import org.forritan.talvmenni.search.Search;
+import org.forritan.talvmenni.strategy.Strategy.DebugInfo;
 import org.forritan.util.Tuple;
 
 
-public class IterativeDeepeningAlphaBetaWithTranspositionTableStrategy
+public class MiniMaxSearchSimpleMaterialAndPositionalEvaluationChooseRandomlyBetweenBestMovesStrategy
       implements Strategy {
 
    private DebugInfo  debugInfo;
@@ -22,24 +24,21 @@ public class IterativeDeepeningAlphaBetaWithTranspositionTableStrategy
    private TheoryBook book;
    private Search     search;
    private Evaluation evaluation;
-   private int ply;
 
-   public IterativeDeepeningAlphaBetaWithTranspositionTableStrategy(
+   public MiniMaxSearchSimpleMaterialAndPositionalEvaluationChooseRandomlyBetweenBestMovesStrategy(
          int ply,
-         Transposition transposition,
          TheoryBook book) {
       this.debugInfo= new DebugInfo();
-      this.search= new AlphaBetaWithTranspositionTableSearch(
-            transposition);
+      this.search= new MiniMaxSearch(
+            ply);
       this.evaluation= new SimpleMaterialAndPositionalEvaluation();
       this.book= book;
-      this.ply= ply;
    }
 
-   public Position.Move getNextMove(
+   public Move getNextMove(
          Position position,
          boolean whiteToMove) {
-      
+
       if (this.book.containsKey(position, whiteToMove)) {
          this.getDebugInfo().postText(
                "Position found in " + (whiteToMove?"white":"black") + "book... [searched through "
@@ -68,14 +67,12 @@ public class IterativeDeepeningAlphaBetaWithTranspositionTableStrategy
 
          }
       }
-      
-      List<Position.Move> bestMoves= null;
-      Position mutablePosition= position.getMutable();
-      for (int i= 1; i <= this.ply; i++) {
-         this.search.setPly(i);
-         bestMoves= this.search.getBestMoves(mutablePosition, this.evaluation, whiteToMove);            
-      }
-      
+
+      List<Move> bestMoves= this.search.getBestMoves(
+            position.getMutable(),
+            this.evaluation,
+            whiteToMove);
+
       if (!bestMoves.isEmpty()) {
          int chosenMoveIndex= new Random().nextInt(bestMoves.size());
          return bestMoves.get(chosenMoveIndex);
@@ -85,18 +82,19 @@ public class IterativeDeepeningAlphaBetaWithTranspositionTableStrategy
    }
 
    public int getPromotionPiece() {
-      return Position.PromotionPiece.DEFAULT;
+      return PositionFactory.PromotionPiece.DEFAULT;
    }
 
    public Search getSearch() {
       return this.search;
    }
 
+   public TheoryBook getTheoryBook() {
+      return this.book;
+   }
+
    public DebugInfo getDebugInfo() {
       return this.debugInfo;
    }
 
-   public TheoryBook getTheoryBook() {
-      return this.book;
-   }
 }

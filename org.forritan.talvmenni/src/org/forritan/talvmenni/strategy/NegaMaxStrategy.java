@@ -7,14 +7,14 @@ import org.forritan.talvmenni.evaluation.Evaluation;
 import org.forritan.talvmenni.evaluation.SimpleMaterialAndPositionalEvaluation;
 import org.forritan.talvmenni.game.Position;
 import org.forritan.talvmenni.game.TheoryBook;
-import org.forritan.talvmenni.game.Transposition;
 import org.forritan.talvmenni.game.Position.Move;
-import org.forritan.talvmenni.search.AlphaBetaWithTranspositionTableSearch;
+import org.forritan.talvmenni.search.AlphaBetaSearch;
+import org.forritan.talvmenni.search.NegaMaxSearch;
 import org.forritan.talvmenni.search.Search;
 import org.forritan.util.Tuple;
 
 
-public class IterativeDeepeningAlphaBetaWithTranspositionTableStrategy
+public class NegaMaxStrategy
       implements Strategy {
 
    private DebugInfo  debugInfo;
@@ -22,18 +22,15 @@ public class IterativeDeepeningAlphaBetaWithTranspositionTableStrategy
    private TheoryBook book;
    private Search     search;
    private Evaluation evaluation;
-   private int ply;
 
-   public IterativeDeepeningAlphaBetaWithTranspositionTableStrategy(
+   public NegaMaxStrategy(
          int ply,
-         Transposition transposition,
          TheoryBook book) {
       this.debugInfo= new DebugInfo();
-      this.search= new AlphaBetaWithTranspositionTableSearch(
-            transposition);
+      this.search= new NegaMaxSearch(
+            ply);
       this.evaluation= new SimpleMaterialAndPositionalEvaluation();
       this.book= book;
-      this.ply= ply;
    }
 
    public Position.Move getNextMove(
@@ -68,14 +65,13 @@ public class IterativeDeepeningAlphaBetaWithTranspositionTableStrategy
 
          }
       }
-      
-      List<Position.Move> bestMoves= null;
-      Position mutablePosition= position.getMutable();
-      for (int i= 1; i <= this.ply; i++) {
-         this.search.setPly(i);
-         bestMoves= this.search.getBestMoves(mutablePosition, this.evaluation, whiteToMove);            
-      }
-      
+
+
+      List<Position.Move> bestMoves= this.search.getBestMoves(
+            position.getMutable(),
+            this.evaluation,
+            whiteToMove);
+
       if (!bestMoves.isEmpty()) {
          int chosenMoveIndex= new Random().nextInt(bestMoves.size());
          return bestMoves.get(chosenMoveIndex);

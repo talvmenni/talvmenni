@@ -10,7 +10,7 @@ import org.forritan.talvmenni.game.Position.Move;
 import org.forritan.util.Tuple;
 
 
-public class AlphaBetaSearch implements Search {
+public class NegaMaxSearch implements Search {
 
    private Thinking  thinking;
    private DebugInfo debugInfo;
@@ -18,12 +18,12 @@ public class AlphaBetaSearch implements Search {
 
    private int       movesSearched;
 
-   public AlphaBetaSearch() {
+   public NegaMaxSearch() {
       this(
             0);
    }
 
-   public AlphaBetaSearch(
+   public NegaMaxSearch(
          int ply) {
       this.ply= ply;
       this.thinking= new Thinking();
@@ -51,20 +51,11 @@ public class AlphaBetaSearch implements Search {
       long time= -System.currentTimeMillis();
       this.movesSearched= 0;
 
-      int alpha= Integer.MIN_VALUE + 1;
-      // Very important!!! Can't be
-      // Integer.MIN_VALUE, because
-      // Integer.MIN_VALUE ==
-      // -Integer.MIN_VALUE
-      int beta= Integer.MAX_VALUE;
-
-      Tuple<Integer, List<Move>> result= this.alphaBeta(
+      Tuple<Integer, List<Move>> result= this.negaMax(
             p,
             e,
             whiteMove,
-            this.ply,
-            alpha,
-            beta);
+            this.ply);
       
       time+= System.currentTimeMillis();
       
@@ -82,13 +73,11 @@ public class AlphaBetaSearch implements Search {
             1) : result.b);
    }
 
-   private Tuple<Integer, List<Move>> alphaBeta(
+   private Tuple<Integer, List<Move>> negaMax(
          Position p,
          Evaluation e,
          boolean whiteMove,
-         int ply,
-         int alpha,
-         int beta) {
+         int ply) {
 
       Tuple<Integer, List<Move>> result= null;
 
@@ -112,10 +101,7 @@ public class AlphaBetaSearch implements Search {
 
          if (moves.size() > 0) {
             for (Move move : moves) {
-               if (best.a.intValue() >= beta) {
-                  this.debugInfo.postText("***break***");
-                  break;                  
-               }
+
                this.movesSearched++;
 
                int movesSearchedBefore= this.movesSearched;
@@ -123,16 +109,11 @@ public class AlphaBetaSearch implements Search {
                p= p.move(
                      move.from,
                      move.to);
-               if (best.a.intValue() > alpha) {
-                  alpha= best.a.intValue();
-               }
-               Tuple<Integer, List<Move>> value= alphaBeta(
+               Tuple<Integer, List<Move>> value= negaMax(
                      p,
                      e,
                      !whiteMove,
-                     ply - 1,
-                     -beta,
-                     -alpha);
+                     ply - 1);
                p.popMove();
                value.a= Integer.valueOf(value.a.intValue()
                      * -1);

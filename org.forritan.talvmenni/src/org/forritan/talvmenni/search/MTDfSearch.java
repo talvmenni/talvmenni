@@ -4,30 +4,39 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.forritan.talvmenni.evaluation.Evaluation;
+import org.forritan.talvmenni.game.MTDfTransposition;
 import org.forritan.talvmenni.game.Position;
 import org.forritan.talvmenni.game.PositionFactory;
 import org.forritan.talvmenni.game.Position.Move;
+import org.forritan.util.ThreeTuple;
 import org.forritan.util.Tuple;
 
 
-public class AlphaBetaSearch implements Search {
+public class MTDfSearch implements Search {
 
-   private Thinking  thinking;
-   private DebugInfo debugInfo;
-   private int       ply;
+   private Thinking          thinking;
+   private DebugInfo         debugInfo;
 
-   private int       movesSearched;
+   private MTDfTransposition transposition;
+   private int               ply;
 
-   public AlphaBetaSearch() {
+   private int               movesSearched;
+   private int               transpositionHits;
+
+   public MTDfSearch(
+         MTDfTransposition transposition) {
       this(
-            0);
+            0,
+            transposition);
    }
 
-   public AlphaBetaSearch(
-         int ply) {
-      this.ply= ply;
+   public MTDfSearch(
+         int ply,
+         MTDfTransposition transposition) {
       this.thinking= new Thinking();
       this.debugInfo= new DebugInfo();
+      this.ply= ply;
+      this.transposition= transposition;
    }
 
    public void setPly(
@@ -47,42 +56,91 @@ public class AlphaBetaSearch implements Search {
          Position p,
          Evaluation e,
          boolean whiteMove) {
-      
+
       long time= -System.currentTimeMillis();
       this.movesSearched= 0;
 
-      int alpha= Integer.MIN_VALUE + 1;
-      // Very important!!! Can't be
-      // Integer.MIN_VALUE, because
-      // Integer.MIN_VALUE ==
-      // -Integer.MIN_VALUE
-      int beta= Integer.MAX_VALUE;
+      int f= 0;
+      int d= this.ply;
 
-      Tuple<Integer, List<Move>> result= this.alphaBeta(
+      Tuple<Integer, List<Move>> result= this.mtdf(
             p,
             e,
             whiteMove,
-            this.ply,
-            alpha,
-            beta);
-      
+            f,
+            d);
+
       time+= System.currentTimeMillis();
-      
+
       this.debugInfo.postNodesPerSecond(
             time,
             this.movesSearched);
-      this.debugInfo.postBestMoves(result.b);
+      this.debugInfo.postBestMoves(result.b.size() > 0 ? result.b.subList(
+            0,
+            1) : result.b);
       this.debugInfo.postPositionStatiscs();
-
-      
-
 
       return (result.b.size() > 0 ? result.b.subList(
             0,
             1) : result.b);
    }
 
-   private Tuple<Integer, List<Move>> alphaBeta(
+   /**
+    * MTD(f). See http://www.cs.vu.nl/~aske/mtdf.html
+    * 
+    * @param p
+    * @param e
+    * @param whiteMove
+    * @param f
+    * @param d
+    * @return
+    */
+
+   private Tuple<Integer, List<Move>> mtdf(
+         Position p,
+         Evaluation e,
+         boolean whiteMove,
+         int f,
+         int d) {
+
+      Tuple<Integer, List<Move>> g= new Tuple<Integer, List<Move>>(
+            Integer.valueOf(f),
+            new ArrayList<Move>());
+
+      int lowerbound= Integer.MIN_VALUE + 1;
+      // Very important!!! Can't be
+      // Integer.MIN_VALUE, because
+      // Integer.MIN_VALUE ==
+      // -Integer.MIN_VALUE
+      int upperbound= Integer.MAX_VALUE;
+
+      do {
+         int beta;
+         if (g.a.intValue() == lowerbound) {
+            beta= g.a.intValue() + 1;
+         } else {
+            beta= g.a.intValue();
+         }
+
+         g= this.alphaBeta(
+               p,
+               e,
+               whiteMove,
+               d,
+               beta - 1,
+               beta);
+
+         if (g.a.intValue() < beta) {
+            upperbound= g.a.intValue();
+         } else {
+            lowerbound= g.a.intValue();
+         }
+      } while (lowerbound < upperbound);
+
+      return g;
+   }
+
+private Tuple<Integer, List<Move>> alphaBeta(
          Position p,
          Evaluation e,
          boolean whiteMove,
@@ -93,6 +151,27 @@ public class AlphaBetaSearch implements Search {
       Tuple<Integer, List<Move>> result= null;
 
       PositionFactory.nodes++;
+
+      if (this.transposition.contains(
+            p,
+            whiteMove)) {
+         Tuple<ThreeTuple<Integer, Integer, List<Move>>, Tuple<Integer, Integer>> entry= this.transposition
+               .get(
+                     p,
+                     whiteMove);
+         
+         if(entry.b.a.intValue() >= beta)
+         
+         
+         if (entry.a.a.intValue() >= ply) {
+            this.transpositionHits++;
+            List<Move> moves= new ArrayList<Move>();
+            moves.addAll(entry.a.c);
+            return new Tuple<Integer, List<Move>>(
+                  entry.a.b,
+                  moves);
+         }
+      }
 
       if (ply == 0) {
          result= new Tuple<Integer, List<Move>>(
@@ -112,10 +191,7 @@ public class AlphaBetaSearch implements Search {
 
          if (moves.size() > 0) {
             for (Move move : moves) {
-               if (best.a.intValue() >= beta) {
-                  this.debugInfo.postText("***break***");
-                  break;                  
-               }
+               if (best.a.intValue() >= beta) break;
                this.movesSearched++;
 
                int movesSearchedBefore= this.movesSearched;
@@ -141,10 +217,15 @@ public class AlphaBetaSearch implements Search {
                      move);
                moveTime+= System.currentTimeMillis();
 
-               
-               
                if (value.a.intValue() > best.a.intValue()) {
                   best= value;
+                  if (whiteMove) {
+                     p.getWhite().killerMove(
+                           move);
+                  } else {
+                     p.getBlack().killerMove(
+                           move);
+                  }
                   if (ply == this.ply) {
                      this.debugInfo.postCurrentBestMove(
                            move,
@@ -152,13 +233,17 @@ public class AlphaBetaSearch implements Search {
                            (this.movesSearched - movesSearchedBefore));
                      this.thinking.postThinking(
                            ply,
-                           (best.a.intValue() * (whiteMove?1:-1)),
+                           (best.a.intValue() * (whiteMove ? 1 : -1)),
                            moveTime + 1,
                            (this.movesSearched - movesSearchedBefore),
                            best.b.toString());
                   }
                }
             }
+
+            p.getWhite().updatePossibleMovesOrdering();
+            p.getBlack().updatePossibleMovesOrdering();
+
             result= best;
          } else {
             if (whiteMove ? p.getWhite().isChecked() : p.getBlack().isChecked()) {
@@ -175,6 +260,13 @@ public class AlphaBetaSearch implements Search {
          }
       }
 
+      this.transposition.update(
+            p,
+            whiteMove,
+            result.b,
+            result.a.intValue(),
+            ply,
+            );
+
       return result;
-   }
-}
+   }}

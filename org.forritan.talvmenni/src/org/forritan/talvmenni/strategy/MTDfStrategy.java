@@ -5,19 +5,16 @@ import java.util.Random;
 
 import org.forritan.talvmenni.evaluation.Evaluation;
 import org.forritan.talvmenni.evaluation.SimpleMaterialAndPositionalEvaluation;
+import org.forritan.talvmenni.game.MTDfTransposition;
 import org.forritan.talvmenni.game.Position;
-import org.forritan.talvmenni.game.PositionFactory;
 import org.forritan.talvmenni.game.TheoryBook;
 import org.forritan.talvmenni.game.Position.Move;
-import org.forritan.talvmenni.game.Position.PromotionPiece;
-import org.forritan.talvmenni.search.MiniMaxSearch;
+import org.forritan.talvmenni.search.MTDfSearch;
 import org.forritan.talvmenni.search.Search;
-import org.forritan.talvmenni.strategy.Strategy.DebugInfo;
 import org.forritan.util.Tuple;
 
 
-public class MiniMaxSearchSimpleMaterialAndPositionalEvaluationChooseRandomlyBetweenBestMovesStrategy
-      implements Strategy {
+public class MTDfStrategy implements Strategy {
 
    private DebugInfo  debugInfo;
 
@@ -25,27 +22,35 @@ public class MiniMaxSearchSimpleMaterialAndPositionalEvaluationChooseRandomlyBet
    private Search     search;
    private Evaluation evaluation;
 
-   public MiniMaxSearchSimpleMaterialAndPositionalEvaluationChooseRandomlyBetweenBestMovesStrategy(
+   public MTDfStrategy(
          int ply,
+         MTDfTransposition transposition,
          TheoryBook book) {
       this.debugInfo= new DebugInfo();
-      this.search= new MiniMaxSearch(
-            ply);
+      this.search= new MTDfSearch(
+            ply,
+            transposition);
       this.evaluation= new SimpleMaterialAndPositionalEvaluation();
       this.book= book;
    }
 
-   public Move getNextMove(
+   public Position.Move getNextMove(
          Position position,
          boolean whiteToMove) {
 
-      if (this.book.containsKey(position, whiteToMove)) {
+      if (this.book.containsKey(
+            position,
+            whiteToMove)) {
          this.getDebugInfo().postText(
-               "Position found in " + (whiteToMove?"white":"black") + "book... [searched through "
+               "Position found in "
+                     + (whiteToMove ? "white" : "black")
+                     + "book... [searched through "
                      + this.book.size(whiteToMove)
                      + " entries]...");
 
-         List<Tuple<Move, Integer>> moves= this.book.get(position, whiteToMove);
+         List<Tuple<Move, Integer>> moves= this.book.get(
+               position,
+               whiteToMove);
 
          if (moves != null) {
 
@@ -68,8 +73,8 @@ public class MiniMaxSearchSimpleMaterialAndPositionalEvaluationChooseRandomlyBet
          }
       }
 
-      List<Move> bestMoves= this.search.getBestMoves(
-            position.getImmutable(),
+      List<Position.Move> bestMoves= this.search.getBestMoves(
+            position.getMutable(),
             this.evaluation,
             whiteToMove);
 
@@ -82,19 +87,18 @@ public class MiniMaxSearchSimpleMaterialAndPositionalEvaluationChooseRandomlyBet
    }
 
    public int getPromotionPiece() {
-      return PositionFactory.PromotionPiece.DEFAULT;
+      return Position.PromotionPiece.DEFAULT;
    }
 
    public Search getSearch() {
       return this.search;
    }
 
-   public TheoryBook getTheoryBook() {
-      return this.book;
-   }
-
    public DebugInfo getDebugInfo() {
       return this.debugInfo;
    }
 
+   public TheoryBook getTheoryBook() {
+      return this.book;
+   }
 }

@@ -5,9 +5,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
 
 import org.forritan.talvmenni.game.TheoryBook;
-import org.forritan.talvmenni.game.Transposition;
-import org.forritan.talvmenni.strategy.AlphaBetaWithTranspositionTableStrategy;
-import org.forritan.talvmenni.strategy.IterativeDeepeningAlphaBetaWithTranspositionTableStrategy;
+import org.forritan.talvmenni.strategy.AlphaBetaStrategy;
 import org.forritan.talvmenni.ui.DebugWindow;
 import org.forritan.util.debug.ExceptionLoggingWindowHandler;
 import org.forritan.util.debug.ObjectStatisticsWindow;
@@ -63,30 +61,28 @@ public class TalvMenni {
             140000);
 
       final ChessEngine chessEngine= ChessEngine
-            .create(new IterativeDeepeningAlphaBetaWithTranspositionTableStrategy(
+      //            .create(new MTDfStrategy(
+            //                  PLY,
+            //                  new MTDfTransposition(
+            //                        MAX_TRANSPOSITION_ENTRIES),
+            //                  book));
+            //            .create(new
+            // IterativeDeepeningAlphaBetaWithTranspositionTableStrategy(
+            //                  PLY,
+            //                  new Transposition(
+            //                        MAX_TRANSPOSITION_ENTRIES),
+            //                  book));
+            //            .create(new AlphaBetaWithTranspositionTableStrategy(
+            //                  PLY,
+            //                  new Transposition(
+            //                        MAX_TRANSPOSITION_ENTRIES),
+            //                  book));
+            .create(new AlphaBetaStrategy(
                   PLY,
-                  new Transposition(
-                        MAX_TRANSPOSITION_ENTRIES),
                   book));
-      //      .create(new AlphaBetaWithTranspositionTableStrategy(
-      //            PLY,
-      //            new Transposition(
-      //                  MAX_TRANSPOSITION_ENTRIES),
-      //            book));
-      //      .create(new AlphaBetaStrategy(
-      //            PLY,
-      //            book));
-      //      .create(new
-      // MiniMaxSearchSimpleMaterialAndPositionalEvaluationChooseRandomlyBetweenBestMovesStrategy(
-      //            PLY,
-      //            book));
-      //      .create(new MiniMaxOpeningBookWithDelayStrategy(
-      //            PLY,
-      //            new Transposition(MAX_TRANSPOSITION_ENTRIES),
-      //            book,
-      //            2000,
-      //            4200));
-
+      //            .create(new NegaMaxStrategy(
+      //                  PLY,
+      //                  book));
       if (Boolean.getBoolean("exception_logging_window")) {
          Thread windowThread= threadFactory.newThread(new Runnable() {
             public void run() {
