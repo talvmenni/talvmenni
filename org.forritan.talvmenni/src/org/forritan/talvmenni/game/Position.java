@@ -304,8 +304,7 @@ public class Position {
             }
 
             // ... and clear any enpassant captures
-            if (!this.black.isAnyPieceOnPosition(to)
-                  && this.black.isEnpassant(to)) {
+            if (this.black.isEnpassant(to) && this.white.isPawn(from)) {
                blackPawns= blackPawns
                      ^ (this.black.enpassant ^ (this.black.enpassant & WhitePawnCaptures
                            .create().getPathsFrom(
@@ -408,8 +407,7 @@ public class Position {
             }
 
             // ... and clear any enpassant captures
-            if (!this.white.isAnyPieceOnPosition(to)
-                  && this.white.isEnpassant(to)) {
+            if (this.white.isEnpassant(to) && this.black.isPawn(from)) {
                whitePawns= whitePawns
                      ^ (this.white.enpassant ^ (this.white.enpassant & BlackPawnCaptures
                            .create().getPathsFrom(

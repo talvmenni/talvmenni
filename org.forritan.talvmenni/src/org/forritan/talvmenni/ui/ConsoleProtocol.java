@@ -293,35 +293,36 @@ public class ConsoleProtocol extends UiProtocolBase {
       }
       return result.toString();            
    }
-
+   
+   
    public String getStringPiece(
          long square) {
       Position currentPosition= this.protocol.getCurrentPosition();
       if (currentPosition != null) {
          if (currentPosition.white.isPawn(square))
-            return "p";
-         else if (currentPosition.black.isPawn(square))
             return "P";
+         else if (currentPosition.black.isPawn(square))
+            return "p";
          else if (currentPosition.white.isRook(square))
-            return "r";
-         else if (currentPosition.black.isRook(square))
             return "R";
+         else if (currentPosition.black.isRook(square))
+            return "r";
          else if (currentPosition.white.isBishop(square))
-            return "b";
-         else if (currentPosition.black.isBishop(square))
             return "B";
+         else if (currentPosition.black.isBishop(square))
+            return "b";
          else if (currentPosition.white.isKnight(square))
-            return "n";
-         else if (currentPosition.black.isKnight(square))
             return "N";
+         else if (currentPosition.black.isKnight(square))
+            return "n";
          else if (currentPosition.white.isQueen(square))
-            return "q";
-         else if (currentPosition.black.isQueen(square))
             return "Q";
+         else if (currentPosition.black.isQueen(square))
+            return "q";
          else if (currentPosition.white.isKing(square))
-            return "k";
-         else if (currentPosition.black.isKing(square))
             return "K";
+         else if (currentPosition.black.isKing(square))
+            return "k";
          else
             return ".";
       } else

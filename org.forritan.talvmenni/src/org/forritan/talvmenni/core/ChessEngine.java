@@ -148,12 +148,14 @@ public class ChessEngine extends Observable implements Runnable {
       public void setCurrentPosition(Position position) {
          this.currentPosition= position;
          this.setChanged();
-         if(this.WhiteToMove) {
-            List<Position.Move> moves= this.currentPosition.white.getPossibleMoves();
-            this.notifyObservers(moves.size() + " possible moves for white: " + moves.toString());            
-         } else {
-            List<Position.Move> moves= this.currentPosition.black.getPossibleMoves();
-            this.notifyObservers(moves.size() + " possible moves for black: " + moves.toString());            
+         if(this.currentPosition != null) {
+            if(this.WhiteToMove) {
+               List<Position.Move> moves= this.currentPosition.white.getPossibleMoves();
+               this.notifyObservers(moves.size() + " possible moves for white: " + moves.toString());            
+            } else {
+               List<Position.Move> moves= this.currentPosition.black.getPossibleMoves();
+               this.notifyObservers(moves.size() + " possible moves for black: " + moves.toString());            
+            }
          }
       }
       
