@@ -3,8 +3,8 @@ package org.forritan.talvmenni.bitboard.attacks;
 import junit.framework.Assert;
 import junit.framework.TestCase;
 
-import org.forritan.talvmenni.bitboard.Rank;
 import org.forritan.talvmenni.bitboard.Square;
+import org.forritan.talvmenni.game.Move;
 import org.forritan.talvmenni.game.Position;
 
 

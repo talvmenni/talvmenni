@@ -7,8 +7,8 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadFactory;
 
-import org.forritan.talvmenni.bitboard.Square;
-import org.forritan.talvmenni.bitboard.Squares;
+import org.forritan.talvmenni.game.Move;
+import org.forritan.talvmenni.game.MoveHistory;
 import org.forritan.talvmenni.game.Position;
 import org.forritan.talvmenni.game.Rules;
 import org.forritan.talvmenni.ui.ConsoleProtocol;
@@ -93,7 +93,7 @@ public class ChessEngine implements Runnable {
 
       private UiProtocol uiProtocol;
       private Position   currentPosition;
-      private Rules   currentRules;
+      private Rules      currentRules;
       private boolean    WhiteToMove = true;
       private boolean    computerPlaysWhite = false;
 
@@ -152,10 +152,13 @@ public class ChessEngine implements Runnable {
       public Position getCurrentPosition() {
          return this.currentPosition;
       }
-      public void makeMove(long fromSquare, long toSquare) { 
-         this.currentPosition = this.currentPosition.move(fromSquare, toSquare);
-        this.WhiteToMove= !this.WhiteToMove;
-             }
+      
+      public void makeMove(long fromSquare, long toSquare) {
+         Move move= new Move(this.currentPosition, fromSquare, toSquare);
+         MoveHistory.getInstance().add(move);
+         this.currentPosition = move.toPosition;
+         this.WhiteToMove= !this.WhiteToMove;
+      }
 
    }
 

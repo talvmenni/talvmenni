@@ -1,8 +1,12 @@
 package org.forritan.talvmenni.ui;
 
+import java.util.List;
+
 import org.forritan.talvmenni.bitboard.Square;
 import org.forritan.talvmenni.bitboard.Squares;
 import org.forritan.talvmenni.core.ChessEngine.Protocol;
+import org.forritan.talvmenni.game.Move;
+import org.forritan.talvmenni.game.MoveHistory;
 import org.forritan.talvmenni.game.Position;
 import org.forritan.talvmenni.game.Rules;
 
@@ -244,7 +248,17 @@ public class ConsoleProtocol extends UiProtocolBase {
    }
 
    private String printHistory() {
-      return this.history;
+      StringBuilder result= new StringBuilder();
+      List<Move> history= MoveHistory.getInstance().getHistory();
+      int number= 1;
+      for(Move move : history )  {
+         if((number++ % 2) != 0) {
+            result.append(number / 2).append(". ").append(move);
+         } else {
+            result.append(", ").append(move).append("\n");
+         }
+      }
+      return result.toString();            
    }
 
    public String getStringPiece(

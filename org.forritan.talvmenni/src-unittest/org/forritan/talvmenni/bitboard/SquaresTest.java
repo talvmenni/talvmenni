@@ -378,7 +378,7 @@ public class SquaresTest extends TestCase {
       for (int i= 0; i < names.length; i++) {
          Assert.assertEquals(
                names[i],
-               square.getSquareName(square.getSquare(i)));
+               square.getSquareName(square.getSquare(i)).toUpperCase());
       }
    }
 
