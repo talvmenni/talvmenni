@@ -98,7 +98,19 @@ public class FullSearch extends Observable implements Search {
             }         
             result= new MoveScoreTuple(currentBestMove, bestScore.score + e.getScore(p));
          } else {
-            result= new MoveScoreTuple(null, (whiteMove ? -3900 : 3900));            
+            if(whiteMove){
+               if(p.white.isChecked()) {
+                  result= new MoveScoreTuple(null, -39000); // Checkmate
+               } else {
+                  result= new MoveScoreTuple(null, 0);  // Stalemate
+               }
+             } else {
+               if(p.black.isChecked()) {
+                  result= new MoveScoreTuple(null, 39000); // Checkmate
+               } else {
+                  result= new MoveScoreTuple(null, 0);  // Stalemate
+               }
+            }
          }
       } else {
          
@@ -121,7 +133,19 @@ public class FullSearch extends Observable implements Search {
                }
             }
          } else {
-            result= new MoveScoreTuple(null, (whiteMove ? bestScore - 3900 : bestScore + 3900));            
+            if(whiteMove){
+               if(p.white.isChecked()) {
+                  result= new MoveScoreTuple(null, bestScore - 3900); // Black wins by checkmate
+               } else {
+                  result= new MoveScoreTuple(null,  bestScore);  // Stalemate
+               }
+             } else {
+               if(p.black.isChecked()) {
+                  result= new MoveScoreTuple(null,  bestScore + 3900); // White wins by checkmate
+               } else {
+                  result= new MoveScoreTuple(null,  bestScore);  // Stalemate
+               }
+            }
          }
       }
       
