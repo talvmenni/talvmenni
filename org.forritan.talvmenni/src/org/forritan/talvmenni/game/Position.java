@@ -175,10 +175,18 @@ public class Position {
             blackCastling,
             blackEnpassant);
    }
-   
+
    public Position move(
          long from,
          long to) {
+      return this.move(from, to, PromotionPiece.DEFAULT);
+   }
+
+   
+   public Position move(
+         long from,
+         long to,
+         int promotionPiece) {
       Position result= null;
 
       if (this.isLegalMove(
@@ -250,9 +258,28 @@ public class Position {
                }
                blackEnpassant= 0L;
 
-               whitePawns= whitePawns
-                     ^ from
-                     | to;
+               if((~Rank._7 & from) == Squares._EMPTY_BOARD) {
+                  whitePawns ^= from;
+                  switch (promotionPiece) {
+                     case PromotionPiece.QUEEN:
+                        whiteQueens |= to;                                                
+                        break;
+                     case PromotionPiece.ROOK:
+                        whiteRooks |= to;                                                
+                        break;
+                     case PromotionPiece.BISHOP:
+                        whiteBishops |= to;                                                
+                        break;
+                     case PromotionPiece.KNIGHT:
+                        whiteKnights |= to;                                                
+                        break;
+                  }
+               } else {
+                  whitePawns= whitePawns
+                  ^ from
+                  | to;
+               }
+               
                //FIXME: set castling
             }
 
@@ -333,9 +360,27 @@ public class Position {
                }
                whiteEnpassant= 0L;
 
-               blackPawns= blackPawns
+               if((~Rank._2 & from) == Squares._EMPTY_BOARD) {
+                  blackPawns ^= from;
+                  switch (promotionPiece) {
+                     case PromotionPiece.QUEEN:
+                        blackQueens |= to;                                                
+                        break;
+                     case PromotionPiece.ROOK:
+                        blackRooks |= to;                                                
+                        break;
+                     case PromotionPiece.BISHOP:
+                        blackBishops |= to;                                                
+                        break;
+                     case PromotionPiece.KNIGHT:
+                        blackKnights |= to;                                                
+                        break;
+                  }
+               } else {
+                  blackPawns= blackPawns
                      ^ from
                      | to;
+               }
                //FIXME: set castling
             }
 
@@ -448,6 +493,14 @@ public class Position {
                + sq.getSquareName(to);
       }
       
+   }
+   
+   public static interface PromotionPiece {
+      public final static int DEFAULT= 0;
+      public final static int QUEEN= 0;
+      public final static int ROOK= 1;
+      public final static int BISHOP= 2;
+      public final static int KNIGHT= 3;      
    }
 
    public class Bitboard {
@@ -583,7 +636,7 @@ public class Position {
             Iterator<Long> moves) {
          while (moves.hasNext()) {
             long toSquare= moves.next().longValue();
-            Position newPosition= this.parent.move(fromSquare, toSquare);
+            Position newPosition= this.parent.move(fromSquare, toSquare, PromotionPiece.DEFAULT);
             if(this.white) {
                if(!newPosition.white.isChecked()) {
                   result.add(new Move(fromSquare, toSquare));

@@ -70,7 +70,7 @@ public class ConsoleProtocol extends UiProtocolBase {
          org.forritan.talvmenni.game.Position.Move move= this.protocol
          .getCurrentPosition().getRandomMove(
                this.protocol.isWhiteToMove());
-         this.protocol.makeMove(move.from, move.to);
+         this.protocol.makeMove(move.from, move.to, Position.PromotionPiece.DEFAULT);
          theOutput = getBoardPosition();                  
       }
       
@@ -165,6 +165,22 @@ public class ConsoleProtocol extends UiProtocolBase {
                         3,
                         4)).intValue())).toUpperCase();
       
+      int promotionPiece= Position.PromotionPiece.DEFAULT;;
+
+      if(theMove.length() > 4) {
+         String promoteTo= theMove.substring(4, 5);
+         if(promoteTo.equalsIgnoreCase("q")) {
+            promotionPiece= Position.PromotionPiece.QUEEN;               
+         } else if(promoteTo.equalsIgnoreCase("r")) {
+            promotionPiece= Position.PromotionPiece.ROOK;               
+         } else if(promoteTo.equalsIgnoreCase("b")) {
+            promotionPiece= Position.PromotionPiece.BISHOP;               
+         } else if(promoteTo.equalsIgnoreCase("n")) {
+            promotionPiece= Position.PromotionPiece.KNIGHT;                              
+         } 
+      }
+
+      
       Square square= Squares.create();
       Rules currentRules= this.protocol.getCurrentRules();
       Position currentPosition= this.protocol.getCurrentPosition();
@@ -177,7 +193,8 @@ public class ConsoleProtocol extends UiProtocolBase {
             ) {
          this.protocol.makeMove(
                square.getSquare(fromSquare),
-               square.getSquare(toSquare));
+               square.getSquare(toSquare),
+               promotionPiece);
          return getBoardPosition();
       } else
          return "Illegal Move: "

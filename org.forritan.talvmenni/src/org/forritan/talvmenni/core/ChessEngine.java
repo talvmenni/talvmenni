@@ -105,7 +105,7 @@ public class ChessEngine implements Runnable {
       public boolean isWhiteToMove();
       public Position getCurrentPosition();
       public Rules getCurrentRules();
-      public Move makeMove(long fromSquare, long toSquare);
+      public Move makeMove(long fromSquare, long toSquare, int promotionPiece);
    }
 
    private class ProtocolImpl implements Protocol {
@@ -174,8 +174,8 @@ public class ChessEngine implements Runnable {
          return this.currentPosition;
       }
       
-      public Move makeMove(long fromSquare, long toSquare) {
-         Move move= new Move(this.currentPosition, fromSquare, toSquare);
+      public Move makeMove(long fromSquare, long toSquare, int promotionPiece) {
+         Move move= new Move(this.currentPosition, fromSquare, toSquare, promotionPiece);
          MoveHistory.getInstance().add(move);
          this.currentPosition = move.toPosition;
          this.WhiteToMove= !this.WhiteToMove;

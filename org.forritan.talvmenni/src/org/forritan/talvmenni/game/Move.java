@@ -15,12 +15,14 @@ public class Move {
    public Move(
          Position fromPosition,
          long fromSquare,
-         long toSquare) {
+         long toSquare,
+         int promotionPiece) {
       this.time= System.currentTimeMillis();
       this.fromPosition= fromPosition;
       this.toPosition= fromPosition.move(
             fromSquare,
-            toSquare);
+            toSquare, 
+            promotionPiece);
       this.from= fromSquare;
       this.to= toSquare;
    }

@@ -22,7 +22,8 @@ public class TestSpeedOnPositionCreation {
          Move m= new Move(
                initialPosition,
                from,
-               to);
+               to, 
+               Position.PromotionPiece.DEFAULT);
          if (howMany < 1001) {
             MoveHistory.getInstance().add(
                   m);
