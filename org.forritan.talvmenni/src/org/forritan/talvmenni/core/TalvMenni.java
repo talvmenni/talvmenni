@@ -15,16 +15,16 @@ public class TalvMenni {
    
    private String[] splitArgs(String[] args, String[] regExps) {
       String[] result= args;
-      for (int i= 0; i < regExps.length; i++) {
-         result= this.splitArg(result, regExps[i]);
+      for(String regExp : regExps) {
+         result= this.splitArg(result, regExp);
       }
       return result;
    }
 
    private String[] splitArg(String[] args, String regExp) {
-      ArrayList result= new ArrayList();
-      for (int i= 0; i < args.length; i++) {
-         String[] s= args[i].split(regExp);
+      ArrayList<String> result= new ArrayList<String>();
+      for (String arg : args) {
+         String[] s= arg.split(regExp);
          if (s[0].length() > 0) {
             result.add(s[0]);
          }
@@ -34,8 +34,7 @@ public class TalvMenni {
             }
          }
       }
-      return (String[]) result.toArray(new String[] {
-      });
+      return result.toArray(new String[] {});
    }
 
 }

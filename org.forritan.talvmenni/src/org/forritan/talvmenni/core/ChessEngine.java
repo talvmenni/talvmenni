@@ -23,9 +23,9 @@ public class ChessEngine implements Runnable {
 
    private ThreadFactory       threadFactory;
 
-   private LinkedBlockingQueue inMessages;
+   private LinkedBlockingQueue<String> inMessages;
 
-   private LinkedBlockingQueue outMessages;
+   private LinkedBlockingQueue<String> outMessages;
 
    public static ChessEngine create() {
       ChessEngine engine= new ChessEngine();
@@ -53,8 +53,8 @@ public class ChessEngine implements Runnable {
       this.running= false;
       this.protocol= new ProtocolImpl();
       this.threadFactory= Executors.defaultThreadFactory();
-      this.inMessages= new LinkedBlockingQueue();
-      this.outMessages= new LinkedBlockingQueue();
+      this.inMessages= new LinkedBlockingQueue<String>();
+      this.outMessages= new LinkedBlockingQueue<String>();
    }
 
    public boolean isRunning() {
@@ -126,7 +126,7 @@ public class ChessEngine implements Runnable {
       }
 
       public void newGame() {
-         currentPosition.createInitial();
+         currentPosition= Position.createInitial();
          WhiteToMove = true;
       }
 
@@ -157,7 +157,7 @@ public class ChessEngine implements Runnable {
 
             try {
                String reply= ChessEngine.this.protocol
-                     .processInput((String) ChessEngine.this.inMessages.take());
+                     .processInput(ChessEngine.this.inMessages.take());
 
                if (reply != null) {
                   if (TalvMenni.DEBUG_WINDOW) {

@@ -3,6 +3,8 @@ package org.forritan.talvmenni.bitboard;
 public interface Square {
    
    public long getSquare(int squareNumber);
+   public long getSquare(String squareNumber);
+   public String getSquareName(long square);
 
    public static final int    A8      = 0;
    public static final int    B8      = 1;
