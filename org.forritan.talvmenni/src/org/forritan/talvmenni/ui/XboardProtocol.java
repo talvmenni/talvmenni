@@ -68,22 +68,34 @@ public class XboardProtocol extends UiProtocolBase {
                            4).toUpperCase()));
 
          if (this.protocol.isGo()) {
-            Move move= this.protocol.makeRandomMove();
+            org.forritan.talvmenni.game.Position.Move move= this.protocol
+                  .getCurrentPosition().getRandomMove(
+                        this.protocol.isWhiteToMove());
+            this.protocol.makeMove(
+                  move.from,
+                  move.to);
             theOutput+= "move "
                   + move.toString();
          }
 
       } else if (theInput.equalsIgnoreCase("go")) {
          this.protocol.setGo(true);
-         Move move= this.protocol.makeRandomMove();
+         org.forritan.talvmenni.game.Position.Move move= this.protocol
+               .getCurrentPosition().getRandomMove(
+                     this.protocol.isWhiteToMove());
+         this.protocol.makeMove(
+               move.from,
+               move.to);
          theOutput+= "move "
                + move.toString();
       } else if (theInput.equalsIgnoreCase("force")) {
-         this.protocol.setGo(false );
+         this.protocol.setGo(false);
       } else if (theInput.equalsIgnoreCase("draw")) {
          theOutput+= "offer draw";
       } else if (theInput.equalsIgnoreCase("new")) {
          this.protocol.newGame();
+      } else if (theInput.startsWith("result")) {
+         //the game ended
       } else if (theInput.equalsIgnoreCase("quit")) {
          this.protocol.stop();
       }

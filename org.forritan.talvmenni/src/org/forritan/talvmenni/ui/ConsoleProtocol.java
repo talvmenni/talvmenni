@@ -67,7 +67,10 @@ public class ConsoleProtocol extends UiProtocolBase {
       }
 
       if ((theInput.equalsIgnoreCase("?")) && (this.protocol.isGo())) {
-         Move move= this.protocol.makeRandomMove();          
+         org.forritan.talvmenni.game.Position.Move move= this.protocol
+         .getCurrentPosition().getRandomMove(
+               this.protocol.isWhiteToMove());
+         this.protocol.makeMove(move.from, move.to);
          theOutput = getBoardPosition();                  
       }
       

@@ -89,6 +89,10 @@ public class ChessEngine implements Runnable {
       this.threadFactory.newThread(new OutStreamHandler()).start();
    }
 
+   public Protocol getProtocol() {
+      return this.protocol;
+   }
+
    public interface Protocol {
       public String processInput(String input);
 
@@ -102,7 +106,6 @@ public class ChessEngine implements Runnable {
       public Position getCurrentPosition();
       public Rules getCurrentRules();
       public Move makeMove(long fromSquare, long toSquare);
-      public Move makeRandomMove();
    }
 
    private class ProtocolImpl implements Protocol {
@@ -177,113 +180,6 @@ public class ChessEngine implements Runnable {
          this.currentPosition = move.toPosition;
          this.WhiteToMove= !this.WhiteToMove;
          return move;
-      }
-
-      public List<Move> getPossibleMoves() {
-         List<Move> result= new ArrayList<Move>();
-
-         Position.Bitboard board;
-
-         if(isWhiteToMove()) {
-            board= this.currentPosition.white;
-         } else {
-            board= this.currentPosition.black;
-         }
-         
-         Iterator<Long> kings= board.kingsIterator();
-         while (kings.hasNext()) {
-            long fromSquare= kings.next().longValue();
-            findMoves(
-                  result,
-                  fromSquare,
-                  new BitboardIterator(King.attacksFrom(fromSquare, this.currentPosition)));            
-         }
-         
-         Iterator<Long> queens= board.queensIterator(); 
-         while (queens.hasNext()) {
-            long fromSquare= queens.next().longValue();
-            findMoves(
-                  result,
-                  fromSquare,
-                  new BitboardIterator(Queen.attacksFrom(fromSquare, this.currentPosition)));            
-         }
-         
-         Iterator<Long> rooks= board.rooksIterator(); 
-         while (rooks.hasNext()) {
-            long fromSquare= rooks.next().longValue();
-            findMoves(
-                  result,
-                  fromSquare,
-                  new BitboardIterator(Rook.attacksFrom(fromSquare, this.currentPosition)));            
-         }
-         
-         Iterator<Long> bishops= board.bishopsIterator(); 
-         while (bishops.hasNext()) {
-            long fromSquare= bishops.next().longValue();
-            findMoves(
-                  result,
-                  fromSquare,
-                  new BitboardIterator(Bishop.attacksFrom(fromSquare, this.currentPosition)));
-         }
-         
-         Iterator<Long> knights= board.knightsIterator(); 
-         while (knights.hasNext()) {
-            long fromSquare= knights.next().longValue();
-            findMoves(
-                  result,
-                  fromSquare,
-                  new BitboardIterator(Knight.attacksFrom(fromSquare, this.currentPosition)));            
-         }
-         
-         Iterator<Long> pawns= board.pawnsIterator();
-         while (pawns.hasNext()) {
-            long fromSquare= pawns.next().longValue();
-
-            if(isWhiteToMove()) {
-               findMoves(
-                     result,
-                     fromSquare,
-                     new BitboardIterator(WhitePawn.captureMoveAttacksFrom(fromSquare, this.currentPosition) | WhitePawn.moveAttacksFrom(fromSquare, this.currentPosition)));            
-               } else {
-                  findMoves(
-                        result,
-                        fromSquare,
-                        new BitboardIterator(BlackPawn.captureMoveAttacksFrom(fromSquare, this.currentPosition) | BlackPawn.moveAttacksFrom(fromSquare, this.currentPosition)));            
-            }
-         }
-         return result;          
-      }
-
-      private void findMoves(
-            List<Move> result,
-            long fromSquare,
-            Iterator<Long> moves) {
-         while (moves.hasNext()) {
-            long toSquare= moves.next().longValue();
-            Move move= new Move(this.currentPosition, fromSquare, toSquare);
-            if(this.isWhiteToMove()) {
-               if(!move.toPosition.white.isChecked()) {
-                  result.add(move);
-               } 
-            } else {
-               if(!move.toPosition.black.isChecked()) {
-                  result.add(move);                  
-               }
-            }
-         }
-      }
-
-      public Move makeRandomMove() {
-         List<Move> possibleMoves= this.getPossibleMoves();
-
-         if(!possibleMoves.isEmpty()) {
-            int chosenMoveIndex= new Random().nextInt(possibleMoves.size());
-            Move chosenMove= possibleMoves.get(chosenMoveIndex);
-            return this.makeMove(chosenMove.from, chosenMove.to);
-         } else {
-            return null;
-         }
-         
       }
 
       public boolean isGo() {

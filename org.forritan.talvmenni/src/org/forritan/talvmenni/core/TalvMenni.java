@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class TalvMenni {
    
-   public static boolean TELLUSER_ALL_INPUT= false;
+   public static boolean TELLUSER_ALL_INPUT;
    public static final boolean DEBUG_WINDOW= false;
    public final static String NAME= "Talvmenni";
    public final static String VERSION= "Version 0.1";

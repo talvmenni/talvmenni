@@ -1,6 +1,9 @@
 package org.forritan.talvmenni.game;
 
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
+import java.util.Random;
 
 import org.forritan.talvmenni.bitboard.BitboardIterator;
 import org.forritan.talvmenni.bitboard.Rank;
@@ -17,6 +20,8 @@ import org.forritan.talvmenni.bitboard.paths.BlackPawnCaptures;
 import org.forritan.talvmenni.bitboard.paths.BlackPawnMoves;
 import org.forritan.talvmenni.bitboard.paths.WhitePawnCaptures;
 import org.forritan.talvmenni.bitboard.paths.WhitePawnMoves;
+import org.forritan.talvmenni.core.TalvMenni;
+import org.forritan.talvmenni.ui.DebugWindow;
 
 
 public class Position {
@@ -170,7 +175,7 @@ public class Position {
             blackCastling,
             blackEnpassant);
    }
-
+   
    public Position move(
          long from,
          long to) {
@@ -398,78 +403,51 @@ public class Position {
       return true;
    }
 
-   /**
-    * Is "castling kings side" (o-o) legal?
-    * 
-    * @param p
-    * @param whiteToMove
-    * @return
-    */
-   private boolean isKingsSideCastlingLegal(
-         Position p,
-         boolean whiteToMove) {
-
-      boolean piecesNotMoved;
-
-      if (whiteToMove) {
-         piecesNotMoved= ((p.white.castling & (Square._E1 | Square._H1)) ^ (Square._E1 | Square._H1)) == 0L;
-      } else {
-         piecesNotMoved= ((p.black.castling & (Square._E8 | Square._H8)) ^ (Square._E8 | Square._H8)) == 0L;
-      }
-
-      if (piecesNotMoved) {
-         if (whiteToMove) {
-            return (p.black.getAllCaptureMovesAttackedSquares() ^ (Square._E1
-                  | Square._F1 | Square._G1)) == 0L;
-         } else {
-            return (p.white.getAllCaptureMovesAttackedSquares() ^ (Square._E8
-                  | Square._F8 | Square._G8)) == 0L;
-         }
-      } else {
-         return false;
-      }
-
-   }
-
-   /**
-    * Is "castling queens side" (o-o-o) legal?
-    * 
-    * @param p
-    * @param whiteToMove
-    * @return
-    */
-   private boolean isQueensSideCastlingLegal(
-         Position p,
-         boolean whiteToMove) {
-
-      boolean piecesNotMoved;
-
-      if (whiteToMove) {
-         piecesNotMoved= ((p.white.castling & (Square._A1 | Square._E1)) ^ (Square._A1 | Square._E1)) == 0L;
-      } else {
-         piecesNotMoved= ((p.black.castling & (Square._A8 | Square._E8)) ^ (Square._A8 | Square._E8)) == 0L;
-      }
-
-      if (piecesNotMoved) {
-         if (whiteToMove) {
-            return (p.black.getAllCaptureMovesAttackedSquares() ^ (Square._C1
-                  | Square._D1 | Square._E1)) == 0L;
-         } else {
-            return (p.white.getAllCaptureMovesAttackedSquares() ^ (Square._C8
-                  | Square._D8 | Square._E8)) == 0L;
-         }
-      } else {
-         return false;
-      }
-
-   }
-
+   
    public long getAllSquaresAttackedByWhiteCaptureMove() {
       return this.white.getAllCaptureMovesAttackedSquares();
    }
 
    public long getAllSquaresAttackedByBlackCaptureMove() {
       return this.black.getAllCaptureMovesAttackedSquares();
+   }
+   
+   public Move getRandomMove(boolean whiteMove) {
+      List<Move> possibleMoves;
+      if(whiteMove) {
+         possibleMoves= this.white.getPossibleMoves();
+      } else {
+         possibleMoves= this.black.getPossibleMoves();
+      }
+      if (TalvMenni.DEBUG_WINDOW) {
+         DebugWindow.updateTekst("From_Talvmenni - " + possibleMoves.size() + " possible moves:  "
+               + possibleMoves.toString());
+      }
+
+      if(!possibleMoves.isEmpty()) {
+         int chosenMoveIndex= new Random().nextInt(possibleMoves.size());
+         return possibleMoves.get(chosenMoveIndex);
+          
+      } else {
+         return null;
+      }      
+   }
+   
+   public static class Move {
+      public final long from;
+      public final long to;
+
+      public Move(long from, long to) {
+         this.from= from;
+         this.to= to;
+      }
+      
+      public String toString() {
+         Square sq= Squares.create();
+         return sq.getSquareName(from)
+               + sq.getSquareName(to);
+      }
+      
    }
 
    public class Bitboard {
@@ -529,6 +507,155 @@ public class Position {
                | this.bishops
                | this.knights
                | this.pawns;
+      }
+      
+      public List<Move> getPossibleMoves() {
+         List<Move> result= new ArrayList<Move>();
+
+         Iterator<Long> kings= this.kingsIterator();
+         while (kings.hasNext()) {
+            long fromSquare= kings.next().longValue();
+            findMoves(
+                  result,
+                  fromSquare,
+                  new BitboardIterator(King.attacksFrom(fromSquare, this.parent)));            
+         }
+         
+         Iterator<Long> queens= this.queensIterator(); 
+         while (queens.hasNext()) {
+            long fromSquare= queens.next().longValue();
+            findMoves(
+                  result,
+                  fromSquare,
+                  new BitboardIterator(Queen.attacksFrom(fromSquare, this.parent)));            
+         }
+         
+         Iterator<Long> rooks= this.rooksIterator(); 
+         while (rooks.hasNext()) {
+            long fromSquare= rooks.next().longValue();
+            findMoves(
+                  result,
+                  fromSquare,
+                  new BitboardIterator(Rook.attacksFrom(fromSquare, this.parent)));            
+         }
+         
+         Iterator<Long> bishops= this.bishopsIterator(); 
+         while (bishops.hasNext()) {
+            long fromSquare= bishops.next().longValue();
+            findMoves(
+                  result,
+                  fromSquare,
+                  new BitboardIterator(Bishop.attacksFrom(fromSquare, this.parent)));
+         }
+         
+         Iterator<Long> knights= this.knightsIterator(); 
+         while (knights.hasNext()) {
+            long fromSquare= knights.next().longValue();
+            findMoves(
+                  result,
+                  fromSquare,
+                  new BitboardIterator(Knight.attacksFrom(fromSquare, this.parent)));            
+         }
+         
+         Iterator<Long> pawns= this.pawnsIterator();
+         while (pawns.hasNext()) {
+            long fromSquare= pawns.next().longValue();
+
+            if(this.white) {
+               findMoves(
+                     result,
+                     fromSquare,
+                     new BitboardIterator(WhitePawn.captureMoveAttacksFrom(fromSquare, this.parent) | WhitePawn.moveAttacksFrom(fromSquare, this.parent)));            
+               } else {
+                  findMoves(
+                        result,
+                        fromSquare,
+                        new BitboardIterator(BlackPawn.captureMoveAttacksFrom(fromSquare, this.parent) | BlackPawn.moveAttacksFrom(fromSquare, this.parent)));            
+            }
+         }
+         return result;          
+      }
+
+
+      private void findMoves(
+            List<Move> result,
+            long fromSquare,
+            Iterator<Long> moves) {
+         while (moves.hasNext()) {
+            long toSquare= moves.next().longValue();
+            Position newPosition= this.parent.move(fromSquare, toSquare);
+            if(this.white) {
+               if(!newPosition.white.isChecked()) {
+                  result.add(new Move(fromSquare, toSquare));
+               } 
+            } else {
+               if(!newPosition.black.isChecked()) {
+                  result.add(new Move(fromSquare, toSquare));                  
+               }
+            }
+            newPosition= null;
+         }
+      }
+
+      
+      /**
+       * Is "castling kings side" (o-o) legal?
+       */
+      public boolean isKingsSideCastlingLegal() {
+
+         boolean piecesNotMoved;
+
+         if (white) {
+            piecesNotMoved= (~this.castling & (Square._E1 | Square._H1)) == 0L;
+         } else {
+            piecesNotMoved= (~this.castling & (Square._E8 | Square._H8)) == 0L;
+         }
+
+         if (piecesNotMoved) {
+            if (white) {
+               return (~this.parent.black.getAllCaptureMovesAttackedSquares() & (Square._E1
+                     | Square._F1 | Square._G1)) == 0L;
+            } else {
+               return (~this.parent.white.getAllCaptureMovesAttackedSquares() & (Square._E8
+                     | Square._F8 | Square._G8)) == 0L;
+            }
+         } else {
+            return false;
+         }
+
+      }
+
+      /**
+       * Is "castling queens side" (o-o-o) legal?
+       */
+      public boolean isQueensSideCastlingLegal() {
+
+         boolean piecesNotMoved;
+
+         if (white) {
+            piecesNotMoved= (~this.castling & (Square._A1 | Square._E1)) == 0L;
+         } else {
+            piecesNotMoved= (~this.castling & (Square._A8 | Square._E8)) == 0L;
+         }
+
+         if (piecesNotMoved) {
+            if (white) {
+               return ((~this.parent.black.getAllCaptureMovesAttackedSquares() & (Square._C1
+                     | Square._D1 | Square._E1)) == 0L) &&
+                     (( ~(this.allPieces | this.parent.black.allPieces) & Square._B1) == 0L);
+            } else {
+               return ((~this.parent.white.getAllCaptureMovesAttackedSquares() & (Square._C8
+                     | Square._D8 | Square._E8)) == 0L) &&
+                     (( ~(this.allPieces | this.parent.black.allPieces) & Square._B8) == 0L);
+            }
+         } else {
+            return false;
+         }
+
+      }
+
+      public long getAllPawnsReadyForPromotion() {
+         return 0L;
       }
 
       public boolean isChecked() {
