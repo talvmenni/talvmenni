@@ -11,6 +11,9 @@ public class SimpleMaterialAndPositionalEvaluation implements Evaluation {
    public int getScore(
          Position position) {
       int result= 0;
+      
+      // White
+      
       for (Iterator it= position.white.kingsIterator(); it.hasNext();) {
          it.next();
          result += Evaluation.KING;         
@@ -62,14 +65,8 @@ public class SimpleMaterialAndPositionalEvaluation implements Evaluation {
          result += Evaluation.CHECK_REWARD;                  
       }
             
-      if(position.white.isKingsSideCastlingLegal()) {
-         result += Evaluation.KINGS_SIDE_CASTLING_REWARD;                  
-      }
-            
-      if(position.white.isQueensSideCastlingLegal()) {
-         result += Evaluation.QUEENS_SIDE_CASTLING_REWARD;                  
-      }
-            
+
+      // Black
       
       for (Iterator it= position.black.kingsIterator(); it.hasNext();) {
          it.next();
@@ -117,15 +114,7 @@ public class SimpleMaterialAndPositionalEvaluation implements Evaluation {
          it.next();
          result -= Evaluation.POSITION_GUARD_REWARD;         
       }
-      
-      if(position.black.isKingsSideCastlingLegal()) {
-         result -= Evaluation.KINGS_SIDE_CASTLING_REWARD;                  
-      }
-            
-      if(position.black.isQueensSideCastlingLegal()) {
-         result -= Evaluation.QUEENS_SIDE_CASTLING_REWARD;                  
-      }
-            
+                  
       if(position.white.isChecked()) {
          result -= Evaluation.CHECK_REWARD;                  
       }
