@@ -2,7 +2,7 @@ import org.forritan.talvmenni.game.ImmutablePosition;
 import org.forritan.talvmenni.game.Move;
 import org.forritan.talvmenni.game.MoveHistory;
 import org.forritan.talvmenni.game.Position;
-import org.forritan.talvmenni.game.PositionFactory;
+import org.forritan.talvmenni.game.AbstractPosition;
 
 
 public class TestSpeedOnPositionCreation {
@@ -16,12 +16,12 @@ public class TestSpeedOnPositionCreation {
             + " mutable positions...");
 
       long time= -System.currentTimeMillis();
-      Position initialPosition= PositionFactory.createInitial(true);
+      Position initialPosition= Position.Factory.createInitial(true);
 
       for (int i= 0; i < howMany; i++) {
          long from= 1L << (i % 32);
          long to= 1L << ((i % 32) + 16);
-         initialPosition.move(from, to, PositionFactory.PromotionPiece.DEFAULT);
+         initialPosition.move(from, to, Position.PromotionPiece.DEFAULT);
          initialPosition.popMove();
 //         Move m= new Move(
 //               initialPosition,
@@ -50,13 +50,13 @@ public class TestSpeedOnPositionCreation {
             + " immutable positions...");
 
       time= -System.currentTimeMillis();
-      initialPosition= PositionFactory.createInitial(false);
+      initialPosition= Position.Factory.createInitial(false);
 
       for (int i= 0; i < howMany; i++) {
          long from= 1L << (i % 32);
          long to= 1L << ((i % 32) + 16);
 
-         initialPosition.move(from, to, PositionFactory.PromotionPiece.DEFAULT);
+         initialPosition.move(from, to, Position.PromotionPiece.DEFAULT);
          initialPosition.popMove();
 
 //         Move m= new Move(

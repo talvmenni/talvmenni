@@ -7,7 +7,7 @@ import java.util.List;
 
 import org.forritan.talvmenni.evaluation.Evaluation;
 import org.forritan.talvmenni.game.Position;
-import org.forritan.talvmenni.game.PositionFactory;
+import org.forritan.talvmenni.game.AbstractPosition;
 import org.forritan.talvmenni.game.Transposition;
 import org.forritan.talvmenni.game.Position.Move;
 import org.forritan.util.ThreeTuple;

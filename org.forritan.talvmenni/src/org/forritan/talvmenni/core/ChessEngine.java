@@ -13,7 +13,7 @@ import java.util.concurrent.ThreadFactory;
 import org.forritan.talvmenni.game.Move;
 import org.forritan.talvmenni.game.MoveHistory;
 import org.forritan.talvmenni.game.Position;
-import org.forritan.talvmenni.game.PositionFactory;
+import org.forritan.talvmenni.game.AbstractPosition;
 import org.forritan.talvmenni.game.Rules;
 import org.forritan.talvmenni.strategy.Strategy;
 import org.forritan.talvmenni.ui.ConsoleProtocol;
@@ -189,7 +189,7 @@ public class ChessEngine extends Observable implements Runnable {
       }
 
       public synchronized void newGame() {
-         this.setCurrentPosition(PositionFactory.createInitial(false));
+         this.setCurrentPosition(Position.Factory.createInitial(false));
          MoveHistory.getInstance().reset();
          this.whiteToMove= true;
          this.go= true;
@@ -241,7 +241,7 @@ public class ChessEngine extends Observable implements Runnable {
 
       public synchronized void setPositionFromFEN(
             String FENString) {
-         Tuple<Position, Boolean> tuple= PositionFactory.createPositionFromFEN(false, FENString);
+         Tuple<Position, Boolean> tuple= Position.Factory.createPositionFromFEN(false, FENString);
          if(tuple.b.booleanValue()) {
             this.whiteToMove();
          } else {

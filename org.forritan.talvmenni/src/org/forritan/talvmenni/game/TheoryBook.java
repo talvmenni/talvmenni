@@ -48,7 +48,7 @@ public class TheoryBook {
          lineNumber++;
          if (fenStringLine) {
             try {
-               p= PositionFactory.createPositionFromFEN(
+               p= Position.Factory.createPositionFromFEN(
                      false,
                      line);
 

@@ -51,11 +51,11 @@ public class Move {
       String result= "";
       if(this.whiteMove) {
          if(fromPosition.getWhite().isPawn(from) && ((from & ~Rank._7) == Square._EMPTY_BOARD)) {
-            result= PositionFactory.PromotionPiece.STRINGS[this.promotionPiece];
+            result= Position.PromotionPiece.STRINGS[this.promotionPiece];
          }
       } else {
          if(fromPosition.getBlack().isPawn(from) && ((from & ~Rank._2) == Square._EMPTY_BOARD)) {
-            result= PositionFactory.PromotionPiece.STRINGS[this.promotionPiece];
+            result= Position.PromotionPiece.STRINGS[this.promotionPiece];
          }
       }
       return result;

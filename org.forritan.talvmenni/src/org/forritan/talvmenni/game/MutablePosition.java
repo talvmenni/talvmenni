@@ -3,7 +3,7 @@ package org.forritan.talvmenni.game;
 import java.util.Stack;
 
 
-public class MutablePosition extends PositionFactory {
+public class MutablePosition extends AbstractPosition {
    
    Stack<Bitboard> whiteBitboards;
    Stack<Bitboard> blackBitboards;
@@ -97,7 +97,7 @@ public class MutablePosition extends PositionFactory {
    }
 
    public Position getImmutable() {
-      return PositionFactory.create(false, this.getWhite(), this.getBlack());
+      return Position.Factory.create(false, this.getWhite(), this.getBlack());
    }
 
    public Position getMutable() {

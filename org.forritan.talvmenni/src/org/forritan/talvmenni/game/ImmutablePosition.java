@@ -2,7 +2,7 @@ package org.forritan.talvmenni.game;
 
 
 
-public class ImmutablePosition extends PositionFactory {
+public class ImmutablePosition extends AbstractPosition {
 
    /**
     * 
@@ -75,7 +75,7 @@ public class ImmutablePosition extends PositionFactory {
    public Position pushMove(
          Bitboard white,
          Bitboard black) {
-      return PositionFactory.create(
+      return Position.Factory.create(
             false,
             white,
             black);
@@ -90,6 +90,6 @@ public class ImmutablePosition extends PositionFactory {
    }
 
    public synchronized Position getMutable() {
-      return PositionFactory.create(true, this.getWhite(), this.getBlack());
+      return Position.Factory.create(true, this.getWhite(), this.getBlack());
    }
 }

@@ -2,7 +2,7 @@ import org.forritan.talvmenni.bitboard.Square;
 import org.forritan.talvmenni.bitboard.attacks.Knight;
 import org.forritan.talvmenni.game.ImmutablePosition;
 import org.forritan.talvmenni.game.Position;
-import org.forritan.talvmenni.game.PositionFactory;
+import org.forritan.talvmenni.game.AbstractPosition;
 
 public class TestSpeedOnKnightAttacks {
 
@@ -16,7 +16,7 @@ public class TestSpeedOnKnightAttacks {
             + " times...");
 
       long time= -System.currentTimeMillis();
-      Position p= PositionFactory.create(
+      Position p= Position.Factory.create(
             false,
             Square._E1, // whiteKings
             Square._G4, // whiteQueens

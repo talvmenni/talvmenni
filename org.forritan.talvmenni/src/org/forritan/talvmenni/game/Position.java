@@ -2,8 +2,10 @@ package org.forritan.talvmenni.game;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.StringTokenizer;
 
 import org.forritan.talvmenni.bitboard.BitboardIterator;
+import org.forritan.talvmenni.bitboard.Rank;
 import org.forritan.talvmenni.bitboard.Square;
 import org.forritan.talvmenni.bitboard.Squares;
 import org.forritan.talvmenni.bitboard.attacks.Bishop;
@@ -13,6 +15,8 @@ import org.forritan.talvmenni.bitboard.attacks.Knight;
 import org.forritan.talvmenni.bitboard.attacks.Queen;
 import org.forritan.talvmenni.bitboard.attacks.Rook;
 import org.forritan.talvmenni.bitboard.attacks.WhitePawn;
+import org.forritan.talvmenni.bitboard.paths.BlackPawnMoves;
+import org.forritan.talvmenni.bitboard.paths.WhitePawnMoves;
 import org.forritan.util.Tuple;
 
 
@@ -43,49 +47,6 @@ public interface Position {
          Bitboard black);
 
    public Position popMove();
-
-   public static interface PromotionPiece {
-      public final static int      DEFAULT = 0;
-      public final static int      QUEEN   = 0;
-      public final static int      ROOK    = 1;
-      public final static int      BISHOP  = 2;
-      public final static int      KNIGHT  = 3;
-      public final static String[] STRINGS = new String[] { "q", "r", "b", "n"};
-   }
-
-   public static class Move {
-      public final long from;
-      public final long to;
-
-      public Move(
-            long from,
-            long to) {
-         this.from= from;
-         this.to= to;
-      }
-
-      public String toString() {
-         Square sq= Squares.create();
-         return sq.getSquareName(from)
-               + sq.getSquareName(to);
-      }
-
-      public boolean equals(
-            Move otherMove) {
-         return (this.from == otherMove.from)
-               && (this.to == otherMove.to);
-      }
-
-      public boolean equals(
-            Object obj) {
-         if (obj instanceof Move) {
-            return this.equals((Move) obj);
-         } else {
-            return false;
-         }
-      }
-
-   }
 
    public class Bitboard {
 
@@ -622,4 +583,360 @@ public interface Position {
       }
    }
 
+   public static interface PromotionPiece {
+      public final static int      DEFAULT = 0;
+      public final static int      QUEEN   = 0;
+      public final static int      ROOK    = 1;
+      public final static int      BISHOP  = 2;
+      public final static int      KNIGHT  = 3;
+      public final static String[] STRINGS = new String[] { "q", "r", "b", "n"};
+   }
+
+   public static class Move {
+      public final long from;
+      public final long to;
+
+      public Move(
+            long from,
+            long to) {
+         this.from= from;
+         this.to= to;
+      }
+
+      public String toString() {
+         Square sq= Squares.create();
+         return sq.getSquareName(from)
+               + sq.getSquareName(to);
+      }
+
+      public boolean equals(
+            Move otherMove) {
+         return (this.from == otherMove.from)
+               && (this.to == otherMove.to);
+      }
+
+      public boolean equals(
+            Object obj) {
+         if (obj instanceof Move) {
+            return this.equals((Move) obj);
+         } else {
+            return false;
+         }
+      }
+
+   }
+
+   public static class Factory {
+      public static Position createInitial(boolean mutable) {
+         if(mutable) {
+            return new MutablePosition(
+                  Square._E1, // whiteKings
+                  Square._D1, // whiteQueens
+                  Square._A1
+                        | Square._H1, // whiteRooks
+                  Square._C1
+                        | Square._F1, // whiteBishops
+                  Square._B1
+                        | Square._G1, // whiteKnights
+                  Rank._2, // whitePawns
+                  Square._A1
+                        | Square._E1
+                        | Square._H1, // whiteCastling
+                  Square._EMPTY_BOARD, // whiteEnpassant
+                  Square._E8, // blackKings
+                  Square._D8, // blackQueens
+                  Square._A8
+                        | Square._H8, // blackRooks
+                  Square._C8
+                        | Square._F8, // blackBishops
+                  Square._B8
+                        | Square._G8, // blackKnights
+                  Rank._7, // blackPawns
+                  Square._A8
+                        | Square._E8
+                        | Square._H8, // blackCastling
+                  Square._EMPTY_BOARD // blackEnpassant
+            );
+         } else {
+            return new ImmutablePosition(
+                  Square._E1, // whiteKings
+                  Square._D1, // whiteQueens
+                  Square._A1
+                        | Square._H1, // whiteRooks
+                  Square._C1
+                        | Square._F1, // whiteBishops
+                  Square._B1
+                        | Square._G1, // whiteKnights
+                  Rank._2, // whitePawns
+                  Square._A1
+                        | Square._E1
+                        | Square._H1, // whiteCastling
+                  Square._EMPTY_BOARD, // whiteEnpassant
+                  Square._E8, // blackKings
+                  Square._D8, // blackQueens
+                  Square._A8
+                        | Square._H8, // blackRooks
+                  Square._C8
+                        | Square._F8, // blackBishops
+                  Square._B8
+                        | Square._G8, // blackKnights
+                  Rank._7, // blackPawns
+                  Square._A8
+                        | Square._E8
+                        | Square._H8, // blackCastling
+                  Square._EMPTY_BOARD // blackEnpassant
+            );
+         }
+      }
+
+      /**
+       * @param mutable
+       * @param whiteKings
+       * @param whiteQueens
+       * @param whiteRooks
+       * @param whiteBishops
+       * @param whiteKnights
+       * @param whitePawns
+       * @param whiteCastling
+       * @param whiteEnpassant
+       * @param blackKings
+       * @param blackQueens
+       * @param blackRooks
+       * @param blackBishops
+       * @param blackKnights
+       * @param blackPawns
+       * @param blackCastling
+       * @param blackEnpassant
+       * @return
+       */
+      public static Position create(
+            boolean mutable,
+            long whiteKings,
+            long whiteQueens,
+            long whiteRooks,
+            long whiteBishops,
+            long whiteKnights,
+            long whitePawns,
+            long whiteCastling,
+            long whiteEnpassant,
+            long blackKings,
+            long blackQueens,
+            long blackRooks,
+            long blackBishops,
+            long blackKnights,
+            long blackPawns,
+            long blackCastling,
+            long blackEnpassant) {
+         if(mutable) {
+            return new MutablePosition(
+                  whiteKings,
+                  whiteQueens,
+                  whiteRooks,
+                  whiteBishops,
+                  whiteKnights,
+                  whitePawns,
+                  whiteCastling,
+                  whiteEnpassant,
+                  blackKings,
+                  blackQueens,
+                  blackRooks,
+                  blackBishops,
+                  blackKnights,
+                  blackPawns,
+                  blackCastling,
+                  blackEnpassant);         
+         } else {
+            return new ImmutablePosition(
+                  whiteKings,
+                  whiteQueens,
+                  whiteRooks,
+                  whiteBishops,
+                  whiteKnights,
+                  whitePawns,
+                  whiteCastling,
+                  whiteEnpassant,
+                  blackKings,
+                  blackQueens,
+                  blackRooks,
+                  blackBishops,
+                  blackKnights,
+                  blackPawns,
+                  blackCastling,
+                  blackEnpassant);
+         }
+      }
+
+      public static Position create(
+            boolean mutable,
+            Bitboard white,
+            Bitboard black) {
+         if(mutable) {
+            return new MutablePosition(
+                  white,
+                  black);
+         } else {
+            return new ImmutablePosition(
+                  white,
+                  black);
+         }
+
+      }
+
+      
+      public static Tuple<Position, Boolean> createPositionFromFEN(boolean mutable,
+            String FENString) {
+         
+         Boolean whiteMove= null;
+         
+         long whiteKings= Square._EMPTY_BOARD;
+         long whiteQueens= Square._EMPTY_BOARD;
+         long whiteRooks= Square._EMPTY_BOARD;
+         long whiteBishops= Square._EMPTY_BOARD;
+         long whiteKnights= Square._EMPTY_BOARD;
+         long whitePawns= Square._EMPTY_BOARD;
+         long whiteCastling= Square._EMPTY_BOARD;
+         long whiteEnpassant= Square._EMPTY_BOARD;
+         long blackKings= Square._EMPTY_BOARD;
+         long blackQueens= Square._EMPTY_BOARD;
+         long blackRooks= Square._EMPTY_BOARD;
+         long blackBishops= Square._EMPTY_BOARD;
+         long blackKnights= Square._EMPTY_BOARD;
+         long blackPawns= Square._EMPTY_BOARD;
+         long blackCastling= Square._EMPTY_BOARD;
+         long blackEnpassant= Square._EMPTY_BOARD;
+         
+         Square square2= Squares.create();
+         long sq;
+
+         StringTokenizer st= new StringTokenizer(
+               FENString);
+
+         String positionString= st.nextToken();
+
+         int y= 0;
+         int x= 0;
+
+         for (int pos= 0; pos < positionString.length(); pos++) {
+            char activeChar= positionString.charAt(pos);
+
+            if (activeChar == '/') {
+               y++;
+               x= 0;
+            } else if (Character.isDigit(activeChar)) {
+               x+= Integer.parseInt(""
+                     + activeChar);
+            } else {
+               int square= y
+                     * 8
+                     + x;
+               sq= square2.getSquare(square);
+
+               if (activeChar == 'r') {
+                  blackRooks|= sq;
+               } else if (activeChar == 'R') {
+                  whiteRooks|= sq;
+               } else if (activeChar == 'b') {
+                  blackBishops|= sq;
+               } else if (activeChar == 'B') {
+                  whiteBishops|= sq;
+               } else if (activeChar == 'q') {
+                  blackQueens|= sq;
+               } else if (activeChar == 'Q') {
+                  whiteQueens|= sq;
+               } else if (activeChar == 'k') {
+                  blackKings|= sq;
+               } else if (activeChar == 'K') {
+                  whiteKings|= sq;
+               } else if (activeChar == 'n') {
+                  blackKnights|= sq;
+               } else if (activeChar == 'N') {
+                  whiteKnights|= sq;
+               } else if (activeChar == 'p') {
+                  blackPawns|= sq;
+               } else if (activeChar == 'P') {
+                  whitePawns|= sq;
+               }
+
+               x++;
+            }
+         }
+
+         if (st.hasMoreTokens()) {
+            String colorToMove= st.nextToken();
+            if (colorToMove.equals("w")) {
+               whiteMove= Boolean.TRUE;
+            } else if (colorToMove.equals("b")) {
+               whiteMove= Boolean.FALSE;
+            }
+         } else {
+            // Malformed FEN string
+            throw new IllegalArgumentException(
+                  "FENString malformed - must say which side is next to move");
+         }
+
+         if (st.hasMoreTokens()) {
+            String castlingString= st.nextToken();
+
+            for (int pos= 0; pos < castlingString.length(); pos++) {
+               char activeChar= castlingString.charAt(pos);
+               if (activeChar == 'K') {
+                  whiteCastling|= Square._E1;
+                  whiteCastling|= Square._H1;
+               }
+               if (activeChar == 'Q') {
+                  whiteCastling|= Square._E1;
+                  whiteCastling|= Square._A1;
+               }
+               if (activeChar == 'k') {
+                  blackCastling|= Square._E8;
+                  blackCastling|= Square._H8;
+               }
+               if (activeChar == 'q') {
+                  blackCastling|= Square._E8;
+                  blackCastling|= Square._A8;
+               }
+            }
+         }
+
+         if (st.hasMoreTokens()) {
+            String targetSquareStr= st.nextToken().toUpperCase();
+            if (!"-".equalsIgnoreCase(targetSquareStr)) {
+               long targetSquare= Squares.create().getSquare(
+                     targetSquareStr.toUpperCase());
+               if (whiteMove.booleanValue()) {
+                  if ((blackPawns & (targetSquare >> 8)) != Square._EMPTY_BOARD) {
+                     blackEnpassant= BlackPawnMoves.create().getPathsFrom(
+                           (targetSquare << 8));
+                  }
+               } else {
+                  if ((whitePawns & (targetSquare << 8)) != Square._EMPTY_BOARD) {
+                     whiteEnpassant= WhitePawnMoves.create().getPathsFrom(
+                           (targetSquare >> 8));
+                  }
+               }
+            }
+         }
+
+         Position fenPosition= Position.Factory.create(
+               mutable,
+               whiteKings,
+               whiteQueens,
+               whiteRooks,
+               whiteBishops,
+               whiteKnights,
+               whitePawns,
+               whiteCastling,
+               whiteEnpassant,
+               blackKings,
+               blackQueens,
+               blackRooks,
+               blackBishops,
+               blackKnights,
+               blackPawns,
+               blackCastling,
+               blackEnpassant);
+         
+         return new Tuple<Position, Boolean>(fenPosition, whiteMove);
+      }            
+   }
 }
