@@ -3,24 +3,30 @@ package org.forritan.talvmenni.ui;
 import org.forritan.talvmenni.bitboard.Square;
 import org.forritan.talvmenni.bitboard.Squares;
 import org.forritan.talvmenni.core.ChessEngine.Protocol;
+import org.forritan.talvmenni.game.Position;
 
 
 public class ConsoleProtocol extends UiProtocolBase {
 
    private static ConsoleProtocol instance;
 
-   private ConsoleProtocol(Protocol protocol) {
-      super(protocol);
+   private ConsoleProtocol(
+         Protocol protocol) {
+      super(
+            protocol);
    }
 
-   public static ConsoleProtocol create(Protocol protocol) {
+   public static ConsoleProtocol create(
+         Protocol protocol) {
       if (ConsoleProtocol.instance == null) {
-         ConsoleProtocol.instance= new ConsoleProtocol(protocol);
+         ConsoleProtocol.instance= new ConsoleProtocol(
+               protocol);
       }
       return ConsoleProtocol.instance;
    }
 
-   public String processInput(String theInput) {
+   public String processInput(
+         String theInput) {
       String theOutput= null;
 
       if ("cmd".equalsIgnoreCase(theInput)) {
@@ -40,7 +46,7 @@ public class ConsoleProtocol extends UiProtocolBase {
          String move= theInput.substring(
                4).trim();
 
-         theOutput=move;
+         theOutput= move;
          //this.protocol.makeMove(move);
       }
 
@@ -90,7 +96,7 @@ public class ConsoleProtocol extends UiProtocolBase {
                   - (x * 8)
                   + y);
             positionString= positionString
-                  + this.protocol.getStringPiece(sq)
+                  + this.getStringPiece(sq)
                   + " ";
          }
          positionString= positionString
@@ -142,7 +148,7 @@ public class ConsoleProtocol extends UiProtocolBase {
       message= message
             + "- NEW: Start a new game \n";
       message= message
-      + "- MOVE: Make move. Format: 'MOVE fftt' \n";
+            + "- MOVE: Make move. Format: 'MOVE fftt' \n";
       message= message
             + "- WHITE: Give white the move \n";
       message= message
@@ -175,5 +181,39 @@ public class ConsoleProtocol extends UiProtocolBase {
             + "--------------------------------------------------------\n";
 
       return message;
+   }
+
+   public String getStringPiece(
+         long square) {
+      Position currentPosition= this.protocol.getCurrentPosition();
+      if (currentPosition != null) {
+         if (currentPosition.white.isPawn(square))
+            return "P";
+         else if (currentPosition.black.isPawn(square))
+            return "p";
+         else if (currentPosition.white.isRook(square))
+            return "R";
+         else if (currentPosition.black.isRook(square))
+            return "r";
+         else if (currentPosition.white.isBishop(square))
+            return "B";
+         else if (currentPosition.black.isBishop(square))
+            return "b";
+         else if (currentPosition.white.isKnight(square))
+            return "N";
+         else if (currentPosition.black.isKnight(square))
+            return "n";
+         else if (currentPosition.white.isQueen(square))
+            return "Q";
+         else if (currentPosition.black.isQueen(square))
+            return "q";
+         else if (currentPosition.white.isKing(square))
+            return "K";
+         else if (currentPosition.black.isKing(square))
+            return "k";
+         else
+            return ".";
+      } else
+         return ".";
    }
 }
