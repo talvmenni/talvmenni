@@ -16,10 +16,10 @@ public class AllTests {
       suite.addTestSuite(FileTest.class);
       suite.addTestSuite(SquaresTest.class);
       suite.addTestSuite(RankTest.class);
+      suite.addTestSuite(BishopMasksTest.class);
       suite.addTestSuite(BackSlashDiagonalTest.class);
       suite.addTestSuite(RookMasksTest.class);
       suite.addTestSuite(RookMaskTest.class);
-      suite.addTestSuite(BishopMasksTest.class);
       //$JUnit-END$
 
       suite.addTest(org.forritan.talvmenni.bitboard.paths.AllTests.suite());
