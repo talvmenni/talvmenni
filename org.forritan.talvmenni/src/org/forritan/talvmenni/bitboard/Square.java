@@ -5,6 +5,9 @@ public interface Square {
    public long getSquare(
          int squareNumber);
 
+   public long getSquareNormalizedIndex(
+         int NormalizedSquareNumber);
+
    public long getSquare(
          String squareNumber);
 

@@ -7,14 +7,15 @@ public class Squares implements Square {
 
    private static Squares      instance;
    private final long[] bitmaps = new long[64];
+   private final int[] bitmapsDeBruijnIndex = new int[64];
    private final String[] squareNames = new String[64];
    private final Map<String, Long> bitmapsMap;
 //   private final Map<Long, String> squareNameMap;
 
    private Squares() {     
-//      for (int i= 0; i < this.bitmaps.length; i++) {
-//         this.bitmaps[i]= (1L << (63 - i));
-//      }
+      for (int i= 0; i < this.bitmaps.length; i++) {
+         this.bitmapsDeBruijnIndex[i]= Square.Util.index(1L << (63 - i));
+      }
      
       this.bitmaps[Square.Util.index(Square._A1)]= Square._A1;
       this.bitmaps[Square.Util.index(Square._A2)]= Square._A2;
@@ -251,6 +252,15 @@ public class Squares implements Square {
          return Square._EMPTY_BOARD;
       } else {
          return this.bitmaps[squareNumber];
+      }
+   }
+
+   public long getSquareNormalizedIndex(
+         int normalizedSquareNumber) {
+      if(normalizedSquareNumber < 0 || normalizedSquareNumber > 63) {
+         return Square._EMPTY_BOARD;
+      } else {
+         return this.bitmaps[this.bitmapsDeBruijnIndex[normalizedSquareNumber]];
       }
    }
 

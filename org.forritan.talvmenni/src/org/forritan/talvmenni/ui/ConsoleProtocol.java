@@ -464,7 +464,7 @@ public class ConsoleProtocol extends UiProtocolBase {
                + x
                + " | ";
          for (int y= 0; y < 8; y++) {
-            sq= square.getSquare(64
+            sq= square.getSquareNormalizedIndex(64
                   - (x * 8)
                   + y);
             positionString= positionString
