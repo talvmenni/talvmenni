@@ -41,8 +41,8 @@ public class RankTest extends TestCase {
 				"00000000" + // A3-H3
 				"00000000" + // B2-H2
 				"11111111" // A1-H1
-		, (this.zeroPrefix[Long.toBinaryString(File._1).length() - 1] + Long
-				.toBinaryString(File._1)));
+		, (this.zeroPrefix[Long.toBinaryString(Rank._1).length() - 1] + Long
+				.toBinaryString(Rank._1)));
 	}
 
 	public void test2() {
@@ -55,8 +55,8 @@ public class RankTest extends TestCase {
 				"00000000" + // A3-H3
 				"11111111" + // A2-H2
 				"00000000" // A1-A8
-		, (this.zeroPrefix[Long.toBinaryString(File._2).length() - 1] + Long
-				.toBinaryString(File._2)));
+		, (this.zeroPrefix[Long.toBinaryString(Rank._2).length() - 1] + Long
+				.toBinaryString(Rank._2)));
 	}
 
 	public void test3() {
@@ -69,8 +69,8 @@ public class RankTest extends TestCase {
 				"11111111" + // A3-H3
 				"00000000" + // A2-H2
 				"00000000" // A1-A8
-		, (this.zeroPrefix[Long.toBinaryString(File._3).length() - 1] + Long
-				.toBinaryString(File._3)));
+		, (this.zeroPrefix[Long.toBinaryString(Rank._3).length() - 1] + Long
+				.toBinaryString(Rank._3)));
 	}
 
 	public void test4() {
@@ -83,8 +83,8 @@ public class RankTest extends TestCase {
 				"00000000" + // A3-H3
 				"00000000" + // A2-H2
 				"00000000" // A1-A8
-		, (this.zeroPrefix[Long.toBinaryString(File._4).length() - 1] + Long
-				.toBinaryString(File._4)));
+		, (this.zeroPrefix[Long.toBinaryString(Rank._4).length() - 1] + Long
+				.toBinaryString(Rank._4)));
 	}
 
 	public void test5() {
@@ -97,8 +97,8 @@ public class RankTest extends TestCase {
 				"00000000" + // A3-H3
 				"00000000" + // A2-H2
 				"00000000" // A1-A8
-		, (this.zeroPrefix[Long.toBinaryString(File._5).length() - 1] + Long
-				.toBinaryString(File._5)));
+		, (this.zeroPrefix[Long.toBinaryString(Rank._5).length() - 1] + Long
+				.toBinaryString(Rank._5)));
 	}
 
 	public void test6() {
@@ -111,8 +111,8 @@ public class RankTest extends TestCase {
 				"00000000" + // A3-H3
 				"00000000" + // A2-H2
 				"00000000" // A1-A8
-		, (this.zeroPrefix[Long.toBinaryString(File._6).length() - 1] + Long
-				.toBinaryString(File._6)));
+		, (this.zeroPrefix[Long.toBinaryString(Rank._6).length() - 1] + Long
+				.toBinaryString(Rank._6)));
 	}
 
 	public void test7() {
@@ -125,8 +125,8 @@ public class RankTest extends TestCase {
 				"00000000" + // A3-H3
 				"00000000" + // A2-H2
 				"00000000" // A1-A8
-		, (this.zeroPrefix[Long.toBinaryString(File._7).length() - 1] + Long
-				.toBinaryString(File._7)));
+		, (this.zeroPrefix[Long.toBinaryString(Rank._7).length() - 1] + Long
+				.toBinaryString(Rank._7)));
 	}
 
 	public void test8() {
@@ -139,7 +139,7 @@ public class RankTest extends TestCase {
 				"00000000" + // A3-H3
 				"00000000" + // A2-H2
 				"00000000" // A1-A8
-		, (this.zeroPrefix[Long.toBinaryString(File._8).length() - 1] + Long
-				.toBinaryString(File._8)));
+		, (this.zeroPrefix[Long.toBinaryString(Rank._8).length() - 1] + Long
+				.toBinaryString(Rank._8)));
 	}
 }
