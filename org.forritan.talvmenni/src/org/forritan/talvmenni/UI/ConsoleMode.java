@@ -16,6 +16,7 @@ public class ConsoleMode {
 
    public void create() {
       welcomeMessage();
+
       while (this.isRunning) {
          System.out.print(this.prompt);
          BufferedReader inputReader= new BufferedReader(new InputStreamReader(
@@ -42,22 +43,23 @@ public class ConsoleMode {
          //Just ignore it...
       } else if ("new".equalsIgnoreCase(input)) // Start a new game
       {
+         ChessEngine ChessEngine= new ChessEngine();
          ChessEngine.startEngine();
          System.out.println(this.prompt
                + "Talvmenni has started...");
       } else if ("white".equalsIgnoreCase(input)) // Stop the game
       {
-         ChessEngine.WhiteToMove();
+//         ChessEngine.WhiteToMove();
          System.out.println(this.prompt
                + "White to move...");
       } else if ("black".equalsIgnoreCase(input)) // black to move
       {
-         ChessEngine.BlackToMove();
+//         ChessEngine.BlackToMove();
          System.out.println(this.prompt
                + "Black to move...");
       } else if ("force".equalsIgnoreCase(input)) // white to move
       {
-         ChessEngine.stopEngine();
+//         ChessEngine.stopEngine();
          System.out.println(this.prompt
                + "Talvmenni has been stopped...");
       } else if ("q".equalsIgnoreCase(input)

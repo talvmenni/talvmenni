@@ -2,23 +2,22 @@ package org.forritan.talvmenni.UI;
 
 public class ChessEngine {
 
-   private static boolean WhiteToMove; //0 or 1: Is white to move or not?
-   private static boolean BlackToMove; //0 or 1: Is black to move or not?
+   public boolean WhiteToMove; //0 or 1: Is white to move or not?
+   public boolean BlackToMove; //0 or 1: Is black to move or not?
 
    public ChessEngine() {
       WhiteToMove= true;
       BlackToMove= false;
    }
 
-   public static void startEngine() {
-      ChessEngine ChessEngine= new ChessEngine();
+   public void startEngine() {
 
    }
 
    /**
     *  
     */
-   public static void stopEngine() {
+   public void stopEngine() {
       // TODO Auto-generated method stub
 
    }
@@ -26,7 +25,7 @@ public class ChessEngine {
    /**
     *  
     */
-   public static void WhiteToMove() {
+   public void WhiteToMove() {
       WhiteToMove= true;
       BlackToMove= !WhiteToMove;
 
@@ -35,7 +34,7 @@ public class ChessEngine {
    /**
     *  
     */
-   public static void BlackToMove() {
+   public void BlackToMove() {
       BlackToMove= true;
       WhiteToMove= !BlackToMove;
 
