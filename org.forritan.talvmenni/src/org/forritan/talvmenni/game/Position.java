@@ -692,18 +692,21 @@ public class Position {
             piecesNotMoved= (this.castling & Square._E8) != Square._EMPTY_BOARD 
             && (this.castling & Square._H8) != Square._EMPTY_BOARD;
          }
+         
+         boolean result= false;
 
          if (piecesNotMoved) {
             if (white) {
-               return (~this.parent.black.getAllCaptureMovesAttackedSquares() & (Square._E1
-                     | Square._F1 | Square._G1)) == Square._EMPTY_BOARD;
-            } else {
-               return (~this.parent.white.getAllCaptureMovesAttackedSquares() & (Square._E8
-                     | Square._F8 | Square._G8)) == Square._EMPTY_BOARD;
-            }
-         } else {
-            return false;
-         }
+               result= ((this.parent.black.getAllCaptureMovesAttackedSquares() & (Square._E1
+                     | Square._F1 | Square._G1)) == Square._EMPTY_BOARD) &&
+                     (( (this.allPieces | this.parent.black.allPieces) & (Square._F1 | Square._G1)) == Square._EMPTY_BOARD);
+               } else {
+               result= ((this.parent.white.getAllCaptureMovesAttackedSquares() & (Square._E8
+                     | Square._F8 | Square._G8)) == Square._EMPTY_BOARD) &&
+                     (( (this.allPieces | this.parent.white.allPieces) & (Square._F8 | Square._G8)) == Square._EMPTY_BOARD);
+            }            
+         }        
+         return result;
 
       }
 
@@ -721,21 +724,21 @@ public class Position {
             piecesNotMoved= (this.castling & Square._A8) != Square._EMPTY_BOARD 
                              && (this.castling & Square._E8) != Square._EMPTY_BOARD;
          }
+         
+         boolean result= false;
 
          if (piecesNotMoved) {
             if (white) {
-               return ((~this.parent.black.getAllCaptureMovesAttackedSquares() & (Square._C1
+               result= ((this.parent.black.getAllCaptureMovesAttackedSquares() & (Square._C1
                      | Square._D1 | Square._E1)) == Square._EMPTY_BOARD) &&
-                     (( ~(this.allPieces | this.parent.black.allPieces) & Square._B1) == Square._EMPTY_BOARD);
+                     (( (this.allPieces | this.parent.black.allPieces) & (Square._B1 | Square._C1 | Square._D1)) == Square._EMPTY_BOARD);
             } else {
-               return ((~this.parent.white.getAllCaptureMovesAttackedSquares() & (Square._C8
+               result= ((this.parent.white.getAllCaptureMovesAttackedSquares() & (Square._C8
                      | Square._D8 | Square._E8)) == Square._EMPTY_BOARD) &&
-                     (( ~(this.allPieces | this.parent.black.allPieces) & Square._B8) == Square._EMPTY_BOARD);
+                     (( (this.allPieces | this.parent.white.allPieces) & (Square._B8 | Square._C8 | Square._D8)) == Square._EMPTY_BOARD);
             }
-         } else {
-            return false;
          }
-
+         return result;
       }
 
       public long getAllPawnsReadyForPromotion() {
