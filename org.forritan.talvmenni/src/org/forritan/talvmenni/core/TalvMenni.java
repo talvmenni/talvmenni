@@ -18,10 +18,19 @@ public class TalvMenni {
 
    public static String       DEBUG_NAME;
 
-   public static int          PLY = 4;                   // Minimum for being
-                                                         // able to detect that
-                                                         // we are getting
-                                                         // checkmated...
+   /**
+    * Default PLY = 4 
+    * Minimum for being able to detect that we are getting checkmated...
+    */
+   public static int          PLY = 4;                   
+
+   /**
+    * Default MAX_TRANSPOSITION_ENTRIES = 100000
+    * Maximum number of entries in each of the transposition tables (currently 
+    * white and black). If MAX_TRANSPOSITION_ENTRIES is reached the eldest
+    * entry will be removed before a new entry is added.
+    */
+   public static int          MAX_TRANSPOSITION_ENTRIES = 100000;
    
    public static void main(
          String args[]) {
@@ -43,7 +52,7 @@ public class TalvMenni {
             .create(
                   new IterativeDeepeningAlphaBetaSearchUsingKillerMoveOrderingAndTranpositionTableSimpleMaterialAndPositionalEvaluationChooseRandomlyBetweenBestMovesStrategy(
                   PLY,
-                  new Transposition()));
+                  new Transposition(MAX_TRANSPOSITION_ENTRIES)));
 
       if (Boolean.getBoolean("exception_logging_window")) {
          Thread windowThread= threadFactory.newThread(new Runnable() {

@@ -12,9 +12,9 @@ public class Transposition {
    private Table<Position, Entry> whiteTable;
    private Table<Position, Entry> blackTable;
 
-   public Transposition() {
-      this.whiteTable= new Table<Position, Entry>();
-      this.blackTable= new Table<Position, Entry>();
+   public Transposition(int maxEntries) {
+      this.whiteTable= new Table<Position, Entry>(maxEntries);
+      this.blackTable= new Table<Position, Entry>(maxEntries);
    }
 
    public static class Entry {
@@ -127,11 +127,15 @@ public class Transposition {
 
    private static class Table<K, V> extends LinkedHashMap<K, V> {
       private static final long serialVersionUID = 1L;
-      private static final int  MAX_ENTRIES      = 100000;
+      private final int maxEntries;
+      
+      public Table(int maxEntries) {
+         this.maxEntries= maxEntries;
+      }
 
       protected boolean removeEldestEntry(
             Map.Entry eldest) {
-         return size() > MAX_ENTRIES;
+         return size() > maxEntries;
       }
 
    }
