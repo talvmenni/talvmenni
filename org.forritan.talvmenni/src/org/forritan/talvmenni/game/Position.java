@@ -211,37 +211,48 @@ public class Position {
             whiteKings= whiteKings
                   ^ from
                   | to;
+            if(from == Square._E1) {
+               if(to == Square._C1) {
+                  whiteRooks= whiteRooks
+                  ^ Square._A1
+                  | Square._D1;
+               } else if (to == Square._G1) {
+                  whiteRooks= whiteRooks
+                  ^ Square._H1
+                  | Square._F1;                  
+               }
+            }
             whiteEnpassant= Square._EMPTY_BOARD;
             blackEnpassant= Square._EMPTY_BOARD;
-            //FIXME: set castling
+            whiteCastling= Square._EMPTY_BOARD; 
          } else if (this.white.isQueen(from)) {
             whiteQueens= whiteQueens
                   ^ from
                   | to;
             whiteEnpassant= Square._EMPTY_BOARD;
             blackEnpassant= Square._EMPTY_BOARD;
-            //FIXME: set castling
+            whiteCastling= this.white.castling;
          } else if (this.white.isRook(from)) {
             whiteRooks= whiteRooks
                   ^ from
                   | to;
             whiteEnpassant= Square._EMPTY_BOARD;
             blackEnpassant= Square._EMPTY_BOARD;
-            //FIXME: set castling
+            whiteCastling= this.white.castling ^ from;
          } else if (this.white.isBishop(from)) {
             whiteBishops= whiteBishops
                   ^ from
                   | to;
             whiteEnpassant= Square._EMPTY_BOARD;
             blackEnpassant= Square._EMPTY_BOARD;
-            //FIXME: set castling
+            whiteCastling= this.white.castling;
          } else if (this.white.isKnight(from)) {
             whiteKnights= whiteKnights
                   ^ from
                   | to;
             whiteEnpassant= Square._EMPTY_BOARD;
             blackEnpassant= Square._EMPTY_BOARD;
-            //FIXME: set castling
+            whiteCastling= this.white.castling;
          } else if (this.white.isPawn(from)) {
 
             // First set en passant bits...
@@ -277,7 +288,7 @@ public class Position {
                whitePawns |= to;
             }
             
-            //FIXME: set castling
+            whiteCastling= this.white.castling;
          }
 
          //... and clear any captures
@@ -314,37 +325,48 @@ public class Position {
             blackKings= blackKings
                   ^ from
                   | to;
+            if(from == Square._E8) {
+               if(to == Square._C8) {
+                  blackRooks= blackRooks
+                  ^ Square._A8
+                  | Square._D8;
+               } else if (to == Square._G8) {
+                  blackRooks= blackRooks
+                  ^ Square._H8
+                  | Square._F8;                  
+               }
+            }
             whiteEnpassant= Square._EMPTY_BOARD;
             blackEnpassant= Square._EMPTY_BOARD;
-            //FIXME: set castling
-         } else if (this.black.isQueen(from)) {
+            blackCastling= Square._EMPTY_BOARD; 
+            } else if (this.black.isQueen(from)) {
             blackQueens= blackQueens
                   ^ from
                   | to;
             whiteEnpassant= Square._EMPTY_BOARD;
             blackEnpassant= Square._EMPTY_BOARD;
-            //FIXME: set castling
+            blackCastling= this.black.castling;
          } else if (this.black.isRook(from)) {
             blackRooks= blackRooks
                   ^ from
                   | to;
             whiteEnpassant= Square._EMPTY_BOARD;
             blackEnpassant= Square._EMPTY_BOARD;
-            //FIXME: set castling
+            blackCastling= this.black.castling ^ from;
          } else if (this.black.isBishop(from)) {
             blackBishops= blackBishops
                   ^ from
                   | to;
             whiteEnpassant= Square._EMPTY_BOARD;
             blackEnpassant= Square._EMPTY_BOARD;
-            //FIXME: set castling
+            blackCastling= this.black.castling;
          } else if (this.black.isKnight(from)) {
             blackKnights= blackKnights
                   ^ from
                   | to;
             whiteEnpassant= Square._EMPTY_BOARD;
             blackEnpassant= Square._EMPTY_BOARD;
-            //FIXME: set castling
+            blackCastling= this.black.castling;
          } else if (this.black.isPawn(from)) {
 
             if ( ((from & Rank._7) != Square._EMPTY_BOARD) &&
@@ -377,7 +399,7 @@ public class Position {
                   ^ from
                   | to;
             }
-            //FIXME: set castling
+            blackCastling= this.black.castling;
          }
 
          //... and clear any captures
