@@ -22,6 +22,8 @@ public class MoveHistory {
       
       public void add(Move move) {
          this.history.add(move);         
+         if (this.history.size() > 100)
+         	{System.out.println("offer draw");}
       }
 
       public void reset() {

@@ -6,10 +6,13 @@ import java.io.InputStreamReader;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.StringTokenizer;
 import java.util.concurrent.Executors;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadFactory;
 
+import org.forritan.talvmenni.bitboard.Square;
+import org.forritan.talvmenni.bitboard.Squares;
 import org.forritan.talvmenni.game.Move;
 import org.forritan.talvmenni.game.MoveHistory;
 import org.forritan.talvmenni.game.Position;
@@ -73,6 +76,8 @@ public class ChessEngine extends Observable implements Runnable {
       public void blackToMove();
       public boolean isWhiteToMove();
       public Position getCurrentPosition();
+      public void setCurrentPosition(Position position);
+      public void setPositionFromFEN(String FENString);      
       public Rules getCurrentRules();
       public Move makeMove(long fromSquare, long toSquare, int promotionPiece);
    }
@@ -158,6 +163,99 @@ public class ChessEngine extends Observable implements Runnable {
             }
          }
       }
+      
+      public void setPositionFromFEN(String FENString)
+      {
+         long whiteKings = 0L;
+         long whiteQueens= 0L; 
+         long whiteRooks = 0L;
+         long whiteBishops = 0L;
+         long whiteKnights = 0L;
+         long whitePawns = 0L;
+         long whiteCastling = 0L;
+         long whiteEnpassant = 0L;
+         long blackKings = 0L;
+         long blackQueens = 0L;
+         long blackRooks = 0L;
+         long blackBishops = 0L;
+         long blackKnights = 0L;
+         long blackPawns = 0L;
+         long blackCastling = 0L;
+         long blackEnpassant = 0L;
+         
+         Square square2= Squares.create();
+         long sq;
+
+         StringTokenizer st = new StringTokenizer(FENString);
+        
+         String positionString = st.nextToken();
+         System.out.println(positionString);
+
+         int y = 0;
+         int x = 0;      
+         
+         for (int pos = 0; pos < positionString.length(); pos++) {
+             char activeChar = positionString.charAt(pos);
+             
+             if (activeChar == '/') {
+                 y++;
+                 x = 0;
+             } else if (Character.isDigit(activeChar)) {
+                 x += Integer.parseInt("" + activeChar);
+             } else {
+                 int square = y * 8 + x;
+                 sq= square2.getSquare(square);
+                 
+                 
+             if (activeChar=='r')
+             	blackRooks |= sq;
+             if (activeChar=='R')
+              	whiteRooks |= sq;
+             if (activeChar=='b')
+              	blackBishops |= sq;
+             if (activeChar=='B')
+            	whiteBishops |= sq;
+             if (activeChar=='q')
+              	blackQueens |= sq;
+             if (activeChar=='Q')
+              	whiteQueens |= sq;
+             if (activeChar=='k')
+              	blackKings |= sq;
+             if (activeChar=='K')
+              	whiteKings |= sq;
+             if (activeChar=='n')
+              	blackKnights |= sq;
+             if (activeChar=='N')
+             	whiteKnights |= sq;
+             if (activeChar=='p')
+              	blackPawns |= sq;
+             if (activeChar=='P')
+              	whitePawns |= sq;
+             
+             x++;
+             }           
+         }         
+
+         if (st.hasMoreTokens()) {
+            if (st.nextToken().equals("w")) 
+               this.whiteToMove();
+            else
+               this.blackToMove();
+               
+        } else {
+           this.whiteToMove();
+        }
+         
+         
+         Position FenPosition = Position.create(whiteKings, whiteQueens, whiteRooks, whiteBishops,
+               whiteKnights, whitePawns, whiteCastling, whiteEnpassant,
+               blackKings, blackQueens, blackRooks, blackBishops,
+               blackKnights, blackPawns, blackCastling, blackEnpassant);
+         
+         this.setCurrentPosition(FenPosition);
+      }
+
+         
       
       public Move makeMove(long fromSquare, long toSquare, int promotionPiece) {
          Move move= new Move(this.getCurrentPosition(), fromSquare, toSquare, promotionPiece);

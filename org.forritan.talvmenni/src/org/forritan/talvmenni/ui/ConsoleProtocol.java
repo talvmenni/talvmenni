@@ -1,6 +1,7 @@
 package org.forritan.talvmenni.ui;
 
 import java.util.List;
+import java.util.StringTokenizer;
 
 import org.forritan.talvmenni.bitboard.Square;
 import org.forritan.talvmenni.bitboard.Squares;
@@ -8,8 +9,6 @@ import org.forritan.talvmenni.core.ChessEngine.Protocol;
 import org.forritan.talvmenni.game.Move;
 import org.forritan.talvmenni.game.MoveHistory;
 import org.forritan.talvmenni.game.Position;
-import org.forritan.talvmenni.game.Rules;
-
 
 public class ConsoleProtocol extends UiProtocolBase {
 
@@ -50,7 +49,7 @@ public class ConsoleProtocol extends UiProtocolBase {
       if ("new".equalsIgnoreCase(theInput)) {
          this.protocol.newGame();
          theOutput= "Setting up a new game...\n\n"
-               + this.getBoardPosition()
+               + this.getStringBoard()
                + "\n";
       }
    if (theInput.equalsIgnoreCase("go")) {
@@ -75,7 +74,7 @@ public class ConsoleProtocol extends UiProtocolBase {
          if (move != null)
          {
          this.protocol.makeMove(move.from, move.to, Position.PromotionPiece.DEFAULT);
-         theOutput = getBoardPosition();
+         theOutput = getStringBoard();
          }
          else
          {theOutput = getWhoIsToMove()+" is checkmated!\n";                  
@@ -83,8 +82,20 @@ public class ConsoleProtocol extends UiProtocolBase {
       }
       
       if ("position".equalsIgnoreCase(theInput)) {
-         theOutput= getBoardPosition();
+         theOutput= getStringBoard();
       }
+      if ("fen".equalsIgnoreCase(theInput)) {
+         theOutput= getStringFEN();
+      }
+
+   if (theInput.toUpperCase().startsWith("SETBOARD")) {
+      	String theFEN= theInput.substring(8);
+
+         this.protocol.setPositionFromFEN(theFEN);
+         theOutput= getStringBoard();
+      }
+      
+      
       if ("white".equalsIgnoreCase(theInput)) {
          if (this.protocol.isWhiteToMove())
             theOutput= "White is already to move";
@@ -112,39 +123,6 @@ public class ConsoleProtocol extends UiProtocolBase {
       }
 
       return theOutput;
-   }
-
-   private String getBoardPosition() {
-      String positionString= "    ---------------\n";
-      Square square= Squares.create();
-      long sq;
-
-      for (int x= 8; x > 0; x--) {
-         positionString= positionString
-               + x
-               + " | ";
-         for (int y= 0; y < 8; y++) {
-            sq= square.getSquare(64
-                  - (x * 8)
-                  + y);
-            positionString= positionString
-                  + this.getStringPiece(sq)
-                  + " ";
-         }
-         positionString= positionString
-               + "|\n";
-      }
-      positionString= positionString
-            + "    ---------------\n";
-      positionString= positionString
-            + "    a b c d e f g h\n";
-      positionString= positionString
-            + "    ["
-            + getWhoIsToMove()
-            + " to move]\n";
-
-      return positionString;
-
    }
 
    private String getWhoIsToMove() {
@@ -202,7 +180,7 @@ public class ConsoleProtocol extends UiProtocolBase {
                square.getSquare(fromSquare),
                square.getSquare(toSquare),
                promotionPiece);
-         return getBoardPosition();
+         return getStringBoard();
       } else
          return "Illegal Move: "
                + theMove;
@@ -223,17 +201,21 @@ public class ConsoleProtocol extends UiProtocolBase {
       message= message
             + "- HELP: This help screen \n";
       message= message
-            + "- HISTORY: Show the movelist \n";
+      		+ "- POSITION: Display current position \n";
       message= message
-            + "- POSITION: Display current position \n";
+            + "- HISTORY: Show the movelist \n";
       message= message
       		+ "- POSSIBLE: Display list of allowed moves \n";
       message= message
             + "- NEW: Start a new game \n";
       message= message
-            + "- MOVE: Make move. Format: 'MOVE fftt' \n";
+            + "- MOVE: Make a move. (Format: 'MOVE fftt') \n";
       message= message
-      + "- ?: Force computer to move now \n";
+      		+ "- ?: Force computer to move now \n";
+      message= message
+      		+ "- FEN: Show the position in FEN-notation \n";
+      message= message
+      		+ "- SETBOARD: Setup a position. (Format: SETBOARD 'FEN-string' \n";
       message= message
             + "- WHITE: Give white the move \n";
       message= message
@@ -305,7 +287,7 @@ public class ConsoleProtocol extends UiProtocolBase {
       return true;
    }
    
-   public String getStringPiece(
+   private String getStringPiece(
          long square) {
       Position currentPosition= this.protocol.getCurrentPosition();
       if (currentPosition != null) {
@@ -338,4 +320,84 @@ public class ConsoleProtocol extends UiProtocolBase {
       } else
          return ".";
    }
+
+   private String getStringFEN() {
+      Position board= this.protocol.getCurrentPosition();
+
+      StringBuffer result = new StringBuffer();
+      int countEmptySquares = 0;
+      
+      for (int y = 0; y <8; y++) {
+          for (int x = 0; x < 8; x++) {
+              int square = y * 8 + x;
+
+              Square square2= Squares.create();
+              long sq;
+
+              sq= square2.getSquare(square);
+              
+              if ((!board.white.isAnyPieceOnPosition(sq)) && (!board.black.isAnyPieceOnPosition(sq))) {
+                  countEmptySquares++;
+              }
+
+              else {
+                  if (countEmptySquares > 0) {
+                      result.append(countEmptySquares);
+                      countEmptySquares = 0;
+                  }
+                  
+                  result.append(this.getStringPiece(sq));
+              }
+          }
+                      
+          if (countEmptySquares > 0) {
+              result.append(countEmptySquares);
+              countEmptySquares = 0;
+          }
+
+          if (y < 7) {
+              result.append("/");
+          }
+
+      }
+      result.append (" ");
+      result.append((this.protocol.isWhiteToMove()) ? "w" : "b");
+      result.append(" ");
+
+      return result.toString();
+  }
+   
+   private String getStringBoard() {
+      String positionString= "    ---------------\n";
+      Square square= Squares.create();
+      long sq;
+
+      for (int x= 8; x > 0; x--) {
+         positionString= positionString
+               + x
+               + " | ";
+         for (int y= 0; y < 8; y++) {
+            sq= square.getSquare(64
+                  - (x * 8)
+                  + y);
+            positionString= positionString
+                  + this.getStringPiece(sq)
+                  + " ";
+         }
+         positionString= positionString
+               + "|\n";
+      }
+      positionString= positionString
+            + "    ---------------\n";
+      positionString= positionString
+            + "    a b c d e f g h\n";
+      positionString= positionString
+            + "    ["
+            + getWhoIsToMove()
+            + " to move]\n";
+
+      return positionString;
+
+   }
+
 }

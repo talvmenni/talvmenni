@@ -9,7 +9,7 @@ import org.forritan.talvmenni.ui.DebugWindow;
 public class TalvMenni {
 
    public final static String NAME    = "Talvmenni";
-   public final static String VERSION = "Version 0.1";
+   public final static String VERSION = "0.1";
 
    public static boolean      TELLUSER_ALL_INPUT;
    public static String       DEBUG_NAME;

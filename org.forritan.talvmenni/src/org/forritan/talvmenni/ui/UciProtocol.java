@@ -1,5 +1,6 @@
 package org.forritan.talvmenni.ui;
 
+import org.forritan.talvmenni.core.TalvMenni;
 import org.forritan.talvmenni.core.ChessEngine.Protocol;
 
 
@@ -23,9 +24,18 @@ public class UciProtocol extends UiProtocolBase {
    }
 
    public String processInput(
-         String input) {
-      // TODO Auto-generated method stub
-      return null;
+         String theInput) {
+      String theOutput= "";
+      if (theInput.equalsIgnoreCase("isready")) {
+         theOutput+= "readyok";
+   } else if (theInput.equalsIgnoreCase("ucinewgame")) {
+      this.protocol.newGame();
    }
+      
+      
+      return theOutput;
 
+   }
 }
+
+

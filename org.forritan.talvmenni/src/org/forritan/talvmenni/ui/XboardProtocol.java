@@ -38,17 +38,22 @@ public class XboardProtocol extends UiProtocolBase {
 
       if (theInput.equalsIgnoreCase("protover 2")) {
          theOutput+= "feature usermove=1 "
-               + "time=0 " //We have not implemented timecontrol yet
+            + "setboard=1 "
+           	+ "time=0 " //We have not implemented timecontrol yet
                + "sigint=0 "
                + "sigterm=0 "
                + "analyze=0 " //We have not implemented analyze yet
                + "myname=\""
                + TalvMenni.NAME
-               + " "
+               + "-"
                + TalvMenni.VERSION
                + "\""
                + "done=1";
-      } else if (theInput.startsWith("usermove")) {
+      } else if (theInput.toUpperCase().startsWith("SETBOARD")) {
+       	String theFEN= theInput.substring(8);
+        this.protocol.setPositionFromFEN(theFEN);
+      }      
+      else if (theInput.startsWith("usermove")) {
          String moveString= theInput.substring(8).trim();
 
          int promotionPiece= Position.PromotionPiece.DEFAULT;
