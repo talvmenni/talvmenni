@@ -66,7 +66,8 @@ public class ChessEngine extends Observable implements Runnable {
    public synchronized void addObserver(Observer observer) {
       this.protocolHandler.addObserver(observer);
       this.protocol.addObserver(observer);
-      this.strategy.getObservable().addObserver(observer);
+      this.strategy.getSearch().getDebugInfo().addObserver(observer);
+      this.strategy.getSearch().getThinking().addObserver(observer);
    }
    
    public interface Protocol {

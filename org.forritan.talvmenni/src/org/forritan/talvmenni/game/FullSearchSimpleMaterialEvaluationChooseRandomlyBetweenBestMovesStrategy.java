@@ -11,7 +11,7 @@ import org.forritan.talvmenni.game.Position.Move;
 import org.forritan.talvmenni.search.FullSearch;
 import org.forritan.talvmenni.search.Search;
 
-public class FullSearchSimpleMaterialEvaluationChooseRandomlyBetweenBestMovesStrategy extends Observable implements Strategy {
+public class FullSearchSimpleMaterialEvaluationChooseRandomlyBetweenBestMovesStrategy implements Strategy {
 
    private Search search;
    private Evaluation evaluation;
@@ -36,10 +36,6 @@ public class FullSearchSimpleMaterialEvaluationChooseRandomlyBetweenBestMovesStr
       return Position.PromotionPiece.DEFAULT;
    }
    
-   public Observable getObservable() {
-      return this.search.getObservable();
-   }
-
    public Search getSearch() {
       return this.search;
    }

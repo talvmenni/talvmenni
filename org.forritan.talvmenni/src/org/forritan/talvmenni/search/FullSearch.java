@@ -10,9 +10,10 @@ import org.forritan.talvmenni.evaluation.Evaluation;
 import org.forritan.talvmenni.game.Position;
 import org.forritan.talvmenni.game.Position.Move;
 
-public class FullSearch extends Observable implements Search {
+public class FullSearch implements Search {
    
    private Thinking thinking;
+   private DebugInfo debugInfo;
    private int depth;
    
    private int movesSearched;
@@ -20,10 +21,15 @@ public class FullSearch extends Observable implements Search {
    public FullSearch(int depth) {
       this.depth= depth;
       this.thinking= new Thinking();
+      this.debugInfo= new DebugInfo();
    }
 
    public Thinking getThinking() {
       return this.thinking;
+   }
+
+   public DebugInfo getDebugInfo() {
+      return this.debugInfo;
    }
 
    public List<Move> getBestMoves(
@@ -49,8 +55,7 @@ public class FullSearch extends Observable implements Search {
          int movesSearchedBeforeMove= this.movesSearched++;
          MoveScoreTuple score= this.getBestMove(p.move(move.from, move.to), e, !whiteMove, depth - 1);
          score.add(move, e.getScore(p));
-         this.setChanged();
-         this.notifyObservers("[" + move.toString() + "] " + score.getScore() + " and there are " + (this.movesSearched - movesSearchedBeforeMove) + " positions searched...");
+         this.debugInfo.postCurrentBestMove(move, score.getScore(), (this.movesSearched - movesSearchedBeforeMove));
          if(bestScore == null || (whiteMove ? score.getScore() > bestScore.getScore() : score.getScore() < bestScore.getScore())) {
             bestScore= score;
             result.clear();
@@ -58,26 +63,16 @@ public class FullSearch extends Observable implements Search {
             moveTime += System.currentTimeMillis();
             this.thinking.postThinking(depth, bestScore.getScore(), moveTime, this.movesSearched, bestScore.getMoveList().toString());
          }else if(bestScore != null && score.getScore() == bestScore.getScore()) {
+            bestScore= score;
             result.add(move);
+            this.thinking.postThinking(depth, bestScore.getScore(), moveTime, this.movesSearched, bestScore.getMoveList().toString());
          }
       }
       
-      time += System.currentTimeMillis() + 1; // Hmmm... tricky one... add one
-                                              // millisecond to make sure that
-                                              // we don't get division by zero
-                                              // in notifyObservers call below
-                                              // :-)
+      time += System.currentTimeMillis(); 
       
-      this.setChanged();
-      this.notifyObservers(
-            "\nFinished search of " 
-            + this.movesSearched 
-            + " positions in just " 
-            + time 
-            + " milliseconds...\ni.e: " 
-            + 1L * this.movesSearched * 1000 / time + " pr. second."
-            + "\nBest moves: " 
-            + result.toString() + "\n");
+      this.debugInfo.postNodesPerSecond(time, this.movesSearched);
+      this.debugInfo.postBestMoves(result);
       
       return result;
    }
@@ -104,8 +99,6 @@ public class FullSearch extends Observable implements Search {
             for(Move move : moves) {
                this.movesSearched++;
                MoveScoreTuple score= this.getBestMove(p.move(move.from, move.to), e, !whiteMove, depth - 1);
-               System.err.println("score: " + score);
-               System.err.println("bestScore: " + bestScore);
                if(bestScore == null || (whiteMove ? score.getScore() > bestScore.getScore() : score.getScore() < bestScore.getScore())) {
                   bestScore= score;
                   currentBestMove= move;
@@ -172,12 +165,7 @@ public class FullSearch extends Observable implements Search {
       
       return result;
    }
-   
-   public Observable getObservable() {
-      return this;
-   }
-
-   
+      
    private static class MoveScoreTuple {
       private List<Move> moves;
       private int score = 0;
