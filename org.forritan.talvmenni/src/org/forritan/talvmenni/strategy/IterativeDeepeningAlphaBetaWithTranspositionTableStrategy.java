@@ -19,10 +19,11 @@ public class IterativeDeepeningAlphaBetaWithTranspositionTableStrategy extends A
    public IterativeDeepeningAlphaBetaWithTranspositionTableStrategy(
          int ply,
          Transposition transposition,
+         boolean useMoveOrdering,
          TheoryBook book) {
       super(ply, book);
       this.search= new AlphaBetaWithTranspositionTableSearch(
-            transposition);
+            transposition, useMoveOrdering);
       this.evaluation= new SimpleMaterialAndPositionalEvaluation();
    }
 

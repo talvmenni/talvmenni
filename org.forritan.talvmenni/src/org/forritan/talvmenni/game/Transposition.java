@@ -10,16 +10,16 @@ import org.forritan.util.ThreeTuple;
 
 public class Transposition {
    
-   // Table<Position.hashCode(), new ThreeTuple<ply, score, moves>>
+   // Table<Position, new ThreeTuple<ply, score, moves>>
 
-   private Table<Integer, ThreeTuple<Integer, Integer, List<Move>>> whiteTable;
-   private Table<Integer, ThreeTuple<Integer, Integer, List<Move>>> blackTable;
+   private Table<Position, ThreeTuple<Integer, Integer, List<Move>>> whiteTable;
+   private Table<Position, ThreeTuple<Integer, Integer, List<Move>>> blackTable;
 
    public Transposition(
          int maxEntries) {
-      this.whiteTable= new Table<Integer, ThreeTuple<Integer, Integer, List<Move>>>(
+      this.whiteTable= new Table<Position, ThreeTuple<Integer, Integer, List<Move>>>(
             maxEntries);
-      this.blackTable= new Table<Integer, ThreeTuple<Integer, Integer, List<Move>>>(
+      this.blackTable= new Table<Position, ThreeTuple<Integer, Integer, List<Move>>>(
             maxEntries);
    }
 
@@ -45,9 +45,9 @@ public class Transposition {
          Position p,
          boolean white) {
       if (white) {
-         return this.whiteTable.containsKey(Integer.valueOf(p.hashCode()));
+         return this.whiteTable.containsKey(p);
       } else {
-         return this.blackTable.containsKey(Integer.valueOf(p.hashCode()));
+         return this.blackTable.containsKey(p);
       }
    }
 
@@ -55,9 +55,9 @@ public class Transposition {
          Position p,
          boolean white) {
       if (white) {
-         return this.whiteTable.get(Integer.valueOf(p.hashCode()));
+         return this.whiteTable.get(p);
       } else {
-         return this.blackTable.get(Integer.valueOf(p.hashCode()));
+         return this.blackTable.get(p);
       }
    }
 
@@ -67,10 +67,12 @@ public class Transposition {
          List<Move> moves,
          int score,
          int ply) {
+      
+      
 
       if (white) {
-         if (this.whiteTable.containsKey(Integer.valueOf(position.hashCode()))) {
-            ThreeTuple<Integer, Integer, List<Move>> entry= this.whiteTable.get(Integer.valueOf(position.hashCode()));
+         if (this.whiteTable.containsKey(position)) {
+            ThreeTuple<Integer, Integer, List<Move>> entry= this.whiteTable.get(position);
             if (entry.a.intValue() < ply
                   || (entry.a.intValue() == ply && entry.b.intValue() < score)) {
                entry.a= Integer.valueOf(ply);
@@ -80,15 +82,15 @@ public class Transposition {
             }
          } else {
             this.whiteTable.put(
-                  Integer.valueOf(position.hashCode()),
+                  position.getImmutable(),
                   new ThreeTuple<Integer, Integer, List<Move>>(
                         Integer.valueOf(ply),
                         Integer.valueOf(score),
                         moves));
          }
       } else {
-         if (this.blackTable.containsKey(Integer.valueOf(position.hashCode()))) {
-            ThreeTuple<Integer, Integer, List<Move>> entry= this.blackTable.get(Integer.valueOf(position.hashCode()));
+         if (this.blackTable.containsKey(position)) {
+            ThreeTuple<Integer, Integer, List<Move>> entry= this.blackTable.get(position);
             if (entry.a.intValue() > ply
                   || (entry.a.intValue() == ply && entry.b.intValue() > score)) {
                entry.a= Integer.valueOf(ply);;
@@ -98,7 +100,7 @@ public class Transposition {
             }
          } else {
             this.blackTable.put(
-                  Integer.valueOf(position.hashCode()),
+                  position.getImmutable(),
                   new ThreeTuple<Integer, Integer, List<Move>>(
                         Integer.valueOf(ply),
                         Integer.valueOf(score),

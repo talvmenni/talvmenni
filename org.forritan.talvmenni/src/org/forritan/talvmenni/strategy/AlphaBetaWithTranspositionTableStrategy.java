@@ -19,13 +19,15 @@ public class AlphaBetaWithTranspositionTableStrategy extends AbstractStrategy {
    public AlphaBetaWithTranspositionTableStrategy(
          int ply,
          Transposition transposition,
+         boolean useMoveOrdering,
          TheoryBook book) {
       super(
             ply,
             book);
       this.search= new AlphaBetaWithTranspositionTableSearch(
             ply,
-            transposition);
+            transposition,
+            useMoveOrdering);
       this.evaluation= new SimpleMaterialAndPositionalEvaluation();
    }
 

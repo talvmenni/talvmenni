@@ -179,7 +179,7 @@ public interface Square {
        * @param square
        * @return a unique index between 0 and 63
        */
-      static int deBruijn64Index(
+      public static int deBruijn64Index(
             long square) {
          square *= Util.DEBRUIJN64;
          return ((int)(square >>> 58));

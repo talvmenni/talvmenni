@@ -5,7 +5,8 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
 
 import org.forritan.talvmenni.game.TheoryBook;
-import org.forritan.talvmenni.strategy.IterativeDeepeningAlphaBetaStrategy;
+import org.forritan.talvmenni.game.Transposition;
+import org.forritan.talvmenni.strategy.IterativeDeepeningAlphaBetaWithTranspositionTableStrategy;
 import org.forritan.talvmenni.ui.DebugWindow;
 import org.forritan.util.debug.ExceptionLoggingWindowHandler;
 import org.forritan.util.debug.ObjectStatisticsWindow;
@@ -25,12 +26,12 @@ public class TalvMenni {
    public static int          PLY                       = 4;
 
    /**
-    * Default MAX_TRANSPOSITION_ENTRIES = 100000 Maximum number of entries in
-    * each of the transposition tables (currently white and black). If
+    * Default MAX_TRANSPOSITION_ENTRIES - Maximum number of entries in each of
+    * the transposition tables (currently white and black). If
     * MAX_TRANSPOSITION_ENTRIES is reached the eldest entry will be removed
     * before a new entry is added.
     */
-   public static int          MAX_TRANSPOSITION_ENTRIES = 100000;
+   public static int          MAX_TRANSPOSITION_ENTRIES = 30000;
 
    public static void main(
          String args[]) {
@@ -65,17 +66,17 @@ public class TalvMenni {
             //                        MAX_TRANSPOSITION_ENTRIES),
             //                  book));
 
-            //      .create(new
-            // IterativeDeepeningAlphaBetaWithTranspositionTableStrategy(
-            //            PLY,
-            //            new Transposition(
-            //                  MAX_TRANSPOSITION_ENTRIES),
-            //            book));
-
-            .create(new IterativeDeepeningAlphaBetaStrategy(
+            .create(new IterativeDeepeningAlphaBetaWithTranspositionTableStrategy(
                   PLY,
+                  new Transposition(
+                        MAX_TRANSPOSITION_ENTRIES),
+                  true,
                   book));
 
+      //            .create(new IterativeDeepeningAlphaBetaStrategy(
+      //                  PLY,
+      //                  book));
+      //
       //            .create(new AlphaBetaWithTranspositionTableStrategy(
       //                  PLY,
       //                  new Transposition(

@@ -16,28 +16,34 @@ import org.forritan.util.Tuple;
 
 public class AlphaBetaWithTranspositionTableSearch implements Search {
 
-   private Thinking  thinking;
-   private DebugInfo debugInfo;
-   
+   private Thinking      thinking;
+   private DebugInfo     debugInfo;
+
    private Transposition transposition;
-   private int       ply;
+   private int           ply;
+   private final boolean       useMoveOrdering;
 
-   private int       movesSearched;
-   private int       transpositionHits;
+   private int           movesSearched;
+   private int           transpositionHits;
 
-   public AlphaBetaWithTranspositionTableSearch(Transposition transposition) {
+   public AlphaBetaWithTranspositionTableSearch(
+         Transposition transposition,
+         boolean useMoveOrdering) {
       this(
             0,
-            transposition);
+            transposition,
+            useMoveOrdering);
    }
 
    public AlphaBetaWithTranspositionTableSearch(
          int ply,
-         Transposition transposition) {
+         Transposition transposition,
+         boolean useMoveOrdering) {
       this.thinking= new Thinking();
       this.debugInfo= new DebugInfo();
       this.ply= ply;
-      this.transposition= transposition;      
+      this.useMoveOrdering= useMoveOrdering;
+      this.transposition= transposition;
    }
 
    public void setPly(
@@ -57,7 +63,7 @@ public class AlphaBetaWithTranspositionTableSearch implements Search {
          Position p,
          Evaluation e,
          boolean whiteMove) {
-      
+
       long time= -System.currentTimeMillis();
       this.movesSearched= 0;
       this.transpositionHits= 0;
@@ -76,9 +82,9 @@ public class AlphaBetaWithTranspositionTableSearch implements Search {
             this.ply,
             alpha,
             beta);
-      
+
       time+= System.currentTimeMillis();
-      
+
       this.debugInfo.postNodesPerSecond(
             time,
             this.movesSearched);
@@ -86,9 +92,6 @@ public class AlphaBetaWithTranspositionTableSearch implements Search {
             0,
             1) : result.b);
       this.debugInfo.postTranspositionHits(this.transpositionHits);
-
-      
-
 
       return (result.b.size() > 0 ? result.b.subList(
             0,
@@ -105,16 +108,21 @@ public class AlphaBetaWithTranspositionTableSearch implements Search {
 
       Tuple<Integer, List<Move>> result= null;
 
-      if(this.transposition.contains(p, whiteMove)) {
-         ThreeTuple<Integer, Integer, List<Move>> entry= this.transposition.get(p, whiteMove);
-         if(entry.a.intValue() >= ply) {
+      if (this.transposition.contains(
+            p,
+            whiteMove)) {
+         ThreeTuple<Integer, Integer, List<Move>> entry= this.transposition
+               .get(
+                     p,
+                     whiteMove);
+         if (entry.a.intValue() >= ply) {
             this.transpositionHits++;
             List<Move> moves= new ArrayList<Move>();
             moves.addAll(entry.c);
             return new Tuple<Integer, List<Move>>(
                   entry.b,
                   moves);
-         }            
+         }
       }
 
       if (ply == 0) {
@@ -136,8 +144,6 @@ public class AlphaBetaWithTranspositionTableSearch implements Search {
          if (moves.size() > 0) {
             for (Move move : moves) {
                if (best.a.intValue() >= beta) {
-//                  this.debugInfo.postText("*** break at " + move.toString() + " - " + ply + " ply...");
-//                  this.debugInfo.postText("*** break: " + best.b.toString());
                   break;
                }
                this.movesSearched++;
@@ -167,11 +173,15 @@ public class AlphaBetaWithTranspositionTableSearch implements Search {
 
                if (value.a.intValue() > best.a.intValue()) {
                   best= value;
-//                  if(whiteMove) {
-//                     p.getWhite().killerMove(move);         
-//                  } else {
-//                     p.getBlack().killerMove(move);         
-//                  }
+                  if (this.useMoveOrdering) {
+                     if (whiteMove) {
+                        p.getWhite().killerMove(
+                              move);
+                     } else {
+                        p.getBlack().killerMove(
+                              move);
+                     }
+                  }
                   if (ply == this.ply) {
                      this.debugInfo.postCurrentBestMove(
                            move,
@@ -179,7 +189,7 @@ public class AlphaBetaWithTranspositionTableSearch implements Search {
                            (this.movesSearched - movesSearchedBefore));
                      this.thinking.postThinking(
                            ply,
-                           (best.a.intValue() * (whiteMove?1:-1)),
+                           (best.a.intValue() * (whiteMove ? 1 : -1)),
                            moveTime + 1,
                            (this.movesSearched - movesSearchedBefore),
                            best.b.toString());
@@ -187,8 +197,10 @@ public class AlphaBetaWithTranspositionTableSearch implements Search {
                }
             }
 
-//            p.getWhite().updatePossibleMovesOrdering();
-//            p.getBlack().updatePossibleMovesOrdering();
+            if (this.useMoveOrdering) {
+               p.getWhite().updatePossibleMovesOrdering();
+               p.getBlack().updatePossibleMovesOrdering();
+            }
 
             result= best;
          } else {
@@ -205,8 +217,13 @@ public class AlphaBetaWithTranspositionTableSearch implements Search {
             }
          }
       }
-      
-      this.transposition.update(p, whiteMove, result.b, result.a.intValue(), ply);
+
+      this.transposition.update(
+            p,
+            whiteMove,
+            result.b,
+            result.a.intValue(),
+            ply);
 
       return result;
    }
