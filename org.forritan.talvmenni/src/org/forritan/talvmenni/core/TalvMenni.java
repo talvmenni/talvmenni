@@ -5,6 +5,7 @@ import java.util.ArrayList;
 public class TalvMenni {
    
    public static final boolean DEBUG_WINDOW = false;
+   public final static String VERSION = "Version 0.1";
 
    public static void main(
          String args[]) {

@@ -59,7 +59,7 @@ public class ChessEngine implements Runnable {
 
    public void setRunning(boolean running) {
       this.running= running;
-      // FIXME: Shoudn't be necessary to System.exit(0) to quit... 
+      // FIXME: Shoudn't be necessary to System.exit(0) to quit...
       if(!this.running) {
          System.exit(0);
       }
@@ -77,15 +77,18 @@ public class ChessEngine implements Runnable {
       public String processInput(String input);
 
       public void newGame();
-
       public void stop();
+      public void whiteToMove();
+      public void blackToMove();
+      public boolean isWhiteToMove();
+      public String getStringPiece(long sq);
    }
 
    private class ProtocolImpl implements Protocol {
 
       private UiProtocol uiProtocol;
       private Position   currentPosition;
-      private boolean    WhiteToMove;
+      private boolean    WhiteToMove = true;
 
       public String processInput(String theInput) {
 
@@ -120,13 +123,62 @@ public class ChessEngine implements Runnable {
          currentPosition= Position.createInitial();
          WhiteToMove = true;
       }
-
+      
+      
       public void whiteToMove() {
          this.WhiteToMove= true;
       }
 
       public void blackToMove() {
          this.WhiteToMove= false;
+      }
+
+      public String getStringPiece(long square) {
+         if (currentPosition != null){
+            if (currentPosition.white.isPawn(square)) 
+               return "P";
+            else
+            if (currentPosition.black.isPawn(square)) 
+               return "p";
+            else
+            if (currentPosition.white.isRook(square)) 
+               return "R";
+            else
+            if (currentPosition.black.isRook(square)) 
+               return "r";
+            else
+            if (currentPosition.white.isBishop(square)) 
+               return "B";
+            else
+            if (currentPosition.black.isBishop(square)) 
+               return "b";
+            else
+            if (currentPosition.white.isKnight(square)) 
+               return "N";
+            else
+            if (currentPosition.black.isKnight(square)) 
+               return "n";
+            else
+            if (currentPosition.white.isQueen(square)) 
+               return "Q";
+            else
+            if (currentPosition.black.isQueen(square)) 
+               return "q";
+            else
+            if (currentPosition.white.isKing(square)) 
+               return "K";
+            else
+            if (currentPosition.black.isKing(square)) 
+               return "k";
+            else
+               return ".";                     
+      }
+         else
+            return ".";
+         }
+
+      public boolean isWhiteToMove() {
+         return this.WhiteToMove;
       }
 
    }
