@@ -331,11 +331,15 @@ public class Object {
      * 
      * <pre>
      * 
-     *      synchronized (obj) {
-     *          while (&lt;condition does not hold&gt;)
-     *              obj.wait(timeout);
-     *          ... // Perform action appropriate to condition
-     *      }
+     *  
+     *   
+     *        synchronized (obj) {
+     *            while (&lt;condition does not hold&gt;)
+     *                obj.wait(timeout);
+     *            ... // Perform action appropriate to condition
+     *        }
+     *    
+     *   
      *  
      * </pre>
      * 
@@ -419,11 +423,15 @@ public class Object {
      * 
      * <pre>
      * 
-     *      synchronized (obj) {
-     *          while (&lt;condition does not hold&gt;)
-     *              obj.wait(timeout, nanos);
-     *          ... // Perform action appropriate to condition
-     *      }
+     *  
+     *   
+     *        synchronized (obj) {
+     *            while (&lt;condition does not hold&gt;)
+     *                obj.wait(timeout, nanos);
+     *            ... // Perform action appropriate to condition
+     *        }
+     *    
+     *   
      *  
      * </pre>
      * 
@@ -483,11 +491,15 @@ public class Object {
      * 
      * <pre>
      * 
-     *      synchronized (obj) {
-     *          while (&lt;condition does not hold&gt;)
-     *              obj.wait();
-     *          ... // Perform action appropriate to condition
-     *      }
+     *  
+     *   
+     *        synchronized (obj) {
+     *            while (&lt;condition does not hold&gt;)
+     *                obj.wait();
+     *            ... // Perform action appropriate to condition
+     *        }
+     *    
+     *   
      *  
      * </pre>
      * 
@@ -561,7 +573,11 @@ public class Object {
 
     
     
-    // ... only for debugging. See http://www.javaspecialists.co.za/archive/Issue038a.html
+    // ... only for debugging. See
+    // http://www.javaspecialists.co.za/archive/Issue038a.html
+    private static HashMap<Class, Counter> grandTotalCountMap = new HashMap<Class, Counter>();
+    private static int grandTotalObjects = 0;
+
     private static HashMap<Class, Counter> countMap = new HashMap<Class, Counter>();
     private static boolean counting = true;
     private static int totalObjects = 0;
@@ -575,11 +591,18 @@ public class Object {
         if (counting) {
           counting = false;
           totalObjects++;
+          grandTotalObjects++;
           Counter c = (Counter)countMap.get(getClass());
           if (c == null) {
             countMap.put(getClass(), new Counter());
           } else {
             c.value++;
+          }
+          Counter grandTotalC = (Counter)grandTotalCountMap.get(getClass());
+          if (grandTotalC == null) {
+             grandTotalCountMap.put(getClass(), new Counter());
+          } else {
+             grandTotalC.value++;
           }
           counting = true;
         }
@@ -591,33 +614,67 @@ public class Object {
       countMap.clear();
       counting = true;
     }
+    
     public static void ___printObjectCreationStats() {
-      ___printObjectCreationStats(System.out);
-    }
-    public synchronized static void ___printObjectCreationStats(java.io.PrintStream out) {
-       counting = false;
-       out.println("Total number of objects: " + totalObjects);
-       TreeSet sorted = new TreeSet(new Comparator() {
-         public int compare(Object o1, Object o2) {
-           int value1 = ((Counter)((Map.Entry)o1).getValue()).value;
-           int value2 = ((Counter)((Map.Entry)o2).getValue()).value;
-           int result = value2 - value1;
-           if (result == 0) {
-             String classname1 = ((Class)((Map.Entry)o1).getKey()).getName();
-             String classname2 = ((Class)((Map.Entry)o2).getKey()).getName();
-             return classname1.compareTo(classname2);
-           }
-           return result;
-         }
-       });
-       sorted.addAll(countMap.entrySet());
-       Iterator it = sorted.iterator();
-       while(it.hasNext()) {
-         Map.Entry entry = (Map.Entry)it.next();
-         out.println("\t" + ((Counter)entry.getValue()).value
-           + "\t" + ((Class)entry.getKey()).getName());
-       }
-       out.println();
-       counting = true;
+       ___printObjectCreationStats(System.out);
      }
+     
+     public synchronized static void ___printObjectCreationStats(java.io.PrintStream out) {
+        counting = false;
+        out.println("Total number of objects: " + totalObjects);
+        TreeSet sorted = new TreeSet(new Comparator() {
+          public int compare(Object o1, Object o2) {
+            int value1 = ((Counter)((Map.Entry)o1).getValue()).value;
+            int value2 = ((Counter)((Map.Entry)o2).getValue()).value;
+            int result = value2 - value1;
+            if (result == 0) {
+              String classname1 = ((Class)((Map.Entry)o1).getKey()).getName();
+              String classname2 = ((Class)((Map.Entry)o2).getKey()).getName();
+              return classname1.compareTo(classname2);
+            }
+            return result;
+          }
+        });
+        sorted.addAll(countMap.entrySet());
+        Iterator it = sorted.iterator();
+        while(it.hasNext()) {
+          Map.Entry entry = (Map.Entry)it.next();
+          out.println("\t" + ((Counter)entry.getValue()).value
+            + "\t" + ((Class)entry.getKey()).getName());
+        }
+        out.println();
+        counting = true;
+      }
+
+    
+    public static void ___printObjectCreationSinceVMStartStats() {
+       ___printObjectCreationSinceVMStartStats(System.out);
+     }
+     
+     public synchronized static void ___printObjectCreationSinceVMStartStats(java.io.PrintStream out) {
+        counting = false;
+        out.println("Grand total number of objects since VM start: " + grandTotalObjects);
+        TreeSet sorted = new TreeSet(new Comparator() {
+          public int compare(Object o1, Object o2) {
+            int value1 = ((Counter)((Map.Entry)o1).getValue()).value;
+            int value2 = ((Counter)((Map.Entry)o2).getValue()).value;
+            int result = value2 - value1;
+            if (result == 0) {
+              String classname1 = ((Class)((Map.Entry)o1).getKey()).getName();
+              String classname2 = ((Class)((Map.Entry)o2).getKey()).getName();
+              return classname1.compareTo(classname2);
+            }
+            return result;
+          }
+        });
+        sorted.addAll(grandTotalCountMap.entrySet());
+        Iterator it = sorted.iterator();
+        while(it.hasNext()) {
+          Map.Entry entry = (Map.Entry)it.next();
+          out.println("\t" + ((Counter)entry.getValue()).value
+            + "\t" + ((Class)entry.getKey()).getName());
+        }
+        out.println();
+        counting = true;
+      }
    }

@@ -143,11 +143,11 @@ public class ChessEngine extends Observable implements Runnable {
          this.setCurrentPosition(null);
          this.go= false;
          ChessEngine.this.running= false;
-         try {
-            // InStreamHandler is blocking on System.in, so we close it, so that
-            // the InStreamHandler thread gets interrupted.
-            System.in.close(); 
-         } catch (IOException e) {} // just exit quietly...
+//         try {
+//            // InStreamHandler is blocking on System.in, so we close it, so that
+//            // the InStreamHandler thread gets interrupted.
+//            System.in.close(); 
+//         } catch (IOException e) {} // just exit quietly...
       }
 
       public void newGame() {
@@ -179,6 +179,7 @@ public class ChessEngine extends Observable implements Runnable {
       }
 
       public synchronized void setCurrentPosition(Position position) {
+         this.currentPosition= position;
          if(position != null) {
             this.currentPosition= position.getImmutable();
             if(this.WhiteToMove) {
@@ -403,6 +404,14 @@ public class ChessEngine extends Observable implements Runnable {
                e.printStackTrace();
             }
          }
+         //XXX: Doesn't work properly just yet...
+         ChessEngine
+         .this
+         .getProtocol()
+         .getObjectCreationStatistics()
+         .post(
+               ObjectCreationStatistics.PrintObjectCreationSinceVMStartStats);
+
       }
    }
 

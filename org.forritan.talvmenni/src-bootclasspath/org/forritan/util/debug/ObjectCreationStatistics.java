@@ -29,79 +29,152 @@ public class ObjectCreationStatistics extends Observable {
       }
    };
 
-   public static final Info ResetObjectCreationStats = new Info() {
-                                                        public void run() {
-                                                           ___resetObjectCreationStats();
-                                                        }
-                                                     };
+   public static final Info ResetObjectCreationStats             = new Info() {
+                                                                    public void run() {
+                                                                       ___resetObjectCreationStats();
+                                                                    }
+                                                                 };
 
-   public static final Info PrintObjectCreationStats = new Info() {
-                                                        public void run() {
+   public static final Info PrintObjectCreationStats             = new Info() {
+                                                                    public void run() {
 
-                                                           final CyclicBarrier barrier= new CyclicBarrier(
-                                                                 2);
+                                                                       final CyclicBarrier barrier= new CyclicBarrier(
+                                                                             2);
 
-                                                           ThreadFactory threadFactory= Executors
-                                                                 .defaultThreadFactory();
+                                                                       ThreadFactory threadFactory= Executors
+                                                                             .defaultThreadFactory();
 
-                                                           final PipedInputStream pipedInputStream= new PipedInputStream();
+                                                                       final PipedInputStream pipedInputStream= new PipedInputStream();
 
-                                                           try {
-                                                              final PrintStream printStream= new PrintStream(
-                                                                    new BufferedOutputStream(
-                                                                          new PipedOutputStream(
-                                                                                pipedInputStream)));
+                                                                       try {
+                                                                          final PrintStream printStream= new PrintStream(
+                                                                                new BufferedOutputStream(
+                                                                                      new PipedOutputStream(
+                                                                                            pipedInputStream)));
 
-                                                              threadFactory
-                                                                    .newThread(
-                                                                          new Runnable() {
-                                                                             public void run() {
-                                                                                ___printObjectCreationStats(printStream);
-                                                                                printStream
-                                                                                      .flush();
-                                                                                try {
-                                                                                   barrier
-                                                                                         .await();
-                                                                                } catch (InterruptedException ex) {
-                                                                                   return;
-                                                                                } catch (BrokenBarrierException ex) {
-                                                                                   return;
-                                                                                }
-                                                                             }
-                                                                          })
-                                                                    .start();
-                                                           } catch (IOException e) {
-                                                              PrintObjectCreationStats.text= "I/O exception in ObjectStatisticsWindow.update(Observable o, Object arg)";
-                                                           }
+                                                                          threadFactory
+                                                                                .newThread(
+                                                                                      new Runnable() {
+                                                                                         public void run() {
+                                                                                            ___printObjectCreationStats(printStream);
+                                                                                            printStream
+                                                                                                  .flush();
+                                                                                            try {
+                                                                                               barrier
+                                                                                                     .await();
+                                                                                            } catch (InterruptedException ex) {
+                                                                                               return;
+                                                                                            } catch (BrokenBarrierException ex) {
+                                                                                               return;
+                                                                                            }
+                                                                                         }
+                                                                                      })
+                                                                                .start();
+                                                                       } catch (IOException e) {
+                                                                          PrintObjectCreationStats.text= "I/O exception in ObjectStatisticsWindow.update(Observable o, Object arg)";
+                                                                       }
 
-                                                           threadFactory
-                                                                 .newThread(
-                                                                       new Runnable() {
-                                                                          public void run() {
-                                                                             try {
-                                                                                StringBuilder stringBuilder= new StringBuilder();
-                                                                                while (pipedInputStream
-                                                                                      .available() != 0) {
-                                                                                   stringBuilder
-                                                                                         .append((char) pipedInputStream
-                                                                                               .read());
-                                                                                }
-                                                                                PrintObjectCreationStats.text= stringBuilder
-                                                                                      .toString();
-                                                                             } catch (IOException e) {
-                                                                                PrintObjectCreationStats.text= "I/O exception in ObjectStatisticsWindow.update(Observable o, Object arg)";
-                                                                             }
-                                                                          }
-                                                                       })
-                                                                 .start();
+                                                                       threadFactory
+                                                                             .newThread(
+                                                                                   new Runnable() {
+                                                                                      public void run() {
+                                                                                         try {
+                                                                                            StringBuilder stringBuilder= new StringBuilder();
+                                                                                            while (pipedInputStream
+                                                                                                  .available() != 0) {
+                                                                                               stringBuilder
+                                                                                                     .append((char) pipedInputStream
+                                                                                                           .read());
+                                                                                            }
+                                                                                            PrintObjectCreationStats.text= stringBuilder
+                                                                                                  .toString();
+                                                                                         } catch (IOException e) {
+                                                                                            PrintObjectCreationStats.text= "I/O exception in ObjectStatisticsWindow.update(Observable o, Object arg)";
+                                                                                         }
+                                                                                      }
+                                                                                   })
+                                                                             .start();
 
-                                                           try {
-                                                              barrier.await();
-                                                           } catch (InterruptedException ex) {
-                                                              return;
-                                                           } catch (BrokenBarrierException ex) {
-                                                              return;
-                                                           }
-                                                        }
-                                                     };
+                                                                       try {
+                                                                          barrier
+                                                                                .await();
+                                                                       } catch (InterruptedException ex) {
+                                                                          return;
+                                                                       } catch (BrokenBarrierException ex) {
+                                                                          return;
+                                                                       }
+                                                                    }
+                                                                 };
+
+   public static final Info PrintObjectCreationSinceVMStartStats = new Info() {
+                                                                    public void run() {
+
+                                                                       final CyclicBarrier barrier= new CyclicBarrier(
+                                                                             2);
+
+                                                                       ThreadFactory threadFactory= Executors
+                                                                             .defaultThreadFactory();
+
+                                                                       final PipedInputStream pipedInputStream= new PipedInputStream();
+
+                                                                       try {
+                                                                          final PrintStream printStream= new PrintStream(
+                                                                                new BufferedOutputStream(
+                                                                                      new PipedOutputStream(
+                                                                                            pipedInputStream)));
+
+                                                                          threadFactory
+                                                                                .newThread(
+                                                                                      new Runnable() {
+                                                                                         public void run() {
+                                                                                            ___printObjectCreationSinceVMStartStats(printStream);
+                                                                                            printStream
+                                                                                                  .flush();
+                                                                                            try {
+                                                                                               barrier
+                                                                                                     .await();
+                                                                                            } catch (InterruptedException ex) {
+                                                                                               return;
+                                                                                            } catch (BrokenBarrierException ex) {
+                                                                                               return;
+                                                                                            }
+                                                                                         }
+                                                                                      })
+                                                                                .start();
+                                                                       } catch (IOException e) {
+                                                                          PrintObjectCreationStats.text= "I/O exception in ObjectStatisticsWindow.update(Observable o, Object arg)";
+                                                                       }
+
+                                                                       threadFactory
+                                                                             .newThread(
+                                                                                   new Runnable() {
+                                                                                      public void run() {
+                                                                                         try {
+                                                                                            StringBuilder stringBuilder= new StringBuilder();
+                                                                                            while (pipedInputStream
+                                                                                                  .available() != 0) {
+                                                                                               stringBuilder
+                                                                                                     .append((char) pipedInputStream
+                                                                                                           .read());
+                                                                                            }
+                                                                                            PrintObjectCreationSinceVMStartStats.text= stringBuilder
+                                                                                                  .toString();
+                                                                                         } catch (IOException e) {
+                                                                                            PrintObjectCreationSinceVMStartStats.text= "I/O exception in ObjectStatisticsWindow.update(Observable o, Object arg)";
+                                                                                         }
+                                                                                      }
+                                                                                   })
+                                                                             .start();
+
+                                                                       try {
+                                                                          barrier
+                                                                                .await();
+                                                                       } catch (InterruptedException ex) {
+                                                                          return;
+                                                                       } catch (BrokenBarrierException ex) {
+                                                                          return;
+                                                                       }
+                                                                    }
+                                                                 };
+
 }
