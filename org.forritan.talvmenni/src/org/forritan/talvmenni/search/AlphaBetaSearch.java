@@ -37,9 +37,9 @@ public class AlphaBetaSearch implements Search {
          Evaluation e,
          boolean whiteMove) {
       
-      int alpha= Integer.MIN_VALUE;
+      int alpha= Integer.MIN_VALUE + 1; // Very important!!! Can't be Integer.MIN_VALUE, because Integer.MIN_VALUE == -Integer.MIN_VALUE
       int beta= Integer.MAX_VALUE;
-      
+            
       Position.nodes++;
       
       long time= -System.currentTimeMillis();

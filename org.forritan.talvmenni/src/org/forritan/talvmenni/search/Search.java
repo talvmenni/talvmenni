@@ -70,6 +70,11 @@ public interface Search {
                + "---------------------------\n");
       }
       
+      public void postText(String text) {
+         this.setChanged();
+         this.notifyObservers(text);
+      }
+      
    }
 
 }
