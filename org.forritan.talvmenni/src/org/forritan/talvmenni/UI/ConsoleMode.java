@@ -40,6 +40,26 @@ public class ConsoleMode {
       if ("".equalsIgnoreCase(input)
             || input.matches("( )*")) {
          //Just ignore it...
+      } else if ("new".equalsIgnoreCase(input)) // Start a new game
+      {
+         ChessEngine.startEngine();
+         System.out.println(this.prompt
+               + "Talvmenni has started...");
+      } else if ("white".equalsIgnoreCase(input)) // Stop the game
+      {
+         ChessEngine.WhiteToMove();
+         System.out.println(this.prompt
+               + "White to move...");
+      } else if ("black".equalsIgnoreCase(input)) // black to move
+      {
+         ChessEngine.BlackToMove();
+         System.out.println(this.prompt
+               + "Black to move...");
+      } else if ("force".equalsIgnoreCase(input)) // white to move
+      {
+         ChessEngine.stopEngine();
+         System.out.println(this.prompt
+               + "Talvmenni has been stopped...");
       } else if ("q".equalsIgnoreCase(input)
             || "quit".equalsIgnoreCase(input)
             || "exit".equalsIgnoreCase(input)) {
