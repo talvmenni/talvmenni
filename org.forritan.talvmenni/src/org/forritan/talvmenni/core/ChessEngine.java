@@ -7,6 +7,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadFactory;
 
+import org.forritan.talvmenni.game.Position;
 import org.forritan.talvmenni.ui.ConsoleProtocol;
 import org.forritan.talvmenni.ui.DebugWindow;
 import org.forritan.talvmenni.ui.UciProtocol;
@@ -30,7 +31,8 @@ public class ChessEngine implements Runnable {
       ChessEngine engine= new ChessEngine();
 
       if (TalvMenni.DEBUG_WINDOW) {
-         //TODO: !!!! Skal flytast / gerast asynkront / órogvar i/o við WinBoard
+         //TODO: !!!! Skal flytast / gerast asynkront / órogvar i/o við
+         // WinBoard
          long time= -System.currentTimeMillis();
          new DebugWindow();
          time+= System.currentTimeMillis();
@@ -59,8 +61,7 @@ public class ChessEngine implements Runnable {
       return this.running;
    }
 
-   public void setRunning(
-         boolean running) {
+   public void setRunning(boolean running) {
       this.running= running;
    }
 
@@ -70,17 +71,15 @@ public class ChessEngine implements Runnable {
       }
 
       this.running= true;
-      this.threadFactory.newThread(
-            new ProtocolHandler()).start();
-      this.threadFactory.newThread(
-            new InStreamHandler()).start();
-      this.threadFactory.newThread(
-            new OutStreamHandler()).start();
+      this.threadFactory.newThread(new ProtocolHandler()).start();
+      this.threadFactory.newThread(new InStreamHandler()).start();
+      this.threadFactory.newThread(new OutStreamHandler()).start();
    }
 
    public interface Protocol {
-      public String processInput(
-            String input);
+      public String processInput(String input);
+
+      public void newGame();
 
       public void stop();
    }
@@ -88,9 +87,10 @@ public class ChessEngine implements Runnable {
    private class ProtocolImpl implements Protocol {
 
       private UiProtocol uiProtocol;
+      private Position   currentPosition;
+      private boolean    WhiteToMove;
 
-      public String processInput(
-            String theInput) {
+      public String processInput(String theInput) {
 
          if (TalvMenni.CROUCHING_TIGER_HIDDEN_DEBUG) {
             System.err.println("DEBUG: ChessEngine.Protocol.processInput( = "
@@ -121,7 +121,21 @@ public class ChessEngine implements Runnable {
       }
 
       public void stop() {
+         currentPosition= null;
          ChessEngine.this.setRunning(false);
+      }
+
+      public void newGame() {
+         currentPosition.createInitial();
+         WhiteToMove = true;
+      }
+
+      public void whiteToMove() {
+         this.WhiteToMove= true;
+      }
+
+      public void blackToMove() {
+         this.WhiteToMove= false;
       }
 
    }
@@ -147,12 +161,12 @@ public class ChessEngine implements Runnable {
 
                if (reply != null) {
                   if (TalvMenni.DEBUG_WINDOW) {
-                     DebugWindow.updateTekst("ToUI: "
+                     DebugWindow.updateTekst("From_Talvmenni: "
                            + reply);
                   }
-
                   ChessEngine.this.outMessages.add(reply);
                }
+
             } catch (InterruptedException e) {
                e.printStackTrace();
             }
@@ -181,9 +195,8 @@ public class ChessEngine implements Runnable {
             System.err.println("DEBUG: ChessEngine.InStreamHandler.run()");
          }
 
-         BufferedReader inReader= new BufferedReader(
-               new InputStreamReader(
-                     System.in));
+         BufferedReader inReader= new BufferedReader(new InputStreamReader(
+               System.in));
 
          String inputMessage= "";
 
