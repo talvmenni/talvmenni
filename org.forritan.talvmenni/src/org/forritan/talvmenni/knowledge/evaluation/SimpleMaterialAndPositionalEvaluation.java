@@ -11,10 +11,10 @@ import org.forritan.talvmenni.knowledge.Position;
 
 public class SimpleMaterialAndPositionalEvaluation extends AbstractEvaluation { 
    
-   private Draw draw;
+//   private Draw draw;
    
    public SimpleMaterialAndPositionalEvaluation() {
-      this.draw= Draw.getInstance();
+//      this.draw= Draw.getInstance();
    }
 
 //      //Draw by three times repitition

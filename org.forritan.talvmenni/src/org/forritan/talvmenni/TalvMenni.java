@@ -7,6 +7,7 @@ import org.forritan.talvmenni.knowledge.Transposition;
 import org.forritan.talvmenni.search.PrincipalVariation;
 import org.forritan.talvmenni.strategy.IterativeDeepeningAlphaBetaWithQuiescentAndNullMoveAndTranspositionTableStrategy;
 import org.forritan.talvmenni.strategy.IterativeDeepeningAlphaBetaWithQuiescentAndTranspositionTableStrategy;
+import org.forritan.talvmenni.strategy.SimpleOneLevelAlphaBetaParallelStrategy;
 import org.forritan.talvmenni.ui.DebugWindow;
 
 import edu.emory.mathcs.util.concurrent.PlainThreadFactory;
@@ -119,43 +120,44 @@ public class TalvMenni {
 
       final ChessEngine chessEngine= ChessEngine
 
-            // Choose strategy
+      // Choose strategy
 
             //      .create(new
             // RandomMoveStrategy(PrincipalVariation.Factory.create(0)));
 
-            //            .create(new SimpleOneLevelAlphaBetaParallelStrategy(
-            //                  PLY,
-            //                  book,
-            //                  PrincipalVariation.Factory.create(PLY - 1)));
-
-            //            .create(new IterativeDeepeningMTDfWithTranspositionTableStrategy(
-            //                  PLY,
-            //                  new Transposition(
-            //                        MAX_TRANSPOSITION_ENTRIES),
-            //                  false,
-            //                  book,
-            //                  PrincipalVariation.Factory.create(PLY),
-            //                  QUIESCENT_MAX_DEPTH));
-
-            //            .create(new
-            // IterativeDeepeningAlphaBetaWithQuiescentAndNullMoveAndTranspositionTableStrategy(
-            //                  PLY,
-            //                  new Transposition(
-            //                        MAX_TRANSPOSITION_ENTRIES),
-            //                  true,
-            //                  book,
-            //                  PrincipalVariation.Factory.create(PLY),
-            //                  QUIESCENT_MAX_DEPTH));
-
-            .create(new IterativeDeepeningAlphaBetaWithQuiescentAndTranspositionTableStrategy(
+            .create(new SimpleOneLevelAlphaBetaParallelStrategy(
                   PLY,
-                  new Transposition(
-                        MAX_TRANSPOSITION_ENTRIES),
-                  false,
                   book,
-                  PrincipalVariation.Factory.create(PLY),
-                  QUIESCENT_MAX_DEPTH));
+                  PrincipalVariation.Factory.create(PLY - 1)));
+
+      //            .create(new IterativeDeepeningMTDfWithTranspositionTableStrategy(
+      //                  PLY,
+      //                  new Transposition(
+      //                        MAX_TRANSPOSITION_ENTRIES),
+      //                  false,
+      //                  book,
+      //                  PrincipalVariation.Factory.create(PLY),
+      //                  QUIESCENT_MAX_DEPTH));
+
+      //            .create(new
+      // IterativeDeepeningAlphaBetaWithQuiescentAndNullMoveAndTranspositionTableStrategy(
+      //                  PLY,
+      //                  new Transposition(
+      //                        MAX_TRANSPOSITION_ENTRIES),
+      //                  true,
+      //                  book,
+      //                  PrincipalVariation.Factory.create(PLY),
+      //                  QUIESCENT_MAX_DEPTH));
+
+      //            .create(new
+      // IterativeDeepeningAlphaBetaWithQuiescentAndTranspositionTableStrategy(
+      //                  PLY,
+      //                  new Transposition(
+      //                        MAX_TRANSPOSITION_ENTRIES),
+      //                  false,
+      //                  book,
+      //                  PrincipalVariation.Factory.create(PLY),
+      //                  QUIESCENT_MAX_DEPTH));
 
       //            .create(new IterativeDeepeningAlphaBetaWithTranspositionTableStrategy(
       //                  PLY,

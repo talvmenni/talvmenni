@@ -1,13 +1,15 @@
 package org.forritan.talvmenni.knowledge;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Stack;
 
 import org.forritan.talvmenni.knowledge.Position.Move;
 
+public class Draw implements Serializable {
 
-public class Draw {
+   public static final long serialVersionUID = 1L;
 
    private static Draw instance;
    

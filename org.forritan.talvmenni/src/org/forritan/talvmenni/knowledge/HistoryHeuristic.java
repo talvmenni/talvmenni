@@ -1,5 +1,6 @@
 package org.forritan.talvmenni.knowledge;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -13,8 +14,9 @@ import java.util.Map;
 import org.forritan.talvmenni.TalvMenni;
 import org.forritan.talvmenni.knowledge.Position.Move;
 
+public class HistoryHeuristic implements Serializable {
 
-public class HistoryHeuristic {
+   public static final long serialVersionUID = 1L;
 
    private static HistoryHeuristic instance;
 
