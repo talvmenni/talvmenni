@@ -47,6 +47,12 @@ public class ConsoleProtocol extends UiProtocolBase {
       if ("possible".equalsIgnoreCase(theInput)) {
          theOutput= printPossibleMoves();
       }
+      if ("possible white".equalsIgnoreCase(theInput)) {
+         theOutput= printPossibleMoves(true);
+      }
+      if ("possible black".equalsIgnoreCase(theInput)) {
+         theOutput= printPossibleMoves(false);
+      }
       if ("new".equalsIgnoreCase(theInput)) {
          this.protocol.newGame();
          theOutput= "Setting up a new game...\n\n"
@@ -246,6 +252,7 @@ public class ConsoleProtocol extends UiProtocolBase {
 
       return message;
    }
+
    private String printPossibleMoves()
    {
       if(this.protocol.isWhiteToMove()) {
@@ -254,6 +261,16 @@ public class ConsoleProtocol extends UiProtocolBase {
          return this.protocol.getCurrentPosition().getBlack().getPossibleMoves().toString();
       }
    }
+
+   private String printPossibleMoves(boolean whiteMoves)
+   {
+      if(whiteMoves) {
+         return this.protocol.getCurrentPosition().getWhite().getPossibleMoves().toString();
+      } else {
+         return this.protocol.getCurrentPosition().getBlack().getPossibleMoves().toString();
+      }
+   }
+
    private String printHistory() {
       StringBuilder result= new StringBuilder();
       List<Move> history= MoveHistory.getInstance().getHistory();
