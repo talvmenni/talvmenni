@@ -69,7 +69,7 @@ public class MiniMaxOpeningBookWithDelayStrategy implements Strategy {
          }
 
          this.getDebugInfo().postText(
-               "Move found in book... [searched through "
+               "Position found in book... [searched through "
                      + this.book.size()
                      + " entries]...");
 

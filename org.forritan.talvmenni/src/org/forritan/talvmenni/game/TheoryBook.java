@@ -16,9 +16,9 @@ public class TheoryBook {
 
    private Table<Position, Position> book;
 
-   public TheoryBook() {
+   public TheoryBook(int maxBookEntries) {
       this.book= new Table<Position, Position>(
-            Integer.MAX_VALUE);
+            maxBookEntries);
    }
 
    public void loadBook(

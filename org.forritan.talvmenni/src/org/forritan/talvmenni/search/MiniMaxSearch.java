@@ -124,9 +124,7 @@ public class MiniMaxSearch implements Search {
 
       PositionFactory.nodes++;
 
-      MoveScoreTuple result= new MoveScoreTuple(
-            null,
-            0);
+      MoveScoreTuple result= null;
       if (ply > 1) {
          List<Move> moves;
          MoveScoreTuple bestScore= null;
