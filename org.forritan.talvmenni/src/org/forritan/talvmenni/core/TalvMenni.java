@@ -48,6 +48,12 @@ public class TalvMenni {
                searchDepth).intValue();
       }
 
+      String MaxTranpositionEntries= System.getProperty("MaxTranpositionEntries");
+      if (MaxTranpositionEntries != null) {
+         MAX_TRANSPOSITION_ENTRIES= Integer.valueOf(
+               MaxTranpositionEntries).intValue();
+      }
+
       final ChessEngine chessEngine= ChessEngine
             .create(
                   new IterativeDeepeningAlphaBetaSearchUsingKillerMoveOrderingAndTranpositionTableSimpleMaterialAndPositionalEvaluationChooseRandomlyBetweenBestMovesStrategy(
