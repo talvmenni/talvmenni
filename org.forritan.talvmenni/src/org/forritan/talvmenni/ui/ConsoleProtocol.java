@@ -157,6 +157,10 @@ public class ConsoleProtocol extends UiProtocolBase {
    private String makeMove(
          String theMove) {
 
+      if (theMove.length() < 4)
+      	{return "Illegal move format: "+theMove;
+         }
+      
       String fromSquare= theMove.substring(
             0,
             1).concat(
@@ -190,16 +194,11 @@ public class ConsoleProtocol extends UiProtocolBase {
 
       
       Square square= Squares.create();
-      Rules currentRules= this.protocol.getCurrentRules();
-      Position currentPosition= this.protocol.getCurrentPosition();
+      Position currentPosition= this.protocol.getCurrentPosition();      
       
-      if (Rules.isMoveLegal(
-            currentPosition,
-            square.getSquare(fromSquare),
-            square.getSquare(toSquare),
-            this.protocol.isWhiteToMove())
-            ) {
-         this.protocol.makeMove(
+      if (isLegalMove(square.getSquare(fromSquare), square.getSquare(toSquare), currentPosition))
+             {
+             this.protocol.makeMove(
                square.getSquare(fromSquare),
                square.getSquare(toSquare),
                promotionPiece);
@@ -223,22 +222,18 @@ public class ConsoleProtocol extends UiProtocolBase {
             + "- \n";
       message= message
             + "- HELP: This help screen \n";
-      //      message= message
-      //            + "- \n";
       message= message
             + "- HISTORY: Show the movelist \n";
-      //      message= message
-      //            + "- \n";
       message= message
-            + "- POSITION: Display current position on prompt \n";
-      //      message= message
-      //            + "- \n";
+            + "- POSITION: Display current position \n";
+      message= message
+      		+ "- POSSIBLE: Display list of allowed moves \n";
       message= message
             + "- NEW: Start a new game \n";
       message= message
             + "- MOVE: Make move. Format: 'MOVE fftt' \n";
       message= message
-      + "- ?: Ask computer to move now \n";
+      + "- ?: Force computer to move now \n";
       message= message
             + "- WHITE: Give white the move \n";
       message= message
@@ -293,7 +288,22 @@ public class ConsoleProtocol extends UiProtocolBase {
       }
       return result.toString();            
    }
-   
+   private boolean isLegalMove(
+         long fromSquare, 
+         long toSquare, 
+         Position currentPosition)
+   {
+      if (currentPosition == null)
+      { System.out.println("ERROR: No game created");
+         return false;}
+      if (currentPosition.white.isAnyPieceOnPosition(fromSquare) && !this.protocol.isWhiteToMove())
+          return false;
+      if (currentPosition.black.isAnyPieceOnPosition(fromSquare) && this.protocol.isWhiteToMove())
+         return false;
+      if (!currentPosition.isLegalMove(fromSquare, toSquare))
+         return false;
+      return true;
+   }
    
    public String getStringPiece(
          long square) {
