@@ -100,7 +100,6 @@ public class ChessEngine implements Runnable {
                uiProtocol= UciProtocol.create(); //Change protocol to
                // UCIProtocol
             } else if (theInput.equals("cmd")) {
-               ChessEngine.this.setRunning(false);
                uiProtocol= ConsoleProtocol.create(); //Change protocol to
                // ConsoleProtocol
             }
