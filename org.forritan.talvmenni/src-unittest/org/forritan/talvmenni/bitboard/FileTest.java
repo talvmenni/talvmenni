@@ -27,7 +27,7 @@ public class FileTest extends TestCase {
    }
 
    public void testA() {
-      Assert.assertEquals(
+      Assert.assertEquals("" + //
             "10000000" + // A8-H8
             "10000000" + // A7-H7
             "10000000" + // A6-H6
@@ -41,7 +41,7 @@ public class FileTest extends TestCase {
    }
 
    public void testB() {
-      Assert.assertEquals(
+      Assert.assertEquals("" + //
             "01000000" + // A8-H8
             "01000000" + // A7-H7
             "01000000" + // A6-H6
@@ -55,7 +55,7 @@ public class FileTest extends TestCase {
    }
 
    public void testC() {
-      Assert.assertEquals(
+      Assert.assertEquals("" + //
             "00100000" + // A8-H8
             "00100000" + // A7-H7
             "00100000" + // A6-H6
@@ -69,7 +69,7 @@ public class FileTest extends TestCase {
    }
 
    public void testD() {
-      Assert.assertEquals(
+      Assert.assertEquals("" + //
             "00010000" + // A8-H8
             "00010000" + // A7-H7
             "00010000" + // A6-H6
@@ -83,7 +83,7 @@ public class FileTest extends TestCase {
    }
 
    public void testE() {
-      Assert.assertEquals(
+      Assert.assertEquals("" + //
             "00001000" + // A8-H8
             "00001000" + // A7-H7
             "00001000" + // A6-H6
@@ -97,7 +97,7 @@ public class FileTest extends TestCase {
    }
 
    public void testF() {
-      Assert.assertEquals(
+      Assert.assertEquals("" + //
             "00000100" + // A8-H8
             "00000100" + // A7-H7
             "00000100" + // A6-H6
@@ -111,7 +111,7 @@ public class FileTest extends TestCase {
    }
 
    public void testG() {
-      Assert.assertEquals(
+      Assert.assertEquals("" + //
             "00000010" + // A8-H8
             "00000010" + // A7-H7
             "00000010" + // A6-H6
@@ -125,7 +125,7 @@ public class FileTest extends TestCase {
    }
 
    public void testH() {
-      Assert.assertEquals(
+      Assert.assertEquals("" + //
             "00000001" + // A8-H8
             "00000001" + // A7-H7
             "00000001" + // A6-H6

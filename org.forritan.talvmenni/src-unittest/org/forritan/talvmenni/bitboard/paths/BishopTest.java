@@ -27,7 +27,8 @@ public class BishopTest extends TestCase {
    }
 
    public void testBishopPathsFromA1() {
-      Assert.assertEquals("00000001" + // A8-H8
+      Assert.assertEquals("" + //
+            "00000001" + // A8-H8
             "00000010" + // A7-H7
             "00000100" + // A6-H6
             "00001000" + // A5-H5
@@ -40,7 +41,8 @@ public class BishopTest extends TestCase {
    }
 
    public void testBishopPathsFromB1() {
-      Assert.assertEquals("00000000" + // A8-H8
+      Assert.assertEquals("" + //
+            "00000000" + // A8-H8
             "00000001" + // A7-H7
             "00000010" + // A6-H6
             "00000100" + // A5-H5
@@ -53,7 +55,8 @@ public class BishopTest extends TestCase {
    }
 
    public void testBishopPathsFromC1() {
-      Assert.assertEquals("00000000" + // A8-H8
+      Assert.assertEquals("" + //
+            "00000000" + // A8-H8
             "00000000" + // A7-H7
             "00000001" + // A6-H6
             "00000010" + // A5-H5
@@ -66,7 +69,8 @@ public class BishopTest extends TestCase {
    }
 
    public void testBishopPathsFromD1() {
-      Assert.assertEquals("00000000" + // A8-H8
+      Assert.assertEquals("" + //
+            "00000000" + // A8-H8
             "00000000" + // A7-H7
             "00000000" + // A6-H6
             "00000001" + // A5-H5
@@ -79,7 +83,8 @@ public class BishopTest extends TestCase {
    }
 
    public void testBishopPathsFromE1() {
-      Assert.assertEquals("00000000" + // A8-H8
+      Assert.assertEquals("" + //
+            "00000000" + // A8-H8
             "00000000" + // A7-H7
             "00000000" + // A6-H6
             "10000000" + // A5-H5
@@ -92,7 +97,8 @@ public class BishopTest extends TestCase {
    }
 
    public void testBishopPathsFromF1() {
-      Assert.assertEquals("00000000" + // A8-H8
+      Assert.assertEquals("" + //
+            "00000000" + // A8-H8
             "00000000" + // A7-H7
             "10000000" + // A6-H6
             "01000000" + // A5-H5
@@ -105,7 +111,8 @@ public class BishopTest extends TestCase {
    }
 
    public void testBishopPathsFromG1() {
-      Assert.assertEquals("00000000" + // A8-H8
+      Assert.assertEquals("" + //
+            "00000000" + // A8-H8
             "10000000" + // A7-H7
             "01000000" + // A6-H6
             "00100000" + // A5-H5
@@ -118,7 +125,8 @@ public class BishopTest extends TestCase {
    }
 
    public void testBishopPathsFromH1() {
-      Assert.assertEquals("10000000" + // A8-H8
+      Assert.assertEquals("" + //
+            "10000000" + // A8-H8
             "01000000" + // A7-H7
             "00100000" + // A6-H6
             "00010000" + // A5-H5
@@ -131,7 +139,8 @@ public class BishopTest extends TestCase {
    }
 
    public void testBishopPathsFromA2() {
-      Assert.assertEquals("00000010" + // A8-H8
+      Assert.assertEquals("" + //
+            "00000010" + // A8-H8
             "00000100" + // A7-H7
             "00001000" + // A6-H6
             "00010000" + // A5-H5
@@ -144,7 +153,8 @@ public class BishopTest extends TestCase {
    }
 
    public void testBishopPathsFromB2() {
-      Assert.assertEquals("00000001" + // A8-H8
+      Assert.assertEquals("" + //
+            "00000001" + // A8-H8
             "00000010" + // A7-H7
             "00000100" + // A6-H6
             "00001000" + // A5-H5
@@ -157,7 +167,8 @@ public class BishopTest extends TestCase {
    }
 
    public void testBishopPathsFromC2() {
-      Assert.assertEquals("00000000" + // A8-H8
+      Assert.assertEquals("" + //
+            "00000000" + // A8-H8
             "00000001" + // A7-H7
             "00000010" + // A6-H6
             "00000100" + // A5-H5
@@ -170,7 +181,8 @@ public class BishopTest extends TestCase {
    }
 
    public void testBishopPathsFromD2() {
-      Assert.assertEquals("00000000" + // A8-H8
+      Assert.assertEquals("" + //
+            "00000000" + // A8-H8
             "00000000" + // A7-H7
             "00000001" + // A6-H6
             "10000010" + // A5-H5
@@ -183,7 +195,8 @@ public class BishopTest extends TestCase {
    }
 
    public void testBishopPathsFromE2() {
-      Assert.assertEquals("00000000" + // A8-H8
+      Assert.assertEquals("" + //
+            "00000000" + // A8-H8
             "00000000" + // A7-H7
             "10000000" + // A6-H6
             "01000001" + // A5-H5
@@ -196,7 +209,8 @@ public class BishopTest extends TestCase {
    }
 
    public void testBishopPathsFromF2() {
-      Assert.assertEquals("00000000" + // A8-H8
+      Assert.assertEquals("" + //
+            "00000000" + // A8-H8
             "10000000" + // A7-H7
             "01000000" + // A6-H6
             "00100000" + // A5-H5
@@ -209,7 +223,8 @@ public class BishopTest extends TestCase {
    }
 
    public void testBishopPathsFromG2() {
-      Assert.assertEquals("10000000" + // A8-H8
+      Assert.assertEquals("" + //
+            "10000000" + // A8-H8
             "01000000" + // A7-H7
             "00100000" + // A6-H6
             "00010000" + // A5-H5
@@ -222,7 +237,8 @@ public class BishopTest extends TestCase {
    }
 
    public void testBishopPathsFromH2() {
-      Assert.assertEquals("01000000" + // A8-H8
+      Assert.assertEquals("" + //
+            "01000000" + // A8-H8
             "00100000" + // A7-H7
             "00010000" + // A6-H6
             "00001000" + // A5-H5
@@ -235,7 +251,8 @@ public class BishopTest extends TestCase {
    }
 
    public void testBishopPathsFromA3() {
-      Assert.assertEquals("00000100" + // A8-H8
+      Assert.assertEquals("" + //
+            "00000100" + // A8-H8
             "00001000" + // A7-H7
             "00010000" + // A6-H6
             "00100000" + // A5-H5
@@ -248,7 +265,8 @@ public class BishopTest extends TestCase {
    }
 
    public void testBishopPathsFromB3() {
-      Assert.assertEquals("00000010" + // A8-H8
+      Assert.assertEquals("" + //
+            "00000010" + // A8-H8
             "00000100" + // A7-H7
             "00001000" + // A6-H6
             "00010000" + // A5-H5
@@ -261,7 +279,8 @@ public class BishopTest extends TestCase {
    }
 
    public void testBishopPathsFromC3() {
-      Assert.assertEquals("00000001" + // A8-H8
+      Assert.assertEquals("" + //
+            "00000001" + // A8-H8
             "00000010" + // A7-H7
             "00000100" + // A6-H6
             "10001000" + // A5-H5
@@ -274,7 +293,8 @@ public class BishopTest extends TestCase {
    }
 
    public void testBishopPathsFromD3() {
-      Assert.assertEquals("00000000" + // A8-H8
+      Assert.assertEquals("" + //
+            "00000000" + // A8-H8
             "00000001" + // A7-H7
             "10000010" + // A6-H6
             "01000100" + // A5-H5
@@ -287,7 +307,8 @@ public class BishopTest extends TestCase {
    }
 
    public void testBishopPathsFromE3() {
-      Assert.assertEquals("00000000" + // A8-H8
+      Assert.assertEquals("" + //
+            "00000000" + // A8-H8
             "10000000" + // A7-H7
             "01000001" + // A6-H6
             "00100010" + // A5-H5
@@ -300,7 +321,8 @@ public class BishopTest extends TestCase {
    }
 
    public void testBishopPathsFromF3() {
-      Assert.assertEquals("10000000" + // A8-H8
+      Assert.assertEquals("" + //
+            "10000000" + // A8-H8
             "01000000" + // A7-H7
             "00100000" + // A6-H6
             "00010001" + // A5-H5
@@ -313,7 +335,8 @@ public class BishopTest extends TestCase {
    }
 
    public void testBishopPathsFromG3() {
-      Assert.assertEquals("01000000" + // A8-H8
+      Assert.assertEquals("" + //
+            "01000000" + // A8-H8
             "00100000" + // A7-H7
             "00010000" + // A6-H6
             "00001000" + // A5-H5
@@ -326,7 +349,8 @@ public class BishopTest extends TestCase {
    }
 
    public void testBishopPathsFromH3() {
-      Assert.assertEquals("00100000" + // A8-H8
+      Assert.assertEquals("" + //
+            "00100000" + // A8-H8
             "00010000" + // A7-H7
             "00001000" + // A6-H6
             "00000100" + // A5-H5
@@ -339,7 +363,8 @@ public class BishopTest extends TestCase {
    }
 
    public void testBishopPathsFromA4() {
-      Assert.assertEquals("00001000" + // A8-H8
+      Assert.assertEquals("" + //
+            "00001000" + // A8-H8
             "00010000" + // A7-H7
             "00100000" + // A6-H6
             "01000000" + // A5-H5
@@ -352,7 +377,8 @@ public class BishopTest extends TestCase {
    }
 
    public void testBishopPathsFromB4() {
-      Assert.assertEquals("00000100" + // A8-H8
+      Assert.assertEquals("" + //
+            "00000100" + // A8-H8
             "00001000" + // A7-H7
             "00010000" + // A6-H6
             "10100000" + // A5-H5
@@ -365,7 +391,8 @@ public class BishopTest extends TestCase {
    }
 
    public void testBishopPathsFromC4() {
-      Assert.assertEquals("00000010" + // A8-H8
+      Assert.assertEquals("" + //
+            "00000010" + // A8-H8
             "00000100" + // A7-H7
             "10001000" + // A6-H6
             "01010000" + // A5-H5
@@ -378,7 +405,8 @@ public class BishopTest extends TestCase {
    }
 
    public void testBishopPathsFromD4() {
-      Assert.assertEquals("00000001" + // A8-H8
+      Assert.assertEquals("" + //
+            "00000001" + // A8-H8
             "10000010" + // A7-H7
             "01000100" + // A6-H6
             "00101000" + // A5-H5
@@ -391,7 +419,8 @@ public class BishopTest extends TestCase {
    }
 
    public void testBishopPathsFromE4() {
-      Assert.assertEquals("10000000" + // A8-H8
+      Assert.assertEquals("" + //
+            "10000000" + // A8-H8
             "01000001" + // A7-H7
             "00100010" + // A6-H6
             "00010100" + // A5-H5
@@ -404,7 +433,8 @@ public class BishopTest extends TestCase {
    }
 
    public void testBishopPathsFromF4() {
-      Assert.assertEquals("01000000" + // A8-H8
+      Assert.assertEquals("" + //
+            "01000000" + // A8-H8
             "00100000" + // A7-H7
             "00010001" + // A6-H6
             "00001010" + // A5-H5
@@ -417,7 +447,8 @@ public class BishopTest extends TestCase {
    }
 
    public void testBishopPathsFromG4() {
-      Assert.assertEquals("00100000" + // A8-H8
+      Assert.assertEquals("" + //
+            "00100000" + // A8-H8
             "00010000" + // A7-H7
             "00001000" + // A6-H6
             "00000101" + // A5-H5
@@ -430,7 +461,8 @@ public class BishopTest extends TestCase {
    }
 
    public void testBishopPathsFromH4() {
-      Assert.assertEquals("00010000" + // A8-H8
+      Assert.assertEquals("" + //
+            "00010000" + // A8-H8
             "00001000" + // A7-H7
             "00000100" + // A6-H6
             "00000010" + // A5-H5
@@ -443,7 +475,8 @@ public class BishopTest extends TestCase {
    }
 
    public void testBishopPathsFromA5() {
-      Assert.assertEquals("00010000" + // A8-H8
+      Assert.assertEquals("" + //
+            "00010000" + // A8-H8
             "00100000" + // A7-H7
             "01000000" + // A6-H6
             "00000000" + // A5-H5
@@ -456,7 +489,8 @@ public class BishopTest extends TestCase {
    }
 
    public void testBishopPathsFromB5() {
-      Assert.assertEquals("00001000" + // A8-H8
+      Assert.assertEquals("" + //
+            "00001000" + // A8-H8
             "00010000" + // A7-H7
             "10100000" + // A6-H6
             "00000000" + // A5-H5
@@ -469,7 +503,8 @@ public class BishopTest extends TestCase {
    }
 
    public void testBishopPathsFromC5() {
-      Assert.assertEquals("00000100" + // A8-H8
+      Assert.assertEquals("" + //
+            "00000100" + // A8-H8
             "10001000" + // A7-H7
             "01010000" + // A6-H6
             "00000000" + // A5-H5
@@ -482,7 +517,8 @@ public class BishopTest extends TestCase {
    }
 
    public void testBishopPathsFromD5() {
-      Assert.assertEquals("10000010" + // A8-H8
+      Assert.assertEquals("" + //
+            "10000010" + // A8-H8
             "01000100" + // A7-H7
             "00101000" + // A6-H6
             "00000000" + // A5-H5
@@ -495,7 +531,8 @@ public class BishopTest extends TestCase {
    }
 
    public void testBishopPathsFromE5() {
-      Assert.assertEquals("01000001" + // A8-H8
+      Assert.assertEquals("" + //
+            "01000001" + // A8-H8
             "00100010" + // A7-H7
             "00010100" + // A6-H6
             "00000000" + // A5-H5
@@ -508,7 +545,8 @@ public class BishopTest extends TestCase {
    }
 
    public void testBishopPathsFromF5() {
-      Assert.assertEquals("00100000" + // A8-H8
+      Assert.assertEquals("" + //
+            "00100000" + // A8-H8
             "00010001" + // A7-H7
             "00001010" + // A6-H6
             "00000000" + // A5-H5
@@ -521,7 +559,8 @@ public class BishopTest extends TestCase {
    }
 
    public void testBishopPathsFromG5() {
-      Assert.assertEquals("00010000" + // A8-H8
+      Assert.assertEquals("" + //
+            "00010000" + // A8-H8
             "00001000" + // A7-H7
             "00000101" + // A6-H6
             "00000000" + // A5-H5
@@ -534,7 +573,8 @@ public class BishopTest extends TestCase {
    }
 
    public void testBishopPathsFromH5() {
-      Assert.assertEquals("00001000" + // A8-H8
+      Assert.assertEquals("" + //
+            "00001000" + // A8-H8
             "00000100" + // A7-H7
             "00000010" + // A6-H6
             "00000000" + // A5-H5
@@ -547,7 +587,8 @@ public class BishopTest extends TestCase {
    }
 
    public void testBishopPathsFromA6() {
-      Assert.assertEquals("00100000" + // A8-H8
+      Assert.assertEquals("" + //
+            "00100000" + // A8-H8
             "01000000" + // A7-H7
             "00000000" + // A6-H6
             "01000000" + // A5-H5
@@ -560,7 +601,8 @@ public class BishopTest extends TestCase {
    }
 
    public void testBishopPathsFromB6() {
-      Assert.assertEquals("00010000" + // A8-H8
+      Assert.assertEquals("" + //
+            "00010000" + // A8-H8
             "10100000" + // A7-H7
             "00000000" + // A6-H6
             "10100000" + // A5-H5
@@ -573,7 +615,8 @@ public class BishopTest extends TestCase {
    }
 
    public void testBishopPathsFromC6() {
-      Assert.assertEquals("10001000" + // A8-H8
+      Assert.assertEquals("" + //
+            "10001000" + // A8-H8
             "01010000" + // A7-H7
             "00000000" + // A6-H6
             "01010000" + // A5-H5
@@ -586,7 +629,8 @@ public class BishopTest extends TestCase {
    }
 
    public void testBishopPathsFromD6() {
-      Assert.assertEquals("01000100" + // A8-H8
+      Assert.assertEquals("" + //
+            "01000100" + // A8-H8
             "00101000" + // A7-H7
             "00000000" + // A6-H6
             "00101000" + // A5-H5
@@ -599,7 +643,8 @@ public class BishopTest extends TestCase {
    }
 
    public void testBishopPathsFromE6() {
-      Assert.assertEquals("00100010" + // A8-H8
+      Assert.assertEquals("" + //
+            "00100010" + // A8-H8
             "00010100" + // A7-H7
             "00000000" + // A6-H6
             "00010100" + // A5-H5
@@ -612,7 +657,8 @@ public class BishopTest extends TestCase {
    }
 
    public void testBishopPathsFromF6() {
-      Assert.assertEquals("00010001" + // A8-H8
+      Assert.assertEquals("" + //
+            "00010001" + // A8-H8
             "00001010" + // A7-H7
             "00000000" + // A6-H6
             "00001010" + // A5-H5
@@ -625,7 +671,8 @@ public class BishopTest extends TestCase {
    }
 
    public void testBishopPathsFromG6() {
-      Assert.assertEquals("00001000" + // A8-H8
+      Assert.assertEquals("" + //
+            "00001000" + // A8-H8
             "00000101" + // A7-H7
             "00000000" + // A6-H6
             "00000101" + // A5-H5
@@ -638,7 +685,8 @@ public class BishopTest extends TestCase {
    }
 
    public void testBishopPathsFromH6() {
-      Assert.assertEquals("00000100" + // A8-H8
+      Assert.assertEquals("" + //
+            "00000100" + // A8-H8
             "00000010" + // A7-H7
             "00000000" + // A6-H6
             "00000010" + // A5-H5
@@ -651,7 +699,8 @@ public class BishopTest extends TestCase {
    }
 
    public void testBishopPathsFromA7() {
-      Assert.assertEquals("01000000" + // A8-H8
+      Assert.assertEquals("" + //
+            "01000000" + // A8-H8
             "00000000" + // A7-H7
             "01000000" + // A6-H6
             "00100000" + // A5-H5
@@ -664,7 +713,8 @@ public class BishopTest extends TestCase {
    }
 
    public void testBishopPathsFromB7() {
-      Assert.assertEquals("10100000" + // A8-H8
+      Assert.assertEquals("" + //
+            "10100000" + // A8-H8
             "00000000" + // A7-H7
             "10100000" + // A6-H6
             "00010000" + // A5-H5
@@ -677,7 +727,8 @@ public class BishopTest extends TestCase {
    }
 
    public void testBishopPathsFromC7() {
-      Assert.assertEquals("01010000" + // A8-H8
+      Assert.assertEquals("" + //
+            "01010000" + // A8-H8
             "00000000" + // A7-H7
             "01010000" + // A6-H6
             "10001000" + // A5-H5
@@ -690,7 +741,8 @@ public class BishopTest extends TestCase {
    }
 
    public void testBishopPathsFromD7() {
-      Assert.assertEquals("00101000" + // A8-H8
+      Assert.assertEquals("" + //
+            "00101000" + // A8-H8
             "00000000" + // A7-H7
             "00101000" + // A6-H6
             "01000100" + // A5-H5
@@ -703,7 +755,8 @@ public class BishopTest extends TestCase {
    }
 
    public void testBishopPathsFromE7() {
-      Assert.assertEquals("00010100" + // A8-H8
+      Assert.assertEquals("" + //
+            "00010100" + // A8-H8
             "00000000" + // A7-H7
             "00010100" + // A6-H6
             "00100010" + // A5-H5
@@ -716,7 +769,8 @@ public class BishopTest extends TestCase {
    }
 
    public void testBishopPathsFromF7() {
-      Assert.assertEquals("00001010" + // A8-H8
+      Assert.assertEquals("" + //
+            "00001010" + // A8-H8
             "00000000" + // A7-H7
             "00001010" + // A6-H6
             "00010001" + // A5-H5
@@ -729,7 +783,8 @@ public class BishopTest extends TestCase {
    }
 
    public void testBishopPathsFromG7() {
-      Assert.assertEquals("00000101" + // A8-H8
+      Assert.assertEquals("" + //
+            "00000101" + // A8-H8
             "00000000" + // A7-H7
             "00000101" + // A6-H6
             "00001000" + // A5-H5
@@ -742,7 +797,8 @@ public class BishopTest extends TestCase {
    }
 
    public void testBishopPathsFromH7() {
-      Assert.assertEquals("00000010" + // A8-H8
+      Assert.assertEquals("" + //
+            "00000010" + // A8-H8
             "00000000" + // A7-H7
             "00000010" + // A6-H6
             "00000100" + // A5-H5
@@ -755,7 +811,8 @@ public class BishopTest extends TestCase {
    }
 
    public void testBishopPathsFromA8() {
-      Assert.assertEquals("00000000" + // A8-H8
+      Assert.assertEquals("" + //
+            "00000000" + // A8-H8
             "01000000" + // A7-H7
             "00100000" + // A6-H6
             "00010000" + // A5-H5
@@ -768,7 +825,8 @@ public class BishopTest extends TestCase {
    }
 
    public void testBishopPathsFromB8() {
-      Assert.assertEquals("00000000" + // A8-H8
+      Assert.assertEquals("" + //
+            "00000000" + // A8-H8
             "10100000" + // A7-H7
             "00010000" + // A6-H6
             "00001000" + // A5-H5
@@ -781,7 +839,8 @@ public class BishopTest extends TestCase {
    }
 
    public void testBishopPathsFromC8() {
-      Assert.assertEquals("00000000" + // A8-H8
+      Assert.assertEquals("" + //
+            "00000000" + // A8-H8
             "01010000" + // A7-H7
             "10001000" + // A6-H6
             "00000100" + // A5-H5
@@ -794,7 +853,8 @@ public class BishopTest extends TestCase {
    }
 
    public void testBishopPathsFromD8() {
-      Assert.assertEquals("00000000" + // A8-H8
+      Assert.assertEquals("" + //
+            "00000000" + // A8-H8
             "00101000" + // A7-H7
             "01000100" + // A6-H6
             "10000010" + // A5-H5
@@ -807,7 +867,8 @@ public class BishopTest extends TestCase {
    }
 
    public void testBishopPathsFromE8() {
-      Assert.assertEquals("00000000" + // A8-H8
+      Assert.assertEquals("" + //
+            "00000000" + // A8-H8
             "00010100" + // A7-H7
             "00100010" + // A6-H6
             "01000001" + // A5-H5
@@ -820,7 +881,8 @@ public class BishopTest extends TestCase {
    }
 
    public void testBishopPathsFromF8() {
-      Assert.assertEquals("00000000" + // A8-H8
+      Assert.assertEquals("" + //
+            "00000000" + // A8-H8
             "00001010" + // A7-H7
             "00010001" + // A6-H6
             "00100000" + // A5-H5
@@ -833,7 +895,8 @@ public class BishopTest extends TestCase {
    }
 
    public void testBishopPathsFromG8() {
-      Assert.assertEquals("00000000" + // A8-H8
+      Assert.assertEquals("" + //
+            "00000000" + // A8-H8
             "00000101" + // A7-H7
             "00001000" + // A6-H6
             "00010000" + // A5-H5
@@ -846,7 +909,8 @@ public class BishopTest extends TestCase {
    }
 
    public void testBishopPathsFromH8() {
-      Assert.assertEquals("00000000" + // A8-H8
+      Assert.assertEquals("" + //
+            "00000000" + // A8-H8
             "00000010" + // A7-H7
             "00000100" + // A6-H6
             "00001000" + // A5-H5
