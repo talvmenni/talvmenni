@@ -11,6 +11,7 @@ import org.forritan.talvmenni.knowledge.Position.Move;
 import org.forritan.talvmenni.knowledge.Transposition.Entry;
 import org.forritan.talvmenni.knowledge.evaluation.Evaluation;
 import org.forritan.talvmenni.knowledge.evaluation.Quiescent;
+import org.forritan.talvmenni.knowledge.evaluation.QuiescentWithNullMove;
 import org.forritan.talvmenni.search.PrincipalVariation.DebugInfo;
 import org.forritan.talvmenni.search.PrincipalVariation.Thinking;
 
@@ -23,17 +24,17 @@ public class MTDfSearch implements Search {
       return this.lastScore;
    }
 
-   private PrincipalVariation pv;
-   private HistoryHeuristic   historyHeuristic;
-   private Transposition      transposition;
-   private int                ply;
-   private final boolean      useMoveOrdering;
-   private Quiescent          quiescent;
+   private PrincipalVariation    pv;
+   private HistoryHeuristic      historyHeuristic;
+   private Transposition         transposition;
+   private int                   ply;
+   private final boolean         useMoveOrdering;
+   private QuiescentWithNullMove quiescent;
 
-   private int                movesSearched;
-   private int                transpositionHits;
-   private int                firstGuess;
-   private int                lastResult;
+   private int                   movesSearched;
+   private int                   transpositionHits;
+   private int                   firstGuess;
+   private int                   lastResult;
 
    public MTDfSearch(
          Transposition transposition,
@@ -59,7 +60,7 @@ public class MTDfSearch implements Search {
       this.transposition= transposition;
       this.pv= pv;
       this.historyHeuristic= HistoryHeuristic.getInstance();
-      this.quiescent= new Quiescent(
+      this.quiescent= new QuiescentWithNullMove(
             this.pv,
             quiescentMaxDepth);
    }

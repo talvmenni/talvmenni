@@ -1,5 +1,6 @@
 package org.forritan.talvmenni.search;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -10,7 +11,6 @@ import org.forritan.talvmenni.knowledge.Transposition;
 import org.forritan.talvmenni.knowledge.Position.Move;
 import org.forritan.talvmenni.knowledge.Transposition.Entry;
 import org.forritan.talvmenni.knowledge.evaluation.Evaluation;
-import org.forritan.talvmenni.knowledge.evaluation.Quiescent;
 import org.forritan.talvmenni.knowledge.evaluation.QuiescentWithNullMove;
 import org.forritan.talvmenni.search.PrincipalVariation.DebugInfo;
 import org.forritan.talvmenni.search.PrincipalVariation.Thinking;
@@ -82,7 +82,7 @@ public class AlphaBetaWithQuiescentAndNullMoveAndTranspositionTableSearch
       return this.pv.getDebugInfo();
    }
 
-   public List getBestMoves(
+public List getBestMoves(
          Position p,
          Evaluation e,
          boolean whiteMove) {
@@ -139,14 +139,34 @@ public class AlphaBetaWithQuiescentAndNullMoveAndTranspositionTableSearch
       this.pv.getDebugInfo().postBestMoves(
             this.pv.getCurrentBestLine());
 
+      this.pv.getDebugInfo().postText(
+            "Moveordering in position:"
+                  + (whiteMove ? p.getWhite().getPossibleMoves().toString() : p
+                        .getBlack().getPossibleMoves().toString()));
+
       this.pv.getDebugInfo().postTranspositionHits(
             this.transpositionHits);
+      
+      List moves=  (whiteMove ? p.getWhite().getPossibleMoves() : p
+            .getBlack().getPossibleMoves());
+      
+      List bestMoves= new ArrayList();
+      
+      if(moves.size() > 1) {
+         bestMoves.addAll(moves.subList(0, 1));
+         bestMoves.addAll(moves.subList(0, 1));
+         bestMoves.addAll(moves.subList(0, 1));
+         bestMoves.addAll(moves.subList(0, 1));
+         bestMoves.addAll(moves.subList(0, 2));
+      } else {
+         bestMoves.addAll(moves);
+      }
 
-      return (pv.getBestMoveAsList());
+      return bestMoves;
 
-   }
+//      return (pv.getBestMoveAsList());
 
-   public int alphaBeta(
+   }   public int alphaBeta(
          Position p,
          Evaluation e,
          boolean whiteMove,

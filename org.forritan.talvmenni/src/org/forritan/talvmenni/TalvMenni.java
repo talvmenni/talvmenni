@@ -2,12 +2,10 @@ package org.forritan.talvmenni;
 
 import java.io.IOException;
 
-import org.forritan.talvmenni.knowledge.Draw;
 import org.forritan.talvmenni.knowledge.TheoryBook;
 import org.forritan.talvmenni.knowledge.Transposition;
 import org.forritan.talvmenni.search.PrincipalVariation;
 import org.forritan.talvmenni.strategy.IterativeDeepeningAlphaBetaWithQuiescentAndNullMoveAndTranspositionTableStrategy;
-import org.forritan.talvmenni.strategy.IterativeDeepeningAlphaBetaWithQuiescentAndTranspositionTableStrategy;
 import org.forritan.talvmenni.ui.DebugWindow;
 
 import edu.emory.mathcs.util.concurrent.PlainThreadFactory;
@@ -143,7 +141,7 @@ public class TalvMenni {
                   PLY,
                   new Transposition(
                         MAX_TRANSPOSITION_ENTRIES),
-                  false,
+                  true,
                   book,
                   PrincipalVariation.Factory.create(PLY),
                   QUIESCENT_MAX_DEPTH));
