@@ -94,14 +94,14 @@ public class ObjectCreationStatistics extends Observable {
                                                                           }
                                                                        })
                                                                  .start();
-                                                           
+
                                                            try {
-                                                              barrier.await(); 
-                                                            } catch (InterruptedException ex) { 
-                                                              return; 
-                                                            } catch (BrokenBarrierException ex) { 
-                                                              return; 
-                                                            }
+                                                              barrier.await();
+                                                           } catch (InterruptedException ex) {
+                                                              return;
+                                                           } catch (BrokenBarrierException ex) {
+                                                              return;
+                                                           }
                                                         }
                                                      };
 }
