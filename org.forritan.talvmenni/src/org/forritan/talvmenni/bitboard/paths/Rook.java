@@ -1,7 +1,7 @@
 package org.forritan.talvmenni.bitboard.paths;
 
-import org.forritan.talvmenni.bitboard.Rank;
 import org.forritan.talvmenni.bitboard.File;
+import org.forritan.talvmenni.bitboard.Rank;
 
 
 public interface Rook {
