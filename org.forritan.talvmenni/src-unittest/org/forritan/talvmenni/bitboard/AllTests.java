@@ -10,8 +10,8 @@ public class AllTests {
          "Test for org.forritan.shallowsenior.bitboard");
       //$JUnit-BEGIN$
       suite.addTestSuite(SquareTest.class);
-      suite.addTestSuite(RankTest.class);
       suite.addTestSuite(FileTest.class);
+      suite.addTestSuite(RankTest.class);
       suite.addTest(org.forritan.talvmenni.bitboard.paths.AllTests.suite());
       suite.addTest(org.forritan.talvmenni.bitboard.attacks.AllTests.suite());
       //$JUnit-END$
