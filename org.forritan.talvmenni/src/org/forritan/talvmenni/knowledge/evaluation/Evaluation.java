@@ -87,9 +87,14 @@ public interface Evaluation extends Serializable {
    public static final int  CHECK_REWARD_IN_MIDDLE_GAME            = 30;
    public static final int  CHECK_REWARD_IN_END_GAME               = 30;
 
-   public static final int  KING_CENTER_REWARD_IN_OPENING_GAME    = -60;
-   public static final int  KING_CENTER_REWARD_IN_MIDDLE_GAME     = -30;
-   public static final int  KING_CENTER_REWARD_IN_END_GAME        = 50;
+   public static final int  KING_CENTER_REWARD_IN_OPENING_GAME     = -60;
+   public static final int  KING_CENTER_REWARD_IN_MIDDLE_GAME      = -30;
+   public static final int  KING_CENTER_REWARD_IN_END_GAME         = 50;
+
+   public static final int  PAWN_TO_PROMOTE_IN_1_IN_END_GAME       = 90;
+   public static final int  PAWN_TO_PROMOTE_IN_2_IN_END_GAME       = 70;
+   public static final int  PAWN_TO_PROMOTE_IN_3_IN_END_GAME       = 50;
+   public static final int  PAWN_TO_PROMOTE_IN_4_IN_END_GAME       = 30;
 
    public static final int  ALL_PIECES_INITIAL_KING_EXCLUSIVE      = QUEEN_IN_OPENING_GAME
                                                                          + 2
@@ -164,14 +169,16 @@ public interface Evaluation extends Serializable {
    //   public static final int CHECK_REWARD = 31;
 
    public int getScore(
-         Position position, boolean whiteToMove);
+         Position position,
+         boolean whiteToMove);
 
    public int getGameFase(
-         Position position, boolean whiteToMove);
-  
+         Position position,
+         boolean whiteToMove);
+
    public static interface GameFase {
-      public static final int OPENING_GAME= 1;
-      public static final int MIDDLE_GAME= 2;
-      public static final int END_GAME= 3;
+      public static final int OPENING_GAME = 1;
+      public static final int MIDDLE_GAME  = 2;
+      public static final int END_GAME     = 3;
    }
 }

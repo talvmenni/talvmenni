@@ -3,6 +3,7 @@ package org.forritan.talvmenni.knowledge.evaluation;
 import java.util.Iterator;
 
 import org.forritan.talvmenni.bitboard.BitboardIterator;
+import org.forritan.talvmenni.bitboard.Rank;
 import org.forritan.talvmenni.bitboard.Square;
 import org.forritan.talvmenni.bitboard.evaluation.Board;
 import org.forritan.talvmenni.knowledge.Draw;
@@ -316,6 +317,23 @@ public class SimpleMaterialAndPositionalEvaluation extends AbstractEvaluation {
          it.next();
          result += Evaluation.POSITION_OUTER_BORDER_IN_END_GAME;         
       }
+
+      for (Iterator it= new BitboardIterator(((position.getWhite().pawns ) & Rank._7)); it.hasNext();) {
+         it.next();
+         result += Evaluation.PAWN_TO_PROMOTE_IN_1_IN_END_GAME;         
+      }
+      for (Iterator it= new BitboardIterator(((position.getWhite().pawns ) & Rank._6)); it.hasNext();) {
+         it.next();
+         result += Evaluation.PAWN_TO_PROMOTE_IN_2_IN_END_GAME;         
+      }
+      for (Iterator it= new BitboardIterator(((position.getWhite().pawns ) & Rank._5)); it.hasNext();) {
+         it.next();
+         result += Evaluation.PAWN_TO_PROMOTE_IN_3_IN_END_GAME;         
+      }
+      for (Iterator it= new BitboardIterator(((position.getWhite().pawns ) & Rank._4)); it.hasNext();) {
+         it.next();
+         result += Evaluation.PAWN_TO_PROMOTE_IN_4_IN_END_GAME;         
+      }
       
       for (Iterator it= new BitboardIterator((position.getWhite().getAllCaptureMovesAttackedSquares() & position.getWhite().allPieces)); it.hasNext();) {
          it.next();
@@ -371,11 +389,28 @@ public class SimpleMaterialAndPositionalEvaluation extends AbstractEvaluation {
          result -= Evaluation.POSITION_OUTER_BORDER_IN_END_GAME;         
       }
       
+      for (Iterator it= new BitboardIterator(((position.getBlack().pawns ) & Rank._2)); it.hasNext();) {
+         it.next();
+         result -= Evaluation.PAWN_TO_PROMOTE_IN_1_IN_END_GAME;         
+      }
+      for (Iterator it= new BitboardIterator(((position.getBlack().pawns ) & Rank._3)); it.hasNext();) {
+         it.next();
+         result -= Evaluation.PAWN_TO_PROMOTE_IN_2_IN_END_GAME;         
+      }
+      for (Iterator it= new BitboardIterator(((position.getBlack().pawns ) & Rank._4)); it.hasNext();) {
+         it.next();
+         result -= Evaluation.PAWN_TO_PROMOTE_IN_3_IN_END_GAME;         
+      }
+      for (Iterator it= new BitboardIterator(((position.getBlack().pawns ) & Rank._5)); it.hasNext();) {
+         it.next();
+         result -= Evaluation.PAWN_TO_PROMOTE_IN_4_IN_END_GAME;         
+      }
+                  
       for (Iterator it= new BitboardIterator((position.getBlack().getAllCaptureMovesAttackedSquares() & position.getBlack().allPieces)); it.hasNext();) {
          it.next();
          result -= Evaluation.POSITION_GUARD_REWARD_IN_END_GAME;         
       }
-                  
+
       if(position.getWhite().isInCheck()) {
          result -= Evaluation.CHECK_REWARD_IN_END_GAME;                  
       }
