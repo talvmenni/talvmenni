@@ -96,7 +96,10 @@ public class TheoryBook {
 
                   Position.Move move= new Position.Move(
                         sq.getSquare(from),
-                        sq.getSquare(to));
+                        sq.getSquare(to),
+                        Position.PromotionPiece.NONE);
+                  //TODO: ?????? Position.PromotionPiece.NONE ?????
+                  
                   Integer score= null;
                   try {
                      score= new Integer(moveAndScore.substring(

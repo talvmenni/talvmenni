@@ -44,7 +44,7 @@ public class ChessEngine extends Observable implements Runnable {
       this.running= false;
       this.protocol= new ProtocolImpl();
       this.strategy= strategy;
-      this.threadFactory= new PlainThreadFactory();
+      this.threadFactory= TalvMenni.getThreadFactory();
       this.inMessages= new DynamicArrayBlockingQueue();
       this.outMessages= new DynamicArrayBlockingQueue();
    }
@@ -112,10 +112,6 @@ public class ChessEngine extends Observable implements Runnable {
             String FENString);
 
       public Rules getCurrentRules();
-
-      public Move makeMove(
-            long fromSquare,
-            long toSquare);
 
       public Move makeMove(
             long fromSquare,
@@ -229,14 +225,14 @@ public class ChessEngine extends Observable implements Runnable {
          }
       }
 
-      public synchronized Move makeMove(
-            long fromSquare,
-            long toSquare) {
-         return this.makeMove(
-               fromSquare,
-               toSquare,
-               ChessEngine.this.strategy.getPromotionPiece());
-      }
+//      public synchronized Move makeMove(
+//            long fromSquare,
+//            long toSquare) {
+//         return this.makeMove(
+//               fromSquare,
+//               toSquare,
+//               ChessEngine.this.strategy.getPromotionPiece());
+//      }
 
       public synchronized void setPositionFromFEN(
             String FENString) {
@@ -285,7 +281,7 @@ public class ChessEngine extends Observable implements Runnable {
                   this.getCurrentPosition(),
                   nextMove.from,
                   nextMove.to,
-                  ChessEngine.this.strategy.getPromotionPiece());
+                  nextMove.promotionPiece);
             MoveHistory.getInstance().add(
                   move);
             this.whiteToMove= !this.whiteToMove;

@@ -41,6 +41,10 @@ public interface Position {
          long from,
          long to);
 
+   public boolean isPromotionMove(
+         long from,
+         long to);
+
    public Position pushMove(
          Bitboard white,
          Bitboard black);
@@ -49,32 +53,32 @@ public interface Position {
 
    public class Bitboard {
 
-      public final static int            SEED         = 17;
-      public final static int            PRIME_FACTOR = 37;
+      public final static int SEED         = 17;
+      public final static int PRIME_FACTOR = 37;
 
-      public final int                   hashCode;
+      public final int        hashCode;
 
-      public final boolean               whiteBoard;
-      public final Position              parent;
+      public final boolean    whiteBoard;
+      public final Position   parent;
 
-      public final long                  kings;
-      public final long                  queens;
-      public final long                  rooks;
-      public final long                  bishops;
-      public final long                  knights;
-      public final long                  pawns;
+      public final long       kings;
+      public final long       queens;
+      public final long       rooks;
+      public final long       bishops;
+      public final long       knights;
+      public final long       pawns;
 
-      public final long                  castling;
-      public final long                  enpassant;
+      public final long       castling;
+      public final long       enpassant;
 
-      public final long                  allPieces;
+      public final long       allPieces;
 
-      private List                       possibleMoves;
-      private List                       killerMoves;
-      private long                       allCaptureMovesAttackedSquares;
-      private boolean                    allCaptureMovesAttackedSquaresInitialized;
-      private Boolean                    kingsSideCastlingLegal;
-      private Boolean                    queensSideCastlingLegal;
+      private List            possibleMoves;
+      private List            killerMoves;
+      private long            allCaptureMovesAttackedSquares;
+      private boolean         allCaptureMovesAttackedSquaresInitialized;
+      private Boolean         kingsSideCastlingLegal;
+      private Boolean         queensSideCastlingLegal;
 
       /**
        * @param white
@@ -193,7 +197,7 @@ public interface Position {
             this.killerMoves= null;
          }
       }
-      
+
       public List getPossibleMoves() {
          if (this.possibleMoves == null) {
             this.possibleMoves= new ArrayList();
@@ -292,11 +296,13 @@ public interface Position {
             if (this.whiteBoard) {
                this.possibleMoves.add(new Move(
                      Square._E1,
-                     Square._C1));
+                     Square._C1,
+                     PromotionPiece.NONE));
             } else {
                this.possibleMoves.add(new Move(
                      Square._E8,
-                     Square._C8));
+                     Square._C8,
+                     PromotionPiece.NONE));
             }
          }
 
@@ -304,11 +310,13 @@ public interface Position {
             if (this.whiteBoard) {
                this.possibleMoves.add(new Move(
                      Square._E1,
-                     Square._G1));
+                     Square._G1,
+                     PromotionPiece.NONE));
             } else {
                this.possibleMoves.add(new Move(
                      Square._E8,
-                     Square._G8));
+                     Square._G8,
+                     PromotionPiece.NONE));
             }
          }
 
@@ -321,25 +329,68 @@ public interface Position {
             BitboardIterator moves) {
          while (moves.hasNext()) {
             long toSquare= moves.nextBitboard();
-            Position newPosition= this.parent.move(
+            Position newPosition;
+            if (this.parent.isPromotionMove(
                   fromSquare,
-                  toSquare,
-                  PromotionPiece.DEFAULT);
-            if (this.whiteBoard) {
-               if (!newPosition.getWhite().isChecked()) {
-                  result.add(new Move(
+                  toSquare)) {
+               for (int promoteTo= PromotionPiece.QUEEN;
+                        promoteTo <= PromotionPiece.KNIGHT;
+                        promoteTo++) {
+                  newPosition= this.parent.move(
                         fromSquare,
-                        toSquare));
+                        toSquare,
+                        promoteTo);
+                  this.addMoveToResultIfNotInCheck(
+                        result,
+                        fromSquare,
+                        toSquare,
+                        promoteTo,
+                        newPosition);
+                  this.parent.popMove();
                }
             } else {
-               if (!newPosition.getBlack().isChecked()) {
-                  result.add(new Move(
-                        fromSquare,
-                        toSquare));
-               }
+               newPosition= this.parent.move(
+                     fromSquare,
+                     toSquare,
+                     PromotionPiece.NONE);
+               this.addMoveToResultIfNotInCheck(
+                     result,
+                     fromSquare,
+                     toSquare,
+                     PromotionPiece.NONE,
+                     newPosition);
+               this.parent.popMove();
             }
-            this.parent.popMove();
             newPosition= null;
+         }
+      }
+
+      /**
+       * @param result
+       * @param fromSquare
+       * @param toSquare
+       * @param newPosition
+       */
+      private void addMoveToResultIfNotInCheck(
+            List result,
+            long fromSquare,
+            long toSquare,
+            int  promotionPiece,
+            Position newPosition) {
+         if (this.whiteBoard) {
+            if (!newPosition.getWhite().isChecked()) {
+               result.add(new Move(
+                     fromSquare,
+                     toSquare,
+                     promotionPiece));
+            }
+         } else {
+            if (!newPosition.getBlack().isChecked()) {
+               result.add(new Move(
+                     fromSquare,
+                     toSquare,
+                     promotionPiece));
+            }
          }
       }
 
@@ -582,35 +633,59 @@ public interface Position {
    }
 
    public static interface PromotionPiece {
-      public final static int      DEFAULT = 0;
+      public final static int      NONE    = 4;
+      
       public final static int      QUEEN   = 0;
       public final static int      ROOK    = 1;
       public final static int      BISHOP  = 2;
       public final static int      KNIGHT  = 3;
-      public final static String[] STRINGS = new String[] { "q", "r", "b", "n"};
+      public final static String[] STRINGS = new String[] { "q", "r", "b", "n", ""};
    }
 
    public static class Move {
+      public final static int SEED         = 17;
+      public final static int PRIME_FACTOR = 37;
+
       public final long from;
       public final long to;
+      public final int  promotionPiece;
+      
+      public final int        hashCode;
+
 
       public Move(
             long from,
-            long to) {
+            long to,
+            int promotionPiece) {
          this.from= from;
          this.to= to;
+         this.promotionPiece= promotionPiece;
+         
+         int hash= SEED;
+         hash= PRIME_FACTOR * hash + ((int) ( this.from ^ ( this.from >>> 32)));
+         hash= PRIME_FACTOR * hash + ((int) (this.to ^ (this.to >>> 32)));         
+         this.hashCode= hash;         
       }
 
       public String toString() {
          Square sq= Squares.create();
          return sq.getSquareName(from)
-               + sq.getSquareName(to);
+               + sq.getSquareName(to)
+               + (this.promotionPiece == PromotionPiece.NONE ? ""
+                     : PromotionPiece.STRINGS[this.promotionPiece]);
       }
 
       public boolean equals(
             Move otherMove) {
          return (this.from == otherMove.from)
                && (this.to == otherMove.to);
+      }
+
+      public boolean equalsIncludingPromotion(
+            Move otherMove) {
+         return (this.from == otherMove.from)
+               && (this.to == otherMove.to)
+               && (this.promotionPiece == otherMove.promotionPiece);
       }
 
       public boolean equals(
@@ -621,12 +696,17 @@ public interface Position {
             return false;
          }
       }
+      
+      public int hashCode() {
+         return this.hashCode;
+      }
 
    }
 
    public static class Factory {
-      public static Position createInitial(boolean mutable) {
-         if(mutable) {
+      public static Position createInitial(
+            boolean mutable) {
+         if (mutable) {
             return new MutablePosition(
                   Square._E1, // whiteKings
                   Square._D1, // whiteQueens
@@ -725,7 +805,7 @@ public interface Position {
             long blackPawns,
             long blackCastling,
             long blackEnpassant) {
-         if(mutable) {
+         if (mutable) {
             return new MutablePosition(
                   whiteKings,
                   whiteQueens,
@@ -742,7 +822,7 @@ public interface Position {
                   blackKnights,
                   blackPawns,
                   blackCastling,
-                  blackEnpassant);         
+                  blackEnpassant);
          } else {
             return new ImmutablePosition(
                   whiteKings,
@@ -768,7 +848,7 @@ public interface Position {
             boolean mutable,
             Bitboard white,
             Bitboard black) {
-         if(mutable) {
+         if (mutable) {
             return new MutablePosition(
                   white,
                   black);
@@ -780,12 +860,12 @@ public interface Position {
 
       }
 
-      
-      public static TuplePositionBoolean createPositionFromFEN(boolean mutable,
+      public static TuplePositionBoolean createPositionFromFEN(
+            boolean mutable,
             String FENString) {
-         
+
          Boolean whiteMove= null;
-         
+
          long whiteKings= Square._EMPTY_BOARD;
          long whiteQueens= Square._EMPTY_BOARD;
          long whiteRooks= Square._EMPTY_BOARD;
@@ -802,7 +882,7 @@ public interface Position {
          long blackPawns= Square._EMPTY_BOARD;
          long blackCastling= Square._EMPTY_BOARD;
          long blackEnpassant= Square._EMPTY_BOARD;
-         
+
          Square square2= Squares.create();
          long sq;
 
@@ -827,7 +907,7 @@ public interface Position {
                int square= y
                      * 8
                      + x;
-               sq= square2.getSquare(square);
+               sq= square2.getSquareNormalizedIndex(square);
 
                if (activeChar == 'r') {
                   blackRooks|= sq;
@@ -933,11 +1013,13 @@ public interface Position {
                blackPawns,
                blackCastling,
                blackEnpassant);
-         
-         return new TuplePositionBoolean(fenPosition, whiteMove);
-      }            
+
+         return new TuplePositionBoolean(
+               fenPosition,
+               whiteMove);
+      }
    }
-   
+
    public static class TuplePositionBoolean {
 
       public Position position;

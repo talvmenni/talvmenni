@@ -96,10 +96,6 @@ public abstract class AbstractStrategy implements Strategy {
       return this.book;
    }
 
-   public int getPromotionPiece() {
-      return Position.PromotionPiece.DEFAULT;
-   }
-
    public class DebugInfo extends Observable {
       public void postText(
             String text) {

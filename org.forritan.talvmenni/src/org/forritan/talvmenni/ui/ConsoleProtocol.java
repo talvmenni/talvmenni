@@ -177,8 +177,7 @@ public class ConsoleProtocol extends UiProtocolBase {
                         3,
                         4)).intValue())).toUpperCase();
 
-      int promotionPiece= ImmutablePosition.PromotionPiece.DEFAULT;
-      ;
+      int promotionPiece= Position.PromotionPiece.NONE;
 
       if (theMove.length() > 4) {
          String promoteTo= theMove.substring(
@@ -415,7 +414,7 @@ public class ConsoleProtocol extends UiProtocolBase {
             Square square2= Squares.create();
             long sq;
 
-            sq= square2.getSquare(square);
+            sq= square2.getSquareNormalizedIndex(square);
 
             if ((!board.getWhite().isAnyPieceOnPosition(
                   sq))

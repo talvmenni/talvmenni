@@ -31,10 +31,20 @@ public class TalvMenni {
     */
    public static int          MAX_TRANSPOSITION_ENTRIES = 30000;
 
+
+   private static PlainThreadFactory threadFactory;
+
+   public synchronized static ThreadFactory getThreadFactory() {
+      if(TalvMenni.threadFactory == null) {
+         TalvMenni.threadFactory= new PlainThreadFactory();
+      }
+      return TalvMenni.threadFactory;
+   }
+
    public static void main(
          String args[]) {
 
-      ThreadFactory threadFactory= new PlainThreadFactory();
+      ThreadFactory threadFactory= TalvMenni.getThreadFactory();
 
       String searchDepth= System.getProperty("ply");
       if (searchDepth != null) {
@@ -159,4 +169,5 @@ public class TalvMenni {
 
       chessEngine.run();
    }
+
 }

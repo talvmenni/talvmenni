@@ -21,7 +21,7 @@ public class TestSpeedOnPositionCreation {
       for (int i= 0; i < howMany; i++) {
          long from= 1L << (i % 32);
          long to= 1L << ((i % 32) + 16);
-         initialPosition.move(from, to, Position.PromotionPiece.DEFAULT);
+         initialPosition.move(from, to);
          initialPosition.popMove();
 //         Move m= new Move(
 //               initialPosition,
@@ -56,7 +56,7 @@ public class TestSpeedOnPositionCreation {
          long from= 1L << (i % 32);
          long to= 1L << ((i % 32) + 16);
 
-         initialPosition.move(from, to, Position.PromotionPiece.DEFAULT);
+         initialPosition.move(from, to);
          initialPosition.popMove();
 
 //         Move m= new Move(

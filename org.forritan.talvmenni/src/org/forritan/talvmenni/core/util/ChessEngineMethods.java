@@ -33,7 +33,8 @@ public class ChessEngineMethods {
             result+= ChessEngineMethods.perft(
                   p.move(
                         move.from,
-                        move.to),
+                        move.to,
+                        move.promotionPiece),
                   !whiteMove,
                   ply - 1);
             p.popMove();

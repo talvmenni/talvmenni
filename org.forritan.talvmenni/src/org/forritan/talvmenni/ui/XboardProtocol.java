@@ -3,8 +3,9 @@ package org.forritan.talvmenni.ui;
 import org.forritan.talvmenni.bitboard.Squares;
 import org.forritan.talvmenni.core.ChessEngine;
 import org.forritan.talvmenni.core.TalvMenni;
-import org.forritan.talvmenni.game.Move;
 import org.forritan.talvmenni.game.ImmutablePosition;
+import org.forritan.talvmenni.game.Move;
+import org.forritan.talvmenni.game.Position;
 
 
 public class XboardProtocol extends UiProtocolBase {
@@ -55,7 +56,7 @@ public class XboardProtocol extends UiProtocolBase {
          String moveString= theInput.substring(
                8).trim();
 
-         int promotionPiece= ImmutablePosition.PromotionPiece.DEFAULT;
+         int promotionPiece= Position.PromotionPiece.NONE;
 
          if (moveString.length() > 4) {
             String promoteTo= moveString.substring(

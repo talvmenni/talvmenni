@@ -37,7 +37,7 @@ public class Move {
          long fromSquare,
          long toSquare) {
       this.time= System.currentTimeMillis();
-      this.promotionPiece= Position.PromotionPiece.DEFAULT;
+      this.promotionPiece= Position.PromotionPiece.NONE;
       this.fromPosition= fromPosition.getImmutable();
       this.whiteMove= this.fromPosition.getWhite().isAnyPieceOnPosition(fromSquare);
       this.toPosition= fromPosition.move(
@@ -47,6 +47,14 @@ public class Move {
       this.to= toSquare;
    }
    
+
+   public String toString() {
+      Square sq= Squares.create();
+      return sq.getSquareName(from)
+            + sq.getSquareName(to)
+            + this.getPromotionString();
+   }
+
    private String getPromotionString() {
       String result= "";
       if(this.whiteMove) {
@@ -59,12 +67,5 @@ public class Move {
          }
       }
       return result;
-   }
-
-   public String toString() {
-      Square sq= Squares.create();
-      return sq.getSquareName(from)
-            + sq.getSquareName(to)
-            + this.getPromotionString();
    }
 }
