@@ -14,6 +14,8 @@ public class TalvMenni {
 
    public static boolean      TELLUSER_ALL_INPUT;
    public static String       DEBUG_NAME;
+   
+   public static int SEARCH_DEPTH= 2;
 
    public static void main(
          String args[]) {
@@ -25,9 +27,14 @@ public class TalvMenni {
       if(DEBUG_NAME == null) {
          DEBUG_NAME= "";
       }
-
+      
+      Integer ply= Integer.valueOf(System.getProperty("org.forritan.talvmenni.search_depth"));
+      if(ply != null) {
+         SEARCH_DEPTH= ply.intValue();
+      }
+      
       final ChessEngine chessEngine=
-         ChessEngine.create(new FullSearchSimpleMaterialEvaluationChooseRandomlyBetweenBestMovesStrategy(3));
+         ChessEngine.create(new FullSearchSimpleMaterialEvaluationChooseRandomlyBetweenBestMovesStrategy(SEARCH_DEPTH));
 
       if (Boolean.getBoolean("org.forritan.talvmenni.debug_window")) {
          Thread debugWindowThread= threadFactory.newThread(new Runnable() {
