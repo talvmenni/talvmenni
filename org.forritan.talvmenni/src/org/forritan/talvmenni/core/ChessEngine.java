@@ -191,129 +191,84 @@ public class ChessEngine implements Runnable {
          Iterator<Long> kings= board.kingsIterator();
          while (kings.hasNext()) {
             long fromSquare= kings.next().longValue();
-            long possibleMoves= King.attacksFrom(fromSquare, this.currentPosition);
-            Iterator<Long> moves= new BitboardIterator(possibleMoves);
-            while (moves.hasNext()) {
-               long toSquare= moves.next().longValue();
-               Move move= new Move(this.currentPosition, fromSquare, toSquare);
-               if(this.isWhiteToMove()) {
-                  if(!move.toPosition.white.isChecked()) {
-                     result.add(move);
-                  } 
-               } else {
-                  if(!move.toPosition.black.isChecked()) {
-                     result.add(move);                  
-                  }
-               }
-            }
-            
+            findMoves(
+                  result,
+                  fromSquare,
+                  new BitboardIterator(King.attacksFrom(fromSquare, this.currentPosition)));            
          }
          
          Iterator<Long> queens= board.queensIterator(); 
          while (queens.hasNext()) {
             long fromSquare= queens.next().longValue();
-            long possibleMoves= Queen.attacksFrom(fromSquare, this.currentPosition);
-            Iterator<Long> moves= new BitboardIterator(possibleMoves);
-            while (moves.hasNext()) {
-               long toSquare= moves.next().longValue();
-               Move move= new Move(this.currentPosition, fromSquare, toSquare);
-               if(this.isWhiteToMove()) {
-                  if(!move.toPosition.white.isChecked()) {
-                     result.add(move);
-                  } 
-               } else {
-                  if(!move.toPosition.black.isChecked()) {
-                     result.add(move);                  
-                  }
-               }
-            }
+            findMoves(
+                  result,
+                  fromSquare,
+                  new BitboardIterator(Queen.attacksFrom(fromSquare, this.currentPosition)));            
          }
          
          Iterator<Long> rooks= board.rooksIterator(); 
          while (rooks.hasNext()) {
             long fromSquare= rooks.next().longValue();
-            long possibleMoves= Rook.attacksFrom(fromSquare, this.currentPosition);
-            Iterator<Long> moves= new BitboardIterator(possibleMoves);
-            while (moves.hasNext()) {
-               long toSquare= moves.next().longValue();
-               Move move= new Move(this.currentPosition, fromSquare, toSquare);
-               if(this.isWhiteToMove()) {
-                  if(!move.toPosition.white.isChecked()) {
-                     result.add(move);
-                  } 
-               } else {
-                  if(!move.toPosition.black.isChecked()) {
-                     result.add(move);                  
-                  }
-               }
-            }
+            findMoves(
+                  result,
+                  fromSquare,
+                  new BitboardIterator(Rook.attacksFrom(fromSquare, this.currentPosition)));            
          }
          
          Iterator<Long> bishops= board.bishopsIterator(); 
          while (bishops.hasNext()) {
             long fromSquare= bishops.next().longValue();
-            long possibleMoves= Bishop.attacksFrom(fromSquare, this.currentPosition);
-            Iterator<Long> moves= new BitboardIterator(possibleMoves);
-            while (moves.hasNext()) {
-               long toSquare= moves.next().longValue();
-               Move move= new Move(this.currentPosition, fromSquare, toSquare);
-               if(this.isWhiteToMove()) {
-                  if(!move.toPosition.white.isChecked()) {
-                     result.add(move);
-                  } 
-               } else {
-                  if(!move.toPosition.black.isChecked()) {
-                     result.add(move);                  
-                  }
-               }
-            }
+            findMoves(
+                  result,
+                  fromSquare,
+                  new BitboardIterator(Bishop.attacksFrom(fromSquare, this.currentPosition)));
          }
          
          Iterator<Long> knights= board.knightsIterator(); 
          while (knights.hasNext()) {
             long fromSquare= knights.next().longValue();
-            long possibleMoves= Knight.attacksFrom(fromSquare, this.currentPosition);
-            Iterator<Long> moves= new BitboardIterator(possibleMoves);
-            while (moves.hasNext()) {
-               long toSquare= moves.next().longValue();
-               Move move= new Move(this.currentPosition, fromSquare, toSquare);
-               if(this.isWhiteToMove()) {
-                  if(!move.toPosition.white.isChecked()) {
-                     result.add(move);
-                  } 
-               } else {
-                  if(!move.toPosition.black.isChecked()) {
-                     result.add(move);                  
-                  }
-               }
-            }
+            findMoves(
+                  result,
+                  fromSquare,
+                  new BitboardIterator(Knight.attacksFrom(fromSquare, this.currentPosition)));            
          }
          
          Iterator<Long> pawns= board.pawnsIterator();
          while (pawns.hasNext()) {
             long fromSquare= pawns.next().longValue();
-            long possibleMoves;
+
             if(isWhiteToMove()) {
-               possibleMoves= WhitePawn.captureMoveAttacksFrom(fromSquare, this.currentPosition) | WhitePawn.moveAttacksFrom(fromSquare, this.currentPosition);
-            } else {
-               possibleMoves= BlackPawn.captureMoveAttacksFrom(fromSquare, this.currentPosition) | BlackPawn.moveAttacksFrom(fromSquare, this.currentPosition);
-            }
-            Iterator<Long> moves= new BitboardIterator(possibleMoves);
-            while (moves.hasNext()) {
-               long toSquare= moves.next().longValue();
-               Move move= new Move(this.currentPosition, fromSquare, toSquare);
-               if(this.isWhiteToMove()) {
-                  if(!move.toPosition.white.isChecked()) {
-                     result.add(move);
-                  } 
+               findMoves(
+                     result,
+                     fromSquare,
+                     new BitboardIterator(WhitePawn.captureMoveAttacksFrom(fromSquare, this.currentPosition) | WhitePawn.moveAttacksFrom(fromSquare, this.currentPosition)));            
                } else {
-                  if(!move.toPosition.black.isChecked()) {
-                     result.add(move);                  
-                  }
-               }
+                  findMoves(
+                        result,
+                        fromSquare,
+                        new BitboardIterator(BlackPawn.captureMoveAttacksFrom(fromSquare, this.currentPosition) | BlackPawn.moveAttacksFrom(fromSquare, this.currentPosition)));            
             }
          }
          return result;          
+      }
+
+      private void findMoves(
+            List<Move> result,
+            long fromSquare,
+            Iterator<Long> moves) {
+         while (moves.hasNext()) {
+            long toSquare= moves.next().longValue();
+            Move move= new Move(this.currentPosition, fromSquare, toSquare);
+            if(this.isWhiteToMove()) {
+               if(!move.toPosition.white.isChecked()) {
+                  result.add(move);
+               } 
+            } else {
+               if(!move.toPosition.black.isChecked()) {
+                  result.add(move);                  
+               }
+            }
+         }
       }
 
       public Move makeRandomMove() {
