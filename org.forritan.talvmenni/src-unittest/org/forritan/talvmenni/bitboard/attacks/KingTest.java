@@ -24,7 +24,7 @@ public class KingTest extends TestCase {
    }
 
    public void testWhiteKingInitial() {
-      Position initialPosition= ImmutablePosition.createInitial();
+      Position initialPosition= ImmutablePosition.createInitialImmutable();
       long kingAttacksFromE1= King.attacksFrom(
             Square._E1,
             initialPosition);
@@ -54,7 +54,7 @@ public class KingTest extends TestCase {
    }
 
    public void testWhiteKingAfterD2D4() {
-      Position p= ImmutablePosition.createInitial().move(
+      Position p= ImmutablePosition.createInitialImmutable().move(
             Square._D2,
             Square._D4);
       long kingAttacksFromE1= King.attacksFrom(
@@ -86,7 +86,7 @@ public class KingTest extends TestCase {
    }
 
    public void testWhiteKingAfterD2D4_E2E4() {
-      Position p= ImmutablePosition.createInitial().move(
+      Position p= ImmutablePosition.createInitialImmutable().move(
             Square._D2,
             Square._D4).move(
             Square._E2,
@@ -120,7 +120,7 @@ public class KingTest extends TestCase {
    }
 
    public void testWhiteKingAfterD2D3_E2E3_F2F4() {
-      Position p= ImmutablePosition.createInitial().move(
+      Position p= ImmutablePosition.createInitialImmutable().move(
             Square._D2,
             Square._D3).move(
             Square._E2,
@@ -156,7 +156,7 @@ public class KingTest extends TestCase {
    }
 
    public void testBlackKingInitial() {
-      Position initialPosition= ImmutablePosition.createInitial();
+      Position initialPosition= ImmutablePosition.createInitialImmutable();
       long kingAttacksFromE8= King.attacksFrom(
             Square._E8,
             initialPosition);
@@ -186,7 +186,7 @@ public class KingTest extends TestCase {
    }
 
    public void testBlackKingAfterD7D5_F7F5() {
-      Position p= ImmutablePosition.createInitial().move(
+      Position p= ImmutablePosition.createInitialImmutable().move(
             Square._D7,
             Square._D5).move(
             Square._F7,
@@ -220,7 +220,7 @@ public class KingTest extends TestCase {
    }
 
    public void testBlackKingAfterD7D5() {
-      Position p= ImmutablePosition.createInitial().move(
+      Position p= ImmutablePosition.createInitialImmutable().move(
             Square._D7,
             Square._D5);
       long kingAttacksFromE8= King.attacksFrom(
@@ -252,7 +252,7 @@ public class KingTest extends TestCase {
    }
 
    public void testBlackKingAfterE7E5() {
-      Position p= ImmutablePosition.createInitial().move(
+      Position p= ImmutablePosition.createInitialImmutable().move(
             Square._E7,
             Square._E5);
       long kingAttacksFromE8= King.attacksFrom(

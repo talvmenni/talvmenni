@@ -17,6 +17,7 @@ import org.forritan.talvmenni.game.ImmutablePosition;
 import org.forritan.talvmenni.game.Move;
 import org.forritan.talvmenni.game.MoveHistory;
 import org.forritan.talvmenni.game.Position;
+import org.forritan.talvmenni.game.PositionFactory;
 import org.forritan.talvmenni.game.Rules;
 import org.forritan.talvmenni.game.Strategy;
 import org.forritan.talvmenni.ui.ConsoleProtocol;
@@ -142,7 +143,7 @@ public class ChessEngine extends Observable implements Runnable {
       }
 
       public void newGame() {
-         this.setCurrentPosition(ImmutablePosition.createInitialImmutable());
+         this.setCurrentPosition(PositionFactory.createInitialImmutable());
          MoveHistory.getInstance().reset();
          this.WhiteToMove = true;
          this.go= true;
@@ -170,8 +171,8 @@ public class ChessEngine extends Observable implements Runnable {
       }
 
       public void setCurrentPosition(Position position) {
-         this.currentPosition= position;
-         if(this.currentPosition != null) {
+         if(position != null) {
+            this.currentPosition= position.getImmutable();
             if(this.WhiteToMove) {
                this.debugInfo.postPossibleMoves(this.currentPosition.getWhite().getPossibleMoves());
             } else {
@@ -305,7 +306,7 @@ public class ChessEngine extends Observable implements Runnable {
             }
          }
  
-         Position FenPosition = ImmutablePosition.create(whiteKings, whiteQueens, whiteRooks, whiteBishops,
+         Position FenPosition = ImmutablePosition.createImmutable(whiteKings, whiteQueens, whiteRooks, whiteBishops,
                whiteKnights, whitePawns, whiteCastling, whiteEnpassant,
                blackKings, blackQueens, blackRooks, blackBishops,
                blackKnights, blackPawns, blackCastling, blackEnpassant);
@@ -324,7 +325,7 @@ public class ChessEngine extends Observable implements Runnable {
       }
       
       public Move makeNextMove() {
-         ImmutablePosition.Move nextMove= ChessEngine.this.strategy.getNextMove(this.getCurrentPosition(), this.WhiteToMove);
+         Position.Move nextMove= ChessEngine.this.strategy.getNextMove(this.getCurrentPosition(), this.WhiteToMove);
          Move move= null;
          if(nextMove != null) {
             move= new Move(this.getCurrentPosition(), nextMove.from, nextMove.to, ChessEngine.this.strategy.getPromotionPiece());

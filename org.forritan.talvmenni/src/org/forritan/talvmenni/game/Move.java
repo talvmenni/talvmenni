@@ -22,7 +22,11 @@ public class Move {
          int promotionPiece) {
       this.time= System.currentTimeMillis();
       this.promotionPiece= promotionPiece;
-      this.fromPosition= fromPosition;
+      if(fromPosition instanceof MutablePosition) {
+         this.fromPosition= PositionFactory.createImmutable(fromPosition.getWhite(), fromPosition.getBlack());         
+      } else {
+         this.fromPosition= fromPosition;
+      }
       this.whiteMove= this.fromPosition.getWhite().isAnyPieceOnPosition(fromSquare);
       this.toPosition= fromPosition.move(
             fromSquare,
@@ -38,7 +42,11 @@ public class Move {
          long toSquare) {
       this.time= System.currentTimeMillis();
       this.promotionPiece= Position.PromotionPiece.DEFAULT;
-      this.fromPosition= fromPosition;
+      if(fromPosition instanceof MutablePosition) {
+         this.fromPosition= PositionFactory.createImmutable(fromPosition.getWhite(), fromPosition.getBlack());         
+      } else {
+         this.fromPosition= fromPosition;
+      }
       this.whiteMove= this.fromPosition.getWhite().isAnyPieceOnPosition(fromSquare);
       this.toPosition= fromPosition.move(
             fromSquare,
@@ -51,11 +59,11 @@ public class Move {
       String result= "";
       if(this.whiteMove) {
          if(fromPosition.getWhite().isPawn(from) && ((from & ~Rank._7) == Square._EMPTY_BOARD)) {
-            result= ImmutablePosition.PromotionPiece.STRINGS[this.promotionPiece];
+            result= PositionFactory.PromotionPiece.STRINGS[this.promotionPiece];
          }
       } else {
          if(fromPosition.getBlack().isPawn(from) && ((from & ~Rank._2) == Square._EMPTY_BOARD)) {
-            result= ImmutablePosition.PromotionPiece.STRINGS[this.promotionPiece];
+            result= PositionFactory.PromotionPiece.STRINGS[this.promotionPiece];
          }
       }
       return result;

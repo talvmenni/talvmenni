@@ -7,12 +7,13 @@ import org.forritan.talvmenni.core.ChessEngine;
 import org.forritan.talvmenni.evaluation.Evaluation;
 import org.forritan.talvmenni.game.ImmutablePosition;
 import org.forritan.talvmenni.game.Position;
+import org.forritan.talvmenni.game.PositionFactory;
 import org.forritan.talvmenni.game.Position.Move;
 
 public interface Search {
    
    public void setPly(int ply);
-   public List<ImmutablePosition.Move> getBestMoves(Position p, Evaluation e, boolean whiteMove);
+   public List<Position.Move> getBestMoves(Position p, Evaluation e, boolean whiteMove);
    
    public Thinking getThinking();
    public DebugInfo getDebugInfo();
@@ -65,10 +66,10 @@ public interface Search {
          this.notifyObservers(
                "---------------------------\n" +
                "Positions created: " 
-               + ImmutablePosition.positionsCreated 
+               + PositionFactory.positionsCreated 
                + "\n"
                + "Average possible moves: " 
-               + ImmutablePosition.positionsCreated / ImmutablePosition.nodes
+               + PositionFactory.positionsCreated / PositionFactory.nodes
                + "\n"
                + "---------------------------\n");
       }

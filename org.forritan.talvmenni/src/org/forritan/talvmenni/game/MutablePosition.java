@@ -1,8 +1,14 @@
 package org.forritan.talvmenni.game;
 
+import java.util.Stack;
 
 
-public class ImmutablePosition extends PositionFactory {
+public class MutablePosition extends PositionFactory {
+   
+   Stack<Bitboard> whiteBitboards;
+   Stack<Bitboard> blackBitboards;
+   
+   int pushMoves;
 
    /**
     * 
@@ -23,7 +29,7 @@ public class ImmutablePosition extends PositionFactory {
     * @param blackCastling
     * @param blackEnpassant
     */
-   protected ImmutablePosition(
+   protected MutablePosition(
          long whiteKings,
          long whiteQueens,
          long whiteRooks,
@@ -57,38 +63,65 @@ public class ImmutablePosition extends PositionFactory {
             blackPawns,
             blackCastling,
             blackEnpassant);
-
+      this.whiteBitboards= new Stack<Bitboard>();
+      this.blackBitboards= new Stack<Bitboard>();
    }
 
    /**
     * @param white
     * @param black
     */
-   protected ImmutablePosition(
+   protected MutablePosition(
          Bitboard white,
          Bitboard black) {
       super(
             white,
             black);
+      this.whiteBitboards= new Stack<Bitboard>();
+      this.blackBitboards= new Stack<Bitboard>();
    }
 
    public Position pushMove(
          Bitboard white,
          Bitboard black) {
-      return PositionFactory.createImmutable(
-            white,
-            black);
+      
+//      String pre= "";
+//      
+//      this.pushMoves++;
+//
+//      for (int i= 0; i < this.pushMoves; i++) {
+//         pre += ">";
+//      }
+//      System.err.println(pre);
+      
+      this.whiteBitboards.push(this.white);
+      this.blackBitboards.push(this.black);
+      this.white= white;
+      this.black= black;
+      return this;
    }
-
+   
    public Position popMove() {
+      this.white= this.whiteBitboards.pop();
+      this.black= this.blackBitboards.pop();
+
+//      String pre= "";
+//
+//      for (int i= 0; i < this.pushMoves; i++) {
+//         pre += "<";
+//      }
+//      System.err.println(pre);
+//      
+//      this.pushMoves--;
+
       return this;
    }
 
    public Position getImmutable() {
-      return this;
+      return PositionFactory.createImmutable(this.getWhite(), this.getBlack());
    }
 
    public Position getMutable() {
-      return PositionFactory.createMutable(this.getWhite(), this.getBlack());
+      return this;
    }
 }

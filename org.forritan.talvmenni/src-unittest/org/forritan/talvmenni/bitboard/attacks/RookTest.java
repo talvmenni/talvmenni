@@ -24,7 +24,7 @@ public class RookTest extends TestCase {
    }
 
    public void testRookAttacks1() {
-      Position p= ImmutablePosition.create(
+      Position p= ImmutablePosition.createImmutable(
             Square._E1, // whiteKings
             Square._G4, // whiteQueens
             Square._A1

@@ -15,7 +15,7 @@ public class TestSpeedOnRookAttacks {
             + " times...");
 
       long time= -System.currentTimeMillis();
-      Position p= ImmutablePosition.create(
+      Position p= ImmutablePosition.createImmutable(
             Square._E1, // whiteKings
             Square._G4, // whiteQueens
             Square._A1

@@ -11,13 +11,13 @@ import junit.framework.TestCase;
 public class SimpleMaterialEvaluationTest extends TestCase {
 
    public void testGetScoreOnInitialPosition() {
-      Position p= ImmutablePosition.createInitial();
+      Position p= ImmutablePosition.createInitialImmutable();
       Evaluation e= new SimpleMaterialEvaluation();
       Assert.assertEquals(0, e.getScore(p));
    }
    
    public void testGetScoreAllWhitePiecesOnlyBlackKing() {
-      Position p= ImmutablePosition.create(
+      Position p= ImmutablePosition.createImmutable(
             Square._E1, // whiteKings
             Square._D1, // whiteQueens
             Square._A1
@@ -45,7 +45,7 @@ public class SimpleMaterialEvaluationTest extends TestCase {
    }
    
    public void testGetScoreAllBlackPiecesOnlyWhiteKing() {
-      Position p= ImmutablePosition.create(
+      Position p= ImmutablePosition.createImmutable(
             Square._E1, // whiteKings
             Square._EMPTY_BOARD, // whiteQueens
             Square._EMPTY_BOARD, // whiteRooks

@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.forritan.talvmenni.core.ChessEngine;
 import org.forritan.talvmenni.evaluation.Evaluation;
 import org.forritan.talvmenni.game.ImmutablePosition;
 import org.forritan.talvmenni.game.Position;
+import org.forritan.talvmenni.game.PositionFactory;
 import org.forritan.talvmenni.game.Position.Move;
 
 public class AlphaBetaWithKillerMoveOrderingSearch implements Search {
@@ -44,7 +44,7 @@ public class AlphaBetaWithKillerMoveOrderingSearch implements Search {
       int alpha= Integer.MIN_VALUE + 1; // Very important!!! Can't be Integer.MIN_VALUE, because Integer.MIN_VALUE == -Integer.MIN_VALUE
       int beta= Integer.MAX_VALUE;
             
-      ImmutablePosition.nodes++;
+      PositionFactory.nodes++;
       
       long time= -System.currentTimeMillis();
       this.movesSearched= 0;
@@ -63,7 +63,9 @@ public class AlphaBetaWithKillerMoveOrderingSearch implements Search {
          long moveTime= -System.currentTimeMillis();
          int movesSearchedBeforeMove= this.movesSearched++;
          MoveScoreTuple score= this.getBestMove(p.move(move.from, move.to), e, !whiteMove, ply - 1, alpha, beta);
-         score.add(move, 0);
+         p.popMove();
+         score.add(move, e.getScore(p));
+//         score.add(move, 0);
          this.debugInfo.postCurrentBestMove(move, score.getScore(), (this.movesSearched - movesSearchedBeforeMove));
          if(bestScore == null || (whiteMove ? score.getScore() > bestScore.getScore() : score.getScore() < bestScore.getScore())) {
             bestScore= score;
@@ -95,17 +97,9 @@ public class AlphaBetaWithKillerMoveOrderingSearch implements Search {
                beta= bestScore.score;
             }
          }
-         this.debugInfo.postText("Alpha: " + alpha + " and Beta: " + beta);
-
       }
-//      this.debugInfo.postPossibleMoves(p.getWhite().getPossibleMoves());
       p.getWhite().updatePossibleMovesOrdering();
-//      this.debugInfo.postPossibleMoves(p.getWhite().getPossibleMoves());
-
-//      this.debugInfo.postPossibleMoves(p.getBlack().getPossibleMoves());
       p.getBlack().updatePossibleMovesOrdering();
-//      this.debugInfo.postPossibleMoves(p.getBlack().getPossibleMoves());
-
       
       time += System.currentTimeMillis(); 
       
@@ -124,7 +118,7 @@ public class AlphaBetaWithKillerMoveOrderingSearch implements Search {
          int alpha,
          int beta) {
 
-      ImmutablePosition.nodes++;
+      PositionFactory.nodes++;
       
       MoveScoreTuple result= new MoveScoreTuple(null, 0);
       if(depth > 1) {
@@ -142,6 +136,7 @@ public class AlphaBetaWithKillerMoveOrderingSearch implements Search {
             for(Move move : moves) {
                this.movesSearched++;
                MoveScoreTuple score= this.getBestMove(p.move(move.from, move.to), e, !whiteMove, depth - 1, -beta, -alpha);
+               p.popMove();
                if(bestScore == null || (whiteMove ? score.getScore() > bestScore.getScore() : score.getScore() < bestScore.getScore())) {
                   bestScore= score;
                   currentBestMove= move;
@@ -156,17 +151,14 @@ public class AlphaBetaWithKillerMoveOrderingSearch implements Search {
                }
                if(alpha >= beta) {
                   break;
-               }               
+               }
             }
-//            this.debugInfo.postPossibleMoves(p.getWhite().getPossibleMoves());
             p.getWhite().updatePossibleMovesOrdering();
-//            this.debugInfo.postPossibleMoves(p.getWhite().getPossibleMoves());
-
-//            this.debugInfo.postPossibleMoves(p.getBlack().getPossibleMoves());
             p.getBlack().updatePossibleMovesOrdering();
-//            this.debugInfo.postPossibleMoves(p.getBlack().getPossibleMoves());
+
             result= bestScore;
-            result.add(currentBestMove, 0);
+            result.add(currentBestMove, e.getScore(p));
+//            result.add(currentBestMove, 0);
             
          } else {
             if(whiteMove){
@@ -197,6 +189,7 @@ public class AlphaBetaWithKillerMoveOrderingSearch implements Search {
             for(Move move : moves) {
                this.movesSearched++;
                int score= e.getScore(p.move(move.from, move.to));
+               p.popMove();
                if((whiteMove ? score >= bestScore : score <= bestScore)) {
                   bestScore= score;
                   result= new MoveScoreTuple(move, score);
@@ -207,13 +200,8 @@ public class AlphaBetaWithKillerMoveOrderingSearch implements Search {
                   }
                }
             }
-//            this.debugInfo.postPossibleMoves(p.getWhite().getPossibleMoves());
             p.getWhite().updatePossibleMovesOrdering();
-//            this.debugInfo.postPossibleMoves(p.getWhite().getPossibleMoves());
-
-//            this.debugInfo.postPossibleMoves(p.getBlack().getPossibleMoves());
             p.getBlack().updatePossibleMovesOrdering();
-//            this.debugInfo.postPossibleMoves(p.getBlack().getPossibleMoves());
          } else {
             if(whiteMove){
                if(p.getWhite().isChecked()) {

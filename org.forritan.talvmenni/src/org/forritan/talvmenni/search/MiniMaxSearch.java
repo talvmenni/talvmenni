@@ -7,6 +7,7 @@ import java.util.List;
 import org.forritan.talvmenni.evaluation.Evaluation;
 import org.forritan.talvmenni.game.ImmutablePosition;
 import org.forritan.talvmenni.game.Position;
+import org.forritan.talvmenni.game.PositionFactory;
 import org.forritan.talvmenni.game.Position.Move;
 
 public class MiniMaxSearch implements Search {
@@ -60,8 +61,8 @@ public class MiniMaxSearch implements Search {
          long moveTime= -System.currentTimeMillis();
          int movesSearchedBeforeMove= this.movesSearched++;
          MoveScoreTuple score= this.getBestMove(p.move(move.from, move.to), e, !whiteMove, ply - 1);
-//         score.add(move, e.getScore(p));
-         score.add(move, 0);
+         score.add(move, e.getScore(p));
+//         score.add(move, 0);
          this.debugInfo.postCurrentBestMove(move, score.getScore(), (this.movesSearched - movesSearchedBeforeMove));
          if(bestScore == null || (whiteMove ? score.getScore() > bestScore.getScore() : score.getScore() < bestScore.getScore())) {
             bestScore= score;
@@ -74,6 +75,7 @@ public class MiniMaxSearch implements Search {
             result.add(move);
             this.thinking.postThinking(ply, bestScore.getScore(), moveTime, this.movesSearched, bestScore.getMoveList().toString());
          }
+         p.popMove();
       }
       
       time += System.currentTimeMillis(); 
@@ -91,7 +93,7 @@ public class MiniMaxSearch implements Search {
          boolean whiteMove,
          int depth) {
 
-      ImmutablePosition.nodes++;
+      PositionFactory.nodes++;
       
       MoveScoreTuple result= new MoveScoreTuple(null, 0);
       if(depth > 1) {
@@ -113,10 +115,11 @@ public class MiniMaxSearch implements Search {
                   bestScore= score;
                   currentBestMove= move;
                }
+               p.popMove();
             }         
             result= bestScore;
-//            result.add(currentBestMove, e.getScore(p));
-            result.add(currentBestMove, 0);
+            result.add(currentBestMove, e.getScore(p));
+//            result.add(currentBestMove, 0);
             
          } else {
             if(whiteMove){
@@ -151,6 +154,7 @@ public class MiniMaxSearch implements Search {
                   bestScore= score;
                   result= new MoveScoreTuple(move, score);
                }
+               p.popMove();
             }
          } else {
             if(whiteMove){

@@ -19,6 +19,9 @@ import org.forritan.talvmenni.bitboard.attacks.WhitePawn;
 public interface Position {
    public Bitboard getBlack();
    public Bitboard getWhite();
+   
+   public Position getImmutable();
+   public Position getMutable();
 
    public Position move(
          long from,
@@ -32,6 +35,11 @@ public interface Position {
    public boolean isLegalMove(
          long from,
          long to);
+   
+   public Position pushMove(Bitboard white,
+         Bitboard black);
+   
+   public Position popMove();
    
    public static interface PromotionPiece {
       public final static int DEFAULT= 0;
@@ -180,9 +188,9 @@ public interface Position {
    
             if(this.isKingsSideCastlingLegal()) {
                if(this.white) {
-                  this.possibleMoves.add(new ImmutablePosition.Move(Square._E1, Square._G1));
+                  this.possibleMoves.add(new Move(Square._E1, Square._G1));
                } else {
-                  this.possibleMoves.add(new ImmutablePosition.Move(Square._E8, Square._G8));
+                  this.possibleMoves.add(new Move(Square._E8, Square._G8));
                }               
             }
          
@@ -259,6 +267,7 @@ public interface Position {
                   result.add(new Move(fromSquare, toSquare));                  
                }
             }
+            this.parent.popMove();
             newPosition= null;
          }
       }

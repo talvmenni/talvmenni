@@ -28,7 +28,7 @@ public class PositionTest extends TestCase {
    }
 
    public void testCreateInitial() {
-      Position p= ImmutablePosition.createInitial();
+      Position p= ImmutablePosition.createInitialImmutable();
       Assert.assertTrue(
             "White king should be on e1!",
             ((p.getWhite().kings ^ Square._E1) == 0L));
@@ -69,7 +69,7 @@ public class PositionTest extends TestCase {
    }
 
    public void testAllPiecesIterator() {
-      Position p= ImmutablePosition.createInitial();
+      Position p= ImmutablePosition.createInitialImmutable();
       Iterator allWhitePieces= p.getWhite().allPiecesIterator();
       long piece;
 
@@ -222,7 +222,7 @@ public class PositionTest extends TestCase {
    }
 
    public void testIsPawnAtInitialPosition() {
-      Position p= ImmutablePosition.createInitial();
+      Position p= ImmutablePosition.createInitialImmutable();
       Assert.assertTrue(
             "Should be white pawn",
             p.getWhite().isPawn(Square._A2));
@@ -274,7 +274,7 @@ public class PositionTest extends TestCase {
    }
 
    public void testIsKingAtInitialPosition() {
-      Position p= ImmutablePosition.createInitial();
+      Position p= ImmutablePosition.createInitialImmutable();
       Assert.assertTrue(
             "Should be white king",
             p.getWhite().isKing(Square._E1));
@@ -290,7 +290,7 @@ public class PositionTest extends TestCase {
    }
 
    public void testIsQueenAtInitialPosition() {
-      Position p= ImmutablePosition.createInitial();
+      Position p= ImmutablePosition.createInitialImmutable();
       Assert.assertTrue(
             "Should be white queen",
             p.getWhite().isQueen(Square._D1));
@@ -306,7 +306,7 @@ public class PositionTest extends TestCase {
    }
 
    public void testIsRookAtInitialPosition() {
-      Position p= ImmutablePosition.createInitial();
+      Position p= ImmutablePosition.createInitialImmutable();
       Assert.assertTrue(
             "Should be white rook",
             p.getWhite().isRook(Square._A1));
@@ -323,7 +323,7 @@ public class PositionTest extends TestCase {
    }
 
    public void testIsBishopAtInitialPosition() {
-      Position p= ImmutablePosition.createInitial();
+      Position p= ImmutablePosition.createInitialImmutable();
       Assert.assertTrue(
             "Should be white bishop",
             p.getWhite().isBishop(Square._C1));
@@ -340,7 +340,7 @@ public class PositionTest extends TestCase {
    }
 
    public void testIsKnightAtInitialPosition() {
-      Position p= ImmutablePosition.createInitial();
+      Position p= ImmutablePosition.createInitialImmutable();
       Assert.assertTrue(
             "Should be white knight",
             p.getWhite().isKnight(Square._B1));
@@ -357,7 +357,7 @@ public class PositionTest extends TestCase {
    }
 
    public void testEnpassantAfterA2A4() {
-      Position p= ImmutablePosition.createInitial().move(
+      Position p= ImmutablePosition.createInitialImmutable().move(
             Square._A2,
             Square._A4);
       Assert.assertTrue(
@@ -369,7 +369,7 @@ public class PositionTest extends TestCase {
    }
 
    public void testEnpassantAfterB2B4() {
-      Position p= ImmutablePosition.createInitial().move(
+      Position p= ImmutablePosition.createInitialImmutable().move(
             Square._B2,
             Square._B4);
       Assert.assertTrue(
@@ -381,7 +381,7 @@ public class PositionTest extends TestCase {
    }
 
    public void testEnpassantAfterC2C4() {
-      Position p= ImmutablePosition.createInitial().move(
+      Position p= ImmutablePosition.createInitialImmutable().move(
             Square._C2,
             Square._C4);
       Assert.assertTrue(
@@ -393,7 +393,7 @@ public class PositionTest extends TestCase {
    }
 
    public void testEnpassantAfterD2D4() {
-      Position p= ImmutablePosition.createInitial().move(
+      Position p= ImmutablePosition.createInitialImmutable().move(
             Square._D2,
             Square._D4);
       Assert.assertTrue(
@@ -405,7 +405,7 @@ public class PositionTest extends TestCase {
    }
 
    public void testEnpassantAfterE2E4() {
-      Position p= ImmutablePosition.createInitial().move(
+      Position p= ImmutablePosition.createInitialImmutable().move(
             Square._E2,
             Square._E4);
       Assert.assertTrue(
@@ -417,7 +417,7 @@ public class PositionTest extends TestCase {
    }
 
    public void testEnpassantAfterF2F4() {
-      Position p= ImmutablePosition.createInitial().move(
+      Position p= ImmutablePosition.createInitialImmutable().move(
             Square._F2,
             Square._F4);
       Assert.assertTrue(
@@ -429,7 +429,7 @@ public class PositionTest extends TestCase {
    }
 
    public void testEnpassantAfterG2G4() {
-      Position p= ImmutablePosition.createInitial().move(
+      Position p= ImmutablePosition.createInitialImmutable().move(
             Square._G2,
             Square._G4);
       Assert.assertTrue(
@@ -441,7 +441,7 @@ public class PositionTest extends TestCase {
    }
 
    public void testEnpassantAfterH2H4() {
-      Position p= ImmutablePosition.createInitial().move(
+      Position p= ImmutablePosition.createInitialImmutable().move(
             Square._H2,
             Square._H4);
       Assert.assertTrue(
@@ -453,7 +453,7 @@ public class PositionTest extends TestCase {
    }
 
    public void testEnpassantAfterA7A5() {
-      Position p= ImmutablePosition.createInitial().move(
+      Position p= ImmutablePosition.createInitialImmutable().move(
             Square._A7,
             Square._A5);
       Assert.assertTrue(
@@ -465,7 +465,7 @@ public class PositionTest extends TestCase {
    }
 
    public void testEnpassantAfterB7B5() {
-      Position p= ImmutablePosition.createInitial().move(
+      Position p= ImmutablePosition.createInitialImmutable().move(
             Square._B7,
             Square._B5);
       Assert.assertTrue(
@@ -477,7 +477,7 @@ public class PositionTest extends TestCase {
    }
 
    public void testEnpassantAfterC7C5() {
-      Position p= ImmutablePosition.createInitial().move(
+      Position p= ImmutablePosition.createInitialImmutable().move(
             Square._C7,
             Square._C5);
       Assert.assertTrue(
@@ -489,7 +489,7 @@ public class PositionTest extends TestCase {
    }
 
    public void testEnpassantAfterD7D5() {
-      Position p= ImmutablePosition.createInitial().move(
+      Position p= ImmutablePosition.createInitialImmutable().move(
             Square._D7,
             Square._D5);
       Assert.assertTrue(
@@ -501,7 +501,7 @@ public class PositionTest extends TestCase {
    }
 
    public void testEnpassantAfterE7E5() {
-      Position p= ImmutablePosition.createInitial().move(
+      Position p= ImmutablePosition.createInitialImmutable().move(
             Square._E7,
             Square._E5);
       Assert.assertTrue(
@@ -513,7 +513,7 @@ public class PositionTest extends TestCase {
    }
 
    public void testEnpassantAfterF7F5() {
-      Position p= ImmutablePosition.createInitial().move(
+      Position p= ImmutablePosition.createInitialImmutable().move(
             Square._F7,
             Square._F5);
       Assert.assertTrue(
@@ -525,7 +525,7 @@ public class PositionTest extends TestCase {
    }
 
    public void testEnpassantAfterG7G5() {
-      Position p= ImmutablePosition.createInitial().move(
+      Position p= ImmutablePosition.createInitialImmutable().move(
             Square._G7,
             Square._G5);
       Assert.assertTrue(
@@ -537,7 +537,7 @@ public class PositionTest extends TestCase {
    }
 
    public void testEnpassantAfterH7H5() {
-      Position p= ImmutablePosition.createInitial().move(
+      Position p= ImmutablePosition.createInitialImmutable().move(
             Square._H7,
             Square._H5);
       Assert.assertTrue(
@@ -549,7 +549,7 @@ public class PositionTest extends TestCase {
    }
 
    public void testEnpassant() {
-      Position p= ImmutablePosition.create(
+      Position p= ImmutablePosition.createImmutable(
             Square._H1, // whiteKings
             Square._EMPTY_BOARD, // whiteQueens
             Square._EMPTY_BOARD, // whiteRooks
@@ -624,7 +624,7 @@ public class PositionTest extends TestCase {
    public void testAllAttackedSquaresInitialBoard() {
 
       long attacks;
-      Position p= ImmutablePosition.createInitial();
+      Position p= ImmutablePosition.createInitialImmutable();
 
       attacks= p.getWhite().getAllCaptureMovesAttackedSquares();
       Assert.assertEquals(
@@ -675,7 +675,7 @@ public class PositionTest extends TestCase {
    public void testAllAttackedSquaresKings() {
 
       long attacks;
-      Position p= ImmutablePosition.create(
+      Position p= ImmutablePosition.createImmutable(
             Square._F3, // whiteKings
             Square._EMPTY_BOARD, // whiteQueens
             Square._EMPTY_BOARD, // whiteRooks

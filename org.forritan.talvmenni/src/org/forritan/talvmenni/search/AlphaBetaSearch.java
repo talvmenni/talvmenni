@@ -7,6 +7,7 @@ import java.util.List;
 import org.forritan.talvmenni.evaluation.Evaluation;
 import org.forritan.talvmenni.game.ImmutablePosition;
 import org.forritan.talvmenni.game.Position;
+import org.forritan.talvmenni.game.PositionFactory;
 import org.forritan.talvmenni.game.Position.Move;
 
 public class AlphaBetaSearch implements Search {
@@ -16,6 +17,10 @@ public class AlphaBetaSearch implements Search {
    private int ply;
    
    private int movesSearched;
+   
+   public AlphaBetaSearch() {
+      this(0);
+   }
    
    public AlphaBetaSearch(int ply) {
       this.ply= ply;
@@ -41,10 +46,13 @@ public class AlphaBetaSearch implements Search {
          Evaluation e,
          boolean whiteMove) {
       
-      int alpha= Integer.MIN_VALUE + 1; // Very important!!! Can't be Integer.MIN_VALUE, because Integer.MIN_VALUE == -Integer.MIN_VALUE
+      int alpha= Integer.MIN_VALUE + 1; // Very important!!! Can't be
+                                        // Integer.MIN_VALUE, because
+                                        // Integer.MIN_VALUE ==
+                                        // -Integer.MIN_VALUE
       int beta= Integer.MAX_VALUE;
             
-      ImmutablePosition.nodes++;
+      PositionFactory.nodes++;
       
       long time= -System.currentTimeMillis();
       this.movesSearched= 0;
@@ -63,8 +71,8 @@ public class AlphaBetaSearch implements Search {
          long moveTime= -System.currentTimeMillis();
          int movesSearchedBeforeMove= this.movesSearched++;
          MoveScoreTuple score= this.getBestMove(p.move(move.from, move.to), e, !whiteMove, ply - 1, alpha, beta);
-//       score.add(move, e.getScore(p));
-         score.add(move, 0);
+         score.add(move, e.getScore(p));
+//       score.add(move, 0);
          this.debugInfo.postCurrentBestMove(move, score.getScore(), (this.movesSearched - movesSearchedBeforeMove));
          if(bestScore == null || (whiteMove ? score.getScore() > bestScore.getScore() : score.getScore() < bestScore.getScore())) {
             bestScore= score;
@@ -86,8 +94,8 @@ public class AlphaBetaSearch implements Search {
                beta= bestScore.score;
             }
          }
+         p.popMove();
          this.debugInfo.postText("Alpha: " + alpha + " and Beta: " + beta);
-
       }
       
       time += System.currentTimeMillis(); 
@@ -107,7 +115,7 @@ public class AlphaBetaSearch implements Search {
          int alpha,
          int beta) {
 
-      ImmutablePosition.nodes++;
+      PositionFactory.nodes++;
       
       MoveScoreTuple result= new MoveScoreTuple(null, 0);
       if(depth > 1) {
@@ -134,10 +142,10 @@ public class AlphaBetaSearch implements Search {
                }
                if(alpha >= beta) {
                   break;
-               }               
+               }
+               p.popMove();
             }         
             result= bestScore;
-//            result.add(currentBestMove, e.getScore(p));
             result.add(currentBestMove, 0);
             
          } else {
@@ -173,6 +181,7 @@ public class AlphaBetaSearch implements Search {
                   bestScore= score;
                   result= new MoveScoreTuple(move, score);
                }
+               p.popMove();
             }
          } else {
             if(whiteMove){
