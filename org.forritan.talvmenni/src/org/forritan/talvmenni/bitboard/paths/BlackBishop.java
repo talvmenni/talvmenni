@@ -118,13 +118,15 @@ public interface BlackBishop {
 			| Square._H6;
 
 	public static final long _PATHS_FROM_G3 =
-		Square._C7
+		Square._B8
+         | Square._C7
 			| Square._D6
 			| Square._E5
 			| Square._F4
 			| Square._F2
 			| Square._H2
-			| Square._H4;
+			| Square._H4
+         | Square._E1;
 
 	public static final long _PATHS_FROM_B4 =
 		Square._A3
@@ -154,17 +156,15 @@ public interface BlackBishop {
 
 	public static final long _PATHS_FROM_F4 =
 		Square._B8
-			| Square._C1
 			| Square._C7
+         | Square._D6
+         | Square._E5
+         | Square._E3
 			| Square._D2
-			| Square._D6
-			| Square._E3
-			| Square._D4
-			| Square._E3
-			| Square._E5
+         | Square._C1
 			| Square._G3
+         | Square._H2
 			| Square._G5
-			| Square._H2
 			| Square._H6;
 
 	public static final long _PATHS_FROM_H4 =
@@ -266,9 +266,9 @@ public interface BlackBishop {
 			| Square._D2
 			| Square._E3
 			| Square._F4
-			| Square._F8
-			| Square._G5
-			| Square._H7;
+         | Square._G5
+         | Square._G7
+         | Square._F8;
 
 	public static final long _PATHS_FROM_A7 =
 		Square._B6
@@ -283,12 +283,12 @@ public interface BlackBishop {
 		Square._A5
 			| Square._B6
 			| Square._B8
-			| Square._D6
 			| Square._D8
+         | Square._D6
 			| Square._E5
 			| Square._F4
 			| Square._G3
-			| Square._H7;
+			| Square._H2;
 
 	public static final long _PATHS_FROM_E7 =
 		Square._A3
@@ -323,7 +323,7 @@ public interface BlackBishop {
 
 	public static final long _PATHS_FROM_D8 =
 		Square._A5
-			| Square._B4
+			| Square._B6
 			| Square._C7
 			| Square._E7
 			| Square._F6

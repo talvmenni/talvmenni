@@ -85,8 +85,8 @@ public interface WhiteBishop {
 	public static final long _PATHS_FROM_B3 =
 		Square._A2
 			| Square._A4
-			| Square._D2
-			| Square._D4
+			| Square._C2
+			| Square._C4
 			| Square._D1
 			| Square._D5
 			| Square._E6
