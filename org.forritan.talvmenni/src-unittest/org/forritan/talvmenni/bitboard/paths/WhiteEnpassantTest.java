@@ -241,9 +241,9 @@ public class WhiteEnpassantTest extends TestCase {
                   + // A6-H6
                   "00000000"
                   + // A5-H5
-                  "10000000"
+                  "11000000"
                   + // A4-H4
-                  "01000000"
+                  "00000000"
                   + // A3-H3
                   "00000000"
                   + // A2-H2
@@ -266,9 +266,9 @@ public class WhiteEnpassantTest extends TestCase {
                   + // A6-H6
                   "00000000"
                   + // A5-H5
-                  "01000000"
+                  "11100000"
                   + // A4-H4
-                  "10100000"
+                  "00000000"
                   + // A3-H3
                   "00000000"
                   + // A2-H2
@@ -291,9 +291,9 @@ public class WhiteEnpassantTest extends TestCase {
                   + // A6-H6
                   "00000000"
                   + // A5-H5
-                  "00100000"
+                  "01110000"
                   + // A4-H4
-                  "01010000"
+                  "00000000"
                   + // A3-H3
                   "00000000"
                   + // A2-H2
@@ -316,9 +316,9 @@ public class WhiteEnpassantTest extends TestCase {
                   + // A6-H6
                   "00000000"
                   + // A5-H5
-                  "00010000"
+                  "00111000"
                   + // A4-H4
-                  "00101000"
+                  "00000000"
                   + // A3-H3
                   "00000000"
                   + // A2-H2
@@ -341,9 +341,9 @@ public class WhiteEnpassantTest extends TestCase {
                   + // A6-H6
                   "00000000"
                   + // A5-H5
-                  "00001000"
+                  "00011100"
                   + // A4-H4
-                  "00010100"
+                  "00000000"
                   + // A3-H3
                   "00000000"
                   + // A2-H2
@@ -366,9 +366,9 @@ public class WhiteEnpassantTest extends TestCase {
                   + // A6-H6
                   "00000000"
                   + // A5-H5
-                  "00000100"
+                  "00001110"
                   + // A4-H4
-                  "00001010"
+                  "00000000"
                   + // A3-H3
                   "00000000"
                   + // A2-H2
@@ -391,9 +391,9 @@ public class WhiteEnpassantTest extends TestCase {
                   + // A6-H6
                   "00000000"
                   + // A5-H5
-                  "00000010"
+                  "00000111"
                   + // A4-H4
-                  "00000101"
+                  "00000000"
                   + // A3-H3
                   "00000000"
                   + // A2-H2
@@ -416,9 +416,9 @@ public class WhiteEnpassantTest extends TestCase {
                   + // A6-H6
                   "00000000"
                   + // A5-H5
-                  "00000001"
+                  "00000011"
                   + // A4-H4
-                  "00000010"
+                  "00000000"
                   + // A3-H3
                   "00000000"
                   + // A2-H2

@@ -1237,9 +1237,9 @@ public class BlackEnpassantTest extends TestCase {
                   + // A8-H8
                   "00000000"
                   + // A7-H7
-                  "01000000"
+                  "00000000"
                   + // A6-H6
-                  "10000000"
+                  "11000000"
                   + // A5-H5
                   "00000000"
                   + // A4-H4
@@ -1262,9 +1262,9 @@ public class BlackEnpassantTest extends TestCase {
                   + // A8-H8
                   "00000000"
                   + // A7-H7
-                  "10100000"
+                  "00000000"
                   + // A6-H6
-                  "01000000"
+                  "11100000"
                   + // A5-H5
                   "00000000"
                   + // A4-H4
@@ -1287,9 +1287,9 @@ public class BlackEnpassantTest extends TestCase {
                   + // A8-H8
                   "00000000"
                   + // A7-H7
-                  "01010000"
+                  "00000000"
                   + // A6-H6
-                  "00100000"
+                  "01110000"
                   + // A5-H5
                   "00000000"
                   + // A4-H4
@@ -1312,9 +1312,9 @@ public class BlackEnpassantTest extends TestCase {
                   + // A8-H8
                   "00000000"
                   + // A7-H7
-                  "00101000"
+                  "00000000"
                   + // A6-H6
-                  "00010000"
+                  "00111000"
                   + // A5-H5
                   "00000000"
                   + // A4-H4
@@ -1337,9 +1337,9 @@ public class BlackEnpassantTest extends TestCase {
                   + // A8-H8
                   "00000000"
                   + // A7-H7
-                  "00010100"
+                  "00000000"
                   + // A6-H6
-                  "00001000"
+                  "00011100"
                   + // A5-H5
                   "00000000"
                   + // A4-H4
@@ -1362,9 +1362,9 @@ public class BlackEnpassantTest extends TestCase {
                   + // A8-H8
                   "00000000"
                   + // A7-H7
-                  "00001010"
+                  "00000000"
                   + // A6-H6
-                  "00000100"
+                  "00001110"
                   + // A5-H5
                   "00000000"
                   + // A4-H4
@@ -1387,9 +1387,9 @@ public class BlackEnpassantTest extends TestCase {
                   + // A8-H8
                   "00000000"
                   + // A7-H7
-                  "00000101"
+                  "00000000"
                   + // A6-H6
-                  "00000010"
+                  "00000111"
                   + // A5-H5
                   "00000000"
                   + // A4-H4
@@ -1412,9 +1412,9 @@ public class BlackEnpassantTest extends TestCase {
                   + // A8-H8
                   "00000000"
                   + // A7-H7
-                  "00000010"
+                  "00000000"
                   + // A6-H6
-                  "00000001"
+                  "00000011"
                   + // A5-H5
                   "00000000"
                   + // A4-H4
