@@ -30,6 +30,13 @@ public class XboardProtocol extends UiProtocolBase {
    public String processInput(
          String theInput) {
       String theOutput= "";
+      
+      String strategyName= ((this.protocol.getStrategy().getClass().getName()
+            .lastIndexOf(
+            '.') > 0) ? this.protocol.getStrategy().getClass().getName().substring(
+            this.protocol.getStrategy().getClass().getName()
+            .lastIndexOf(
+                  '.') + 1) : this.protocol.getStrategy().getClass().getName());
 
       if (theInput.equalsIgnoreCase("protover 2")) {
          theOutput+= "feature usermove=1 "
@@ -43,17 +50,19 @@ public class XboardProtocol extends UiProtocolBase {
                + "-"
                + TalvMenni.VERSION
                + "["
-               + this.protocol.getStrategy().getClass().getSimpleName()
+               + strategyName
                + "]"
                + "\""
                + "done=1";
       } else if (theInput.toUpperCase().startsWith(
-      "SETBOARD")) {
+            "SETBOARD")) {
          String theFEN= theInput.substring(8);
          this.protocol.setPositionFromFEN(theFEN);
-      } else if (theInput.toUpperCase().equalsIgnoreCase("POST")) {
+      } else if (theInput.toUpperCase().equalsIgnoreCase(
+            "POST")) {
          this.protocol.postThinking(true);
-      } else if (theInput.toUpperCase().equalsIgnoreCase("NOPOST")) {
+      } else if (theInput.toUpperCase().equalsIgnoreCase(
+            "NOPOST")) {
          this.protocol.postThinking(false);
       } else if (theInput.startsWith("usermove")) {
          String moveString= theInput.substring(
@@ -109,10 +118,10 @@ public class XboardProtocol extends UiProtocolBase {
          }
 
       } else if (theInput.equalsIgnoreCase("go")) {
-         
+
          this.protocol.setGo(true);
          Move move= this.protocol.makeNextMove();
-         
+
          if (move != null) {
             theOutput+= "move "
                   + move.toString();
@@ -131,7 +140,7 @@ public class XboardProtocol extends UiProtocolBase {
                }
             }
          }
-         
+
       } else if (theInput.equalsIgnoreCase("force")) {
          this.protocol.setGo(false);
       } else if (theInput.equalsIgnoreCase("draw")) {
