@@ -50,7 +50,7 @@ public class FullSearch extends Observable implements Search {
          }
       }
       
-      time += System.currentTimeMillis();
+      time += System.currentTimeMillis() + 1; // Hmmm... tricky one... add one millisecond to make sure that we don't get division by zero in notify call below :-) 
       
       this.setChanged();
       this.notifyObservers("Searched " + this.movesSearched + " in just " + time + " milliseconds... i.e: " + 1L * this.movesSearched * 1000 / time + " pr. second.");
@@ -73,15 +73,21 @@ public class FullSearch extends Observable implements Search {
          } else {
             moves= p.black.getPossibleMoves();         
          }
-    
-         for(Move move : moves) {
-            this.movesSearched++;
-            MoveScoreTuple score= this.getBestMove(p.move(move.from, move.to), e, !whiteMove, depth - 1);
-            if(bestScore == null || (whiteMove ? score.score > bestScore.score : score.score < bestScore.score)) {
-               bestScore= score;
-            }
-         }         
-         result= new MoveScoreTuple(bestScore.move, bestScore.score + e.getScore(p));
+         
+         if(moves.size() > 0) {
+            Move currentBestMove= null;
+            for(Move move : moves) {
+               this.movesSearched++;
+               MoveScoreTuple score= this.getBestMove(p.move(move.from, move.to), e, !whiteMove, depth - 1);
+               if(bestScore == null || (whiteMove ? score.score > bestScore.score : score.score < bestScore.score)) {
+                  bestScore= score;
+                  currentBestMove= move;
+               }
+            }         
+            result= new MoveScoreTuple(currentBestMove, bestScore.score + e.getScore(p));
+         } else {
+            result= new MoveScoreTuple(null, (whiteMove ? Integer.MAX_VALUE : Integer.MIN_VALUE));            
+         }
       } else {
          
          List<Move> moves;
@@ -91,15 +97,20 @@ public class FullSearch extends Observable implements Search {
          } else {
             moves= p.black.getPossibleMoves();         
          }
+         
+         if(moves.size() > 0) {
 
-         for(Move move : moves) {
-            this.movesSearched++;
-            int score= e.getScore(p.move(move.from, move.to));
-            if((whiteMove ? score >= bestScore : score <= bestScore)) {
-               bestScore= score;
-               result= new MoveScoreTuple(move, score);
+            for(Move move : moves) {
+               this.movesSearched++;
+               int score= e.getScore(p.move(move.from, move.to));
+               if((whiteMove ? score >= bestScore : score <= bestScore)) {
+                  bestScore= score;
+                  result= new MoveScoreTuple(move, score);
+               }
             }
-         }         
+         } else {
+            result= new MoveScoreTuple(null, (whiteMove ? Integer.MAX_VALUE : Integer.MIN_VALUE));            
+         }
       }
       
       return result;
