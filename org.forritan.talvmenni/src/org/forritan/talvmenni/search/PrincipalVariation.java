@@ -16,6 +16,8 @@ public interface PrincipalVariation extends Serializable {
 
    public void setDepth(
          int ply);
+   
+   public int getDepth();
 
    public List getCurrentBestLine();
 
@@ -124,7 +126,11 @@ public interface PrincipalVariation extends Serializable {
          this.pv.push(move);
       }
 
-      public void setDepth(
+      public int getDepth() {
+         return this.depth;
+      }
+
+     public void setDepth(
             int depth) {
          this.depth= depth;
          this.clearPrincipalVariation();
@@ -233,5 +239,4 @@ public interface PrincipalVariation extends Serializable {
       }
 
    }
-
 }

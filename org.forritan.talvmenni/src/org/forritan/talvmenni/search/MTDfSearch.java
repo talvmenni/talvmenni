@@ -10,6 +10,7 @@ import org.forritan.talvmenni.knowledge.Transposition;
 import org.forritan.talvmenni.knowledge.Position.Move;
 import org.forritan.talvmenni.knowledge.Transposition.Entry;
 import org.forritan.talvmenni.knowledge.evaluation.Evaluation;
+import org.forritan.talvmenni.knowledge.evaluation.Quiescent;
 import org.forritan.talvmenni.search.PrincipalVariation.DebugInfo;
 import org.forritan.talvmenni.search.PrincipalVariation.Thinking;
 
@@ -21,6 +22,7 @@ public class MTDfSearch implements Search {
    private Transposition      transposition;
    private int                ply;
    private final boolean      useMoveOrdering;
+   private Quiescent          quiescent;
 
    private int                movesSearched;
    private int                transpositionHits;
@@ -30,24 +32,28 @@ public class MTDfSearch implements Search {
    public MTDfSearch(
          Transposition transposition,
          boolean useMoveOrdering,
-         PrincipalVariation pv) {
+         PrincipalVariation pv,
+         int quiescentMaxDepth) {
       this(
             0,
             transposition,
             useMoveOrdering,
-            pv);
+            pv,
+            quiescentMaxDepth);
    }
 
    public MTDfSearch(
          int ply,
          Transposition transposition,
          boolean useMoveOrdering,
-         PrincipalVariation pv) {
+         PrincipalVariation pv,
+         int quiescentMaxDepth) {
       this.ply= ply;
       this.useMoveOrdering= useMoveOrdering;
       this.transposition= transposition;
       this.pv= pv;
       this.historyHeuristic= HistoryHeuristic.getInstance();
+      this.quiescent= new Quiescent(this.pv, quiescentMaxDepth);
    }
 
    public void setPly(
@@ -257,8 +263,14 @@ public class MTDfSearch implements Search {
       }
 
       if (d == 0) { // leaf node
-         g= e.getScore(p);
-         this.pv.updateLastExaminedLine();
+         g= this.quiescent.search(
+               p,
+               e,
+               whiteMove,
+               ply,
+               alpha,
+               beta);;
+//         this.pv.updateLastExaminedLine();
       } else {
          List moves;
          int whiteBest= Integer.MIN_VALUE + 1;

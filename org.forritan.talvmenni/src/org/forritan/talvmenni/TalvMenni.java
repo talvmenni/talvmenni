@@ -120,7 +120,8 @@ public class TalvMenni {
             //                        MAX_TRANSPOSITION_ENTRIES),
             //                  false,
             //                  book,
-            //                  PrincipalVariation.Factory.create(PLY)));
+            //                  PrincipalVariation.Factory.create(PLY),
+            //                  QUIESCENT_MAX_DEPTH));
 
             .create(new IterativeDeepeningAlphaBetaWithQuiescentAndTranspositionTableStrategy(
                   PLY,
@@ -150,7 +151,8 @@ public class TalvMenni {
       //                        MAX_TRANSPOSITION_ENTRIES),
       //                  false,
       //                  book,
-      //                  PrincipalVariation.Factory.create(PLY)));
+      //                  PrincipalVariation.Factory.create(PLY),
+      //                  QUIESCENT_MAX_DEPTH));
 
       //            .create(new AlphaBetaWithTranspositionTableStrategy(
       //                  PLY,

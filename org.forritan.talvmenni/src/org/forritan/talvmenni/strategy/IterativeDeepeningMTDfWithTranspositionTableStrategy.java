@@ -22,7 +22,8 @@ public class IterativeDeepeningMTDfWithTranspositionTableStrategy extends
          Transposition transposition,
          boolean useMoveOrdering,
          TheoryBook book,
-         PrincipalVariation pv) {
+         PrincipalVariation pv,
+         int quiescentMaxDepth) {
       super(
             ply,
             book,
@@ -30,7 +31,8 @@ public class IterativeDeepeningMTDfWithTranspositionTableStrategy extends
             new MTDfSearch(
                   transposition,
                   useMoveOrdering,
-                  pv),
+                  pv,
+                  quiescentMaxDepth),
             new SimpleMaterialAndPositionalEvaluation());
       this.lastWhiteResult= 0;
       this.lastBlackResult= 0;

@@ -17,7 +17,8 @@ public class MTDfStrategy extends AbstractStrategy {
          Transposition transposition,
          boolean useMoveOrdering,
          TheoryBook book,
-         PrincipalVariation pv) {
+         PrincipalVariation pv,
+         int quiescentMaxDepth) {
       super(
             ply,
             book,
@@ -26,7 +27,8 @@ public class MTDfStrategy extends AbstractStrategy {
                   ply,
                   transposition,
                   useMoveOrdering,
-                  pv),
+                  pv,
+                  quiescentMaxDepth),
             new SimpleMaterialAndPositionalEvaluation());
    }
 

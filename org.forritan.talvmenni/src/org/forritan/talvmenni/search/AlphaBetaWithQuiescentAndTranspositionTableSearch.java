@@ -51,7 +51,7 @@ public class AlphaBetaWithQuiescentAndTranspositionTableSearch implements
       this.transposition= transposition;
       this.pv= pv;
       this.historyHeuristic= HistoryHeuristic.getInstance();
-      this.quiescent= new Quiescent(quiescentMaxDepth);
+      this.quiescent= new Quiescent(this.pv, quiescentMaxDepth);
    }
 
    public void setPly(
@@ -173,7 +173,7 @@ public class AlphaBetaWithQuiescentAndTranspositionTableSearch implements
                ply,
                alpha,
                beta);
-         this.pv.updateLastExaminedLine();
+//         this.pv.updateLastExaminedLine();
       } else {
          List moves;
          int best= Integer.MIN_VALUE + 1;
