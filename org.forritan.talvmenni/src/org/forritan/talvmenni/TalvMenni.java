@@ -5,6 +5,7 @@ import java.io.IOException;
 import org.forritan.talvmenni.knowledge.TheoryBook;
 import org.forritan.talvmenni.knowledge.Transposition;
 import org.forritan.talvmenni.search.PrincipalVariation;
+import org.forritan.talvmenni.strategy.IterativeDeepeningAlphaBetaStrategy;
 import org.forritan.talvmenni.strategy.IterativeDeepeningAlphaBetaWithTranspositionTableStrategy;
 import org.forritan.talvmenni.strategy.IterativeDeepeningMTDfWithTranspositionTableStrategy;
 import org.forritan.talvmenni.ui.DebugWindow;
@@ -32,14 +33,14 @@ public class TalvMenni {
     * MAX_TRANSPOSITION_ENTRIES is reached the eldest entry will be removed
     * before a new entry is added.
     */
-   public static int                 MAX_TRANSPOSITION_ENTRIES     = 125000;
+   public static int                 MAX_TRANSPOSITION_ENTRIES     = 50000;
 
    /**
     * Default MAX_HISTORY_HEURISTIC_ENTRIES - Maximum number of entries in the
     * history heuristic table. If MAX_HISTORY_HEURISTIC_ENTRIES is reached the
     * eldest entry will be removed before a new entry is added.
     */
-   public static int                 MAX_HISTORY_HEURISTIC_ENTRIES = 250000;
+   public static int                 MAX_HISTORY_HEURISTIC_ENTRIES = 500000;
 
    /**
     * Very experimental :) Partition search - e.g.: Entries in transposition
@@ -91,7 +92,7 @@ public class TalvMenni {
 
       final ChessEngine chessEngine= ChessEngine
 
-      // Choose strategy
+            // Choose strategy
 
             //      .create(new
             // RandomMoveStrategy(PrincipalVariation.Factory.create(0)));
@@ -101,26 +102,21 @@ public class TalvMenni {
             //                  book,
             //                  PrincipalVariation.Factory.create(PLY - 1)));
 
-            .create(new IterativeDeepeningMTDfWithTranspositionTableStrategy(
+            //            .create(new IterativeDeepeningMTDfWithTranspositionTableStrategy(
+            //                  PLY,
+            //                  new Transposition(
+            //                        MAX_TRANSPOSITION_ENTRIES),
+            //                  false,
+            //                  book,
+            //                  PrincipalVariation.Factory.create(PLY)));
+
+            .create(new IterativeDeepeningAlphaBetaWithTranspositionTableStrategy(
                   PLY,
                   new Transposition(
                         MAX_TRANSPOSITION_ENTRIES),
-                  true,
+                  false,
                   book,
                   PrincipalVariation.Factory.create(PLY)));
-
-      //            .create(new IterativeDeepeningAlphaBetaWithTranspositionTableStrategy(
-      //                  PLY,
-      //                  new Transposition(
-      //                        MAX_TRANSPOSITION_ENTRIES),
-      //                  true,
-      //                  book,
-      //                  PrincipalVariation.Factory.create(PLY)));
-
-      //            .create(new IterativeDeepeningAndReductionAlphaBetaStrategy(
-      //                  PLY,
-      //                  3,
-      //                  book));
 
       //            .create(new IterativeDeepeningAlphaBetaStrategy(
       //                  PLY,
@@ -131,7 +127,7 @@ public class TalvMenni {
       //                  PLY,
       //                  new Transposition(
       //                        MAX_TRANSPOSITION_ENTRIES),
-      //                  true,
+      //                  false,
       //                  book,
       //                  PrincipalVariation.Factory.create(PLY)));
 
@@ -139,7 +135,7 @@ public class TalvMenni {
       //                  PLY,
       //                  new Transposition(
       //                        MAX_TRANSPOSITION_ENTRIES),
-      //                  true,
+      //                  false,
       //                  book,
       //                  PrincipalVariation.Factory.create(PLY)));
 

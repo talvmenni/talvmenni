@@ -4,17 +4,20 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.forritan.talvmenni.knowledge.HistoryHeuristic;
 import org.forritan.talvmenni.knowledge.Position;
 import org.forritan.talvmenni.knowledge.Position.Move;
 import org.forritan.talvmenni.knowledge.evaluation.Evaluation;
 import org.forritan.talvmenni.search.PrincipalVariation.DebugInfo;
 import org.forritan.talvmenni.search.PrincipalVariation.Thinking;
 
+
 public class AlphaBetaSearch implements Search {
 
    private PrincipalVariation pv;
-   private int       ply;
-   private int       movesSearched;
+   private HistoryHeuristic   historyHeuristic;
+   private int                ply;
+   private int                movesSearched;
 
    public AlphaBetaSearch() {
       this(
@@ -25,6 +28,7 @@ public class AlphaBetaSearch implements Search {
          int ply) {
       this.ply= ply;
       this.pv= PrincipalVariation.Factory.create(ply);
+      this.historyHeuristic= HistoryHeuristic.getInstance();
    }
 
    public void setPly(
@@ -32,7 +36,7 @@ public class AlphaBetaSearch implements Search {
       this.ply= ply;
       this.pv.setDepth(ply);
    }
-   
+
    public PrincipalVariation getPrincipalVariation() {
       return this.pv;
    }
@@ -58,9 +62,10 @@ public class AlphaBetaSearch implements Search {
       // Integer.MIN_VALUE, because
       // Integer.MIN_VALUE ==
       // -Integer.MIN_VALUE
-      // int beta= Integer.MAX_VALUE;
+
+      int beta= Integer.MAX_VALUE;
       // If checkmate there is no need to search further...
-      int beta= Evaluation.CHECKMATE_SCORE;
+      // int beta= Evaluation.CHECKMATE_SCORE;
 
       int result= this.alphaBeta(
             p,
@@ -72,13 +77,17 @@ public class AlphaBetaSearch implements Search {
 
       time+= System.currentTimeMillis();
 
-      System.err.println("*** at ply = " + ply + " : best result = " + result + " : AlphaBetaSearch ***");
-      
-      
+      System.err.println("*** at ply = "
+            + ply
+            + " : best result = "
+            + result
+            + " : AlphaBetaSearch ***");
+
       this.pv.getDebugInfo().postNodesPerSecond(
             time,
             this.movesSearched);
-      this.pv.getDebugInfo().postBestMoves(this.pv.getCurrentBestLine());
+      this.pv.getDebugInfo().postBestMoves(
+            this.pv.getCurrentBestLine());
 
       return (pv.getBestMoveAsList());
    }
@@ -101,13 +110,15 @@ public class AlphaBetaSearch implements Search {
          int best= Integer.MIN_VALUE + 1;
 
          if (whiteMove) {
+            this.historyHeuristic.sortMoveList(p.getWhite());
             moves= p.getWhite().getPossibleMoves();
          } else {
+            this.historyHeuristic.sortMoveList(p.getBlack());
             moves= p.getBlack().getPossibleMoves();
          }
 
          if (moves.size() > 0) {
-            
+
             for (Iterator it= moves.iterator(); it.hasNext();) {
                Move move= (Move) it.next();
                if (best >= beta) {
@@ -134,9 +145,9 @@ public class AlphaBetaSearch implements Search {
                      ply - 1,
                      -beta,
                      -alpha);
-               
+
                this.pv.pop();
-               
+
                p.popMove();
                moveTime+= System.currentTimeMillis();
 
@@ -154,6 +165,9 @@ public class AlphaBetaSearch implements Search {
                      p.getBlack().betterMove(
                            move);
                   }
+                  this.historyHeuristic.updateWithSufficient(
+                        move,
+                        ply);
                }
             }
 
@@ -162,9 +176,9 @@ public class AlphaBetaSearch implements Search {
 
             result= best;
          } else {
-            if (whiteMove ? p.getWhite().isChecked() : p.getBlack().isChecked()) {
+            if (whiteMove ? p.getBlack().isChecked() : p.getWhite().isChecked()) {
                // Checkmate...
-               result= (-Evaluation.CHECKMATE_SCORE - ply);
+               result= (Evaluation.CHECKMATE_SCORE + ply);
             } else {
                // Stalemate...
                result= 0;

@@ -79,13 +79,16 @@ public class AlphaBetaWithTranspositionTableSearch implements Search {
       // Integer.MIN_VALUE, because
       // Integer.MIN_VALUE ==
       // -Integer.MIN_VALUE
-      // int beta= Integer.MAX_VALUE;
+      
+      int beta= Integer.MAX_VALUE;
       // If checkmate there is no need to search further...
-      int beta= Evaluation.CHECKMATE_SCORE;
+      // int beta= Evaluation.CHECKMATE_SCORE;
 
       this.pv.clearPrincipalVariation();
 
-//      System.err.println("Possible moves: " + (whiteMove ? p.getWhite().getPossibleMoves().toString() : p.getBlack().getPossibleMoves().toString()));
+      //      System.err.println("Possible moves: " + (whiteMove ?
+      // p.getWhite().getPossibleMoves().toString() :
+      // p.getBlack().getPossibleMoves().toString()));
 
       int result= this.alphaBeta(
             p,
@@ -97,16 +100,18 @@ public class AlphaBetaWithTranspositionTableSearch implements Search {
 
       time+= System.currentTimeMillis();
 
-//      System.err.println("*** at ply = "
-//            + ply
-//            + " : best result = "
-//            + result
-//            + " : AlphaBetaWithTranspositionTableSearch ***");
-//
-//      System.err.println("White transposition: " + this.transposition.size(true));
-//      System.err.println("Black transposition: " + this.transposition.size(false));
-//      
-//      System.err.println();
+      //      System.err.println("*** at ply = "
+      //            + ply
+      //            + " : best result = "
+      //            + result
+      //            + " : AlphaBetaWithTranspositionTableSearch ***");
+      //
+      //      System.err.println("White transposition: " +
+      // this.transposition.size(true));
+      //      System.err.println("Black transposition: " +
+      // this.transposition.size(false));
+      //      
+      //      System.err.println();
 
       this.pv.getDebugInfo().postNodesPerSecond(
             time,
@@ -142,13 +147,11 @@ public class AlphaBetaWithTranspositionTableSearch implements Search {
             if (entry.depthToLeaf >= ply) {
                this.transpositionHits++;
                this.pv.updateLastExaminedLine();
-               if((entry.type & Transposition.Entry.Type.EXACT) != 0) {
-                  return entry.exactScore;
-               }
-               if((entry.type & Transposition.Entry.Type.LOWER_BOUND) != 0) {
+               if ((entry.type & Transposition.Entry.Type.EXACT) != 0) { return entry.exactScore; }
+               if ((entry.type & Transposition.Entry.Type.LOWER_BOUND) != 0) {
                   if (entry.lowerBound >= beta) { return beta; }
                }
-               if((entry.type & Transposition.Entry.Type.UPPER_BOUND) != 0) {
+               if ((entry.type & Transposition.Entry.Type.UPPER_BOUND) != 0) {
                   if (entry.upperBound <= alpha) { return alpha; }
                }
             }
@@ -163,12 +166,12 @@ public class AlphaBetaWithTranspositionTableSearch implements Search {
          int best= Integer.MIN_VALUE + 1;
 
          if (whiteMove) {
+            this.historyHeuristic.sortMoveList(p.getWhite());
             moves= p.getWhite().getPossibleMoves();
          } else {
+            this.historyHeuristic.sortMoveList(p.getBlack());
             moves= p.getBlack().getPossibleMoves();
          }
-         
-         moves= this.historyHeuristic.sort(moves);
 
          if (moves.size() > 0) {
             for (Iterator it= moves.iterator(); it.hasNext();) {
@@ -220,7 +223,9 @@ public class AlphaBetaWithTranspositionTableSearch implements Search {
                               move);
                      }
                   }
-                  this.historyHeuristic.updateWithSufficient(move, ply);
+                  this.historyHeuristic.updateWithSufficient(
+                        move,
+                        ply);
                }
             }
 
@@ -231,9 +236,9 @@ public class AlphaBetaWithTranspositionTableSearch implements Search {
 
             result= best;
          } else {
-            if (whiteMove ? p.getWhite().isChecked() : p.getBlack().isChecked()) {
+            if (whiteMove ? p.getBlack().isChecked() : p.getWhite().isChecked()) {
                // Checkmate...
-               result= (-Evaluation.CHECKMATE_SCORE - ply);
+               result= (Evaluation.CHECKMATE_SCORE + ply);
             } else {
                // Stalemate...
                result= 0;

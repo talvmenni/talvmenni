@@ -149,7 +149,12 @@ public abstract class AbstractStrategy implements Strategy {
 
       if (!bestMoves.isEmpty()) {
          int chosenMoveIndex= new Random().nextInt(bestMoves.size());
-         return (Move) bestMoves.get(chosenMoveIndex);
+         Move move= (Move) bestMoves.get(chosenMoveIndex);
+         this.debugInfo
+               .postText("\n\n\nMoved: "
+                     + move.toString()
+                     + "\n\n\n_______________________________________________________________\n\n\n");
+         return move;
       } else {
          return null;
       }

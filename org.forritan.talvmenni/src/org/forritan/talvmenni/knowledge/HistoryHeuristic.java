@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Map;
 
 import org.forritan.talvmenni.TalvMenni;
@@ -20,7 +21,8 @@ public class HistoryHeuristic {
    private Map                     historyMap;
 
    private HistoryHeuristic() {
-      this.historyMap= new Table(TalvMenni.MAX_HISTORY_HEURISTIC_ENTRIES);
+      this.historyMap= new Table(
+            TalvMenni.MAX_HISTORY_HEURISTIC_ENTRIES);
    }
 
    public static HistoryHeuristic getInstance() {
@@ -28,6 +30,10 @@ public class HistoryHeuristic {
          HistoryHeuristic.instance= new HistoryHeuristic();
       }
       return HistoryHeuristic.instance;
+   }
+
+   public void clear() {
+      this.historyMap.clear();
    }
 
    public boolean containsMove(
@@ -53,25 +59,26 @@ public class HistoryHeuristic {
             new Integer(
                   weight));
    }
+   
+   public void sortMoveList(
+         Position.Bitboard board) {
+      
+      //TODO: Guard - if there are any moves in betterOrderMoves... Refactor into updatePossibleMovesOrdering()
+      board.updatePossibleMovesOrdering();
 
-   public List sort(
-         List moveList) {
+      List moves= board.getPossibleMoves();      
+      
       Map heuristicMoves= new LinkedHashMap();
-      Iterator it= moveList.iterator();
+      Iterator it= moves.iterator();
       while (it.hasNext()) {
          Move move= (Move) it.next();
          if (historyMap.containsKey(move)) {
             heuristicMoves.put(
                   move,
                   ((Integer) historyMap.get(move)));
-         } else {
-            heuristicMoves.put(
-                  move,
-                  new Integer(
-                        0));
          }
       }
-
+            
       ArrayList aList= new ArrayList();
       aList.addAll(heuristicMoves.entrySet());
       Collections.sort(
@@ -80,19 +87,16 @@ public class HistoryHeuristic {
                public int compare(
                      Object o1,
                      Object o2) {
-                  return ((Integer) ((Map.Entry) o2).getValue())
-                        .compareTo((Integer) ((Map.Entry) o1).getValue());
+                  return ((Integer) ((Map.Entry) o1).getValue())
+                        .compareTo((Integer) ((Map.Entry) o2).getValue());
                }
             });
 
-      List result= new ArrayList(
-            aList.size());
       for (Iterator i= aList.iterator(); i.hasNext();) {
-         result.add(((Map.Entry) i.next()).getKey());
+         board.betterMove((Move) ((Map.Entry) i.next()).getKey());
       }
-
-      return result;
-
+      
+      board.updatePossibleMovesOrdering();
    }
 
    private static class Table extends LinkedHashMap {

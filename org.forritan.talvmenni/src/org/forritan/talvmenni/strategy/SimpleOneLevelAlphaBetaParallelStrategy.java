@@ -144,18 +144,18 @@ public class SimpleOneLevelAlphaBetaParallelStrategy extends
          this.whiteToMove= whiteToMove;
          this.ply= ply;
 
-//TODO: throws NPE...
-//         
-//         this.worker.search.getPrincipalVariation().getThinking().addObserver(
-//               new Observer() {
-//                  public void update(
-//                        Observable o,
-//                        Object arg) {
-//                     if (arg instanceof String) {
-//                        System.out.println((String) arg);
-//                     }
-//                  }
-//               });
+         //TODO: throws NPE...
+         //         
+         //         this.worker.search.getPrincipalVariation().getThinking().addObserver(
+         //               new Observer() {
+         //                  public void update(
+         //                        Observable o,
+         //                        Object arg) {
+         //                     if (arg instanceof String) {
+         //                        System.out.println((String) arg);
+         //                     }
+         //                  }
+         //               });
       }
 
       public Move getMove() {
@@ -169,9 +169,10 @@ public class SimpleOneLevelAlphaBetaParallelStrategy extends
          // Integer.MIN_VALUE, because
          // Integer.MIN_VALUE ==
          // -Integer.MIN_VALUE
-         // int beta= Integer.MAX_VALUE;
+
+         int beta= Integer.MAX_VALUE;
          // If checkmate there is no need to search further...
-         int beta= Evaluation.CHECKMATE_SCORE;
+         // int beta= Evaluation.CHECKMATE_SCORE;
 
          int score= ((AlphaBetaSearch) this.worker.search).alphaBeta(
                position,

@@ -136,9 +136,16 @@ public class MTDfSearch implements Search {
          int f,
          int d) {
       int score= f;
-      int upperbound= 2 * Evaluation.CHECKMATE_SCORE;
-      int lowerbound= -2
-            * Evaluation.CHECKMATE_SCORE;
+
+      int upperbound= Integer.MAX_VALUE;
+      int lowerbound= Integer.MIN_VALUE + 1;
+      // Very important!!! Can't be
+      // Integer.MIN_VALUE, because
+      // Integer.MIN_VALUE ==
+      // -Integer.MIN_VALUE
+
+      // int upperbound= 2 * Evaluation.CHECKMATE_SCORE;
+      // int lowerbound= -2 * Evaluation.CHECKMATE_SCORE;
 
       //      int movesSearchedBefore= this.movesSearched;
       //      long moveTime= -System.currentTimeMillis();
@@ -258,19 +265,19 @@ public class MTDfSearch implements Search {
          int blackBest= Integer.MAX_VALUE;
 
          if (whiteMove) {
+            this.historyHeuristic.sortMoveList(p.getWhite());
             moves= p.getWhite().getPossibleMoves();
          } else {
+            this.historyHeuristic.sortMoveList(p.getBlack());
             moves= p.getBlack().getPossibleMoves();
          }
-
-         moves= historyHeuristic.sort(moves);
 
          if (moves.size() > 0) {
 
             if (whiteMove) { // MAX_NODE
 
-               g= -2
-                     * Evaluation.CHECKMATE_SCORE;
+               // g= -2 * Evaluation.CHECKMATE_SCORE;
+               g= Integer.MIN_VALUE + 1;
                int a= alpha; // save original alpha value
 
                Iterator it= moves.iterator();
@@ -323,7 +330,8 @@ public class MTDfSearch implements Search {
 
             } else { // MIN_NODE
 
-               g= 2 * Evaluation.CHECKMATE_SCORE;
+               // g= 2 * Evaluation.CHECKMATE_SCORE;
+               g= Integer.MAX_VALUE;
                int best= g;
                int b= beta; // save original alpha value
 
@@ -406,10 +414,10 @@ public class MTDfSearch implements Search {
                      Transposition.Entry.Type.LOWER_BOUND);
             }
          } else {
-            if (whiteMove ? p.getWhite().isChecked() : p.getBlack().isChecked()) {
+            if ((whiteMove ? p.getBlack().isChecked() : p.getWhite()
+                  .isChecked())) {
                // Checkmate...
-               g= Evaluation.CHECKMATE_SCORE
-                     + d
+               g= (Evaluation.CHECKMATE_SCORE + d)
                      * (whiteMove ? 1 : -1);
             } else {
                // Stalemate...
