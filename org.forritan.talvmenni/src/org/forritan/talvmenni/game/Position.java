@@ -14,6 +14,7 @@ import org.forritan.talvmenni.bitboard.attacks.Knight;
 import org.forritan.talvmenni.bitboard.attacks.Queen;
 import org.forritan.talvmenni.bitboard.attacks.Rook;
 import org.forritan.talvmenni.bitboard.attacks.WhitePawn;
+import org.forritan.talvmenni.ui.ConsoleProtocol;
 
 
 public interface Position {
@@ -165,11 +166,15 @@ public interface Position {
 //         }
       }
       
-      public List<Move> getPossibleMoves() {   
-//         if(this.possibleMoves == null) {
+      public List<Move> getPossibleMoves() {
+         //crap starts here
+         System.out.println(ConsoleProtocol.getStringBoard(this.parent, "fuck"));
+         //crap ends here
+
+         //         if(this.possibleMoves == null) {
          List<Move> result= new ArrayList<Move>(); 
 //            this.possibleMoves= new ArrayList<Move>();
-   
+
             Iterator<Long> kings= this.kingsIterator();
             while (kings.hasNext()) {
                 long fromSquare= kings.next().longValue();
@@ -194,7 +199,7 @@ public interface Position {
                   result.add(new Move(Square._E8, Square._G8));
                }               
             }
-         
+            
             Iterator<Long> queens= this.queensIterator(); 
             while (queens.hasNext()) {
                 long fromSquare= queens.next().longValue();
