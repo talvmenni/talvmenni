@@ -134,7 +134,7 @@ public class NegaMaxSearch implements Search {
          } else {
             if (whiteMove ? p.getWhite().isChecked() : p.getBlack().isChecked()) {
                // Checkmate...
-               result= (-Evaluation.CHECKMATE_SCORE - ply);
+               result= -(Evaluation.CHECKMATE_SCORE + ply);
             } else {
                // Stalemate...
                result= 0;

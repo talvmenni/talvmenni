@@ -176,9 +176,9 @@ public class AlphaBetaSearch implements Search {
 
             result= best;
          } else {
-            if (whiteMove ? p.getBlack().isChecked() : p.getWhite().isChecked()) {
+            if (whiteMove ? p.getWhite().isChecked() : p.getBlack().isChecked()) {
                // Checkmate...
-               result= (Evaluation.CHECKMATE_SCORE + ply);
+               result= -(Evaluation.CHECKMATE_SCORE + ply);
             } else {
                // Stalemate...
                result= 0;
