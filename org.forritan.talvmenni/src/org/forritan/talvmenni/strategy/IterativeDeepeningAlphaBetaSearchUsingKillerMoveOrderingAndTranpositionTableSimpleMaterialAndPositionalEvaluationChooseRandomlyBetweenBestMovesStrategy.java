@@ -25,7 +25,7 @@ public class IterativeDeepeningAlphaBetaSearchUsingKillerMoveOrderingAndTranposi
    public Position.Move getNextMove(Position position, boolean whiteToMove) {
             
       List<Position.Move> bestMoves= null;
-         for (int i= 0; i <= this.ply; i += 2) {
+         for (int i= 0; i <= this.ply; i++) {
             this.search.setPly(i);
             bestMoves= this.search.getBestMoves(position.getMutable(), this.evaluation, whiteToMove);            
          }

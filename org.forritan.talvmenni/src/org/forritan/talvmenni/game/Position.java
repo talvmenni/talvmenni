@@ -88,6 +88,9 @@ public interface Position {
    }
 
    public class Bitboard {
+      
+      public final static int SEED= 17;
+      public final static int PRIME_FACTOR= 37;
 
       public final int     hashCode;
 
@@ -155,19 +158,18 @@ public interface Position {
                | this.knights
                | this.pawns;
 
-         long longHashcode= this.kings
-               ^ this.queens
-               ^ this.rooks
-               ^ this.bishops
-               ^ this.knights
-               ^ this.pawns
-               ^ this.enpassant
-               ^ this.castling;
-         if(!whiteBoard) {
-            longHashcode= ~longHashcode;
-         }
+         int hash= SEED;
+         hash= PRIME_FACTOR * hash + ((int) (this.kings ^ (this.kings >>> 32)));
+         hash= PRIME_FACTOR * hash + ((int) (this.queens ^ (this.queens >>> 32)));
+         hash= PRIME_FACTOR * hash + ((int) (this.rooks ^ (this.rooks >>> 32)));
+         hash= PRIME_FACTOR * hash + ((int) (this.bishops ^ (this.bishops >>> 32)));
+         hash= PRIME_FACTOR * hash + ((int) (this.knights ^ (this.knights >>> 32)));
+         hash= PRIME_FACTOR * hash + ((int) (this.pawns ^ (this.pawns >>> 32)));
+         hash= PRIME_FACTOR * hash + ((int) (this.enpassant ^ (this.enpassant >>> 32)));
+         hash= PRIME_FACTOR * hash + ((int) (this.castling ^ (this.castling >>> 32)));
+         hash= PRIME_FACTOR * hash + (whiteBoard ? 0 : 1);
          
-         this.hashCode= (int)(longHashcode ^ (longHashcode >>> 32));
+         this.hashCode= hash;
       }
 
       public boolean equals(Object o) {

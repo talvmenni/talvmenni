@@ -123,13 +123,9 @@ public class AlphaBetaUsingKillerMoveOrderingAndTranspositionTableSearch impleme
       
       MoveScoreTuple result= new MoveScoreTuple(null, 0);
       if(ply > 1) {
-         
-         if(this.transposition.contains(p)) {
-            Transposition.Entry entry= this.transposition.get(p);
+         if(this.transposition.contains(p, whiteMove)) {
+            Transposition.Entry entry= this.transposition.get(p, whiteMove);
             if(entry.ply >= ply) {
-//               System.err.println("Transposition got p");
-//               System.err.println("ply= " + ply + " and entry.ply= " + entry.ply);
-//               System.err.println("entry.score= " + entry.score);
                result.update(entry.moves, entry.score);
                return result;
             }            
@@ -236,7 +232,7 @@ public class AlphaBetaUsingKillerMoveOrderingAndTranspositionTableSearch impleme
          }
       }
       
-      this.transposition.update(p, result.moves, result.score, ply);
+      this.transposition.update(p, whiteMove, result.moves, result.score, ply);
       
       return result;
    }
