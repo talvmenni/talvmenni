@@ -4,29 +4,27 @@ import org.forritan.talvmenni.bitboard.Square;
 import org.forritan.talvmenni.bitboard.Squares;
 import org.forritan.talvmenni.core.ChessEngine.Protocol;
 import org.forritan.talvmenni.game.Position;
+import org.forritan.talvmenni.game.Rules;
 
 
 public class ConsoleProtocol extends UiProtocolBase {
 
    private static ConsoleProtocol instance;
+   private static int             moveCounter;
+   private static String          moves = "";
 
-   private ConsoleProtocol(
-         Protocol protocol) {
-      super(
-            protocol);
+   private ConsoleProtocol(Protocol protocol) {
+      super(protocol);
    }
 
-   public static ConsoleProtocol create(
-         Protocol protocol) {
+   public static ConsoleProtocol create(Protocol protocol) {
       if (ConsoleProtocol.instance == null) {
-         ConsoleProtocol.instance= new ConsoleProtocol(
-               protocol);
+         ConsoleProtocol.instance= new ConsoleProtocol(protocol);
       }
       return ConsoleProtocol.instance;
    }
 
-   public String processInput(
-         String theInput) {
+   public String processInput(String theInput) {
       String theOutput= null;
 
       if ("cmd".equalsIgnoreCase(theInput)) {
@@ -36,18 +34,22 @@ public class ConsoleProtocol extends UiProtocolBase {
       if ("help".equalsIgnoreCase(theInput)) {
          theOutput= helpMessage();
       }
+      if ("history".equalsIgnoreCase(theInput)) {
+         theOutput= printHistory();
+      }
 
       if ("new".equalsIgnoreCase(theInput)) {
          theOutput= "Setting up a new game";
+         moves = "";
+         moveCounter = 0;
          this.protocol.newGame();
       }
 
-      if (theInput.startsWith("move")) {
-         String move= theInput.substring(
-               4).trim();
+      if (theInput.toUpperCase().startsWith("MOVE")) {
+         String theMove= theInput.substring(4).trim();
 
-         theOutput= move;
-         //this.protocol.makeMove(move);
+         theOutput= makeMove(theMove);
+
       }
 
       if ("position".equalsIgnoreCase(theInput)) {
@@ -122,6 +124,42 @@ public class ConsoleProtocol extends UiProtocolBase {
          return "Black";
    }
 
+   private String makeMove(String theMove) {
+
+      String fromSquare= theMove.substring(0, 1).concat(
+            Integer.toString(Integer.valueOf(theMove.substring(1, 2))
+                  .intValue())).toUpperCase();
+
+      String toSquare= theMove.substring(2, 3).concat(
+            Integer.toString(Integer.valueOf(theMove.substring(3, 4))
+                  .intValue())).toUpperCase();
+
+      Square square= Squares.create();
+      Rules currentRules= this.protocol.getCurrentRules();
+      Position currentPosition= this.protocol.getCurrentPosition();
+
+      if (currentRules.isMoveLegal(currentPosition, square
+            .getSquare(fromSquare), square.getSquare(toSquare), this.protocol
+            .isWhiteToMove())) {
+         this.protocol.makeMove(square.getSquare(fromSquare), square
+               .getSquare(toSquare));
+
+         if (!this.protocol.isWhiteToMove()) {
+            moveCounter++;
+            this.moves+= moveCounter
+                  + "."+theMove;
+         } else {
+            this.moves+= " "
+            + theMove + "\n";
+         }
+
+         return boardPosition();
+      } else
+         return "Illegal Move: "
+               + theMove;
+
+   }
+
    private String helpMessage() {
 
       String message;
@@ -138,7 +176,7 @@ public class ConsoleProtocol extends UiProtocolBase {
       //      message= message
       //            + "- \n";
       message= message
-            + "- MOVELIST: Show the move-history \n";
+            + "- HISTORY: Show the movelist \n";
       //      message= message
       //            + "- \n";
       message= message
@@ -183,8 +221,12 @@ public class ConsoleProtocol extends UiProtocolBase {
       return message;
    }
 
-   public String getStringPiece(
-         long square) {
+   private String printHistory() {
+      String theHistory= this.moves;
+      return theHistory;
+   }
+
+   public String getStringPiece(long square) {
       Position currentPosition= this.protocol.getCurrentPosition();
       if (currentPosition != null) {
          if (currentPosition.white.isPawn(square))
