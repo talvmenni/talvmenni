@@ -90,16 +90,16 @@ public class RulesTest extends TestCase {
                   .isMoveLegal(p, Square._G1, Square._H3, true));
       Assert.assertTrue(
             "Should be legal to move black knight at initial position B1 to A3", Rules
-                  .isMoveLegal(p, Square._B8, Square._A6, true));
+                  .isMoveLegal(p, Square._B8, Square._A6, false));
       Assert.assertTrue(
             "Should be legal to move black knight at initial position B1 to C3", Rules
-                  .isMoveLegal(p, Square._B8, Square._C6, true));
+                  .isMoveLegal(p, Square._B8, Square._C6, false));
       Assert.assertTrue(
             "Should be legal to move black knight at initial position G1 to F3", Rules
-                  .isMoveLegal(p, Square._G8, Square._F6, true));
+                  .isMoveLegal(p, Square._G8, Square._F6, false));
       Assert.assertTrue(
             "Should be legal to move black knight at initial position G1 to H3", Rules
-                  .isMoveLegal(p, Square._G8, Square._H6, true));
+                  .isMoveLegal(p, Square._G8, Square._H6, false));
    }
    
    public void testIsPawnAtInitialPosition() {
