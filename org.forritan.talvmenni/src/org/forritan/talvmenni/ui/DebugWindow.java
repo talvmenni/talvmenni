@@ -1,9 +1,15 @@
 package org.forritan.talvmenni.ui;
 
-import java.awt.*;
-import javax.swing.*;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.util.Observable;
+import java.util.Observer;
 
-public class DebugWindow {
+import javax.swing.JFrame;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+
+public class DebugWindow implements Observer {
 
    public static JFrame        DebugWindow;
    public static JTextArea     MessageText;
@@ -13,7 +19,7 @@ public class DebugWindow {
     * Create the GUI and show it. For thread safety, this method should be
     * invoked from the event-dispatching thread.
     */
-   private static void createAndShowGUI() {
+   private static void createAndShowGUI(String name) {
       //Suggest that the L&F (rather than the system)
       //decorate all windows. This must be invoked before
       //creating the JFrame. Native look and feels will
@@ -22,35 +28,35 @@ public class DebugWindow {
      // JFrame.setDefaultLookAndFeelDecorated(true);
 
       //Create and set up the window.
-      DebugWindow= new JFrame("Talvmenni JFrame");
+      DebugWindow= new JFrame(name);
       DebugWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
       MessageText= new JTextArea("");
       MessageText.setLineWrap(true);
       
       JScrollPane scroller = new JScrollPane(MessageText);
-      scroller.setPreferredSize (new Dimension (400, 300));
+      scroller.setPreferredSize (new Dimension (300, 900));
       
       DebugWindow.getContentPane().add(scroller, BorderLayout.CENTER);
       
       //Display the window.
-      DebugWindow.setLocation(650, 50);
+      DebugWindow.setLocation(0, 0);
       DebugWindow.pack();
       DebugWindow.setVisible(true);
 
    }
 
-   public DebugWindow() {
+   public DebugWindow(final String name) {
       //Schedule a job for the event-dispatching thread:
       //creating and showing this application's GUI.
       javax.swing.SwingUtilities.invokeLater(new Runnable() {
          public void run() {
-            createAndShowGUI();
+            createAndShowGUI(name);
          }
       });
    }
 
-   public static void updateTekst(String message) {
+   public void updateText(String message) {
 
       MessageText.append(message
             + newline);
@@ -59,6 +65,15 @@ public class DebugWindow {
       //was a selection in the text area.
       MessageText.setCaretPosition(MessageText.getDocument().getLength());
 
+   }
+
+   public void update(
+         Observable o,
+         Object arg) {
+      if(arg instanceof String) {
+         this.updateText((String)arg);
+      }
+      
    }
 
 }

@@ -3,65 +3,36 @@ package org.forritan.talvmenni.core;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Random;
+import java.util.Observable;
+import java.util.Observer;
 import java.util.concurrent.Executors;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadFactory;
 
-import org.forritan.talvmenni.bitboard.BitboardIterator;
-import org.forritan.talvmenni.bitboard.attacks.Bishop;
-import org.forritan.talvmenni.bitboard.attacks.BlackPawn;
-import org.forritan.talvmenni.bitboard.attacks.King;
-import org.forritan.talvmenni.bitboard.attacks.Knight;
-import org.forritan.talvmenni.bitboard.attacks.Queen;
-import org.forritan.talvmenni.bitboard.attacks.Rook;
-import org.forritan.talvmenni.bitboard.attacks.WhitePawn;
-import org.forritan.talvmenni.bitboard.paths.WhitePawnMoves;
 import org.forritan.talvmenni.game.Move;
 import org.forritan.talvmenni.game.MoveHistory;
 import org.forritan.talvmenni.game.Position;
 import org.forritan.talvmenni.game.Rules;
 import org.forritan.talvmenni.ui.ConsoleProtocol;
-import org.forritan.talvmenni.ui.DebugWindow;
 import org.forritan.talvmenni.ui.UciProtocol;
 import org.forritan.talvmenni.ui.UiProtocol;
 import org.forritan.talvmenni.ui.XboardProtocol;
 
 
-public class ChessEngine implements Runnable {
+public class ChessEngine extends Observable implements Runnable {
 
    private boolean             running;
-
    private Protocol            protocol;
-
    private ThreadFactory       threadFactory;
-
    private LinkedBlockingQueue<String> inMessages;
-
    private LinkedBlockingQueue<String> outMessages;
+   private ProtocolHandler protocolHandler;
 
    public static ChessEngine create() {
-      ChessEngine engine= new ChessEngine();
-
-      if (TalvMenni.DEBUG_WINDOW) {
-         //TODO: !!!! Skal flytast / gerast asynkront / órogvar i/o við
-         // WinBoard
-         long time= -System.currentTimeMillis();
-         new DebugWindow();
-         time+= System.currentTimeMillis();
-         System.err.println("Used "
-               + time
-               + " millis in main thread to create DebugWindow");
-      }
-
-      return engine;
+      return new ChessEngine();
    }
 
    private ChessEngine() {
-
       this.running= false;
       this.protocol= new ProtocolImpl();
       this.threadFactory= Executors.defaultThreadFactory();
@@ -73,18 +44,10 @@ public class ChessEngine implements Runnable {
       return this.running;
    }
 
-   public void setRunning(boolean running) {
-      this.running= running;
-      try {
-         // InStreamHandler is blocking on System.in, so we close it, so that
-         // the InStreamHandler thread gets interrupted.
-         System.in.close(); 
-      } catch (IOException e) {} // just exit quietly...
-   }
-
    public void run() {
       this.running= true;
-      this.threadFactory.newThread(new ProtocolHandler()).start();
+      this.protocolHandler= new ProtocolHandler();
+      this.threadFactory.newThread(this.protocolHandler).start();
       this.threadFactory.newThread(new InStreamHandler()).start();
       this.threadFactory.newThread(new OutStreamHandler()).start();
    }
@@ -93,6 +56,10 @@ public class ChessEngine implements Runnable {
       return this.protocol;
    }
 
+   public synchronized void addObserver(Observer observer) {
+      this.protocolHandler.addObserver(observer);
+   }
+   
    public interface Protocol {
       public String processInput(String input);
 
@@ -117,9 +84,7 @@ public class ChessEngine implements Runnable {
       private boolean    WhiteToMove = true;
 
       public String processInput(String theInput) {
-
          String theOutput= null;
-
          if (uiProtocol == null) {
             if (theInput.equalsIgnoreCase("xboard")) {
                uiProtocol= XboardProtocol.create(this); //Change protocol to
@@ -132,11 +97,9 @@ public class ChessEngine implements Runnable {
                // ConsoleProtocol
             }
          }
-
          if (uiProtocol != null) {
             theOutput= uiProtocol.processInput(theInput);
          }
-
          return theOutput;
       }
 
@@ -144,7 +107,12 @@ public class ChessEngine implements Runnable {
          currentRules= null;
          currentPosition= null;
          this.go= false;
-         ChessEngine.this.setRunning(false);
+         ChessEngine.this.running= false;
+         try {
+            // InStreamHandler is blocking on System.in, so we close it, so that
+            // the InStreamHandler thread gets interrupted.
+            System.in.close(); 
+         } catch (IOException e) {} // just exit quietly...
       }
 
       public void newGame() {
@@ -192,24 +160,19 @@ public class ChessEngine implements Runnable {
 
    }
 
-   private class ProtocolHandler implements Runnable {
-
+   private class ProtocolHandler extends Observable implements Runnable {
       public void run() {
-
          while (ChessEngine.this.isRunning()) {
-
             try {
-               String reply= ChessEngine.this.protocol
-                     .processInput(ChessEngine.this.inMessages.take());
-
+               String message= ChessEngine.this.inMessages.take();
+               this.setChanged();
+               this.notifyObservers(message);
+               String reply= ChessEngine.this.protocol.processInput(message);
                if (reply != null && reply.length() > 0) {
-                  if (TalvMenni.DEBUG_WINDOW) {
-                     DebugWindow.updateTekst("From_Talvmenni: "
-                           + reply);
-                  }
                   ChessEngine.this.outMessages.add(reply);
+                  this.setChanged();
+                  this.notifyObservers(reply);
                }
-
             } catch (InterruptedException e) {
                e.printStackTrace();
             }
@@ -218,29 +181,18 @@ public class ChessEngine implements Runnable {
    }
 
    private class InStreamHandler implements Runnable {
-
       public void run() {
-
          BufferedReader inReader= new BufferedReader(new InputStreamReader(
                System.in));
-
          String inputMessage= "";
-
          while (ChessEngine.this.isRunning()) {
-
             try {
                inputMessage= inReader.readLine();
             } catch (IOException e) {
-               // TODO Auto-generated catch block
                e.printStackTrace();
             }
             if (inputMessage != null) {
                ChessEngine.this.inMessages.add(inputMessage);
-               if (TalvMenni.DEBUG_WINDOW) {
-                  DebugWindow.updateTekst("FromUI: "
-                        + inputMessage);
-               }
-
             }
             inputMessage= null;
          }
@@ -248,13 +200,10 @@ public class ChessEngine implements Runnable {
    }
 
    private class OutStreamHandler implements Runnable {
-
       public void run() {
-
          while (ChessEngine.this.isRunning()) {
-
             try {
-               System.out.println((String) ChessEngine.this.outMessages.take());
+               System.out.println(ChessEngine.this.outMessages.take());
             } catch (InterruptedException e) {
                e.printStackTrace();
             }

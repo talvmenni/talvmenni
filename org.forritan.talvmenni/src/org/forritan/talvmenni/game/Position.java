@@ -464,11 +464,6 @@ public class Position {
       } else {
          possibleMoves= this.black.getPossibleMoves();
       }
-      if (TalvMenni.DEBUG_WINDOW) {
-         DebugWindow.updateTekst("From_Talvmenni - " + possibleMoves.size() + " possible moves:  "
-               + possibleMoves.toString());
-      }
-
       if(!possibleMoves.isEmpty()) {
          int chosenMoveIndex= new Random().nextInt(possibleMoves.size());
          return possibleMoves.get(chosenMoveIndex);

@@ -1,46 +1,42 @@
 package org.forritan.talvmenni.core;
 
-import java.util.ArrayList;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadFactory;
+
+import org.forritan.talvmenni.ui.DebugWindow;
+
 
 public class TalvMenni {
-   
-   public static boolean TELLUSER_ALL_INPUT;
-   public static final boolean DEBUG_WINDOW= false;
-   public final static String NAME= "Talvmenni";
-   public final static String VERSION= "Version 0.1";
-   public static String DEBUG_NAME;
-   
+
+   public final static String NAME    = "Talvmenni";
+   public final static String VERSION = "Version 0.1";
+
+   public static boolean      TELLUSER_ALL_INPUT;
+   public static String       DEBUG_NAME;
 
    public static void main(
          String args[]) {
-      TELLUSER_ALL_INPUT= Boolean.getBoolean("org.forritan.talvmenni.telluser_all_input");
-      DEBUG_NAME= System.getProperty("org.forritan.talvmenni.debug_name");      
-      ChessEngine chessEngine= ChessEngine.create();
+      ThreadFactory threadFactory= Executors.defaultThreadFactory();
+
+      TELLUSER_ALL_INPUT= Boolean
+            .getBoolean("org.forritan.talvmenni.telluser_all_input");
+      DEBUG_NAME= System.getProperty("org.forritan.talvmenni.debug_name");
+      if(DEBUG_NAME == null) {
+         DEBUG_NAME= "";
+      }
+
+      final ChessEngine chessEngine= ChessEngine.create();
+
+      if (Boolean.getBoolean("org.forritan.talvmenni.debug_window")) {
+         Thread debugWindowThread= threadFactory.newThread(new Runnable() {
+            public void run() {
+               DebugWindow debugWindow= new DebugWindow(TalvMenni.NAME + " | " + TalvMenni.DEBUG_NAME);
+               chessEngine.addObserver(debugWindow);
+            }
+         });
+         debugWindowThread.start();
+      }
+
       chessEngine.run();
    }
-   
-   private String[] splitArgs(String[] args, String[] regExps) {
-      String[] result= args;
-      for(String regExp : regExps) {
-         result= this.splitArg(result, regExp);
-      }
-      return result;
-   }
-
-   private String[] splitArg(String[] args, String regExp) {
-      ArrayList<String> result= new ArrayList<String>();
-      for (String arg : args) {
-         String[] s= arg.split(regExp);
-         if (s[0].length() > 0) {
-            result.add(s[0]);
-         }
-         for (int j= 1; j < s.length; j++) {
-            if (s[j].length() > 0) {
-               result.add(regExp.concat(s[j]));
-            }
-         }
-      }
-      return result.toArray(new String[] {});
-   }
-
 }
