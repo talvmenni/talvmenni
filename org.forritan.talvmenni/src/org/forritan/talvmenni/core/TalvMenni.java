@@ -7,6 +7,7 @@ import java.util.concurrent.ThreadFactory;
 import org.forritan.talvmenni.game.TheoryBook;
 import org.forritan.talvmenni.game.Transposition;
 import org.forritan.talvmenni.strategy.AlphaBetaWithTranspositionTableStrategy;
+import org.forritan.talvmenni.strategy.IterativeDeepeningAlphaBetaWithTranspositionTableStrategy;
 import org.forritan.talvmenni.ui.DebugWindow;
 import org.forritan.util.debug.ExceptionLoggingWindowHandler;
 import org.forritan.util.debug.ObjectStatisticsWindow;
@@ -62,11 +63,16 @@ public class TalvMenni {
             140000);
 
       final ChessEngine chessEngine= ChessEngine
-            .create(new AlphaBetaWithTranspositionTableStrategy(
+            .create(new IterativeDeepeningAlphaBetaWithTranspositionTableStrategy(
                   PLY,
                   new Transposition(
                         MAX_TRANSPOSITION_ENTRIES),
                   book));
+      //      .create(new AlphaBetaWithTranspositionTableStrategy(
+      //            PLY,
+      //            new Transposition(
+      //                  MAX_TRANSPOSITION_ENTRIES),
+      //            book));
       //      .create(new AlphaBetaStrategy(
       //            PLY,
       //            book));

@@ -166,6 +166,11 @@ public class AlphaBetaWithTranspositionTableSearch implements Search {
 
                if (value.a.intValue() > best.a.intValue()) {
                   best= value;
+                  if(whiteMove) {
+                     p.getWhite().killerMove(move);         
+                  } else {
+                     p.getBlack().killerMove(move);         
+                  }
                   if (ply == this.ply) {
                      this.debugInfo.postCurrentBestMove(
                            move,
@@ -180,6 +185,10 @@ public class AlphaBetaWithTranspositionTableSearch implements Search {
                   }
                }
             }
+
+            p.getWhite().updatePossibleMovesOrdering();
+            p.getBlack().updatePossibleMovesOrdering();
+
             result= best;
          } else {
             if (whiteMove ? p.getWhite().isChecked() : p.getBlack().isChecked()) {
