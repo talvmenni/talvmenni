@@ -36,19 +36,19 @@ public class SimpleMaterialAndPositionalEvaluation implements Evaluation {
          result += Evaluation.PAWN;         
       }
       
-      for (Iterator it= new BitboardIterator((position.white.allPieces & Board._CORE)); it.hasNext();) {
+      for (Iterator it= new BitboardIterator(((position.white.allPieces & ~position.white.kings) & Board._CORE)); it.hasNext();) {
          it.next();
          result += Evaluation.POSITION_CORE;         
       }
-      for (Iterator it= new BitboardIterator((position.white.allPieces & Board._INNER_BORDER)); it.hasNext();) {
+      for (Iterator it= new BitboardIterator(((position.white.allPieces & ~position.white.kings) & Board._INNER_BORDER)); it.hasNext();) {
          it.next();
          result += Evaluation.POSITION_INNER_BORDER;         
       }
-      for (Iterator it= new BitboardIterator((position.white.allPieces & Board._MIDDLE_BORDER)); it.hasNext();) {
+      for (Iterator it= new BitboardIterator(((position.white.allPieces & ~position.white.kings) & Board._MIDDLE_BORDER)); it.hasNext();) {
          it.next();
          result += Evaluation.POSITION_MIDDLE_BORDER;         
       }
-      for (Iterator it= new BitboardIterator((position.white.allPieces & Board._OUTER_BORDER)); it.hasNext();) {
+      for (Iterator it= new BitboardIterator(((position.white.allPieces & ~position.white.kings) & Board._OUTER_BORDER)); it.hasNext();) {
          it.next();
          result += Evaluation.POSITION_OUTER_BORDER;         
       }
@@ -96,19 +96,19 @@ public class SimpleMaterialAndPositionalEvaluation implements Evaluation {
          result -= Evaluation.PAWN;         
       }
       
-      for (Iterator it= new BitboardIterator((position.black.allPieces & Board._CORE)); it.hasNext();) {
+      for (Iterator it= new BitboardIterator(((position.black.allPieces & ~position.black.kings) & Board._CORE)); it.hasNext();) {
          it.next();
          result -= Evaluation.POSITION_CORE;         
       }
-      for (Iterator it= new BitboardIterator((position.black.allPieces & Board._INNER_BORDER)); it.hasNext();) {
+      for (Iterator it= new BitboardIterator(((position.black.allPieces & ~position.black.kings) & Board._INNER_BORDER)); it.hasNext();) {
          it.next();
          result -= Evaluation.POSITION_INNER_BORDER;         
       }
-      for (Iterator it= new BitboardIterator((position.black.allPieces & Board._MIDDLE_BORDER)); it.hasNext();) {
+      for (Iterator it= new BitboardIterator(((position.black.allPieces & ~position.black.kings) & Board._MIDDLE_BORDER)); it.hasNext();) {
          it.next();
          result -= Evaluation.POSITION_MIDDLE_BORDER;         
       }
-      for (Iterator it= new BitboardIterator((position.black.allPieces & Board._OUTER_BORDER)); it.hasNext();) {
+      for (Iterator it= new BitboardIterator(((position.black.allPieces & ~position.black.kings) & Board._OUTER_BORDER)); it.hasNext();) {
          it.next();
          result -= Evaluation.POSITION_OUTER_BORDER;         
       }
