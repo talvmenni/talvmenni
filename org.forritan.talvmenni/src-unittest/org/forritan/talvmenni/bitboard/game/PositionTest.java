@@ -456,4 +456,118 @@ public class PositionTest extends TestCase {
             p.white.isEnpassant(Square._H3));
    }
 
+   public void testEnpassantAfterA7A5() {
+      Position p= Position.createInitial().move(
+            Square._A7,
+            Square._A5);      
+      Assert.assertTrue(
+            "Should be enpassant square",
+            p.black.isEnpassant(Square._A6));
+      Assert.assertTrue(
+            "Should be enpassant square",
+            p.black.isEnpassant(Square._B5));
+   }
+
+   public void testEnpassantAfterB7B5() {
+      Position p= Position.createInitial().move(
+            Square._B7,
+            Square._B5);      
+      Assert.assertTrue(
+            "Should be enpassant square",
+            p.black.isEnpassant(Square._A5));
+      Assert.assertTrue(
+            "Should be enpassant square",
+            p.black.isEnpassant(Square._B6));
+      Assert.assertTrue(
+            "Should be enpassant square",
+            p.black.isEnpassant(Square._C5));
+   }
+
+   public void testEnpassantAfterC7C5() {
+      Position p= Position.createInitial().move(
+            Square._C7,
+            Square._C5);      
+      Assert.assertTrue(
+            "Should be enpassant square",
+            p.black.isEnpassant(Square._B5));
+      Assert.assertTrue(
+            "Should be enpassant square",
+            p.black.isEnpassant(Square._C6));
+      Assert.assertTrue(
+            "Should be enpassant square",
+            p.black.isEnpassant(Square._D5));
+   }
+
+   public void testEnpassantAfterD7D5() {
+      Position p= Position.createInitial().move(
+            Square._D7,
+            Square._D5);      
+      Assert.assertTrue(
+            "Should be enpassant square",
+            p.black.isEnpassant(Square._C5));
+      Assert.assertTrue(
+            "Should be enpassant square",
+            p.black.isEnpassant(Square._D6));
+      Assert.assertTrue(
+            "Should be enpassant square",
+            p.black.isEnpassant(Square._E5));
+   }
+
+   public void testEnpassantAfterE7E5() {
+      Position p= Position.createInitial().move(
+            Square._E7,
+            Square._E5);      
+      Assert.assertTrue(
+            "Should be enpassant square",
+            p.black.isEnpassant(Square._D5));
+      Assert.assertTrue(
+            "Should be enpassant square",
+            p.black.isEnpassant(Square._E6));
+      Assert.assertTrue(
+            "Should be enpassant square",
+            p.black.isEnpassant(Square._F5));
+   }
+
+   public void testEnpassantAfterF7F5() {
+      Position p= Position.createInitial().move(
+            Square._F7,
+            Square._F5);      
+      Assert.assertTrue(
+            "Should be enpassant square",
+            p.black.isEnpassant(Square._E5));
+      Assert.assertTrue(
+            "Should be enpassant square",
+            p.black.isEnpassant(Square._F6));
+      Assert.assertTrue(
+            "Should be enpassant square",
+            p.black.isEnpassant(Square._G5));
+   }
+
+   public void testEnpassantAfterG7G5() {
+      Position p= Position.createInitial().move(
+            Square._G7,
+            Square._G5);      
+      Assert.assertTrue(
+            "Should be enpassant square",
+            p.black.isEnpassant(Square._F5));
+      Assert.assertTrue(
+            "Should be enpassant square",
+            p.black.isEnpassant(Square._G6));
+      Assert.assertTrue(
+            "Should be enpassant square",
+            p.black.isEnpassant(Square._H5));
+   }
+
+   public void testEnpassantAfterH7H5() {
+      Position p= Position.createInitial().move(
+            Square._H7,
+            Square._H5);      
+      Assert.assertTrue(
+            "Should be enpassant square",
+            p.black.isEnpassant(Square._G5));
+      Assert.assertTrue(
+            "Should be enpassant square",
+            p.black.isEnpassant(Square._H6));
+   }
+
 }
