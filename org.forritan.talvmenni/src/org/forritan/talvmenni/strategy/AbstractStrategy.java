@@ -6,10 +6,10 @@ import java.util.Observable;
 import java.util.Random;
 
 import org.forritan.talvmenni.evaluation.Evaluation;
-import org.forritan.talvmenni.game.Position;
-import org.forritan.talvmenni.game.TheoryBook;
-import org.forritan.talvmenni.game.Position.Move;
-import org.forritan.talvmenni.game.TheoryBook.TupleMoveWeight;
+import org.forritan.talvmenni.knowledge.Position;
+import org.forritan.talvmenni.knowledge.TheoryBook;
+import org.forritan.talvmenni.knowledge.Position.Move;
+import org.forritan.talvmenni.knowledge.TheoryBook.TupleMoveWeight;
 import org.forritan.talvmenni.search.PrincipalVariation;
 import org.forritan.talvmenni.search.Search;
 import org.forritan.talvmenni.search.PrincipalVariation.Thinking;

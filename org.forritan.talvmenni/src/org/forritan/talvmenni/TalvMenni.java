@@ -1,9 +1,9 @@
-package org.forritan.talvmenni.core;
+package org.forritan.talvmenni;
 
 import java.io.IOException;
 
-import org.forritan.talvmenni.game.TheoryBook;
-import org.forritan.talvmenni.game.Transposition;
+import org.forritan.talvmenni.knowledge.TheoryBook;
+import org.forritan.talvmenni.knowledge.Transposition;
 import org.forritan.talvmenni.search.PrincipalVariation;
 import org.forritan.talvmenni.strategy.IterativeDeepeningAlphaBetaWithTranspositionTableStrategy;
 import org.forritan.talvmenni.ui.DebugWindow;

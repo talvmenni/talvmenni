@@ -9,11 +9,11 @@ import net.jini.core.lease.Lease;
 import net.jini.core.transaction.TransactionException;
 import net.jini.space.JavaSpace;
 
-import org.forritan.talvmenni.core.TalvMenni;
+import org.forritan.talvmenni.TalvMenni;
 import org.forritan.talvmenni.evaluation.Evaluation;
-import org.forritan.talvmenni.game.TheoryBook;
-import org.forritan.talvmenni.game.Transposition;
-import org.forritan.talvmenni.game.Position.Move;
+import org.forritan.talvmenni.knowledge.TheoryBook;
+import org.forritan.talvmenni.knowledge.Transposition;
+import org.forritan.talvmenni.knowledge.Position.Move;
 import org.forritan.talvmenni.masterworker.generic.Command;
 import org.forritan.talvmenni.masterworker.generic.Result;
 import org.forritan.talvmenni.masterworker.generic.Task;

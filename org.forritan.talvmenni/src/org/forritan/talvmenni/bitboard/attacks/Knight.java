@@ -1,8 +1,8 @@
 package org.forritan.talvmenni.bitboard.attacks;
 
 import org.forritan.talvmenni.bitboard.paths.Knights;
-import org.forritan.talvmenni.game.ImmutablePosition;
-import org.forritan.talvmenni.game.Position;
+import org.forritan.talvmenni.knowledge.ImmutablePosition;
+import org.forritan.talvmenni.knowledge.Position;
 
 
 public class Knight {

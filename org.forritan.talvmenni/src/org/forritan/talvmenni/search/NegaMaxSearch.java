@@ -4,8 +4,8 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.forritan.talvmenni.evaluation.Evaluation;
-import org.forritan.talvmenni.game.Position;
-import org.forritan.talvmenni.game.Position.Move;
+import org.forritan.talvmenni.knowledge.Position;
+import org.forritan.talvmenni.knowledge.Position.Move;
 
 import org.forritan.talvmenni.search.PrincipalVariation.DebugInfo;
 import org.forritan.talvmenni.search.PrincipalVariation.Thinking;

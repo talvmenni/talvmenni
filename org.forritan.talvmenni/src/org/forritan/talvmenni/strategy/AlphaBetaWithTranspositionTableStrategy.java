@@ -3,9 +3,9 @@ package org.forritan.talvmenni.strategy;
 import java.util.List;
 
 import org.forritan.talvmenni.evaluation.MaterialAndPositionalEvaluation;
-import org.forritan.talvmenni.game.Position;
-import org.forritan.talvmenni.game.TheoryBook;
-import org.forritan.talvmenni.game.Transposition;
+import org.forritan.talvmenni.knowledge.Position;
+import org.forritan.talvmenni.knowledge.TheoryBook;
+import org.forritan.talvmenni.knowledge.Transposition;
 import org.forritan.talvmenni.search.AlphaBetaWithTranspositionTableSearch;
 import org.forritan.talvmenni.search.PrincipalVariation;
 

@@ -1,9 +1,9 @@
 import java.util.List;
 import java.util.Random;
 
-import org.forritan.talvmenni.game.Position;
-import org.forritan.talvmenni.game.AbstractPosition;
-import org.forritan.talvmenni.game.Position.Move;
+import org.forritan.talvmenni.knowledge.AbstractPosition;
+import org.forritan.talvmenni.knowledge.Position;
+import org.forritan.talvmenni.knowledge.Position.Move;
 
 
 public class TestSpeedOnMakeRandomMove {

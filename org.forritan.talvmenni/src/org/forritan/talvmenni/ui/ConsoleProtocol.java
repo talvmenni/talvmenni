@@ -5,15 +5,15 @@ import java.io.IOException;
 import java.util.Iterator;
 import java.util.List;
 
+import org.forritan.talvmenni.ChessEngineMethods;
+import org.forritan.talvmenni.ChessEngine.Protocol;
 import org.forritan.talvmenni.bitboard.Square;
 import org.forritan.talvmenni.bitboard.Squares;
-import org.forritan.talvmenni.core.ChessEngine.Protocol;
-import org.forritan.talvmenni.core.util.ChessEngineMethods;
-import org.forritan.talvmenni.game.ImmutablePosition;
-import org.forritan.talvmenni.game.Move;
-import org.forritan.talvmenni.game.MoveHistory;
-import org.forritan.talvmenni.game.Position;
-import org.forritan.talvmenni.game.TheoryBook;
+import org.forritan.talvmenni.knowledge.ImmutablePosition;
+import org.forritan.talvmenni.knowledge.Move;
+import org.forritan.talvmenni.knowledge.MoveHistory;
+import org.forritan.talvmenni.knowledge.Position;
+import org.forritan.talvmenni.knowledge.TheoryBook;
 
 
 public class ConsoleProtocol extends UiProtocolBase {

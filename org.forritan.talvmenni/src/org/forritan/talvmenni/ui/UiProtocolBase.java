@@ -1,6 +1,6 @@
 package org.forritan.talvmenni.ui;
 
-import org.forritan.talvmenni.core.ChessEngine;
+import org.forritan.talvmenni.ChessEngine;
 
 
 public abstract class UiProtocolBase implements UiProtocol {

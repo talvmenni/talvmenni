@@ -1,7 +1,7 @@
 package org.forritan.talvmenni.ui;
 
-import org.forritan.talvmenni.core.TalvMenni;
-import org.forritan.talvmenni.core.ChessEngine.Protocol;
+import org.forritan.talvmenni.TalvMenni;
+import org.forritan.talvmenni.ChessEngine.Protocol;
 
 
 public class UciProtocol extends UiProtocolBase {

@@ -4,9 +4,9 @@ import junit.framework.Assert;
 import junit.framework.TestCase;
 
 import org.forritan.talvmenni.bitboard.Square;
-import org.forritan.talvmenni.game.Move;
-import org.forritan.talvmenni.game.ImmutablePosition;
-import org.forritan.talvmenni.game.Position;
+import org.forritan.talvmenni.knowledge.ImmutablePosition;
+import org.forritan.talvmenni.knowledge.Move;
+import org.forritan.talvmenni.knowledge.Position;
 
 
 public class KingTest extends TestCase {

@@ -1,4 +1,4 @@
-package org.forritan.talvmenni.game;
+package org.forritan.talvmenni.knowledge;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -11,8 +11,8 @@ import java.util.StringTokenizer;
 
 import org.forritan.talvmenni.bitboard.Square;
 import org.forritan.talvmenni.bitboard.Squares;
-import org.forritan.talvmenni.game.Position.Move;
-import org.forritan.talvmenni.game.Position.ColorPosition;
+import org.forritan.talvmenni.knowledge.Position.ColorPosition;
+import org.forritan.talvmenni.knowledge.Position.Move;
 
 
 public class TheoryBook {

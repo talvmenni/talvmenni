@@ -4,8 +4,8 @@ import java.util.Iterator;
 
 import org.forritan.talvmenni.bitboard.BitboardIterator;
 import org.forritan.talvmenni.bitboard.evaluation.Board;
-import org.forritan.talvmenni.game.ImmutablePosition;
-import org.forritan.talvmenni.game.Position;
+import org.forritan.talvmenni.knowledge.ImmutablePosition;
+import org.forritan.talvmenni.knowledge.Position;
 
 public class SimpleMaterialAndPositionalEvaluation implements Evaluation { 
 

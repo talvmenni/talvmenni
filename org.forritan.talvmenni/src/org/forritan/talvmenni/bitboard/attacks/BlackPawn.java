@@ -5,8 +5,8 @@ import org.forritan.talvmenni.bitboard.Square;
 import org.forritan.talvmenni.bitboard.paths.BlackPawnCaptures;
 import org.forritan.talvmenni.bitboard.paths.BlackPawnMoves;
 import org.forritan.talvmenni.bitboard.paths.WhitePawnCaptures;
-import org.forritan.talvmenni.game.ImmutablePosition;
-import org.forritan.talvmenni.game.Position;
+import org.forritan.talvmenni.knowledge.ImmutablePosition;
+import org.forritan.talvmenni.knowledge.Position;
 
 
 public class BlackPawn {

@@ -2,8 +2,8 @@ package org.forritan.talvmenni.strategy;
 
 import java.io.Serializable;
 
-import org.forritan.talvmenni.game.Position;
-import org.forritan.talvmenni.game.TheoryBook;
+import org.forritan.talvmenni.knowledge.Position;
+import org.forritan.talvmenni.knowledge.TheoryBook;
 import org.forritan.talvmenni.search.PrincipalVariation;
 import org.forritan.talvmenni.search.Search;
 import org.forritan.talvmenni.search.PrincipalVariation.Thinking;

@@ -1,8 +1,8 @@
 import org.forritan.talvmenni.bitboard.Square;
 import org.forritan.talvmenni.bitboard.attacks.Queen;
-import org.forritan.talvmenni.game.ImmutablePosition;
-import org.forritan.talvmenni.game.Position;
-import org.forritan.talvmenni.game.AbstractPosition;
+import org.forritan.talvmenni.knowledge.AbstractPosition;
+import org.forritan.talvmenni.knowledge.ImmutablePosition;
+import org.forritan.talvmenni.knowledge.Position;
 
 public class TestSpeedOnQueenAttacks {
 

@@ -1,4 +1,4 @@
-package org.forritan.talvmenni.game;
+package org.forritan.talvmenni.knowledge;
 
 import java.util.Collections;
 import java.util.LinkedList;

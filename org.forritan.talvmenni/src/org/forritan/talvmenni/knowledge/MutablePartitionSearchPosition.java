@@ -1,6 +1,6 @@
-package org.forritan.talvmenni.game;
+package org.forritan.talvmenni.knowledge;
 
-import org.forritan.talvmenni.game.Position.Bitboard;
+import org.forritan.talvmenni.knowledge.Position.Bitboard;
 
 public class MutablePartitionSearchPosition extends MutablePosition {
 

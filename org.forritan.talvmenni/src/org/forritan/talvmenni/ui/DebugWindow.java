@@ -9,7 +9,7 @@ import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
-import org.forritan.talvmenni.game.ImmutablePosition;
+import org.forritan.talvmenni.knowledge.ImmutablePosition;
 
 public class DebugWindow implements Observer {
 

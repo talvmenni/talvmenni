@@ -2,9 +2,9 @@ package org.forritan.talvmenni.evaluation;
 
 import org.forritan.talvmenni.bitboard.Rank;
 import org.forritan.talvmenni.bitboard.Square;
-import org.forritan.talvmenni.game.ImmutablePosition;
-import org.forritan.talvmenni.game.Position;
-import org.forritan.talvmenni.game.AbstractPosition;
+import org.forritan.talvmenni.knowledge.AbstractPosition;
+import org.forritan.talvmenni.knowledge.ImmutablePosition;
+import org.forritan.talvmenni.knowledge.Position;
 
 import junit.framework.Assert;
 import junit.framework.TestCase;

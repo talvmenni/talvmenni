@@ -4,7 +4,7 @@ import org.forritan.talvmenni.bitboard.Rank;
 import org.forritan.talvmenni.bitboard.Square;
 import org.forritan.talvmenni.bitboard.paths.WhitePawnCaptures;
 import org.forritan.talvmenni.bitboard.paths.WhitePawnMoves;
-import org.forritan.talvmenni.game.Position;
+import org.forritan.talvmenni.knowledge.Position;
 
 
 public class WhitePawn {

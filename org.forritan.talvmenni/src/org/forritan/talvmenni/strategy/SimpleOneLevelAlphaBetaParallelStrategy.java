@@ -7,12 +7,12 @@ import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
-import org.forritan.talvmenni.core.ChessEngine;
+import org.forritan.talvmenni.ChessEngine;
 import org.forritan.talvmenni.evaluation.Evaluation;
 import org.forritan.talvmenni.evaluation.MaterialAndPositionalEvaluation;
-import org.forritan.talvmenni.game.Position;
-import org.forritan.talvmenni.game.TheoryBook;
-import org.forritan.talvmenni.game.Position.Move;
+import org.forritan.talvmenni.knowledge.Position;
+import org.forritan.talvmenni.knowledge.TheoryBook;
+import org.forritan.talvmenni.knowledge.Position.Move;
 import org.forritan.talvmenni.masterworker.generic.Result;
 import org.forritan.talvmenni.search.AlphaBetaSearch;
 import org.forritan.talvmenni.search.PrincipalVariation;

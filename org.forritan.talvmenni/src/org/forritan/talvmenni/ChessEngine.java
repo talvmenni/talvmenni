@@ -1,4 +1,4 @@
-package org.forritan.talvmenni.core;
+package org.forritan.talvmenni;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -6,21 +6,19 @@ import java.io.InputStreamReader;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
-import edu.emory.mathcs.util.concurrent.PlainThreadFactory;
-import edu.emory.mathcs.util.concurrent.DynamicArrayBlockingQueue;
-import edu.emory.mathcs.util.concurrent.ThreadFactory;
 
-import org.forritan.talvmenni.game.Move;
-import org.forritan.talvmenni.game.MoveHistory;
-import org.forritan.talvmenni.game.Position;
-import org.forritan.talvmenni.game.AbstractPosition;
-import org.forritan.talvmenni.game.Rules;
-import org.forritan.talvmenni.game.Position.ColorPosition;
+import org.forritan.talvmenni.knowledge.Move;
+import org.forritan.talvmenni.knowledge.MoveHistory;
+import org.forritan.talvmenni.knowledge.Position;
+import org.forritan.talvmenni.knowledge.Position.ColorPosition;
 import org.forritan.talvmenni.strategy.Strategy;
 import org.forritan.talvmenni.ui.ConsoleProtocol;
 import org.forritan.talvmenni.ui.UciProtocol;
 import org.forritan.talvmenni.ui.UiProtocol;
 import org.forritan.talvmenni.ui.XboardProtocol;
+
+import edu.emory.mathcs.util.concurrent.DynamicArrayBlockingQueue;
+import edu.emory.mathcs.util.concurrent.ThreadFactory;
 
 
 public class ChessEngine extends Observable implements Runnable {
@@ -111,8 +109,6 @@ public class ChessEngine extends Observable implements Runnable {
       public void setPositionFromFEN(
             String FENString);
 
-      public Rules getCurrentRules();
-
       public Move makeMove(
             long fromSquare,
             long toSquare,
@@ -133,7 +129,6 @@ public class ChessEngine extends Observable implements Runnable {
       private DebugInfo  debugInfo;
       private UiProtocol uiProtocol;
       private Position   currentPosition;
-      private Rules      currentRules;
       private boolean    go          = false;
       private boolean    whiteToMove = true;
 
@@ -173,7 +168,6 @@ public class ChessEngine extends Observable implements Runnable {
       }
 
       public synchronized void stop() {
-         currentRules= null;
          this.setCurrentPosition(null);
          this.go= false;
          ChessEngine.this.running= false;
@@ -203,10 +197,6 @@ public class ChessEngine extends Observable implements Runnable {
 
       public synchronized boolean isWhiteToMove() {
          return this.whiteToMove;
-      }
-
-      public Rules getCurrentRules() {
-         return this.currentRules;
       }
 
       public synchronized Position getCurrentPosition() {

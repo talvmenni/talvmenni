@@ -6,8 +6,8 @@ import org.forritan.talvmenni.bitboard.BitboardIterator;
 import org.forritan.talvmenni.bitboard.BishopMasks;
 import org.forritan.talvmenni.bitboard.Square;
 import org.forritan.talvmenni.bitboard.paths.Bishops;
-import org.forritan.talvmenni.game.ImmutablePosition;
-import org.forritan.talvmenni.game.Position;
+import org.forritan.talvmenni.knowledge.ImmutablePosition;
+import org.forritan.talvmenni.knowledge.Position;
 
 
 public class Bishop {

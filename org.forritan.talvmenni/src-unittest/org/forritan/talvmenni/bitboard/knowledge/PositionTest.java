@@ -1,4 +1,4 @@
-package org.forritan.talvmenni.bitboard.game;
+package org.forritan.talvmenni.bitboard.knowledge;
 
 import java.util.Iterator;
 
@@ -7,11 +7,7 @@ import junit.framework.TestCase;
 
 import org.forritan.talvmenni.bitboard.Rank;
 import org.forritan.talvmenni.bitboard.Square;
-import org.forritan.talvmenni.bitboard.paths.King;
-import org.forritan.talvmenni.game.ImmutablePosition;
-import org.forritan.talvmenni.game.Position;
-import org.forritan.talvmenni.game.AbstractPosition;
-import org.forritan.talvmenni.game.Rules;
+import org.forritan.talvmenni.knowledge.Position;
 
 
 public class PositionTest extends TestCase {

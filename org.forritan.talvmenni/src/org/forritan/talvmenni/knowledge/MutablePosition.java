@@ -1,9 +1,15 @@
-package org.forritan.talvmenni.game;
+package org.forritan.talvmenni.knowledge;
+
+import java.util.Stack;
+
+import org.forritan.talvmenni.knowledge.Position.Bitboard;
 
 
-
-public class ImmutablePosition extends AbstractPosition {
-
+public class MutablePosition extends AbstractPosition {
+   
+   Stack whiteBitboards;
+   Stack blackBitboards;
+   
    /**
     * 
     * @param whiteKings
@@ -23,7 +29,7 @@ public class ImmutablePosition extends AbstractPosition {
     * @param blackCastling
     * @param blackEnpassant
     */
-   protected ImmutablePosition(
+   protected MutablePosition(
          long whiteKings,
          long whiteQueens,
          long whiteRooks,
@@ -57,39 +63,46 @@ public class ImmutablePosition extends AbstractPosition {
             blackPawns,
             blackCastling,
             blackEnpassant);
+      this.whiteBitboards= new Stack();
+      this.blackBitboards= new Stack();
    }
 
    /**
     * @param white
     * @param black
     */
-   protected ImmutablePosition(
+   protected MutablePosition(
          Bitboard white,
          Bitboard black) {
       super(
             white,
             black);
+      this.whiteBitboards= new Stack();
+      this.blackBitboards= new Stack();
    }
 
    public Position pushMove(
          Bitboard white,
          Bitboard black) {
-      return Position.Factory.create(
-            false,
-            false,
-            white,
-            black);
+      
+      this.whiteBitboards.push(this.white);
+      this.blackBitboards.push(this.black);
+      this.white= white;
+      this.black= black;
+      return this;
    }
-
+   
    public Position popMove() {
+      this.white= (Bitboard) this.whiteBitboards.pop();
+      this.black= (Bitboard) this.blackBitboards.pop();
       return this;
    }
 
-   public synchronized Position getImmutable() {
-      return this;
+   public Position getImmutable() {
+      return Position.Factory.create(false, false, this.getWhite(), this.getBlack());
    }
 
-   public synchronized Position getMutable() {
-      return Position.Factory.create(false, true, this.getWhite(), this.getBlack());
+   public Position getMutable() {
+      return this;
    }
 }

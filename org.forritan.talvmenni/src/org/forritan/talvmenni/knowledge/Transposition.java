@@ -1,4 +1,4 @@
-package org.forritan.talvmenni.game;
+package org.forritan.talvmenni.knowledge;
 
 import java.io.Serializable;
 import java.util.Collections;
@@ -6,7 +6,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.forritan.talvmenni.game.Position.Move;
+import org.forritan.talvmenni.knowledge.Position.Move;
 
 public class Transposition implements Serializable {
 

@@ -2,8 +2,8 @@ package org.forritan.talvmenni.evaluation;
 
 import java.util.Iterator;
 
-import org.forritan.talvmenni.game.ImmutablePosition;
-import org.forritan.talvmenni.game.Position;
+import org.forritan.talvmenni.knowledge.ImmutablePosition;
+import org.forritan.talvmenni.knowledge.Position;
 
 public class SimpleMaterialEvaluation implements Evaluation { 
 

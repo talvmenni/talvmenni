@@ -1,4 +1,4 @@
-package org.forritan.talvmenni.game;
+package org.forritan.talvmenni.knowledge;
 
 import org.forritan.talvmenni.bitboard.Rank;
 import org.forritan.talvmenni.bitboard.Square;

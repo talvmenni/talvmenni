@@ -6,8 +6,8 @@ import java.util.List;
 import java.util.Observable;
 import java.util.Stack;
 
-import org.forritan.talvmenni.game.Position;
-import org.forritan.talvmenni.game.Position.Move;
+import org.forritan.talvmenni.knowledge.Position;
+import org.forritan.talvmenni.knowledge.Position.Move;
 
 
 public interface PrincipalVariation extends Serializable {

@@ -1,10 +1,10 @@
-package org.forritan.talvmenni.core.util;
+package org.forritan.talvmenni;
 
 import java.util.Iterator;
 import java.util.List;
 
-import org.forritan.talvmenni.game.Position;
-import org.forritan.talvmenni.game.Position.Move;
+import org.forritan.talvmenni.knowledge.Position;
+import org.forritan.talvmenni.knowledge.Position.Move;
 
 
 public class ChessEngineMethods {
