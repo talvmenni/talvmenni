@@ -1,8 +1,10 @@
 package org.forritan.talvmenni.search;
 
+import java.io.UnsupportedEncodingException;
 import java.util.Iterator;
 import java.util.List;
 
+import org.forritan.talvmenni.knowledge.HistoryHeuristic;
 import org.forritan.talvmenni.knowledge.Position;
 import org.forritan.talvmenni.knowledge.Position.Move;
 import org.forritan.talvmenni.knowledge.evaluation.Evaluation;
@@ -149,5 +151,9 @@ public class NegaMaxSearch implements Search {
          }
       }
       return result;
+   }
+
+   public HistoryHeuristic getHistoryHeuristic() {
+      throw new UnsupportedOperationException();
    }
 }

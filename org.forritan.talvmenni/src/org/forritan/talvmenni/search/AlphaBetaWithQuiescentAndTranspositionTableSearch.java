@@ -58,7 +58,7 @@ public class AlphaBetaWithQuiescentAndTranspositionTableSearch implements
       this.useMoveOrdering= useMoveOrdering;
       this.transposition= transposition;
       this.pv= pv;
-      this.historyHeuristic= HistoryHeuristic.getInstance();
+      this.historyHeuristic= new HistoryHeuristic();
       this.quiescent= new Quiescent(
             this.pv,
             quiescentMaxDepth);
@@ -281,5 +281,14 @@ public class AlphaBetaWithQuiescentAndTranspositionTableSearch implements
             Transposition.Entry.Type.EXACT);
 
       return result;
+   }
+
+   public HistoryHeuristic getHistoryHeuristic() {
+      return this.historyHeuristic;
+   }
+
+   public void setHistoryHeuristic(
+         HistoryHeuristic historyHeuristic) {
+      this.historyHeuristic= historyHeuristic;
    }
 }

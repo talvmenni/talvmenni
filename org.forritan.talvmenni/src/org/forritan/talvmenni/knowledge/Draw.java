@@ -16,13 +16,6 @@ public class Draw implements Serializable {
    private Map   positionRepetitions;
    private Stack moveStack;
 
-   public static Draw getInstance() {
-      if(Draw.instance == null) {
-         Draw.instance= new Draw();
-      }
-      return Draw.instance;
-   }
-   
    
    public Draw() {
       this.positionRepetitions= new HashMap();

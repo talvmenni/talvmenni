@@ -6,6 +6,7 @@ import java.util.Observable;
 
 import org.forritan.talvmenni.ChessEngine;
 import org.forritan.talvmenni.knowledge.AbstractPosition;
+import org.forritan.talvmenni.knowledge.HistoryHeuristic;
 import org.forritan.talvmenni.knowledge.ImmutablePosition;
 import org.forritan.talvmenni.knowledge.Position;
 import org.forritan.talvmenni.knowledge.Position.Move;
@@ -16,8 +17,8 @@ import org.forritan.talvmenni.search.PrincipalVariation.Thinking;
 
 
 public interface Search extends Serializable {
-   
-   public static final long serialVersionUID = 1L; 
+
+   public static final long serialVersionUID = 1L;
 
    public void setPly(
          int ply);
@@ -28,10 +29,13 @@ public interface Search extends Serializable {
          boolean whiteMove);
 
    public PrincipalVariation getPrincipalVariation();
-   
+
+   public HistoryHeuristic getHistoryHeuristic();
+
    public Thinking getThinking();
+
    public DebugInfo getDebugInfo();
-   
+
    public int getLastScore();
-      
+
 }

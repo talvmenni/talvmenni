@@ -5,9 +5,18 @@ import java.io.IOException;
 import org.forritan.talvmenni.knowledge.TheoryBook;
 import org.forritan.talvmenni.knowledge.Transposition;
 import org.forritan.talvmenni.search.PrincipalVariation;
+import org.forritan.talvmenni.strategy.AlphaBetaStrategy;
+import org.forritan.talvmenni.strategy.AlphaBetaWithTranspositionTableStrategy;
+import org.forritan.talvmenni.strategy.IterativeDeepeningAlphaBetaStrategy;
 import org.forritan.talvmenni.strategy.IterativeDeepeningAlphaBetaWithQuiescentAndNullMoveAndTranspositionTableStrategy;
 import org.forritan.talvmenni.strategy.IterativeDeepeningAlphaBetaWithQuiescentAndTranspositionTableStrategy;
+import org.forritan.talvmenni.strategy.IterativeDeepeningAlphaBetaWithTranspositionTableStrategy;
+import org.forritan.talvmenni.strategy.IterativeDeepeningMTDfWithTranspositionTableStrategy;
+import org.forritan.talvmenni.strategy.MTDfStrategyWithTranspositionTable;
+import org.forritan.talvmenni.strategy.NegaMaxStrategy;
+import org.forritan.talvmenni.strategy.RandomMoveStrategy;
 import org.forritan.talvmenni.strategy.SimpleOneLevelAlphaBetaParallelStrategy;
+import org.forritan.talvmenni.strategy.Strategy;
 import org.forritan.talvmenni.ui.DebugWindow;
 
 import edu.emory.mathcs.util.concurrent.PlainThreadFactory;
@@ -64,6 +73,11 @@ public class TalvMenni {
     */
    public static final boolean       PARTITION_SEARCH              = false;
 
+   /**
+    *  
+    */
+   public static int                 STRATEGY                      = ChoosenStrategy.ITERATIVE_DEEPENING_ALPHA_BETA_WITH_QUIESCENT_AND_TRANSPOSITION_TABLE;
+
    private static PlainThreadFactory threadFactory;
 
    public synchronized static ThreadFactory getThreadFactory() {
@@ -77,6 +91,31 @@ public class TalvMenni {
          String args[]) {
 
       ThreadFactory threadFactory= TalvMenni.getThreadFactory();
+
+      String strategyPropertyString= System.getProperty("strategy");
+      if (strategyPropertyString != null) {
+         if ("random".equalsIgnoreCase(strategyPropertyString)) {
+            STRATEGY= ChoosenStrategy.RANDOM_MOVE;
+         } else if ("nm".equalsIgnoreCase(strategyPropertyString)) {
+            STRATEGY= ChoosenStrategy.NEGA_MAX;
+         } else if ("ab".equalsIgnoreCase(strategyPropertyString)) {
+            STRATEGY= ChoosenStrategy.ALPHA_BETA;
+         } else if ("abtt".equalsIgnoreCase(strategyPropertyString)) {
+            STRATEGY= ChoosenStrategy.ALPHA_BETA_WITH_TRANSPOSITION_TABLE;
+         } else if ("idab".equalsIgnoreCase(strategyPropertyString)) {
+            STRATEGY= ChoosenStrategy.ITERATIVE_DEEPENING_ALPHA_BETA;
+         } else if ("idabtt".equalsIgnoreCase(strategyPropertyString)) {
+            STRATEGY= ChoosenStrategy.ITERATIVE_DEEPENING_ALPHA_BETA_WITH_TRANSPOSITION_TABLE;
+         } else if ("idabqtt".equalsIgnoreCase(strategyPropertyString)) {
+            STRATEGY= ChoosenStrategy.ITERATIVE_DEEPENING_ALPHA_BETA_WITH_QUIESCENT_AND_TRANSPOSITION_TABLE;
+         } else if ("idabqnmtt".equalsIgnoreCase(strategyPropertyString)) {
+            STRATEGY= ChoosenStrategy.ITERATIVE_DEEPENING_ALPHA_BETA_WITH_QUIESCENT_AND_NULL_MOVE_AND_TRANSPOSITION_TABLE;
+         } else if ("mtdf".equalsIgnoreCase(strategyPropertyString)) {
+            STRATEGY= ChoosenStrategy.MTDF_WITH_TRANSPOSITION_TABLE;
+         } else if ("idmtdf".equalsIgnoreCase(strategyPropertyString)) {
+            STRATEGY= ChoosenStrategy.ITERATIVE_DEEPENING_MTDF_WITH_TRANSPOSITION_TABLE;
+         }
+      }
 
       String minimumMoveDelay= System.getProperty("minimumMoveDelay");
       if (minimumMoveDelay != null) {
@@ -118,113 +157,9 @@ public class TalvMenni {
       final TheoryBook book= new TheoryBook(
             140000);
 
-      final ChessEngine chessEngine= ChessEngine
-
-      // Choose strategy
-
-            //      .create(new
-            // RandomMoveStrategy(PrincipalVariation.Factory.create(0)));
-
-            .create(new SimpleOneLevelAlphaBetaParallelStrategy(
-                  PLY,
-                  book,
-                  PrincipalVariation.Factory.create(PLY - 1)));
-
-      //            .create(new IterativeDeepeningMTDfWithTranspositionTableStrategy(
-      //                  PLY,
-      //                  new Transposition(
-      //                        MAX_TRANSPOSITION_ENTRIES),
-      //                  false,
-      //                  book,
-      //                  PrincipalVariation.Factory.create(PLY),
-      //                  QUIESCENT_MAX_DEPTH));
-
-      //            .create(new
-      // IterativeDeepeningAlphaBetaWithQuiescentAndNullMoveAndTranspositionTableStrategy(
-      //                  PLY,
-      //                  new Transposition(
-      //                        MAX_TRANSPOSITION_ENTRIES),
-      //                  true,
-      //                  book,
-      //                  PrincipalVariation.Factory.create(PLY),
-      //                  QUIESCENT_MAX_DEPTH));
-
-      //            .create(new
-      // IterativeDeepeningAlphaBetaWithQuiescentAndTranspositionTableStrategy(
-      //                  PLY,
-      //                  new Transposition(
-      //                        MAX_TRANSPOSITION_ENTRIES),
-      //                  false,
-      //                  book,
-      //                  PrincipalVariation.Factory.create(PLY),
-      //                  QUIESCENT_MAX_DEPTH));
-
-      //            .create(new IterativeDeepeningAlphaBetaWithTranspositionTableStrategy(
-      //                  PLY,
-      //                  new Transposition(
-      //                        MAX_TRANSPOSITION_ENTRIES),
-      //                  false,
-      //                  book,
-      //                  PrincipalVariation.Factory.create(PLY)));
-
-      //            .create(new IterativeDeepeningAlphaBetaStrategy(
-      //                  PLY,
-      //                  book,
-      //                  PrincipalVariation.Factory.create(PLY)));
-
-      //            .create(new MTDfStrategy(
-      //                  PLY,
-      //                  new Transposition(
-      //                        MAX_TRANSPOSITION_ENTRIES),
-      //                  false,
-      //                  book,
-      //                  PrincipalVariation.Factory.create(PLY),
-      //                  QUIESCENT_MAX_DEPTH));
-
-      //            .create(new AlphaBetaWithTranspositionTableStrategy(
-      //                  PLY,
-      //                  new Transposition(
-      //                        MAX_TRANSPOSITION_ENTRIES),
-      //                  false,
-      //                  book,
-      //                  PrincipalVariation.Factory.create(PLY)));
-
-      //                  .create(new AlphaBetaStrategy(
-      //                        PLY,
-      //                        book,
-      //    PrincipalVariation.Factory.create(PLY)));
-
-      //            .create(new NegaMaxStrategy(
-      //                  PLY,
-      //                  book,
-      //                  PrincipalVariation.Factory.create(PLY)));
-
-      //      if (Boolean.getBoolean("exception_logging_window")) {
-      //         Thread windowThread= threadFactory.newThread(new Runnable() {
-      //            public void run() {
-      //               Thread
-      //                     .setDefaultUncaughtExceptionHandler(ExceptionLoggingWindowHandler
-      //                           .getInstance());
-      //            }
-      //         });
-      //         windowThread.start();
-      //      }
-
-      //      if (Boolean.getBoolean("object_statisics_window")) {
-      //         Thread windowThread= threadFactory.newThread(new Runnable() {
-      //            public void run() {
-      //               ObjectStatisticsWindow window= new ObjectStatisticsWindow(
-      //                     TalvMenni.NAME
-      //                           + " | "
-      //                           + TalvMenni.DEBUG_NAME
-      //                           + " | Object creations statistics");
-      //               chessEngine.getProtocol().getObjectCreationStatistics()
-      //                     .addObserver(
-      //                           window);
-      //            }
-      //         });
-      //         windowThread.start();
-      //      }
+      final ChessEngine chessEngine= ChessEngine.create(ChoosenStrategy.get(
+            STRATEGY,
+            book));
 
       if (Boolean.getBoolean("debug_window")) {
          Thread windowThread= threadFactory.newThread(new Runnable() {
@@ -259,5 +194,121 @@ public class TalvMenni {
       }
 
       chessEngine.run();
+   }
+
+   public static class ChoosenStrategy {
+
+      public static final int RANDOM_MOVE                                                                         = 0;
+
+      public static final int NEGA_MAX                                                                            = 1;
+
+      public static final int ALPHA_BETA                                                                          = 2;
+      public static final int ALPHA_BETA_WITH_TRANSPOSITION_TABLE                                                 = 3;
+      public static final int ITERATIVE_DEEPENING_ALPHA_BETA                                                      = 4;
+      public static final int ITERATIVE_DEEPENING_ALPHA_BETA_WITH_TRANSPOSITION_TABLE                             = 5;
+      public static final int ITERATIVE_DEEPENING_ALPHA_BETA_WITH_QUIESCENT_AND_TRANSPOSITION_TABLE               = 6;
+      public static final int ITERATIVE_DEEPENING_ALPHA_BETA_WITH_QUIESCENT_AND_NULL_MOVE_AND_TRANSPOSITION_TABLE = 7;
+
+      public static final int MTDF_WITH_TRANSPOSITION_TABLE                                                       = 8;
+      public static final int ITERATIVE_DEEPENING_MTDF_WITH_TRANSPOSITION_TABLE                                   = 9;
+
+      public static final int SIMPLE_ONE_LEVEL_ALPHA_BETA_PARALLEL                                                = 10;
+
+      public static Strategy get(
+            int choosenOne,
+            TheoryBook book) {
+         switch (choosenOne) {
+
+            case ChoosenStrategy.RANDOM_MOVE:
+               return new RandomMoveStrategy(
+                     PrincipalVariation.Factory.create(0));
+
+            case ChoosenStrategy.NEGA_MAX:
+               new NegaMaxStrategy(
+                     PLY,
+                     book,
+                     PrincipalVariation.Factory.create(PLY));
+
+            case ChoosenStrategy.ALPHA_BETA:
+               new AlphaBetaStrategy(
+                     PLY,
+                     book,
+                     PrincipalVariation.Factory.create(PLY));
+
+            case ChoosenStrategy.ALPHA_BETA_WITH_TRANSPOSITION_TABLE:
+               new AlphaBetaWithTranspositionTableStrategy(
+                     PLY,
+                     new Transposition(),
+                     false,
+                     book,
+                     PrincipalVariation.Factory.create(PLY));
+
+            case ChoosenStrategy.ITERATIVE_DEEPENING_ALPHA_BETA:
+               return new IterativeDeepeningAlphaBetaStrategy(
+                     PLY,
+                     book,
+                     PrincipalVariation.Factory.create(PLY));
+
+            case ChoosenStrategy.ITERATIVE_DEEPENING_ALPHA_BETA_WITH_TRANSPOSITION_TABLE:
+               return new IterativeDeepeningAlphaBetaWithTranspositionTableStrategy(
+                     PLY,
+                     new Transposition(),
+                     false,
+                     book,
+                     PrincipalVariation.Factory.create(PLY));
+
+            case ChoosenStrategy.ITERATIVE_DEEPENING_ALPHA_BETA_WITH_QUIESCENT_AND_TRANSPOSITION_TABLE:
+               new IterativeDeepeningAlphaBetaWithQuiescentAndTranspositionTableStrategy(
+                     PLY,
+                     new Transposition(),
+                     false,
+                     book,
+                     PrincipalVariation.Factory.create(PLY),
+                     QUIESCENT_MAX_DEPTH);
+
+            case ChoosenStrategy.ITERATIVE_DEEPENING_ALPHA_BETA_WITH_QUIESCENT_AND_NULL_MOVE_AND_TRANSPOSITION_TABLE:
+               new IterativeDeepeningAlphaBetaWithQuiescentAndNullMoveAndTranspositionTableStrategy(
+                     PLY,
+                     new Transposition(),
+                     true,
+                     book,
+                     PrincipalVariation.Factory.create(PLY),
+                     QUIESCENT_MAX_DEPTH);
+
+            case ChoosenStrategy.MTDF_WITH_TRANSPOSITION_TABLE:
+               return new MTDfStrategyWithTranspositionTable(
+                     PLY,
+                     new Transposition(),
+                     false,
+                     book,
+                     PrincipalVariation.Factory.create(PLY),
+                     QUIESCENT_MAX_DEPTH);
+
+            case ChoosenStrategy.ITERATIVE_DEEPENING_MTDF_WITH_TRANSPOSITION_TABLE:
+               return new IterativeDeepeningMTDfWithTranspositionTableStrategy(
+                     PLY,
+                     new Transposition(),
+                     false,
+                     book,
+                     PrincipalVariation.Factory.create(PLY),
+                     QUIESCENT_MAX_DEPTH);
+
+            case ChoosenStrategy.SIMPLE_ONE_LEVEL_ALPHA_BETA_PARALLEL:
+               return new SimpleOneLevelAlphaBetaParallelStrategy(
+                     PLY,
+                     book,
+                     PrincipalVariation.Factory.create(PLY - 1));
+
+            default:
+               return new IterativeDeepeningAlphaBetaWithQuiescentAndTranspositionTableStrategy(
+                     PLY,
+                     new Transposition(),
+                     false,
+                     book,
+                     PrincipalVariation.Factory.create(PLY),
+                     QUIESCENT_MAX_DEPTH);
+         }
+      }
+
    }
 }

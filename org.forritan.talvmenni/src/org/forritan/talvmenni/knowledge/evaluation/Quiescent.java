@@ -14,8 +14,6 @@ import org.forritan.talvmenni.search.PrincipalVariation;
 
 public class Quiescent {
 
-//   private PrincipalVariation pv;
-   private HistoryHeuristic   historyHeuristic;
    private int                maxDepth;
    private AlphaBetaSearch    search;
 
@@ -27,8 +25,6 @@ public class Quiescent {
          int maxDepth) {
       this.maxDepth= maxDepth;
       this.search= new AlphaBetaSearch();
-//      this.pv= pv;
-      this.historyHeuristic= HistoryHeuristic.getInstance();
    }
 
    public int search(
@@ -38,25 +34,6 @@ public class Quiescent {
          int ply,
          int alpha,
          int beta) {
-
-//      if (this.transposition.contains(
-//            p,
-//            whiteMove)) {
-//         Entry entry= this.transposition.get(
-//               p,
-//               whiteMove);
-//         if (entry.depthToLeaf >= ply) {
-//            this.transpositionHits++;
-//            this.pv.updateLastExaminedLine();
-//            if ((entry.type & Transposition.Entry.Type.EXACT) != 0) { return entry.exactScore; }
-//            if ((entry.type & Transposition.Entry.Type.LOWER_BOUND) != 0) {
-//               if (entry.lowerBound >= beta) { return beta; }
-//            }
-//            if ((entry.type & Transposition.Entry.Type.UPPER_BOUND) != 0) {
-//               if (entry.upperBound <= alpha) { return alpha; }
-//            }
-//         }
-//      }
 
       if ((whiteMove ? p.getWhite().isInCheck() : p.getBlack().isInCheck()))
             return this.search.alphaBeta(
@@ -68,7 +45,6 @@ public class Quiescent {
                   beta);
 
       int score= (e.getScore(p, whiteMove) * (whiteMove ? 1 : -1));
-//      this.pv.updateLastExaminedLine();
 
       if ((this.maxDepth + ply) > 0) {
 
@@ -81,18 +57,14 @@ public class Quiescent {
          List moves;
 
          if (whiteMove) {
-//            this.historyHeuristic.sortMoveList(p.getWhite());
             moves= p.getWhite().getPossibleCaptureMoves();
          } else {
-//            this.historyHeuristic.sortMoveList(p.getBlack());
             moves= p.getBlack().getPossibleCaptureMoves();
          }
 
          if (moves.size() > 0) {
             for (Iterator it= moves.iterator(); it.hasNext();) {
                Move move= (Move) it.next();
-//               this.movesSearched++;
-//               this.pv.push(move);
 
                p= p.move(move);
 
@@ -106,8 +78,6 @@ public class Quiescent {
                      -beta,
                      -alpha);
 
-//               this.pv.pop();
-
                p.popMove();
 
                if (score >= beta) { return beta; }
@@ -116,16 +86,6 @@ public class Quiescent {
 
                if (score > alpha) {
                   alpha= score;
-
-//                  this.pv.updatePV(
-//                        this.pv.getDepth() + (-ply),
-//                        moveTime,
-//                        (this.movesSearched - movesSearchedBefore),
-//                        (alpha * (whiteMove ? 1 : -1)));
-
-//                  this.historyHeuristic.updateWithSufficient(
-//                        move,
-//                        0); // i.e.: add only 1 to this move 
                }
             }
          } else {

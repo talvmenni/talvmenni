@@ -6,6 +6,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.forritan.talvmenni.TalvMenni;
 import org.forritan.talvmenni.knowledge.Position.Move;
 
 
@@ -16,6 +17,17 @@ public class Transposition implements Serializable {
    private Table            whiteTable;
    private Table            blackTable;
 
+   public Transposition() {
+      this.whiteTable= new Table(
+            TalvMenni.MAX_TRANSPOSITION_ENTRIES);
+      this.blackTable= new Table(
+            TalvMenni.MAX_TRANSPOSITION_ENTRIES);
+   }
+   
+   /**
+    * @deprecated Use no-arg constructor instead...
+    * @param maxEntries
+    */  
    public Transposition(
          int maxEntries) {
       this.whiteTable= new Table(

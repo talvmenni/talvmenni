@@ -21,14 +21,14 @@ public class AlphaBetaWithTranspositionTableSearch implements Search {
       return this.lastScore;
    }
 
-   private PrincipalVariation pv;
-   private HistoryHeuristic   historyHeuristic;
-   private Transposition      transposition;
-   private int                ply;
-   private final boolean      useMoveOrdering;
+   private PrincipalVariation         pv;
+   private transient HistoryHeuristic historyHeuristic;
+   private transient Transposition    transposition;
+   private int                        ply;
+   private final boolean              useMoveOrdering;
 
-   private int                movesSearched;
-   private int                transpositionHits;
+   private int                        movesSearched;
+   private int                        transpositionHits;
 
    public AlphaBetaWithTranspositionTableSearch(
          Transposition transposition,
@@ -50,7 +50,7 @@ public class AlphaBetaWithTranspositionTableSearch implements Search {
       this.useMoveOrdering= useMoveOrdering;
       this.transposition= transposition;
       this.pv= pv;
-      this.historyHeuristic= HistoryHeuristic.getInstance();
+      this.historyHeuristic= new HistoryHeuristic();
    }
 
    public void setPly(
@@ -88,7 +88,7 @@ public class AlphaBetaWithTranspositionTableSearch implements Search {
 
       // int beta= Integer.MAX_VALUE;
       // If checkmate there is no need to search further...
-       int beta= Evaluation.CHECKMATE_SCORE;
+      int beta= Evaluation.CHECKMATE_SCORE;
 
       this.pv.clearPrincipalVariation();
 
@@ -167,7 +167,9 @@ public class AlphaBetaWithTranspositionTableSearch implements Search {
       }
 
       if (ply == 0) {
-         result= (e.getScore(p, whiteMove) * (whiteMove ? 1 : -1));
+         result= (e.getScore(
+               p,
+               whiteMove) * (whiteMove ? 1 : -1));
          this.pv.updateLastExaminedLine();
       } else {
          List moves;
@@ -261,5 +263,23 @@ public class AlphaBetaWithTranspositionTableSearch implements Search {
             Transposition.Entry.Type.EXACT);
 
       return result;
+   }
+
+   public Transposition getTransposition() {
+      return this.transposition;
+   }
+   
+   public void setTransposition(
+         Transposition transposition) {
+      this.transposition= transposition;
+   }
+   
+   public HistoryHeuristic getHistoryHeuristic() {
+      return this.historyHeuristic;
+   }
+   
+   public void setHistoryHeuristic(
+         HistoryHeuristic historyHeuristic) {
+      this.historyHeuristic= historyHeuristic;
    }
 }

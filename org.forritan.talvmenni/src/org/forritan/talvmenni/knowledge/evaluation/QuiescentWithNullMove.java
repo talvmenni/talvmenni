@@ -24,7 +24,7 @@ public class QuiescentWithNullMove {
          int maxDepth) {
       this.maxDepth= maxDepth;
       this.search= new AlphaBetaSearch();
-      this.historyHeuristic= HistoryHeuristic.getInstance();
+      this.historyHeuristic= new HistoryHeuristic();
    }
 
    public int search(

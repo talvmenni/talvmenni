@@ -11,9 +11,9 @@ import org.forritan.talvmenni.search.MTDfSearch;
 import org.forritan.talvmenni.search.PrincipalVariation;
 
 
-public class MTDfStrategy extends AbstractStrategy {
+public class MTDfStrategyWithTranspositionTable extends AbstractStrategy {
 
-   public MTDfStrategy(
+   public MTDfStrategyWithTranspositionTable(
          int ply,
          Transposition transposition,
          boolean useMoveOrdering,

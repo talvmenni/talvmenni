@@ -16,12 +16,8 @@ import org.forritan.talvmenni.knowledge.Position.Move;
 
 public class HistoryHeuristicTest extends TestCase {
 
-   public void testSingleton() {
-      Assert.assertNotNull(HistoryHeuristic.getInstance());
-   }
-
    public void testGetAndUpdate() {
-      HistoryHeuristic hh= HistoryHeuristic.getInstance();
+      HistoryHeuristic hh= new HistoryHeuristic();
       Move a2a3= new Move(
             Square._A2,
             Square._A3,
@@ -70,7 +66,7 @@ public class HistoryHeuristicTest extends TestCase {
    public void testSortMoveList() throws IllegalArgumentException,
          SecurityException, InstantiationException, IllegalAccessException,
          InvocationTargetException, NoSuchMethodException {
-      HistoryHeuristic hh= HistoryHeuristic.getInstance();
+      HistoryHeuristic hh= new HistoryHeuristic();
       hh.clear();
 
       Position.Bitboard whiteBoard= Position.Factory.createInitial(

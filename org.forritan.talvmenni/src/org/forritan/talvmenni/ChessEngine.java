@@ -186,8 +186,7 @@ public class ChessEngine extends Observable implements Runnable {
          try {
             this.setCurrentPosition(Position.Factory.createInitial(ImmutablePosition.class));
             MoveHistory.getInstance().reset();
-            HistoryHeuristic.getInstance().clear();
-            Draw.getInstance().clear();
+            this.getStrategy().getSearch().getHistoryHeuristic().clear();
             this.whiteToMove= true;
             this.go= true;
 

@@ -58,7 +58,7 @@ public class MTDfSearch implements Search {
       this.useMoveOrdering= useMoveOrdering;
       this.transposition= transposition;
       this.pv= pv;
-      this.historyHeuristic= HistoryHeuristic.getInstance();
+      this.historyHeuristic= new HistoryHeuristic();
       this.quiescent= new QuiescentWithNullMove(
             quiescentMaxDepth);
    }
@@ -470,5 +470,14 @@ public class MTDfSearch implements Search {
          }
       }
       return g;
+   }
+   
+   public HistoryHeuristic getHistoryHeuristic() {
+      return this.historyHeuristic;
+   }
+   
+   public void setHistoryHeuristic(
+         HistoryHeuristic historyHeuristic) {
+      this.historyHeuristic= historyHeuristic;
    }
 }

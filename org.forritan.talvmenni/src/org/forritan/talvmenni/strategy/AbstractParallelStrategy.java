@@ -10,6 +10,7 @@ import net.jini.core.transaction.TransactionException;
 import net.jini.space.JavaSpace;
 
 import org.forritan.talvmenni.TalvMenni;
+import org.forritan.talvmenni.knowledge.HistoryHeuristic;
 import org.forritan.talvmenni.knowledge.TheoryBook;
 import org.forritan.talvmenni.knowledge.Transposition;
 import org.forritan.talvmenni.knowledge.Position.Move;
@@ -42,8 +43,7 @@ public abstract class AbstractParallelStrategy extends AbstractStrategy {
          this.space= (JavaSpace) ServiceLocator.getService(JavaSpace.class);
 
          final ChessEngineWorker worker= new ChessEngineWorker();
-         worker.transposition= new Transposition(
-               TalvMenni.MAX_TRANSPOSITION_ENTRIES);
+         worker.transposition= new Transposition();
          worker.search= search;
          worker.evaluation= evaluation;
 
@@ -145,12 +145,15 @@ public abstract class AbstractParallelStrategy extends AbstractStrategy {
 
    public static class ChessEngineWorker extends Task {
 
-      public JavaSpace     space         = null;
-      public Transposition transposition = null;
-      public Search        search        = null;
-      public Evaluation    evaluation    = null;
+      public JavaSpace        space            = null;
+      public Transposition    transposition    = null;
+      public HistoryHeuristic historyHeuristic = null;
+      public Search           search           = null;
+      public Evaluation       evaluation       = null;
 
       public ChessEngineWorker() {
+         this.transposition= new Transposition();
+         this.historyHeuristic= new HistoryHeuristic();
       }
 
       public Result execute() {

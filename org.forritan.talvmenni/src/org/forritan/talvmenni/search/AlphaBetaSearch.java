@@ -34,7 +34,7 @@ public class AlphaBetaSearch implements Search {
          int ply) {
       this.ply= ply;
       this.pv= PrincipalVariation.Factory.create(ply);
-      this.historyHeuristic= HistoryHeuristic.getInstance();
+      this.historyHeuristic= new HistoryHeuristic();
    }
 
    public void setPly(
@@ -80,7 +80,7 @@ public class AlphaBetaSearch implements Search {
             this.ply,
             alpha,
             beta);
-      
+
       this.lastScore= result;
 
       time+= System.currentTimeMillis();
@@ -111,7 +111,9 @@ public class AlphaBetaSearch implements Search {
       int result;
 
       if (ply == 0) {
-         result= (e.getScore(p, whiteMove) * (whiteMove ? 1 : -1));
+         result= (e.getScore(
+               p,
+               whiteMove) * (whiteMove ? 1 : -1));
          this.pv.updateLastExaminedLine();
       } else {
          List moves;
@@ -193,5 +195,12 @@ public class AlphaBetaSearch implements Search {
       }
 
       return result;
+   }
+   public HistoryHeuristic getHistoryHeuristic() {
+      return historyHeuristic;
+   }
+   public void setHistoryHeuristic(
+         HistoryHeuristic historyHeuristic) {
+      this.historyHeuristic= historyHeuristic;
    }
 }
