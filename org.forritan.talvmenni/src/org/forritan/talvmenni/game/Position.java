@@ -458,7 +458,11 @@ public class Position {
 
    
    /**
-    * @deprecated Use @link{org.forritan.talvmenni.game.Strategy.getNextMove(Position position, boolean whiteToMove)} instead
+    * @deprecated Use
+    * @link{org.forritan.talvmenni.game.Strategy.getNextMove(Position position,
+    *                                                                 boolean
+    *                                                                 whiteToMove)}
+    *                                                                 instead
     * @param whiteMove
     * @return
     */
@@ -534,6 +538,9 @@ public class Position {
       public final long     allPieces;
 
       private List<Move> possibleMoves;
+      private Long allCaptureMovesAttackedSquares;
+      private Boolean kingsSideCastlingLegal;
+      private Boolean queensSideCastlingLegal;
 
       /**
        * @param white
@@ -688,7 +695,9 @@ public class Position {
        * Is "castling kings side" (o-o) legal?
        */
       public boolean isKingsSideCastlingLegal() {
-
+         
+         if(this.kingsSideCastlingLegal == null) {
+            
          boolean piecesNotMoved;
 
          if (white) {
@@ -712,8 +721,9 @@ public class Position {
                      (( (this.allPieces | this.parent.white.allPieces) & (Square._F8 | Square._G8)) == Square._EMPTY_BOARD);
             }            
          }        
-         return result;
-
+         this.kingsSideCastlingLegal= Boolean.valueOf(result);
+         }
+         return this.kingsSideCastlingLegal.booleanValue();
       }
 
       /**
@@ -721,6 +731,8 @@ public class Position {
        */
       public boolean isQueensSideCastlingLegal() {
 
+         if(this.queensSideCastlingLegal == null) {
+            
          boolean piecesNotMoved;
 
          if (white) {
@@ -744,10 +756,13 @@ public class Position {
                      (( (this.allPieces | this.parent.white.allPieces) & (Square._B8 | Square._C8 | Square._D8)) == Square._EMPTY_BOARD);
             }
          }
-         return result;
+         this.queensSideCastlingLegal= Boolean.valueOf(result);
+         }
+         return this.queensSideCastlingLegal.booleanValue();
       }
 
       public long getAllPawnsReadyForPromotion() {
+         //TODO: Implementation...
          return Square._EMPTY_BOARD;
       }
 
@@ -837,7 +852,11 @@ public class Position {
       }
 
       public long getAllCaptureMovesAttackedSquares() {
-         long result= Squares._EMPTY_BOARD;
+         
+         if(this.allCaptureMovesAttackedSquares == null) {
+            
+            long result= Square._EMPTY_BOARD;
+         
 
          Iterator<Long> kings= this.kingsIterator();
          while (kings.hasNext()) {
@@ -891,10 +910,12 @@ public class Position {
                result|= BlackPawn.captureMoveAttacksFrom(
                      square,
                      this.parent);
+               }
             }
+         
+         this.allCaptureMovesAttackedSquares= Long.valueOf(result);
          }
-
-         return result;
+         return this.allCaptureMovesAttackedSquares.longValue();
       }
    }
 
