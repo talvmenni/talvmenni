@@ -189,8 +189,6 @@ public interface Position {
                + (whiteBoard ? 0 : 1);
 
          this.hashCode= hash;
-
-         this.bookMoves= new ArrayList<Tuple<Move, Integer>>();
       }
 
       public boolean equals(
@@ -235,18 +233,6 @@ public interface Position {
             this.possibleMoves.addAll(currentPossibleMoves);
             this.killerMoves= null;
          }
-      }
-
-      public List<Tuple<Move, Integer>> getBookMoves() {
-         return this.bookMoves;
-      }
-      
-      public void addBookMove(Move move, int score) {
-            if(this.getPossibleMoves().contains(move)) {
-               if(!this.bookMoves.contains(move)) {
-                  this.bookMoves.add(new Tuple<Move, Integer>(move, Integer.valueOf(score)));
-               }               
-            }
       }
       
       public List<Move> getPossibleMoves() {

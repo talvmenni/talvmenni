@@ -49,7 +49,7 @@ public class MiniMaxOpeningBookWithDelayStrategy implements Strategy {
          Position position,
          boolean whiteToMove) {
 
-      if (this.book.containsKey(position)) {
+      if (this.book.containsKey(position, whiteToMove)) {
 
          //Delay...
          int delay= new Random().nextInt(this.maxBookDelayInMillis);
@@ -69,22 +69,14 @@ public class MiniMaxOpeningBookWithDelayStrategy implements Strategy {
          }
 
          this.getDebugInfo().postText(
-               "Position found in book... [searched through "
-                     + this.book.size()
+               "Position found in " + (whiteToMove?"white":"black") + "book... [searched through "
+                     + this.book.size(whiteToMove)
                      + " entries]...");
 
-         Position bookPosition= this.book.get(position);
+         List<Tuple<Move, Integer>>  moves= this.book.get(position, whiteToMove);
 
-         if (bookPosition != null) {
-            Position.Bitboard board;
-            if (whiteToMove) {
-               board= bookPosition.getWhite();
-            } else {
-               board= bookPosition.getBlack();
-            }
-
-            List<Tuple<Move, Integer>> moves= board.getBookMoves();
-
+         if (moves != null) {
+            
             int totalWeight= 0;
 
             for (Tuple<Move, Integer> tuple : moves) {
