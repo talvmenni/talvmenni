@@ -6,8 +6,8 @@ import junit.framework.TestCase;
 
 public class RookTest extends TestCase {
 
-      public void testRankAttacksFromA1() {
-         Assert.assertTrue(true);
-      }
-
+   public void testRankAttacksFromA1() {
+      Assert.assertTrue(true);
    }
+
+}

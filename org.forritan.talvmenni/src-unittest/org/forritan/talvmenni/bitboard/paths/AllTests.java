@@ -10,9 +10,10 @@ public class AllTests {
          "Test for org.forritan.shallowsenior.bitboard.attacks");
       //$JUnit-BEGIN$
       suite.addTestSuite(RookTest.class);
+      suite.addTestSuite(QueenTest.class);
       suite.addTestSuite(BishopTest.class);
       suite.addTestSuite(KnightTest.class);
-      suite.addTestSuite(QueenTest.class);
+      suite.addTestSuite(WhitePawnTest.class);
       //$JUnit-END$
       return suite;
    }
