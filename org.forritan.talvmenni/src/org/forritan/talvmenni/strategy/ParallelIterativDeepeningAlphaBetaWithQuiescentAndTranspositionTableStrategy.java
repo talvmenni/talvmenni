@@ -238,7 +238,7 @@ public class ParallelIterativDeepeningAlphaBetaWithQuiescentAndTranspositionTabl
                      + "] Got a result: "
                      + result.move
                      + " is scored with "
-                     + result.score);
+                     + result.score.intValue());
             } catch (IOException e) {
                e.printStackTrace();
             }
@@ -265,6 +265,8 @@ public class ParallelIterativDeepeningAlphaBetaWithQuiescentAndTranspositionTabl
    public static class ParallelIterativeDeepeningAlphaBetaWithQuiescentAndTranspositionTableTask
          extends ChessEngineTask {
 
+      public transient int lastScore;
+      
       public Position position;
       public Move     move;
       public Boolean  whiteToMove;
@@ -307,11 +309,13 @@ public class ParallelIterativDeepeningAlphaBetaWithQuiescentAndTranspositionTabl
       }
 
       public Result execute() {
+         
+         long time= -System.currentTimeMillis();
 
-         boolean taskIsSwapped= false;
+//         boolean taskIsSwapped= false;
          System.out
                .println("[PLY="
-                     + (this.workerSearchedToPly.intValue() == 0 ? ("2-" + (this.masterSearchedToPly
+                     + (this.workerSearchedToPly.intValue() == 0 ? ("1-" + (this.masterSearchedToPly
                            .intValue() + 1))
                            : ("" + (this.workerSearchedToPly.intValue() + 2)))
                      + "] "
@@ -328,15 +332,25 @@ public class ParallelIterativDeepeningAlphaBetaWithQuiescentAndTranspositionTabl
 
             System.out.println("Setting local ply to: "
                   + localPly);
+            
+////          Lookup possible better alpha-beta values in space...
+//            this.updateAlphaBeta(
+//                  localPly,
+//                  this.alpha.intValue(),
+//                  this.beta.intValue());
 
             search.setPly(localPly);
-            int score= -search.alphaBeta(
+            int score= search.alphaBeta(
                   this.position,
                   this.worker.evaluation,
                   this.whiteToMove.booleanValue(),
                   localPly,
                   this.alpha.intValue(),
                   this.beta.intValue());
+            
+            this.lastScore= score;
+
+            time+= System.currentTimeMillis();
 
             this.workerSearchedToPly= new Integer(
                   localPly);
@@ -344,61 +358,63 @@ public class ParallelIterativDeepeningAlphaBetaWithQuiescentAndTranspositionTabl
             this.lastWorkerId= this.worker.name;
             this.lastWorkerIdNull= Boolean.FALSE;
 
-            ParallelIterativeDeepeningAlphaBetaWithQuiescentAndTranspositionTableTask swapTask= null;
-            ParallelIterativeDeepeningAlphaBetaWithQuiescentAndTranspositionTableTask swapTemplate= new ParallelIterativeDeepeningAlphaBetaWithQuiescentAndTranspositionTableTask();
+//            ParallelIterativeDeepeningAlphaBetaWithQuiescentAndTranspositionTableTask swapTask= null;
+//            ParallelIterativeDeepeningAlphaBetaWithQuiescentAndTranspositionTableTask swapTemplate= new ParallelIterativeDeepeningAlphaBetaWithQuiescentAndTranspositionTableTask();
 
             if (localPly >= (this.masterSearchedToPly.intValue())) {
 
-               //Lookup possible better alpha-beta values in space...
-               this.updateAlphaBeta(
-                     localPly,
-                     search.getFinalAlpha(),
-                     search.getFinalBeta());
+//               //Lookup possible better alpha-beta values in space...
+//               this.updateAlphaBeta(
+//                     localPly,
+//                     search.getFinalAlpha(),
+//                     search.getFinalBeta());
 
                //first find possible task in space which hasn't been
                // searched
                // as
                // at
                // all yet
-               swapTemplate.lastWorkerIdNull= Boolean.TRUE;
-               swapTask= this.getTaskFromSpace(swapTemplate);
 
-               if (swapTask == null) {
-                  swapTemplate.lastWorkerIdNull= null;
-                  swapTemplate.lastWorkerId= this.worker.name;
-                  //first find possible task in space which haven't been
-                  // searched
-                  // as
-                  // deep as the current one (this) and which was last
-                  // searched
-                  // on the current worker, because then we might get some
-                  // advantage
-                  // with transpositiontable and history heuristic, maybe...
-                  // :)
-                  int j= 1;
-                  while (j < this.workerSearchedToPly.intValue()
-                        && swapTask == null) {
-                     swapTemplate.workerSearchedToPly= new Integer(
-                           j);
-                     swapTask= this.getTaskFromSpace(swapTemplate);
-                     j++;
-                  }
-               }
+//               swapTemplate.lastWorkerIdNull= Boolean.TRUE;
+//               swapTask= this.getTaskFromSpace(swapTemplate);
+//
+//               if (swapTask == null) {
+//                  swapTemplate.lastWorkerIdNull= null;
+//                  swapTemplate.lastWorkerId= this.worker.name;
+//                  //first find possible task in space which haven't been
+//                  // searched
+//                  // as
+//                  // deep as the current one (this) and which was last
+//                  // searched
+//                  // on the current worker, because then we might get some
+//                  // advantage
+//                  // with transpositiontable and history heuristic, maybe...
+//                  // :)
+//                  int j= 1;
+//                  while (j < this.workerSearchedToPly.intValue()
+//                        && swapTask == null) {
+//                     swapTemplate.workerSearchedToPly= new Integer(
+//                           j);
+//                     swapTask= this.getTaskFromSpace(swapTemplate);
+//                     j++;
+//                  }
+//               }
+//
+//               if (swapTask == null) {
+//                  swapTemplate.lastWorkerId= null;
+//                  //then find any task in space which haven't been searched
+//                  // as
+//                  // deep as the current one (this)
+//                  int j= 1;
+//                  while (j < this.workerSearchedToPly.intValue()
+//                        && swapTask == null) {
+//                     swapTemplate.workerSearchedToPly= new Integer(
+//                           j);
+//                     swapTask= this.getTaskFromSpace(swapTemplate);
+//                     j++;
+//                  }
+//               }
 
-               if (swapTask == null) {
-                  swapTemplate.lastWorkerId= null;
-                  //then find any task in space which haven't been searched
-                  // as
-                  // deep as the current one (this)
-                  int j= 1;
-                  while (j < this.workerSearchedToPly.intValue()
-                        && swapTask == null) {
-                     swapTemplate.workerSearchedToPly= new Integer(
-                           j);
-                     swapTask= this.getTaskFromSpace(swapTemplate);
-                     j++;
-                  }
-               }
             }
 
             if (localPly > (this.masterSearchedToPly.intValue())) {
@@ -441,14 +457,15 @@ public class ParallelIterativDeepeningAlphaBetaWithQuiescentAndTranspositionTabl
                }
             }
 
-            taskIsSwapped= false;
-            if (swapTask != null) {
-               taskIsSwapped= true;
-               break; //if task is swapped...
-            }
+//            taskIsSwapped= false;
+//            if (swapTask != null) {
+//               taskIsSwapped= true;
+//               break; //if task is swapped...
+//            }
          }
          if (this.workerSearchedToPly.intValue() < this.ply.intValue()
-               || taskIsSwapped) {
+               ){
+               //               || taskIsSwapped) {
             return ParallelIterativeDeepeningAlphaBetaWithQuiescentAndTranspositionTableTask.this.worker
                   .getTask().execute();
          } else {

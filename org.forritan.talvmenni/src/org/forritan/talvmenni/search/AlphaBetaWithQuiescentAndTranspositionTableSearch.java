@@ -236,6 +236,17 @@ public class AlphaBetaWithQuiescentAndTranspositionTableSearch implements
 
                if (score > best) {
                   best= score;
+                  
+                  if(ply >= (this.ply-1) ) {
+                     this.pv.getDebugInfo().postText(
+                           "[PLY="
+                                 + ply
+                                 + "] Got a result: "
+                                 + move
+                                 + " is scored with "
+                                 + score);
+                  }
+
                   this.pv.updatePV(
                         ply,
                         moveTime,
@@ -296,11 +307,11 @@ public class AlphaBetaWithQuiescentAndTranspositionTableSearch implements
          HistoryHeuristic historyHeuristic) {
       this.historyHeuristic= historyHeuristic;
    }
-   
+
    public int getFinalAlpha() {
       return this.finalAlpha;
    }
-   
+
    public int getFinalBeta() {
       return this.finalBeta;
    }

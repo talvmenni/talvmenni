@@ -312,7 +312,7 @@ public class TalvMenni {
 
             case ChoosenStrategy.PARALLEL_ITERATIVE_DEEPENING_ALPHA_BETA_WITH_QUIESCENT_AND_TRANSPOSITION_TABLE:
 
-               int masterSearchToPly= 3;
+               int masterSearchToPly= 2;
 
                return new ParallelIterativDeepeningAlphaBetaWithQuiescentAndTranspositionTableStrategy(
                      PLY,
