@@ -112,7 +112,6 @@ public class ChessEngine implements Runnable {
       private Rules      currentRules;
       private boolean    go = false;
       private boolean    WhiteToMove = true;
-      private boolean    computerPlaysWhite = false;
 
       public String processInput(String theInput) {
 
@@ -145,9 +144,9 @@ public class ChessEngine implements Runnable {
       }
 
       public void newGame() {
-         currentPosition= Position.createInitial();
-         WhiteToMove = true;
-         computerPlaysWhite = false;         
+         this.currentPosition= Position.createInitial();
+         this.WhiteToMove = true;
+         this.go= false;
       }
       
       
