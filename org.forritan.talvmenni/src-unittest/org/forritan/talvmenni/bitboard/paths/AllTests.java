@@ -18,6 +18,8 @@ public class AllTests {
       suite.addTestSuite(BlackPawnMoveTest.class);
       suite.addTestSuite(BlackPawnKillTest.class);
       suite.addTestSuite(WhitePawnKillTest.class);
+      suite.addTestSuite(BlackEnpassantTest.class);
+      suite.addTestSuite(WhiteEnpassantTest.class);
       //$JUnit-END$
       return suite;
    }
