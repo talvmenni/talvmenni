@@ -446,14 +446,6 @@ public class Position {
    }
 
    
-   public long getAllSquaresAttackedByWhiteCaptureMove() {
-      return this.white.getAllCaptureMovesAttackedSquares();
-   }
-
-   public long getAllSquaresAttackedByBlackCaptureMove() {
-      return this.black.getAllCaptureMovesAttackedSquares();
-   }
-   
    public Move getRandomMove(boolean whiteMove) {
       List<Move> possibleMoves;
       if(whiteMove) {
@@ -723,9 +715,9 @@ public class Position {
       public boolean isChecked() {
          long allSquaresUnderAttackByOppositionPieces;
          if(this.white) {
-            allSquaresUnderAttackByOppositionPieces= this.parent.getAllSquaresAttackedByBlackCaptureMove();
+            allSquaresUnderAttackByOppositionPieces= this.parent.black.getAllCaptureMovesAttackedSquares();
          } else {
-            allSquaresUnderAttackByOppositionPieces= this.parent.getAllSquaresAttackedByWhiteCaptureMove();
+            allSquaresUnderAttackByOppositionPieces= this.parent.white.getAllCaptureMovesAttackedSquares();
          }
          return (allSquaresUnderAttackByOppositionPieces & this.kings) != Squares._EMPTY_BOARD;
       }
@@ -805,7 +797,7 @@ public class Position {
          return ((this.enpassant & position) != Square._EMPTY_BOARD);
       }
 
-      private long getAllCaptureMovesAttackedSquares() {
+      public long getAllCaptureMovesAttackedSquares() {
          long result= Squares._EMPTY_BOARD;
 
          Iterator<Long> kings= this.kingsIterator();
