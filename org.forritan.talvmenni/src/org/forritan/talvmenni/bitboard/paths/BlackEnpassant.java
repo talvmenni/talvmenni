@@ -14,27 +14,21 @@ public interface BlackEnpassant extends Enpassant {
    public static final long _PATHS_FROM_G8 = 0L;
    public static final long _PATHS_FROM_H8 = 0L;
    
-   public static final long _PATHS_FROM_A7 = Square._A5
+   public static final long _PATHS_FROM_A7 = Square._A6
+                                                 | Square._A5;
+   public static final long _PATHS_FROM_B7 = Square._B6
                                                  | Square._B5;
-   public static final long _PATHS_FROM_B7 = Square._A5
-                                                 | Square._B5
+   public static final long _PATHS_FROM_C7 = Square._C6
                                                  | Square._C5;
-   public static final long _PATHS_FROM_C7 = Square._B5
-                                                 | Square._C5
+   public static final long _PATHS_FROM_D7 = Square._D6
                                                  | Square._D5;
-   public static final long _PATHS_FROM_D7 = Square._C5
-                                                 | Square._D5
+   public static final long _PATHS_FROM_E7 = Square._E6
                                                  | Square._E5;
-   public static final long _PATHS_FROM_E7 = Square._D5
-                                                 | Square._E5
+   public static final long _PATHS_FROM_F7 = Square._F6
                                                  | Square._F5;
-   public static final long _PATHS_FROM_F7 = Square._E5
-                                                 | Square._F5
+   public static final long _PATHS_FROM_G7 = Square._G6
                                                  | Square._G5;
-   public static final long _PATHS_FROM_G7 = Square._F5
-                                                 | Square._G5
-                                                 | Square._H5;
-   public static final long _PATHS_FROM_H7 = Square._G5
+   public static final long _PATHS_FROM_H7 = Square._H6
                                                  | Square._H5;
    
    public static final long _PATHS_FROM_A6 = 0L;

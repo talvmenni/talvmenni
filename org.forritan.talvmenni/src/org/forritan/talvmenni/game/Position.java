@@ -4,9 +4,9 @@ import java.util.Iterator;
 
 import org.forritan.talvmenni.bitboard.Rank;
 import org.forritan.talvmenni.bitboard.Square;
-import org.forritan.talvmenni.bitboard.paths.BlackEnpassants;
+import org.forritan.talvmenni.bitboard.paths.BlackPawnKills;
 import org.forritan.talvmenni.bitboard.paths.BlackPawnMoves;
-import org.forritan.talvmenni.bitboard.paths.WhiteEnpassants;
+import org.forritan.talvmenni.bitboard.paths.WhitePawnKills;
 import org.forritan.talvmenni.bitboard.paths.WhitePawnMoves;
 import org.forritan.talvmenni.core.TalvMenni;
 
@@ -18,32 +18,33 @@ public class Position {
 
    public static Position createInitial() {
       return new Position(
-            Square._E1,
-            Square._D1,
+            Square._E1, // whiteKings
+            Square._D1, // whiteQueens
             Square._A1
-                  | Square._H1,
+                  | Square._H1, // whiteRooks
             Square._C1
-                  | Square._F1,
+                  | Square._F1, // whiteBishops
             Square._B1
-                  | Square._G1,
-            Rank._2,
+                  | Square._G1, // whiteKnights
+            Rank._2, // whitePawns
             Square._A1
                   | Square._E1
-                  | Square._H1,
-            0L,
-            Square._E8,
-            Square._D8,
+                  | Square._H1, // whiteCastling
+            Square._EMPTY_BOARD, // whiteEnpassant
+            Square._E8, // blackKings
+            Square._D8, // blackQueens
             Square._A8
-                  | Square._H8,
+                  | Square._H8, // blackRooks
             Square._C8
-                  | Square._F8,
+                  | Square._F8, // blackBishops
             Square._B8
-                  | Square._G8,
-            Rank._7,
+                  | Square._G8, // blackKnights
+            Rank._7, // blackPawns
             Square._A8
                   | Square._E8
-                  | Square._H8,
-            0L);
+                  | Square._H8, // blackCastling
+            Square._EMPTY_BOARD // blackEnpassant
+      );
    }
 
    /**
@@ -224,14 +225,10 @@ public class Position {
                blackEnpassant= 0L;
                //FIXME: set castling
             } else if (this.white.isPawn(from)) {
-
-               if ((WhiteEnpassants.create().getPathsFrom(
-                     from) & WhitePawnMoves.create().getPathsFrom(
-                     from)) != 0L) {
-                  whiteEnpassant= WhiteEnpassants.create().getPathsFrom(
-                        from)
-                        ^ WhitePawnMoves.create().getPathsFrom(
-                              from);
+               if ((WhitePawnMoves.create().getPathsFrom(
+                     from) & Rank._3) != 0L) {
+                  whiteEnpassant= WhitePawnMoves.create().getPathsFrom(
+                        from);
                } else {
                   whiteEnpassant= 0L;
                }
@@ -261,6 +258,15 @@ public class Position {
                   blackPawns= blackPawns
                         ^ to;
                }
+            }
+
+            // ... and clear any enpassant captures
+            if (!this.black.isAnyPieceOnPosition(to)
+                  && this.black.isEnpassant(to)) {
+               blackPawns= blackPawns
+                     ^ (this.black.enpassant ^ (this.black.enpassant & WhitePawnKills
+                           .create().getPathsFrom(
+                                 from)));
             }
 
          } else if (this.black.isAnyPieceOnPosition(from)) {
@@ -302,13 +308,10 @@ public class Position {
                //FIXME: set castling
             } else if (this.black.isPawn(from)) {
 
-               if ((BlackEnpassants.create().getPathsFrom(
-                     from) & BlackPawnMoves.create().getPathsFrom(
-                     from)) != 0L) {
-                  blackEnpassant= BlackEnpassants.create().getPathsFrom(
-                        from)
-                        ^ BlackPawnMoves.create().getPathsFrom(
-                              from);
+               if ((BlackPawnMoves.create().getPathsFrom(
+                     from) & Rank._6) != 0L) {
+                  blackEnpassant= BlackPawnMoves.create().getPathsFrom(
+                        from);
                } else {
                   blackEnpassant= 0L;
                }
@@ -341,6 +344,15 @@ public class Position {
                   whitePawns= whitePawns
                         ^ to;
                }
+            }
+
+            // ... and clear any enpassant captures
+            if (!this.white.isAnyPieceOnPosition(to)
+                  && this.white.isEnpassant(to)) {
+               whitePawns= whitePawns
+                     ^ (this.white.enpassant ^ (this.white.enpassant & BlackPawnKills
+                           .create().getPathsFrom(
+                                 from)));
             }
 
          }
