@@ -1,4 +1,4 @@
-package org.forritan.talvmenni.UI;
+package org.forritan.talvmenni.ui;
 
 public class ChessEngine {
 

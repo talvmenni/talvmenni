@@ -1,4 +1,4 @@
-package org.forritan.talvmenni.UI;
+package org.forritan.talvmenni.ui;
 
 import java.io.BufferedReader;
 import java.io.IOException;

@@ -1,4 +1,4 @@
-package org.forritan.talvmenni.UI;
+package org.forritan.talvmenni.ui;
 
 import java.io.*;
 
@@ -13,8 +13,9 @@ public class XboardMode {
 
    public void create() {
 
-      BufferedReader inReader= new BufferedReader(new InputStreamReader(
-            System.in));
+      BufferedReader inReader= new BufferedReader(
+            new InputStreamReader(
+                  System.in));
 
       String xboardMessage= "";
       System.out.println("feature myname=\"TALVMENNI v0.1\" done=1");
@@ -29,8 +30,7 @@ public class XboardMode {
 
          if (xboardMessage.equals("d2d4")) {
             System.out.println("move d7d5");
-         }
-         if (xboardMessage.equals("e2e4")) {
+         } else if (xboardMessage.equals("e2e4")) {
             System.out.println("move c7c5");
          }
 
