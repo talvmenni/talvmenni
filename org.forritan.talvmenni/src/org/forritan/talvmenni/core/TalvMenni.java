@@ -5,7 +5,8 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
 
 import org.forritan.talvmenni.game.TheoryBook;
-import org.forritan.talvmenni.strategy.MiniMaxSearchSimpleMaterialAndPositionalEvaluationChooseRandomlyBetweenBestMovesStrategy;
+import org.forritan.talvmenni.game.Transposition;
+import org.forritan.talvmenni.strategy.MiniMaxOpeningBookWithDelayStrategy;
 import org.forritan.talvmenni.ui.DebugWindow;
 import org.forritan.util.debug.ExceptionLoggingWindowHandler;
 import org.forritan.util.debug.ObjectStatisticsWindow;
@@ -59,10 +60,12 @@ public class TalvMenni {
       final TheoryBook book= new TheoryBook();
 
       final ChessEngine chessEngine= ChessEngine
-            .create(new MiniMaxSearchSimpleMaterialAndPositionalEvaluationChooseRandomlyBetweenBestMovesStrategy(
+            .create(new MiniMaxOpeningBookWithDelayStrategy(
                   PLY,
-                  book));
-      //,new Transposition(MAX_TRANSPOSITION_ENTRIES)));
+                  new Transposition(MAX_TRANSPOSITION_ENTRIES),
+                  book,
+                  2000,
+                  4200));
 
       if (Boolean.getBoolean("exception_logging_window")) {
          Thread windowThread= threadFactory.newThread(new Runnable() {
