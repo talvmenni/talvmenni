@@ -459,14 +459,14 @@ public interface Position extends Serializable {
             int promotionPiece,
             Position newPosition) {
          if (this.whiteBoard) {
-            if (!newPosition.getWhite().isChecked()) {
+            if (!newPosition.getWhite().isInCheck()) {
                result.add(new Move(
                      fromSquare,
                      toSquare,
                      promotionPiece));
             }
          } else {
-            if (!newPosition.getBlack().isChecked()) {
+            if (!newPosition.getBlack().isInCheck()) {
                result.add(new Move(
                      fromSquare,
                      toSquare,
@@ -556,7 +556,7 @@ public interface Position extends Serializable {
          return Square._EMPTY_BOARD;
       }
 
-      public boolean isChecked() {
+      public boolean isInCheck() {
          long allSquaresUnderAttackByOppositionPieces;
          if (this.whiteBoard) {
             allSquaresUnderAttackByOppositionPieces= this.parent.getBlack()

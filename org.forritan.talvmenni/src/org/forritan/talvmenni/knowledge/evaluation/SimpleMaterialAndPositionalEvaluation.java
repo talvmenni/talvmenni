@@ -62,7 +62,7 @@ public class SimpleMaterialAndPositionalEvaluation implements Evaluation {
          result += Evaluation.POSITION_GUARD_REWARD;         
       }
 
-      if(position.getBlack().isChecked()) {
+      if(position.getBlack().isInCheck()) {
          result += Evaluation.CHECK_REWARD;                  
       }
             
@@ -116,7 +116,7 @@ public class SimpleMaterialAndPositionalEvaluation implements Evaluation {
          result -= Evaluation.POSITION_GUARD_REWARD;         
       }
                   
-      if(position.getWhite().isChecked()) {
+      if(position.getWhite().isInCheck()) {
          result -= Evaluation.CHECK_REWARD;                  
       }
                   

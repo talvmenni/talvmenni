@@ -249,7 +249,7 @@ public class AlphaBetaWithQuiescentAndTranspositionTableSearch implements
 
             result= best;
          } else {
-            if (whiteMove ? p.getWhite().isChecked() : p.getBlack().isChecked()) {
+            if (whiteMove ? p.getWhite().isInCheck() : p.getBlack().isInCheck()) {
                // Checkmate...
                result= -(Evaluation.CHECKMATE_SCORE + ply);
             } else {

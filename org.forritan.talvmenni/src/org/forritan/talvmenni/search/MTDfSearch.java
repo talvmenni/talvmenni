@@ -414,8 +414,8 @@ public class MTDfSearch implements Search {
                      Transposition.Entry.Type.LOWER_BOUND);
             }
          } else {
-            if ((whiteMove ? p.getWhite().isChecked() : p.getBlack()
-                  .isChecked())) {
+            if ((whiteMove ? p.getWhite().isInCheck() : p.getBlack()
+                  .isInCheck())) {
                // Checkmate...
                g= (Evaluation.CHECKMATE_SCORE + d)
                      * (whiteMove ? -1 : 1);

@@ -102,13 +102,13 @@ public class XboardProtocol extends UiProtocolBase {
                      + move.toString();
             } else {
                if (this.protocol.isWhiteToMove()) {
-                  if (this.protocol.getCurrentPosition().getWhite().isChecked()) {
+                  if (this.protocol.getCurrentPosition().getWhite().isInCheck()) {
                      theOutput+= "0-1 {Black mates}";
                   } else {
                      theOutput+= "1/2-1/2 {Stalemate}";
                   }
                } else {
-                  if (this.protocol.getCurrentPosition().getBlack().isChecked()) {
+                  if (this.protocol.getCurrentPosition().getBlack().isInCheck()) {
                      theOutput+= "1-0 {White mates}";
                   } else {
                      theOutput+= "1/2-1/2 {Stalemate}";
@@ -127,13 +127,13 @@ public class XboardProtocol extends UiProtocolBase {
                   + move.toString();
          } else {
             if (this.protocol.isWhiteToMove()) {
-               if (this.protocol.getCurrentPosition().getWhite().isChecked()) {
+               if (this.protocol.getCurrentPosition().getWhite().isInCheck()) {
                   theOutput+= "0-1 {Black mates}";
                } else {
                   theOutput+= "1/2-1/2 {Stalemate}";
                }
             } else {
-               if (this.protocol.getCurrentPosition().getBlack().isChecked()) {
+               if (this.protocol.getCurrentPosition().getBlack().isInCheck()) {
                   theOutput+= "1-0 {White mates}";
                } else {
                   theOutput+= "1/2-1/2 {Stalemate}";

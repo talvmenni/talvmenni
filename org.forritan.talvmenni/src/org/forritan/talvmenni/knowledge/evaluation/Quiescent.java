@@ -7,16 +7,19 @@ import org.forritan.talvmenni.knowledge.Position;
 import org.forritan.talvmenni.knowledge.Transposition;
 import org.forritan.talvmenni.knowledge.Position.Bitboard;
 import org.forritan.talvmenni.knowledge.Position.Move;
+import org.forritan.talvmenni.search.AlphaBetaSearch;
 import org.forritan.talvmenni.search.PrincipalVariation;
 
 
 public class Quiescent {
 
    private int maxDepth;
+   private AlphaBetaSearch search;
 
    public Quiescent(
          int maxDepth) {
       this.maxDepth= maxDepth;
+      this.search= new AlphaBetaSearch();
    }
 
    public int search(
@@ -26,6 +29,9 @@ public class Quiescent {
          int ply,
          int alpha,
          int beta) {
+      
+      if ((whiteMove ? p.getWhite().isInCheck() : p.getBlack().isInCheck()))
+         return this.search(p, e, whiteMove, 1, alpha, beta);
 
       int score= (e.getScore(p) * (whiteMove ? 1 : -1));
 
@@ -64,6 +70,8 @@ public class Quiescent {
                   alpha= score;
                }
             }
+         } else {
+            alpha= score; //TODO: ????? Skal tað vera so???
          }
          return alpha;
       } else {
