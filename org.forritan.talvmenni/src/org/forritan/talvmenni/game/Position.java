@@ -1,7 +1,10 @@
 package org.forritan.talvmenni.game;
 
+import java.util.Iterator;
+
 import org.forritan.talvmenni.bitboard.Rank;
 import org.forritan.talvmenni.bitboard.Square;
+import org.forritan.talvmenni.core.TalvMenni;
 
 
 public class Position {
@@ -199,7 +202,88 @@ public class Position {
                | this.queen
                | this.rooks
                | this.bishops
+               | this.knights
                | this.pawns;
+      }
+
+      public Iterator allPiecesIterator() {
+         return new BitboardIterator(
+               this.allPieces);
+      }
+
+      public Iterator kingsIterator() {
+         return new BitboardIterator(
+               this.king);
+      }
+
+      public Iterator queensIterator() {
+         return new BitboardIterator(
+               this.queen);
+      }
+
+      public Iterator rooksIterator() {
+         return new BitboardIterator(
+               this.rooks);
+      }
+
+      public Iterator bishopsIterator() {
+         return new BitboardIterator(
+               this.bishops);
+      }
+
+      public Iterator knightsIterator() {
+         return new BitboardIterator(
+               this.knights);
+      }
+
+      public Iterator pawnsIterator() {
+         return new BitboardIterator(
+               this.pawns);
+      }
+
+      private class BitboardIterator implements Iterator {
+
+         private long bitboard;
+
+         private BitboardIterator(
+               long bitboard) {
+            this.bitboard= bitboard;
+         }
+
+         public boolean hasNext() {
+            return this.bitboard != 0L;
+         }
+
+         public Object next() {
+            long result= Long.lowestOneBit(this.bitboard);
+            
+            if (TalvMenni.CROUCHING_TIGER_HIDDEN_DEBUG) {
+               System.err.println("DEBUG: this.bitboard= "
+                     + this.bitboard
+                     + " : "
+                     + Long.toBinaryString(this.bitboard));
+               System.err.println("DEBUG: result= "
+                     + result
+                     + " : "
+                     + Long.toBinaryString(result));
+            }
+            
+            this.bitboard= this.bitboard ^ result;
+            
+            if (TalvMenni.CROUCHING_TIGER_HIDDEN_DEBUG) {
+               System.err.println("DEBUG: this.bitboard= "
+                     + this.bitboard
+                     + " : "
+                     + Long.toBinaryString(this.bitboard));
+            }
+            
+            return Long.valueOf(result);
+         }
+
+         public void remove() {
+            throw new UnsupportedOperationException();
+         }
+
       }
    }
 }
