@@ -91,12 +91,12 @@ public class MiniMaxSearch implements Search {
          Position p,
          Evaluation e,
          boolean whiteMove,
-         int depth) {
+         int ply) {
 
       PositionFactory.nodes++;
       
       MoveScoreTuple result= new MoveScoreTuple(null, 0);
-      if(depth > 1) {
+      if(ply > 1) {
           List<Move> moves;
          MoveScoreTuple bestScore= null;
          
@@ -110,7 +110,7 @@ public class MiniMaxSearch implements Search {
             Move currentBestMove= null;
             for(Move move : moves) {
                this.movesSearched++;
-               MoveScoreTuple score= this.getBestMove(p.move(move.from, move.to), e, !whiteMove, depth - 1);
+               MoveScoreTuple score= this.getBestMove(p.move(move.from, move.to), e, !whiteMove, ply - 1);
                if(bestScore == null || (whiteMove ? score.getScore() > bestScore.getScore() : score.getScore() < bestScore.getScore())) {
                   bestScore= score;
                   currentBestMove= move;
@@ -124,13 +124,13 @@ public class MiniMaxSearch implements Search {
          } else {
             if(whiteMove){
                if(p.getWhite().isChecked()) {
-                  result= new MoveScoreTuple(null, -20000 + depth); // Checkmate
+                  result= new MoveScoreTuple(null, -20000 + ply); // Checkmate
                } else {
                   result= new MoveScoreTuple(null, 0);  // Stalemate
                }
              } else {
                if(p.getBlack().isChecked()) {
-                  result= new MoveScoreTuple(null, 20000 - depth); // Checkmate
+                  result= new MoveScoreTuple(null, 20000 - ply); // Checkmate
                } else {
                   result= new MoveScoreTuple(null, 0);  // Stalemate
                }
@@ -159,7 +159,7 @@ public class MiniMaxSearch implements Search {
          } else {
             if(whiteMove){
                if(p.getWhite().isChecked()) {
-                  result= new MoveScoreTuple(null, -20000 + depth); // Black
+                  result= new MoveScoreTuple(null, -20000 + ply); // Black
                                                                       // wins by
                                                                       // checkmate
                } else {
@@ -167,7 +167,7 @@ public class MiniMaxSearch implements Search {
                }
              } else {
                if(p.getBlack().isChecked()) {
-                  result= new MoveScoreTuple(null,  20000 - depth); // White
+                  result= new MoveScoreTuple(null,  20000 - ply); // White
                                                                        // wins
                                                                        // by
                                                                        // checkmate

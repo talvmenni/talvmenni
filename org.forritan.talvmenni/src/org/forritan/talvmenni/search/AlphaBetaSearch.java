@@ -137,8 +137,14 @@ public class AlphaBetaSearch implements Search {
                   bestScore= score;
                   currentBestMove= move;
                }
-               if(bestScore != null && bestScore.score > alpha) {
-                  alpha= bestScore.score;
+               if(whiteMove) {
+                  if(bestScore != null && bestScore.score > alpha) {
+                     alpha= bestScore.score;
+                  }
+               } else {
+                  if(bestScore != null && bestScore.score < beta) {
+                     beta= bestScore.score;
+                  }
                }
                if(alpha >= beta) {
                   break;

@@ -7,6 +7,7 @@ import org.forritan.talvmenni.bitboard.paths.BlackPawnCaptures;
 import org.forritan.talvmenni.bitboard.paths.BlackPawnMoves;
 import org.forritan.talvmenni.bitboard.paths.WhitePawnCaptures;
 import org.forritan.talvmenni.bitboard.paths.WhitePawnMoves;
+import org.forritan.talvmenni.visitor.Switchable;
 
 
 public abstract class PositionFactory implements Position {

@@ -3,9 +3,7 @@ package org.forritan.talvmenni.core;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
 
-import org.forritan.talvmenni.game.Transposition;
-import org.forritan.talvmenni.strategy.IterativeDeepeningAlphaBetaSearchUsingKillerMoveOrderingAndTranpositionTableSimpleMaterialAndPositionalEvaluationChooseRandomlyBetweenBestMovesStrategy;
-import org.forritan.talvmenni.strategy.IterativeDeepeningAlphaBetaSearchUsingKillerMoveOrderingSimpleMaterialAndPositionalEvaluationChooseRandomlyBetweenBestMovesStrategy;
+import org.forritan.talvmenni.strategy.AlphaBetaSearchSimpleMaterialAndPositionalEvaluationChooseRandomlyBetweenBestMovesStrategy;
 import org.forritan.talvmenni.ui.DebugWindow;
 import org.forritan.util.debug.ExceptionLoggingWindowHandler;
 import org.forritan.util.debug.ObjectStatisticsWindow;
@@ -39,7 +37,7 @@ public class TalvMenni {
 
       DEBUG_NAME= System.getProperty("debug_name");
       if (DEBUG_NAME == null) {
-         DEBUG_NAME= "";
+         DEBUG_NAME= "AlphaBeta";
       }
 
       String searchDepth= System.getProperty("ply");
@@ -56,9 +54,8 @@ public class TalvMenni {
 
       final ChessEngine chessEngine= ChessEngine
             .create(
-                  new IterativeDeepeningAlphaBetaSearchUsingKillerMoveOrderingAndTranpositionTableSimpleMaterialAndPositionalEvaluationChooseRandomlyBetweenBestMovesStrategy(
-                  PLY,
-                  new Transposition(MAX_TRANSPOSITION_ENTRIES)));
+                  new AlphaBetaSearchSimpleMaterialAndPositionalEvaluationChooseRandomlyBetweenBestMovesStrategy(
+                  PLY));
 
       if (Boolean.getBoolean("exception_logging_window")) {
          Thread windowThread= threadFactory.newThread(new Runnable() {

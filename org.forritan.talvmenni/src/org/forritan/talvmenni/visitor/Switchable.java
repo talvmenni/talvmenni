@@ -1,6 +1,6 @@
 package org.forritan.talvmenni.visitor;
 
-public interface Switchable {
+public interface Switchable<T> {
    void apply(
-         Switch sw);
+         Switch<T> sw);
 }
