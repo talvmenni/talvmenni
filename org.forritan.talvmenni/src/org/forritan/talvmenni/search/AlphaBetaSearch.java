@@ -80,7 +80,7 @@ public class AlphaBetaSearch implements Search {
       return (pv.getBestMoveAsList());
    }
 
-   private int alphaBeta(
+   public int alphaBeta(
          Position p,
          Evaluation e,
          boolean whiteMove,

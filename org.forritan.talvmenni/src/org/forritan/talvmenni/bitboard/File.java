@@ -1,6 +1,10 @@
 package org.forritan.talvmenni.bitboard;
 
-public interface File {
+import java.io.Serializable;
+
+public interface File extends Serializable {
+   
+   public static final long serialVersionUID = 1L; 
 
    public static final long _A = Square._A1
                                      | Square._A2

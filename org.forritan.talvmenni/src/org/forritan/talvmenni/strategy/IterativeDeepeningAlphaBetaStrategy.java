@@ -18,15 +18,15 @@ public class IterativeDeepeningAlphaBetaStrategy extends AbstractStrategy {
       super(
             ply,
             book,
-            pv);
-      this.search= new AlphaBetaSearch();
-      this.evaluation= new MaterialAndPositionalEvaluation();
+            pv,
+            new AlphaBetaSearch(),
+            new MaterialAndPositionalEvaluation());
    }
 
    protected List search(
          Position position,
          boolean whiteToMove) {
-      
+
       List result= null;
       Position mutablePosition= position.getMutable();
       for (int i= 1; i <= this.ply; i++) {

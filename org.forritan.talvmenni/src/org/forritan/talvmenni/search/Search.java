@@ -1,5 +1,6 @@
 package org.forritan.talvmenni.search;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Observable;
 
@@ -14,7 +15,9 @@ import org.forritan.talvmenni.search.PrincipalVariation.DebugInfo;
 import org.forritan.talvmenni.search.PrincipalVariation.Thinking;
 
 
-public interface Search {
+public interface Search extends Serializable {
+   
+   public static final long serialVersionUID = 1L; 
 
    public void setPly(
          int ply);

@@ -1,6 +1,10 @@
 package org.forritan.talvmenni.bitboard;
 
-public interface Rank {
+import java.io.Serializable;
+
+public interface Rank extends Serializable {
+   
+   public static final long serialVersionUID = 1L; 
 
    public static final long _1 = Square._A1
                                      | Square._B1

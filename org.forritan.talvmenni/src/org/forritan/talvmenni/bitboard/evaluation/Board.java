@@ -1,9 +1,13 @@
 package org.forritan.talvmenni.bitboard.evaluation;
 
+import java.io.Serializable;
+
 import org.forritan.talvmenni.bitboard.File;
 import org.forritan.talvmenni.bitboard.Rank;
 
-public interface Board {
+public interface Board extends Serializable {
+   
+   public static final long serialVersionUID = 1L; 
    
    public static final long _CORE = (Rank._4 | Rank._5) & (File._D | File._E);
    public static final long _INNER_BORDER = (Rank._3 | Rank._4 | Rank._5 | Rank._6 ) & (File._C | File._D | File._E | File._F) & ~Board._CORE;

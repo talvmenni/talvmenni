@@ -1,6 +1,10 @@
 package org.forritan.talvmenni.bitboard;
 
-public interface SlashDiagonal {
+import java.io.Serializable;
+
+public interface SlashDiagonal extends Serializable {
+   
+   public static final long serialVersionUID = 1L; 
 
    public static final long _A8A8 = Square._A8;
    public static final long _A7B8 = Square._A7

@@ -1,6 +1,10 @@
 package org.forritan.talvmenni.bitboard;
 
-public interface Square {
+import java.io.Serializable;
+
+public interface Square extends Serializable {
+   
+   public static final long serialVersionUID = 1L; 
 
    public long getSquare(
          int squareNumber);

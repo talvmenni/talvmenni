@@ -1,6 +1,10 @@
 package org.forritan.talvmenni.bitboard;
 
-public interface BishopMask {
+import java.io.Serializable;
+
+public interface BishopMask extends Serializable {
+   
+   public static final long serialVersionUID = 1L; 
    
    public long getNorthWest2SouthEastMaskFrom(
          long square);

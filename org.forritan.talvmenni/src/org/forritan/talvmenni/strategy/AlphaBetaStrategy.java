@@ -18,10 +18,9 @@ public class AlphaBetaStrategy extends AbstractStrategy {
       super(
             ply,
             book,
-            pv);
-      this.search= new AlphaBetaSearch(
-            ply);
-      this.evaluation= new MaterialAndPositionalEvaluation();
+            pv,
+            new AlphaBetaSearch(ply),
+            new MaterialAndPositionalEvaluation());
    }
 
    protected List search(

@@ -1,6 +1,10 @@
 package org.forritan.talvmenni.bitboard;
 
-public interface RookMask {
+import java.io.Serializable;
+
+public interface RookMask extends Serializable {
+   
+   public static final long serialVersionUID = 1L; 
 
    public long getEast2WestMaskFrom(
          long square);

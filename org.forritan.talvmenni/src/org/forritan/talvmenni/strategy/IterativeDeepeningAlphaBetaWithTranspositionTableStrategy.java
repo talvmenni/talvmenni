@@ -10,7 +10,8 @@ import org.forritan.talvmenni.search.AlphaBetaWithTranspositionTableSearch;
 import org.forritan.talvmenni.search.PrincipalVariation;
 
 
-public class IterativeDeepeningAlphaBetaWithTranspositionTableStrategy extends AbstractStrategy {
+public class IterativeDeepeningAlphaBetaWithTranspositionTableStrategy extends
+      AbstractStrategy {
 
    public IterativeDeepeningAlphaBetaWithTranspositionTableStrategy(
          int ply,
@@ -18,10 +19,15 @@ public class IterativeDeepeningAlphaBetaWithTranspositionTableStrategy extends A
          boolean useMoveOrdering,
          TheoryBook book,
          PrincipalVariation pv) {
-      super(ply, book, pv);
-      this.search= new AlphaBetaWithTranspositionTableSearch(
-            transposition, useMoveOrdering, pv);
-      this.evaluation= new MaterialAndPositionalEvaluation();
+      super(
+            ply,
+            book,
+            pv,
+            new AlphaBetaWithTranspositionTableSearch(
+                  transposition,
+                  useMoveOrdering,
+                  pv),
+            new MaterialAndPositionalEvaluation());
    }
 
    protected List search(
@@ -32,7 +38,10 @@ public class IterativeDeepeningAlphaBetaWithTranspositionTableStrategy extends A
       Position mutablePosition= position.getMutable();
       for (int i= 1; i <= this.ply; i++) {
          this.search.setPly(i);
-         result= this.search.getBestMoves(mutablePosition, this.evaluation, whiteToMove);            
+         result= this.search.getBestMoves(
+               mutablePosition,
+               this.evaluation,
+               whiteToMove);
       }
 
       return result;

@@ -1,5 +1,6 @@
 package org.forritan.talvmenni.game;
 
+import java.io.Serializable;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -7,8 +8,9 @@ import java.util.Map;
 
 import org.forritan.talvmenni.game.Position.Move;
 
+public class Transposition implements Serializable {
 
-public class Transposition {
+   public static final long serialVersionUID = 1L;
 
    private Table whiteTable;
    private Table blackTable;

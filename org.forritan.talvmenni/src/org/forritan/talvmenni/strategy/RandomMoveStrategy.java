@@ -10,7 +10,7 @@ import org.forritan.talvmenni.search.PrincipalVariation;
 public class RandomMoveStrategy extends AbstractStrategy {
    
    public RandomMoveStrategy(PrincipalVariation pv) {
-      super(0, null, pv);
+      super(0, null, pv, null, null);
    }
    
    protected List search(

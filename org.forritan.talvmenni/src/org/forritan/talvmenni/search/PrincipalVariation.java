@@ -1,5 +1,6 @@
 package org.forritan.talvmenni.search;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
@@ -9,7 +10,9 @@ import org.forritan.talvmenni.game.Position;
 import org.forritan.talvmenni.game.Position.Move;
 
 
-public interface PrincipalVariation {
+public interface PrincipalVariation extends Serializable {
+
+   public static final long serialVersionUID = 1L;
 
    public void setDepth(
          int ply);
@@ -29,7 +32,6 @@ public interface PrincipalVariation {
 
    public void updateLastExaminedLine();
 
-   
    public void updatePV(
          int ply,
          long moveTime,
@@ -140,7 +142,10 @@ public interface PrincipalVariation {
 
    }
 
-   public static class Thinking extends Observable {
+   public static class Thinking extends Observable implements Serializable {
+
+      public static final long serialVersionUID = 1L;
+
       public void postThinking(
             int ply,
             int score,
@@ -160,7 +165,9 @@ public interface PrincipalVariation {
       }
    }
 
-   public static class DebugInfo extends Observable {
+   public static class DebugInfo extends Observable implements Serializable {
+
+      public static final long serialVersionUID = 1L;
 
       public void postNodesPerSecond(
             long time,

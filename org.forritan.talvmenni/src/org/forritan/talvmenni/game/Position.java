@@ -1,5 +1,6 @@
 package org.forritan.talvmenni.game;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
@@ -19,7 +20,10 @@ import org.forritan.talvmenni.bitboard.paths.BlackPawnMoves;
 import org.forritan.talvmenni.bitboard.paths.WhitePawnMoves;
 
 
-public interface Position {
+public interface Position extends Serializable {
+   
+   public static final long serialVersionUID = 1L; 
+   
    public Bitboard getBlack();
 
    public Bitboard getWhite();
@@ -52,7 +56,9 @@ public interface Position {
    public Position popMove();
    
 
-   public class Bitboard {
+   public class Bitboard implements Serializable {
+
+      public static final long serialVersionUID = 1L;
 
       public final static int SEED         = 17;
       public final static int PRIME_FACTOR = 37;
@@ -631,7 +637,10 @@ public interface Position {
       }
    }
 
-   public static interface PromotionPiece {
+   public static interface PromotionPiece extends Serializable {
+      
+      public static final long serialVersionUID = 1L; 
+      
       public final static int      NONE    = 4;
       
       public final static int      QUEEN   = 0;
@@ -641,7 +650,10 @@ public interface Position {
       public final static String[] STRINGS = new String[] { "q", "r", "b", "n", ""};
    }
 
-   public static class Move {
+   public static class Move implements Serializable {
+
+      public static final long serialVersionUID = 1L;
+      
       public final static int SEED         = 17;
       public final static int PRIME_FACTOR = 37;
 
@@ -1019,7 +1031,9 @@ public interface Position {
       }
    }
 
-   public static class ColorPosition {
+   public static class ColorPosition implements Serializable {
+
+      public static final long serialVersionUID = 1L;
 
       public Position position;
       public Boolean  whiteToMove;

@@ -21,13 +21,13 @@ public class AlphaBetaWithTranspositionTableStrategy extends AbstractStrategy {
       super(
             ply,
             book,
-            pv);
-      this.search= new AlphaBetaWithTranspositionTableSearch(
-            ply,
-            transposition,
-            useMoveOrdering,
-            pv);
-      this.evaluation= new MaterialAndPositionalEvaluation();
+            pv,
+            new AlphaBetaWithTranspositionTableSearch(
+                  ply,
+                  transposition,
+                  useMoveOrdering,
+                  pv),
+            new MaterialAndPositionalEvaluation());
    }
 
    protected List search(

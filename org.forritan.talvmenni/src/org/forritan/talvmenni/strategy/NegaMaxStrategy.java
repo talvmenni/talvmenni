@@ -18,11 +18,11 @@ public class NegaMaxStrategy extends AbstractStrategy {
       super(
             ply,
             book,
-            pv);
-      this.search= new NegaMaxSearch(
-            ply,
-            pv);
-      this.evaluation= new MaterialAndPositionalEvaluation();
+            pv,
+            new NegaMaxSearch(
+                  ply,
+                  pv),
+            new MaterialAndPositionalEvaluation());
    }
 
    protected List search(

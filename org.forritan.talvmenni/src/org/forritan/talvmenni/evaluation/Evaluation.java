@@ -1,10 +1,12 @@
 package org.forritan.talvmenni.evaluation;
 
+import java.io.Serializable;
+
 import org.forritan.talvmenni.game.Position;
 
-public interface Evaluation {
+public interface Evaluation extends Serializable {
    
-
+   public static final long serialVersionUID = 1L; 
          
 // Standard values... 
    public static final int QUEEN= 980;

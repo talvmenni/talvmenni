@@ -27,12 +27,15 @@ public abstract class AbstractStrategy implements Strategy {
    public AbstractStrategy(
          int ply,
          TheoryBook book,
-         PrincipalVariation pv) {
+         PrincipalVariation pv,
+         Search search,
+         Evaluation evaluation) {
       this.debugInfo= new DebugInfo();
       this.pv= pv;
       this.ply= ply;
       this.book= book;
-
+      this.search= search;
+      this.evaluation= evaluation;
    }
 
    protected abstract List search(
