@@ -28,7 +28,7 @@ public class ChessEngine extends Observable implements Runnable {
    
    private Strategy            strategy;
    private boolean             running;
-   private ProtocolImpl        protocol;
+   private Protocol            protocol;
    private ThreadFactory       threadFactory;
    private LinkedBlockingQueue<String> inMessages;
    private LinkedBlockingQueue<String> outMessages;
@@ -65,14 +65,13 @@ public class ChessEngine extends Observable implements Runnable {
   
    public synchronized void addObserver(Observer observer) {
       this.protocolHandler.addObserver(observer);
-      this.protocol.addObserver(observer);
+      this.protocol.getDebugInfo().addObserver(observer);
       this.strategy.getSearch().getDebugInfo().addObserver(observer);
       this.strategy.getSearch().getThinking().addObserver(observer);
    }
    
    public interface Protocol {
       public String processInput(String input);
-
       public boolean isGo();
       public boolean setGo(boolean go);
       public void newGame();
@@ -89,15 +88,38 @@ public class ChessEngine extends Observable implements Runnable {
       public Move makeMove(long fromSquare, long toSquare, int promotionPiece);
       public Move makeNextMove();
       public Strategy getStrategy();
+      public DebugInfo getDebugInfo();
+
+      public class DebugInfo extends Observable {
+         
+         public void postPossibleMoves(List<Position.Move> moves) {
+            this.setChanged();
+            this.notifyObservers(
+                  moves.size() 
+                  + " possible moves for white: " 
+                  + moves.toString());
+         }
+   
+      }
+
    }
 
-   private class ProtocolImpl extends Observable implements Protocol {
+   private class ProtocolImpl implements Protocol {
 
+      private DebugInfo debugInfo;
       private UiProtocol uiProtocol;
       private Position   currentPosition;
       private Rules      currentRules;
       private boolean    go = false;
       private boolean    WhiteToMove = true;
+      
+      public ProtocolImpl() {
+         this.debugInfo= new DebugInfo();
+      }
+
+      public DebugInfo getDebugInfo() {
+         return this.debugInfo;
+      }
 
       public String processInput(String theInput) {
          String theOutput= null;
@@ -161,14 +183,11 @@ public class ChessEngine extends Observable implements Runnable {
 
       public void setCurrentPosition(Position position) {
          this.currentPosition= position;
-         this.setChanged();
          if(this.currentPosition != null) {
             if(this.WhiteToMove) {
-               List<Position.Move> moves= this.currentPosition.white.getPossibleMoves();
-               this.notifyObservers(moves.size() + " possible moves for white: " + moves.toString());            
+               this.debugInfo.postPossibleMoves(this.currentPosition.white.getPossibleMoves());
             } else {
-               List<Position.Move> moves= this.currentPosition.black.getPossibleMoves();
-               this.notifyObservers(moves.size() + " possible moves for black: " + moves.toString());            
+               this.debugInfo.postPossibleMoves(this.currentPosition.black.getPossibleMoves());
             }
          }
       }
