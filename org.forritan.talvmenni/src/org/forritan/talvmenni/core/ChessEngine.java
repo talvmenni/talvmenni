@@ -142,7 +142,7 @@ public class ChessEngine extends Observable implements Runnable {
       }
 
       public void newGame() {
-         this.setCurrentPosition(ImmutablePosition.createInitial());
+         this.setCurrentPosition(ImmutablePosition.createInitialImmutable());
          MoveHistory.getInstance().reset();
          this.WhiteToMove = true;
          this.go= true;
@@ -305,7 +305,7 @@ public class ChessEngine extends Observable implements Runnable {
             }
          }
  
-         ImmutablePosition FenPosition = ImmutablePosition.create(whiteKings, whiteQueens, whiteRooks, whiteBishops,
+         Position FenPosition = ImmutablePosition.create(whiteKings, whiteQueens, whiteRooks, whiteBishops,
                whiteKnights, whitePawns, whiteCastling, whiteEnpassant,
                blackKings, blackQueens, blackRooks, blackBishops,
                blackKnights, blackPawns, blackCastling, blackEnpassant);
