@@ -186,7 +186,6 @@ public class Position {
          long from,
          long to,
          int promotionPiece) {
-      Position result= null;
 
       long whiteKings= this.white.kings;
       long whiteQueens= this.white.queens;
@@ -414,7 +413,7 @@ public class Position {
 
       }
 
-      result= Position.create(
+      return Position.create(
             whiteKings,
             whiteQueens,
             whiteRooks,
@@ -431,7 +430,6 @@ public class Position {
             blackPawns,
             blackCastling,
             blackEnpassant);
-      return result;
    }
 
    public boolean isLegalMove(
