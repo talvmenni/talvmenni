@@ -187,32 +187,32 @@ public class Position {
             if (this.white.isKing(from)) {
                whiteKings= whiteKings
                      ^ from
-                     & to;
+                     | to;
                //TODO: set castling and enpassant
             } else if (this.white.isQueen(from)) {
                whiteQueens= whiteQueens
                      ^ from
-                     & to;
+                     | to;
                //TODO: set castling and enpassant
             } else if (this.white.isRook(from)) {
                whiteRooks= whiteRooks
                      ^ from
-                     & to;
+                     | to;
                //TODO: set castling and enpassant
             } else if (this.white.isBishop(from)) {
                whiteBishops= whiteBishops
                      ^ from
-                     & to;
+                     | to;
                //TODO: set castling and enpassant
             } else if (this.white.isKnight(from)) {
                whiteKnights= whiteKnights
                      ^ from
-                     & to;
+                     | to;
                //TODO: set castling and enpassant
             } else if (this.white.isPawn(from)) {
                whitePawns= whitePawns
                      ^ from
-                     & to;
+                     | to;
                //TODO: set castling and enpassant
             }
 
@@ -241,32 +241,32 @@ public class Position {
             if (this.black.isKing(from)) {
                blackKings= blackKings
                      ^ from
-                     & to;
+                     | to;
                //TODO: set castling and enpassant
             } else if (this.black.isQueen(from)) {
                blackQueens= blackQueens
                      ^ from
-                     & to;
+                     | to;
                //TODO: set castling and enpassant
             } else if (this.black.isRook(from)) {
                blackRooks= blackRooks
                      ^ from
-                     & to;
+                     | to;
                //TODO: set castling and enpassant
             } else if (this.black.isBishop(from)) {
                blackBishops= blackBishops
                      ^ from
-                     & to;
+                     | to;
                //TODO: set castling and enpassant
             } else if (this.black.isKnight(from)) {
                blackKnights= blackKnights
                      ^ from
-                     & to;
+                     | to;
                //TODO: set castling and enpassant
             } else if (this.black.isPawn(from)) {
                blackPawns= blackPawns
                      ^ from
-                     & to;
+                     | to;
                //TODO: set castling and enpassant
             }
 
@@ -295,6 +295,23 @@ public class Position {
 
          }
 
+         result= Position.create(
+               whiteKings,
+               whiteQueens,
+               whiteRooks,
+               whiteBishops,
+               whiteKnights,
+               whitePawns,
+               whiteCastling,
+               whiteEnpassant,
+               blackKings,
+               blackQueens,
+               blackRooks,
+               blackBishops,
+               blackKnights,
+               blackPawns,
+               blackCastling,
+               blackEnpassant);
       } else {
          throw new IllegalArgumentException();
       }
@@ -304,7 +321,9 @@ public class Position {
    private boolean isLegalMove(
          long from,
          long to) {
-      return false;
+      
+      //TODO: !!!! Implementation missing...
+      return true;
    }
 
    public class Bitboard {
