@@ -272,7 +272,7 @@ public abstract class AbstractPosition implements Position {
                   blackRooks&= ~Square._A8;
                   blackRooks|= Square._D8;
                } else if (to == Square._G8) {
-                  blackRooks&= Square._H8;
+                  blackRooks&= ~Square._H8;
                   blackRooks|= Square._F8;
                }
             }

@@ -1,15 +1,12 @@
 package org.forritan.talvmenni.strategy;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
-import org.forritan.talvmenni.evaluation.Evaluation;
 import org.forritan.talvmenni.evaluation.SimpleMaterialAndPositionalEvaluation;
 import org.forritan.talvmenni.game.Position;
 import org.forritan.talvmenni.game.TheoryBook;
-import org.forritan.talvmenni.game.Position.Move;
 import org.forritan.talvmenni.search.AlphaBetaSearch;
-import org.forritan.talvmenni.search.Search;
 
 
 public class IterativeDeepeningAlphaBetaStrategy extends AbstractStrategy {

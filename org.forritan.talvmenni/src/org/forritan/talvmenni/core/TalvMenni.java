@@ -1,13 +1,14 @@
 package org.forritan.talvmenni.core;
 
 import java.io.IOException;
-import edu.emory.mathcs.util.concurrent.PlainThreadFactory;
-import edu.emory.mathcs.util.concurrent.ThreadFactory;
 
 import org.forritan.talvmenni.game.TheoryBook;
 import org.forritan.talvmenni.game.Transposition;
 import org.forritan.talvmenni.strategy.IterativeDeepeningAlphaBetaWithTranspositionTableStrategy;
 import org.forritan.talvmenni.ui.DebugWindow;
+
+import edu.emory.mathcs.util.concurrent.PlainThreadFactory;
+import edu.emory.mathcs.util.concurrent.ThreadFactory;
 
 
 public class TalvMenni {
@@ -77,21 +78,22 @@ public class TalvMenni {
             //                  MAX_TRANSPOSITION_ENTRIES),
             //            book));
 
-            .create(new IterativeDeepeningAlphaBetaWithTranspositionTableStrategy(
-                  PLY,
-                  new Transposition(
-                        MAX_TRANSPOSITION_ENTRIES),
-                  true,
-                  book));
+
+      .create(new IterativeDeepeningAlphaBetaWithTranspositionTableStrategy(
+            PLY,
+            new Transposition(
+                  MAX_TRANSPOSITION_ENTRIES),
+            true,
+            book));
 
       //            .create(new IterativeDeepeningAndReductionAlphaBetaStrategy(
       //                  PLY,
       //                  3,
       //                  book));
 
-      //      .create(new IterativeDeepeningAlphaBetaStrategy(
-      //            PLY,
-      //            book));
+//            .create(new IterativeDeepeningAlphaBetaStrategy(
+//                  PLY,
+//                  book));
 
       //            .create(new AlphaBetaWithTranspositionTableStrategy(
       //                  PLY,
@@ -100,13 +102,13 @@ public class TalvMenni {
       //                  true,
       //                  book));
 
-      //            .create(new AlphaBetaStrategy(
-      //                  PLY,
-      //                  book));
+//                  .create(new AlphaBetaStrategy(
+//                        PLY,
+//                        book));
 
-      //            .create(new NegaMaxStrategy(
-      //                  PLY,
-      //                  book));
+//                  .create(new NegaMaxStrategy(
+//                        PLY,
+//                        book));
 
 //      if (Boolean.getBoolean("exception_logging_window")) {
 //         Thread windowThread= threadFactory.newThread(new Runnable() {

@@ -6,16 +6,14 @@ import java.util.List;
 
 import org.forritan.talvmenni.evaluation.Evaluation;
 import org.forritan.talvmenni.game.Position;
-import org.forritan.talvmenni.game.AbstractPosition;
 import org.forritan.talvmenni.game.Position.Move;
-
+import org.forritan.talvmenni.search.PrincipalVariation.DebugInfo;
+import org.forritan.talvmenni.search.PrincipalVariation.Thinking;
 
 public class AlphaBetaSearch implements Search {
 
-   private Thinking  thinking;
-   private DebugInfo debugInfo;
+   private PrincipalVariation pv;
    private int       ply;
-
    private int       movesSearched;
 
    public AlphaBetaSearch() {
@@ -26,21 +24,21 @@ public class AlphaBetaSearch implements Search {
    public AlphaBetaSearch(
          int ply) {
       this.ply= ply;
-      this.thinking= new Thinking();
-      this.debugInfo= new DebugInfo();
+      this.pv= PrincipalVariation.Factory.create(ply);
    }
 
    public void setPly(
          int ply) {
       this.ply= ply;
+      this.pv.setDepth(ply);
    }
 
    public Thinking getThinking() {
-      return this.thinking;
+      return this.pv.getThinking();
    }
 
    public DebugInfo getDebugInfo() {
-      return this.debugInfo;
+      return this.pv.getDebugInfo();
    }
 
    public List getBestMoves(
@@ -60,7 +58,7 @@ public class AlphaBetaSearch implements Search {
       // If checkmate there is no need to search further...
       int beta= Evaluation.CHECKMATE_SCORE;
 
-      TupleScoreMoves result= this.alphaBeta(
+      int result= this.alphaBeta(
             p,
             e,
             whiteMove,
@@ -70,17 +68,15 @@ public class AlphaBetaSearch implements Search {
 
       time+= System.currentTimeMillis();
 
-      this.debugInfo.postNodesPerSecond(
+      this.pv.getDebugInfo().postNodesPerSecond(
             time,
             this.movesSearched);
-      this.debugInfo.postBestMoves(result.moves);
+      this.pv.getDebugInfo().postBestMoves(this.pv.getCurrentBestLine());
 
-      return (result.moves.size() > 0 ? result.moves.subList(
-            0,
-            1) : result.moves);
+      return (pv.getBestMoveAsList());
    }
 
-   private TupleScoreMoves alphaBeta(
+   private int alphaBeta(
          Position p,
          Evaluation e,
          boolean whiteMove,
@@ -88,17 +84,14 @@ public class AlphaBetaSearch implements Search {
          int alpha,
          int beta) {
 
-      TupleScoreMoves result= null;
+      int result;
 
       if (ply == 0) {
-         result= new TupleScoreMoves(
-               new Integer((e.getScore(p) * (whiteMove ? 1 : -1))),
-               new ArrayList());
+         result= (e.getScore(p) * (whiteMove ? 1 : -1));
+         this.pv.updateLastExaminedLine();
       } else {
          List moves;
-         TupleScoreMoves best= new TupleScoreMoves(
-               new Integer(Integer.MIN_VALUE + 1),
-               new ArrayList());
+         int best= Integer.MIN_VALUE + 1;
 
          if (whiteMove) {
             moves= p.getWhite().getPossibleMoves();
@@ -110,8 +103,7 @@ public class AlphaBetaSearch implements Search {
             
             for (Iterator it= moves.iterator(); it.hasNext();) {
                Move move= (Move) it.next();
-               if (best.score.intValue() >= beta) {
-//                  this.debugInfo.postText("***break***");
+               if (best >= beta) {
                   break;
                }
                this.movesSearched++;
@@ -120,45 +112,40 @@ public class AlphaBetaSearch implements Search {
                long moveTime= -System.currentTimeMillis();
                p= p.move(
                      move.from,
-                     move.to);
-               if (best.score.intValue() > alpha) {
-                  alpha= best.score.intValue();
+                     move.to,
+                     move.promotionPiece);
+               if (best > alpha) {
+                  alpha= best;
                }
-               TupleScoreMoves value= alphaBeta(
+
+               this.pv.push(move);
+
+               int score= -alphaBeta(
                      p,
                      e,
                      !whiteMove,
                      ply - 1,
                      -beta,
                      -alpha);
+               
+               this.pv.pop();
+               
                p.popMove();
-               value.score= new Integer(value.score.intValue()
-                     * -1);
-               value.moves.add(
-                     0,
-                     move);
                moveTime+= System.currentTimeMillis();
 
-               if (value.score.intValue() > best.score.intValue()) {
-                  best= value;
+               if (score > best) {
+                  best= score;
+                  this.pv.updatePV(
+                        ply,
+                        moveTime,
+                        (this.movesSearched - movesSearchedBefore),
+                        (best * (whiteMove ? 1 : -1)));
                   if (whiteMove) {
                      p.getWhite().killerMove(
                            move);
                   } else {
                      p.getBlack().killerMove(
                            move);
-                  }
-                  if (ply == this.ply) {
-                     this.debugInfo.postCurrentBestMove(
-                           move,
-                           best.score.intValue(),
-                           (this.movesSearched - movesSearchedBefore));
-                     this.thinking.postThinking(
-                           ply,
-                           (best.score.intValue() * (whiteMove ? 1 : -1)),
-                           moveTime + 1,
-                           (this.movesSearched - movesSearchedBefore),
-                           best.moves.toString());
                   }
                }
             }
@@ -170,14 +157,10 @@ public class AlphaBetaSearch implements Search {
          } else {
             if (whiteMove ? p.getWhite().isChecked() : p.getBlack().isChecked()) {
                // Checkmate...
-               result= new TupleScoreMoves(
-                     new Integer(((-Evaluation.CHECKMATE_SCORE - ply))),
-                     new ArrayList());
+               result= (-Evaluation.CHECKMATE_SCORE - ply);
             } else {
                // Stalemate...
-               result= new TupleScoreMoves(
-                     new Integer(0),
-                     new ArrayList());
+               result= 0;
             }
          }
       }
