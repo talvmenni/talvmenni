@@ -3,7 +3,7 @@ package org.forritan.talvmenni.search;
 import java.util.Iterator;
 import java.util.List;
 
-import org.forritan.talvmenni.knowledge.Draw;
+import org.forritan.talvmenni.TalvMenni;
 import org.forritan.talvmenni.knowledge.HistoryHeuristic;
 import org.forritan.talvmenni.knowledge.Position;
 import org.forritan.talvmenni.knowledge.Transposition;
@@ -16,8 +16,8 @@ import org.forritan.talvmenni.search.PrincipalVariation.DebugInfo;
 import org.forritan.talvmenni.search.PrincipalVariation.Thinking;
 
 
-public class AlphaBetaWithQuiescentAndTranspositionTableSearch implements
-      Search {
+public class AlphaBetaWithQuiescentAndNullMoveAndTranspositionTableSearch
+      implements Search {
 
    private int lastScore;
 
@@ -25,17 +25,17 @@ public class AlphaBetaWithQuiescentAndTranspositionTableSearch implements
       return this.lastScore;
    }
 
-   private PrincipalVariation pv;
-   private HistoryHeuristic   historyHeuristic;
-   private Transposition      transposition;
-   private int                ply;
-   private final boolean      useMoveOrdering;
-   private Quiescent          quiescent;
+   private PrincipalVariation    pv;
+   private HistoryHeuristic      historyHeuristic;
+   private Transposition         transposition;
+   private int                   ply;
+   private boolean               useMoveOrdering;
+   private QuiescentWithNullMove quiescent;
 
-   private int                movesSearched;
-   private int                transpositionHits;
+   private int                   movesSearched;
+   private int                   transpositionHits;
 
-   public AlphaBetaWithQuiescentAndTranspositionTableSearch(
+   public AlphaBetaWithQuiescentAndNullMoveAndTranspositionTableSearch(
          Transposition transposition,
          boolean useMoveOrdering,
          PrincipalVariation pv,
@@ -48,7 +48,7 @@ public class AlphaBetaWithQuiescentAndTranspositionTableSearch implements
             quiescentMaxDepth);
    }
 
-   public AlphaBetaWithQuiescentAndTranspositionTableSearch(
+   public AlphaBetaWithQuiescentAndNullMoveAndTranspositionTableSearch(
          int ply,
          Transposition transposition,
          boolean useMoveOrdering,
@@ -59,7 +59,7 @@ public class AlphaBetaWithQuiescentAndTranspositionTableSearch implements
       this.transposition= transposition;
       this.pv= pv;
       this.historyHeuristic= HistoryHeuristic.getInstance();
-      this.quiescent= new Quiescent(
+      this.quiescent= new QuiescentWithNullMove(
             this.pv,
             quiescentMaxDepth);
    }
@@ -187,6 +187,20 @@ public class AlphaBetaWithQuiescentAndTranspositionTableSearch implements
                beta);
          this.pv.updateLastExaminedLine();
       } else {
+
+         if ((ply - 1 - TalvMenni.NULL_MOVE_REDUCTION) >= 0) {
+            int nullMoveScore= -this.alphaBeta(
+                  p,
+                  e,
+                  !whiteMove,
+                  ply
+                        - 1
+                        - TalvMenni.NULL_MOVE_REDUCTION,
+                  -beta,
+                  -beta + 1);
+            if (nullMoveScore >= beta) { return beta; }
+         }
+
          List moves;
          int best= Integer.MIN_VALUE + 1;
 

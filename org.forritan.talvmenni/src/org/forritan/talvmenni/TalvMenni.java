@@ -6,6 +6,7 @@ import org.forritan.talvmenni.knowledge.Draw;
 import org.forritan.talvmenni.knowledge.TheoryBook;
 import org.forritan.talvmenni.knowledge.Transposition;
 import org.forritan.talvmenni.search.PrincipalVariation;
+import org.forritan.talvmenni.strategy.IterativeDeepeningAlphaBetaWithQuiescentAndNullMoveAndTranspositionTableStrategy;
 import org.forritan.talvmenni.strategy.IterativeDeepeningAlphaBetaWithQuiescentAndTranspositionTableStrategy;
 import org.forritan.talvmenni.ui.DebugWindow;
 
@@ -22,9 +23,9 @@ public class TalvMenni {
 
    /**
     * Default 0 - Minimum time in milli seconds for moving. Should probably be
-    * something 600 when playing as human player on FICS og ICC...  ;-)
+    * something 600 when playing as human player on FICS og ICC... ;-)
     */
-   public static long MINIMUM_MOVE_DELAY = 0;
+   public static long                MINIMUM_MOVE_DELAY            = 0;
 
    /**
     * Default PLY = 4 Minimum for being able to detect that we are getting
@@ -36,6 +37,11 @@ public class TalvMenni {
     * Default QUIESCENT_MAX_DEPTH = 16 - ply seems like a resonable value ;-)
     */
    public static int                 QUIESCENT_MAX_DEPTH           = 16 - PLY;
+
+   /**
+    * Default reduction of depth in NullMove search: NULL_MOVE_REDUCTION = 2
+    */
+   public static final int           NULL_MOVE_REDUCTION           = 2;
 
    /**
     * Default MAX_TRANSPOSITION_ENTRIES - Maximum number of entries in each of
@@ -133,7 +139,7 @@ public class TalvMenni {
             //                  PrincipalVariation.Factory.create(PLY),
             //                  QUIESCENT_MAX_DEPTH));
 
-            .create(new IterativeDeepeningAlphaBetaWithQuiescentAndTranspositionTableStrategy(
+            .create(new IterativeDeepeningAlphaBetaWithQuiescentAndNullMoveAndTranspositionTableStrategy(
                   PLY,
                   new Transposition(
                         MAX_TRANSPOSITION_ENTRIES),
@@ -141,6 +147,16 @@ public class TalvMenni {
                   book,
                   PrincipalVariation.Factory.create(PLY),
                   QUIESCENT_MAX_DEPTH));
+
+      //      .create(new
+      // IterativeDeepeningAlphaBetaWithQuiescentAndTranspositionTableStrategy(
+      //            PLY,
+      //            new Transposition(
+      //                  MAX_TRANSPOSITION_ENTRIES),
+      //            false,
+      //            book,
+      //            PrincipalVariation.Factory.create(PLY),
+      //            QUIESCENT_MAX_DEPTH));
 
       //      .create(new IterativeDeepeningAlphaBetaWithTranspositionTableStrategy(
       //            PLY,
