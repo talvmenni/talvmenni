@@ -29,9 +29,9 @@ public class TalvMenni {
    public static int                 PLY                           = 3;
 
    /**
-    * Default QUIESCENT_MAX_DEPTH = 4
+    * Default QUIESCENT_MAX_DEPTH = 1000 ;-)
     */
-   public static int                 QUIESCENT_MAX_DEPTH           = 6;
+   public static int                 QUIESCENT_MAX_DEPTH           = 1000;
 
    /**
     * Default MAX_TRANSPOSITION_ENTRIES - Maximum number of entries in each of

@@ -70,7 +70,7 @@ public class Quiescent {
       int score= (e.getScore(p) * (whiteMove ? 1 : -1));
       this.pv.updateLastExaminedLine();
 
-//      if ((this.maxDepth + ply) > 0) {
+      if ((this.maxDepth + ply) > 0) {
 
          if (score >= beta) { return beta; }
 
@@ -134,8 +134,8 @@ public class Quiescent {
             alpha= score; //TODO: ????? Skal tað vera so???
          }
          return alpha;
-//      } else {
-//         return score;
-//      }
+      } else {
+         return score;
+      }
    }
 }
