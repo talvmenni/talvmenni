@@ -125,8 +125,7 @@ public class Transposition {
       }
    }
 
-   private static class Table<K, V> extends LinkedHashMap<K, V> implements
-         Map<K, V> {
+   private static class Table<K, V> extends LinkedHashMap<K, V> {
       private static final long serialVersionUID = 1L;
       private static final int  MAX_ENTRIES      = 20000;
 
