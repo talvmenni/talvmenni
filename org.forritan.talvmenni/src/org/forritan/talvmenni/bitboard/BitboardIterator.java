@@ -20,7 +20,7 @@ public class BitboardIterator implements Iterator {
     * @deprecated Use nextBitboard() instead...
     */
    public Object next() {
-      return Long.valueOf(this.nextBitboard());
+      return new Long(this.nextBitboard());
    }
 
    public long nextBitboard() {

@@ -6,22 +6,19 @@ import java.util.List;
 import java.util.Map;
 
 import org.forritan.talvmenni.game.Position.Move;
-import org.forritan.util.ThreeTuple;
 
 
 public class Transposition {
    
    // Table<Position, new ThreeTuple<ply, score, moves>>
 
-   private Table<Position, ThreeTuple<Integer, Integer, List<Move>>> whiteTable;
-   private Table<Position, ThreeTuple<Integer, Integer, List<Move>>> blackTable;
+   private Table whiteTable;
+   private Table blackTable;
 
    public Transposition(
          int maxEntries) {
-      this.whiteTable= new Table<Position, ThreeTuple<Integer, Integer, List<Move>>>(
-            maxEntries);
-      this.blackTable= new Table<Position, ThreeTuple<Integer, Integer, List<Move>>>(
-            maxEntries);
+      this.whiteTable= new Table(maxEntries);
+      this.blackTable= new Table(maxEntries);
    }
 
    public int size(
@@ -52,63 +49,63 @@ public class Transposition {
       }
    }
 
-   public ThreeTuple<Integer, Integer, List<Move>> get(
+   public ThreeTuplePlyScoreMoves get(
          Position p,
          boolean white) {
       if (white) {
-         return this.whiteTable.get(p);
+         return (ThreeTuplePlyScoreMoves) this.whiteTable.get(p);
       } else {
-         return this.blackTable.get(p);
+         return (ThreeTuplePlyScoreMoves) this.blackTable.get(p);
       }
    }
 
    public void update(
          Position position,
          boolean white,
-         List<Move> moves,
+         List moves,
          int score,
          int ply) {
       
       if (white) {
          if (this.whiteTable.containsKey(position)) {
-            ThreeTuple<Integer, Integer, List<Move>> entry= this.whiteTable.get(position);
-            if ((entry.a.intValue() < ply)
-                  || (entry.a.intValue() == ply && entry.b.intValue() < score)) {
+            ThreeTuplePlyScoreMoves entry= (ThreeTuplePlyScoreMoves) this.whiteTable.get(position);
+            if ((entry.ply.intValue() < ply)
+                  || (entry.ply.intValue() == ply && entry.score.intValue() < score)) {
                this.whiteTable.remove(position);
                this.whiteTable.put(
                      position.getImmutable(),
-                     new ThreeTuple<Integer, Integer, List<Move>>(
-                           Integer.valueOf(ply),
-                           Integer.valueOf(score),
+                     new ThreeTuplePlyScoreMoves(
+                           new Integer(ply),
+                           new Integer(score),
                            Collections.unmodifiableList(moves)));
             }
          } else {
             this.whiteTable.put(
                   position.getImmutable(),
-                  new ThreeTuple<Integer, Integer, List<Move>>(
-                        Integer.valueOf(ply),
-                        Integer.valueOf(score),
+                  new ThreeTuplePlyScoreMoves(
+                        new Integer(ply),
+                        new Integer(score),
                         Collections.unmodifiableList(moves)));
          }
       } else {
          if (this.blackTable.containsKey(position)) {
-            ThreeTuple<Integer, Integer, List<Move>> entry= this.blackTable.get(position);
-            if (entry.a.intValue() < ply
-                  || (entry.a.intValue() == ply && entry.b.intValue() < score)) {
+            ThreeTuplePlyScoreMoves entry= (ThreeTuplePlyScoreMoves) this.blackTable.get(position);
+            if (entry.ply.intValue() < ply
+                  || (entry.ply.intValue() == ply && entry.ply.intValue() < score)) {
                this.blackTable.remove(position);
                this.blackTable.put(
                      position.getImmutable(),
-                     new ThreeTuple<Integer, Integer, List<Move>>(
-                           Integer.valueOf(ply),
-                           Integer.valueOf(score),
+                     new ThreeTuplePlyScoreMoves(
+                           new Integer(ply),
+                           new Integer(score),
                            Collections.unmodifiableList(moves)));
             }
          } else {
             this.blackTable.put(
                   position.getImmutable(),
-                  new ThreeTuple<Integer, Integer, List<Move>>(
-                        Integer.valueOf(ply),
-                        Integer.valueOf(score),
+                  new ThreeTuplePlyScoreMoves(
+                        new Integer(ply),
+                        new Integer(score),
                         Collections.unmodifiableList(moves)));
          }
       }
@@ -123,7 +120,7 @@ public class Transposition {
       }
    }
 
-   private static class Table<K, V> extends LinkedHashMap<K, V> {
+   private static class Table extends LinkedHashMap {
       private static final long serialVersionUID = 1L;
       private final int         maxEntries;
 
@@ -135,6 +132,23 @@ public class Transposition {
       protected boolean removeEldestEntry(
             Map.Entry eldest) {
          return size() > maxEntries;
+      }
+
+   }
+   
+   public static class ThreeTuplePlyScoreMoves {
+
+      public Integer ply;
+      public Integer score;
+      public List moves;
+
+      public ThreeTuplePlyScoreMoves(
+            Integer ply,
+            Integer score,
+            List moves) {
+         this.ply= ply;
+         this.score= score;
+         this.moves= moves;
       }
 
    }

@@ -1,13 +1,13 @@
 package org.forritan.talvmenni.search;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.forritan.talvmenni.evaluation.Evaluation;
 import org.forritan.talvmenni.game.Position;
 import org.forritan.talvmenni.game.AbstractPosition;
 import org.forritan.talvmenni.game.Position.Move;
-import org.forritan.util.Tuple;
 
 
 public class NegaMaxSearch implements Search {
@@ -43,7 +43,7 @@ public class NegaMaxSearch implements Search {
       return this.debugInfo;
    }
 
-   public List<Move> getBestMoves(
+   public List getBestMoves(
          Position p,
          Evaluation e,
          boolean whiteMove) {
@@ -51,7 +51,7 @@ public class NegaMaxSearch implements Search {
       long time= -System.currentTimeMillis();
       this.movesSearched= 0;
 
-      Tuple<Integer, List<Move>> result= this.negaMax(
+      TupleScoreMoves result= this.negaMax(
             p,
             e,
             whiteMove,
@@ -62,30 +62,30 @@ public class NegaMaxSearch implements Search {
       this.debugInfo.postNodesPerSecond(
             time,
             this.movesSearched);
-      this.debugInfo.postBestMoves(result.b);
+      this.debugInfo.postBestMoves(result.moves);
 
-      return (result.b.size() > 0 ? result.b.subList(
+      return (result.moves.size() > 0 ? result.moves.subList(
             0,
-            1) : result.b);
+            1) : result.moves);
    }
 
-   private Tuple<Integer, List<Move>> negaMax(
+   private TupleScoreMoves negaMax(
          Position p,
          Evaluation e,
          boolean whiteMove,
          int ply) {
 
-      Tuple<Integer, List<Move>> result= null;
+      TupleScoreMoves result= null;
 
       if (ply == 0) {
-         result= new Tuple<Integer, List<Move>>(
-               Integer.valueOf((e.getScore(p) * (whiteMove ? 1 : -1))),
-               new ArrayList<Move>());
+         result= new TupleScoreMoves(
+               new Integer((e.getScore(p) * (whiteMove ? 1 : -1))),
+               new ArrayList());
       } else {
-         List<Move> moves;
-         Tuple<Integer, List<Move>> best= new Tuple<Integer, List<Move>>(
-               Integer.valueOf(Integer.MIN_VALUE + 1),
-               new ArrayList<Move>());
+         List moves;
+         TupleScoreMoves best= new TupleScoreMoves(
+               new Integer(Integer.MIN_VALUE + 1),
+               new ArrayList());
 
          if (whiteMove) {
             moves= p.getWhite().getPossibleMoves();
@@ -94,7 +94,8 @@ public class NegaMaxSearch implements Search {
          }
 
          if (moves.size() > 0) {
-            for (Move move : moves) {
+            for (Iterator it= moves.iterator(); it.hasNext();) {
+               Move move= (Move) it.next();
 
                this.movesSearched++;
 
@@ -103,34 +104,34 @@ public class NegaMaxSearch implements Search {
                p= p.move(
                      move.from,
                      move.to);
-               Tuple<Integer, List<Move>> value= negaMax(
+               TupleScoreMoves value= negaMax(
                      p,
                      e,
                      !whiteMove,
                      ply - 1);
                p.popMove();
-               value.a= Integer.valueOf(value.a.intValue()
+               value.score= new Integer(value.score.intValue()
                      * -1);
-               value.b.add(
+               value.moves.add(
                      0,
                      move);
                moveTime+= System.currentTimeMillis();
 
                
                
-               if (value.a.intValue() > best.a.intValue()) {
+               if (value.score.intValue() > best.score.intValue()) {
                   best= value;
                   if (ply == this.ply) {
                      this.debugInfo.postCurrentBestMove(
                            move,
-                           best.a.intValue(),
+                           best.score.intValue(),
                            (this.movesSearched - movesSearchedBefore));
                      this.thinking.postThinking(
                            ply,
-                           (best.a.intValue() * (whiteMove?1:-1)),
+                           (best.score.intValue() * (whiteMove?1:-1)),
                            moveTime + 1,
                            (this.movesSearched - movesSearchedBefore),
-                           best.b.toString());
+                           best.score.toString());
                   }
                }
             }
@@ -138,14 +139,14 @@ public class NegaMaxSearch implements Search {
          } else {
             if (whiteMove ? p.getWhite().isChecked() : p.getBlack().isChecked()) {
                // Checkmate...
-               result= new Tuple<Integer, List<Move>>(
-                     Integer.valueOf(((-Evaluation.CHECKMATE_SCORE - ply))),
-                     new ArrayList<Move>());
+               result= new TupleScoreMoves(
+                     new Integer(((-Evaluation.CHECKMATE_SCORE - ply))),
+                     new ArrayList());
             } else {
                // Stalemate...
-               result= new Tuple<Integer, List<Move>>(
-                     Integer.valueOf(0),
-                     new ArrayList<Move>());
+               result= new TupleScoreMoves(
+                     new Integer(0),
+                     new ArrayList());
             }
          }
       }

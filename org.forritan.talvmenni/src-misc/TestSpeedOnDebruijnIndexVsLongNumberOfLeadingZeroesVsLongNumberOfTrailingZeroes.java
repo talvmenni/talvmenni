@@ -19,10 +19,10 @@ public class TestSpeedOnDebruijnIndexVsLongNumberOfLeadingZeroesVsLongNumberOfTr
          index= Square.Util.deBruijn64Index(sq.getSquare(new Random().nextInt(64))); 
       }
       for (int i= 0; i < howMany; i++) {
-         index= Long.numberOfLeadingZeros(sq.getSquare(new Random().nextInt(64))); 
+         index= Square.Util.numberOfLeadingZeros(sq.getSquare(new Random().nextInt(64))); 
       }
       for (int i= 0; i < howMany; i++) {
-         index= Long.numberOfTrailingZeros(sq.getSquare(new Random().nextInt(64))); 
+         index= Square.Util.numberOfTrailingZeros(sq.getSquare(new Random().nextInt(64))); 
       }
 
       // Square.Util.deBruijn64Index
@@ -36,7 +36,7 @@ public class TestSpeedOnDebruijnIndexVsLongNumberOfLeadingZeroesVsLongNumberOfTr
       // Long.numberOfLeadingZeros
       time= -System.currentTimeMillis();
       for (int i= 0; i < howMany; i++) {
-         index= Long.numberOfLeadingZeros(sq.getSquare(new Random().nextInt(64))); 
+         index= Square.Util.numberOfLeadingZeros(sq.getSquare(new Random().nextInt(64))); 
       }      
       time += System.currentTimeMillis();      
       System.out.println("Getting the index " + howMany + " times using Long.numberOfLeadingZeros: " + time + " milliseconds...");
@@ -44,7 +44,7 @@ public class TestSpeedOnDebruijnIndexVsLongNumberOfLeadingZeroesVsLongNumberOfTr
       // Long.numberOfTrailingZeros
       time= -System.currentTimeMillis();
       for (int i= 0; i < howMany; i++) {
-         index= Long.numberOfTrailingZeros(sq.getSquare(new Random().nextInt(64))); 
+         index= Square.Util.numberOfTrailingZeros(sq.getSquare(new Random().nextInt(64))); 
       }      
       time += System.currentTimeMillis();      
       System.out.println("Getting the index " + howMany + " times using Long.numberOfTrailingZeros: " + time + " milliseconds...");

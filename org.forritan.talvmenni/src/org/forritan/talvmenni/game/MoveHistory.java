@@ -7,7 +7,7 @@ import java.util.List;
 public class MoveHistory {
 
       private static MoveHistory instance;
-      private List<Move> history;
+      private List history;
       
       public static MoveHistory getInstance() {
          if (MoveHistory.instance == null) {
@@ -17,7 +17,7 @@ public class MoveHistory {
       }
       
       private MoveHistory() {
-         this.history= new LinkedList<Move>();
+         this.history= new LinkedList();
       }
       
       public void add(Move move) {
@@ -32,7 +32,7 @@ public class MoveHistory {
          this.history.clear();         
       }
       
-      public List<Move> getHistory(){
+      public List getHistory(){
          return Collections.unmodifiableList(this.history);
       }
       

@@ -16,7 +16,7 @@ public class TestSpeedOnMakeRandomMoveUsingTransposition {
 
       int warmup= 100000;
 
-      ___resetObjectCreationStats();
+//      ___resetObjectCreationStats();
 
       Random rnd= new Random();
 
@@ -24,27 +24,27 @@ public class TestSpeedOnMakeRandomMoveUsingTransposition {
       int collisions= 0;
       int total= 0;
 
-      Set<Integer> hashCodes= new HashSet<Integer>();
-      Set<Position> positions= new HashSet<Position>();
+      Set hashCodes= new HashSet();
+      Set positions= new HashSet();
 
       Position p= Position.Factory.createInitial(false);
       boolean whiteToMove= true;
       for (int i= 0; i < warmup; i++) {
-         List<Move> moves= (whiteToMove ? p.getWhite().getPossibleMoves() : p
+         List moves= (whiteToMove ? p.getWhite().getPossibleMoves() : p
                .getBlack().getPossibleMoves());
          if (!moves.isEmpty()) {
-            Move move= moves.get(rnd.nextInt(moves.size()));
+            Move move= (Move) moves.get(rnd.nextInt(moves.size()));
             total++;
             p= p.move(
                   move.from,
                   move.to);
-            if (hashCodes.contains(Integer.valueOf(p.hashCode()))) {
+            if (hashCodes.contains(new Integer(p.hashCode()))) {
                collisions++;
             }
             if (positions.contains(p)) {
                positionCollisions++;
             }
-            hashCodes.add(Integer.valueOf(p.hashCode()));
+            hashCodes.add(new Integer(p.hashCode()));
             positions.add(p);
          } else {
             p= Position.Factory.createInitial(false);
@@ -69,9 +69,9 @@ public class TestSpeedOnMakeRandomMoveUsingTransposition {
       System.err.println("... created "
             + warmup
             + " immutable positions");
-      ___printObjectCreationStats(System.err);
-
-      ___resetObjectCreationStats();
+//      ___printObjectCreationStats(System.err);
+//
+//      ___resetObjectCreationStats();
 
       hashCodes.clear();
       positions.clear();
@@ -92,21 +92,21 @@ public class TestSpeedOnMakeRandomMoveUsingTransposition {
       p= Position.Factory.createInitial(true);
       whiteToMove= true;
       for (int i= 0; i < warmup; i++) {
-         List<Move> moves= (whiteToMove ? p.getWhite().getPossibleMoves() : p
+         List moves= (whiteToMove ? p.getWhite().getPossibleMoves() : p
                .getBlack().getPossibleMoves());
          if (!moves.isEmpty()) {
-            Move move= moves.get(rnd.nextInt(moves.size()));
+            Move move= (Move) moves.get(rnd.nextInt(moves.size()));
             p= p.move(
                   move.from,
                   move.to);
             total++;
-            if (hashCodes.contains(Integer.valueOf(p.hashCode()))) {
+            if (hashCodes.contains(new Integer(p.hashCode()))) {
                collisions++;
             }
             if (positions.contains(p)) {
                positionCollisions++;
             }
-            hashCodes.add(Integer.valueOf(p.hashCode()));
+            hashCodes.add(new Integer(p.hashCode()));
             positions.add(p);
          } else {
             p= Position.Factory.createInitial(true);
@@ -149,7 +149,7 @@ public class TestSpeedOnMakeRandomMoveUsingTransposition {
       System.err.println("... created "
             + warmup
             + " mutable positions");
-      ___printObjectCreationStats(System.err);
+//      ___printObjectCreationStats(System.err);
 
       
       
@@ -162,10 +162,10 @@ public class TestSpeedOnMakeRandomMoveUsingTransposition {
 
       long time= -System.currentTimeMillis();
       for (int i= 0; i < howMany; i++) {
-         List<Move> moves= (whiteToMove ? p.getWhite().getPossibleMoves() : p
+         List moves= (whiteToMove ? p.getWhite().getPossibleMoves() : p
                .getBlack().getPossibleMoves());
          if (!moves.isEmpty()) {
-            Move move= moves.get(new Random().nextInt(moves.size()));
+            Move move= (Move) moves.get(new Random().nextInt(moves.size()));
             p= p.move(
                   move.from,
                   move.to);
@@ -196,10 +196,10 @@ public class TestSpeedOnMakeRandomMoveUsingTransposition {
 
       time= -System.currentTimeMillis();
       for (int i= 0; i < howMany; i++) {
-         List<Move> moves= (whiteToMove ? p.getWhite().getPossibleMoves() : p
+         List moves= (whiteToMove ? p.getWhite().getPossibleMoves() : p
                .getBlack().getPossibleMoves());
          if (!moves.isEmpty()) {
-            Move move= moves.get(new Random().nextInt(moves.size()));
+            Move move= (Move) moves.get(new Random().nextInt(moves.size()));
             p= p.move(
                   move.from,
                   move.to);

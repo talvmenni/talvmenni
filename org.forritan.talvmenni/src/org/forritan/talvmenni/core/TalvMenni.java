@@ -1,15 +1,13 @@
 package org.forritan.talvmenni.core;
 
 import java.io.IOException;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ThreadFactory;
+import edu.emory.mathcs.util.concurrent.PlainThreadFactory;
+import edu.emory.mathcs.util.concurrent.ThreadFactory;
 
 import org.forritan.talvmenni.game.TheoryBook;
 import org.forritan.talvmenni.game.Transposition;
 import org.forritan.talvmenni.strategy.IterativeDeepeningAlphaBetaWithTranspositionTableStrategy;
 import org.forritan.talvmenni.ui.DebugWindow;
-import org.forritan.util.debug.ExceptionLoggingWindowHandler;
-import org.forritan.util.debug.ObjectStatisticsWindow;
 
 
 public class TalvMenni {
@@ -36,7 +34,7 @@ public class TalvMenni {
    public static void main(
          String args[]) {
 
-      ThreadFactory threadFactory= Executors.defaultThreadFactory();
+      ThreadFactory threadFactory= new PlainThreadFactory();
 
       String searchDepth= System.getProperty("ply");
       if (searchDepth != null) {
@@ -99,32 +97,33 @@ public class TalvMenni {
       //            .create(new NegaMaxStrategy(
       //                  PLY,
       //                  book));
-      if (Boolean.getBoolean("exception_logging_window")) {
-         Thread windowThread= threadFactory.newThread(new Runnable() {
-            public void run() {
-               Thread
-                     .setDefaultUncaughtExceptionHandler(ExceptionLoggingWindowHandler
-                           .getInstance());
-            }
-         });
-         windowThread.start();
-      }
 
-      if (Boolean.getBoolean("object_statisics_window")) {
-         Thread windowThread= threadFactory.newThread(new Runnable() {
-            public void run() {
-               ObjectStatisticsWindow window= new ObjectStatisticsWindow(
-                     TalvMenni.NAME
-                           + " | "
-                           + TalvMenni.DEBUG_NAME
-                           + " | Object creations statistics");
-               chessEngine.getProtocol().getObjectCreationStatistics()
-                     .addObserver(
-                           window);
-            }
-         });
-         windowThread.start();
-      }
+//      if (Boolean.getBoolean("exception_logging_window")) {
+//         Thread windowThread= threadFactory.newThread(new Runnable() {
+//            public void run() {
+//               Thread
+//                     .setDefaultUncaughtExceptionHandler(ExceptionLoggingWindowHandler
+//                           .getInstance());
+//            }
+//         });
+//         windowThread.start();
+//      }
+
+//      if (Boolean.getBoolean("object_statisics_window")) {
+//         Thread windowThread= threadFactory.newThread(new Runnable() {
+//            public void run() {
+//               ObjectStatisticsWindow window= new ObjectStatisticsWindow(
+//                     TalvMenni.NAME
+//                           + " | "
+//                           + TalvMenni.DEBUG_NAME
+//                           + " | Object creations statistics");
+//               chessEngine.getProtocol().getObjectCreationStatistics()
+//                     .addObserver(
+//                           window);
+//            }
+//         });
+//         windowThread.start();
+//      }
 
       if (Boolean.getBoolean("debug_window")) {
          Thread windowThread= threadFactory.newThread(new Runnable() {

@@ -1,5 +1,6 @@
 package org.forritan.talvmenni.strategy;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.Observable;
 import java.util.Random;
@@ -8,8 +9,8 @@ import org.forritan.talvmenni.evaluation.Evaluation;
 import org.forritan.talvmenni.game.Position;
 import org.forritan.talvmenni.game.TheoryBook;
 import org.forritan.talvmenni.game.Position.Move;
+import org.forritan.talvmenni.game.TheoryBook.TupleMoveWeight;
 import org.forritan.talvmenni.search.Search;
-import org.forritan.util.Tuple;
 
 
 public abstract class AbstractStrategy implements Strategy {
@@ -29,7 +30,7 @@ public abstract class AbstractStrategy implements Strategy {
 
    }
 
-   protected abstract List<Position.Move> search(
+   protected abstract List search(
          Position position,
          boolean whiteToMove);
 
@@ -51,7 +52,7 @@ public abstract class AbstractStrategy implements Strategy {
                      + this.book.size(whiteToMove)
                      + " entries]...");
 
-         List<Tuple<Move, Integer>> moves= this.book.get(
+         List moves= this.book.get(
                position,
                whiteToMove);
 
@@ -59,18 +60,20 @@ public abstract class AbstractStrategy implements Strategy {
 
             int totalWeight= 0;
 
-            for (Tuple<Move, Integer> tuple : moves) {
-               totalWeight+= tuple.b.intValue();
+            for (Iterator it= moves.iterator(); it.hasNext();) {
+               TupleMoveWeight tuple= (TupleMoveWeight) it.next();
+               totalWeight+= tuple.weight.intValue();
             }
 
             if (totalWeight > 0) {
 
                int weight= new Random().nextInt(totalWeight);
 
-               for (Tuple<Move, Integer> tuple : moves) {
-                  weight-= tuple.b.intValue();
+               for (Iterator it= moves.iterator(); it.hasNext();) {
+                  TupleMoveWeight tuple= (TupleMoveWeight) it.next();
+                  weight-= tuple.weight.intValue();
                   if (weight < 0) {
-                     result= tuple.a;
+                     result= tuple.move;
                      break;
                   }
                }
@@ -115,14 +118,14 @@ public abstract class AbstractStrategy implements Strategy {
 
       if (result != null) { return result; }
 
-      List<Position.Move> moves;
+      List moves;
       if (whiteToMove) {
          moves= position.getWhite().getPossibleMoves();
       } else {
          moves= position.getBlack().getPossibleMoves();
       }
 
-      List<Position.Move> bestMoves;
+      List bestMoves;
       if (moves.size() == 1) {
          bestMoves= moves;
       } else {
@@ -133,7 +136,7 @@ public abstract class AbstractStrategy implements Strategy {
 
       if (!bestMoves.isEmpty()) {
          int chosenMoveIndex= new Random().nextInt(bestMoves.size());
-         return bestMoves.get(chosenMoveIndex);
+         return (Move) bestMoves.get(chosenMoveIndex);
       } else {
          return null;
       }

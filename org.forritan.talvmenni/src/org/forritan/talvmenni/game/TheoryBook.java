@@ -12,20 +12,18 @@ import java.util.StringTokenizer;
 import org.forritan.talvmenni.bitboard.Square;
 import org.forritan.talvmenni.bitboard.Squares;
 import org.forritan.talvmenni.game.Position.Move;
-import org.forritan.util.Tuple;
+import org.forritan.talvmenni.game.Position.TuplePositionBoolean;
 
 
 public class TheoryBook {
 
-   private Table<Integer, List<Tuple<Move, Integer>>> whiteBook;
-   private Table<Integer, List<Tuple<Move, Integer>>> blackBook;
+   private Table whiteBook;
+   private Table blackBook;
 
    public TheoryBook(
          int maxBookEntries) {
-      this.whiteBook= new Table<Integer, List<Tuple<Move, Integer>>>(
-            maxBookEntries);
-      this.blackBook= new Table<Integer, List<Tuple<Move, Integer>>>(
-            maxBookEntries);
+      this.whiteBook= new Table(maxBookEntries);
+      this.blackBook= new Table(maxBookEntries);
    }
 
    public void loadBook(
@@ -41,8 +39,8 @@ public class TheoryBook {
       int lineNumber= 0;
       boolean fenStringLine= true;
       String line= null;
-      Tuple<Position, Boolean> p= null;
-      List<Tuple<Move, Integer>> bookMoves= null;
+      TuplePositionBoolean p= null;
+      List bookMoves= null;
 
       while ((line= reader.readLine()) != null) {
          lineNumber++;
@@ -53,13 +51,13 @@ public class TheoryBook {
                      line);
 
                if (this.containsKey(
-                     Integer.valueOf(p.a.hashCode()),
-                     p.b.booleanValue())) {
+                     new Integer(p.position.hashCode()),
+                     p.whiteToMove.booleanValue())) {
 
                   if (this.get(
-                        Integer.valueOf(p.a.hashCode()),
-                        p.b.booleanValue()).size() != 0) {
-                     if (p.b.booleanValue()) {
+                        new Integer(p.position.hashCode()),
+                        p.whiteToMove.booleanValue()).size() != 0) {
+                     if (p.whiteToMove.booleanValue()) {
                         whiteCollisions++;
                      } else {
                         blackCollisions++;
@@ -67,10 +65,10 @@ public class TheoryBook {
                   }
 
                   bookMoves= this.get(
-                        Integer.valueOf(p.a.hashCode()),
-                        p.b.booleanValue());
+                        new Integer(p.position.hashCode()),
+                        p.whiteToMove.booleanValue());
                } else {
-                  bookMoves= new ArrayList<Tuple<Move, Integer>>();
+                  bookMoves= new ArrayList();
                }
             } catch (IllegalArgumentException e) {
                fenStringLine= !fenStringLine; //try to read new fenString next
@@ -101,11 +99,11 @@ public class TheoryBook {
                         sq.getSquare(to));
                   Integer score= null;
                   try {
-                     score= Integer.valueOf(moveAndScore.substring(
+                     score= new Integer(moveAndScore.substring(
                            5,
                            (moveAndScore.length() - 1)));
                   } catch (NumberFormatException e) {
-                     score= Integer.valueOf(0);
+                     score= new Integer(0);
                      System.err
                            .println("NumberFormatException: [FENString] at lineNumber "
                                  + lineNumber
@@ -117,20 +115,20 @@ public class TheoryBook {
 
                   }
 
-                  if (p.b.booleanValue()) {
-                     if (p.a.getWhite().getPossibleMoves().contains(
+                  if (p.whiteToMove.booleanValue()) {
+                     if (p.position.getWhite().getPossibleMoves().contains(
                            move)) {
                         if (!bookMoves.contains(move)) {
-                           bookMoves.add(new Tuple<Move, Integer>(
+                           bookMoves.add(new TupleMoveWeight(
                                  move,
                                  score));
                         }
                      }
                   } else {
-                     if (p.a.getBlack().getPossibleMoves().contains(
+                     if (p.position.getBlack().getPossibleMoves().contains(
                            move)) {
                         if (!bookMoves.contains(move)) {
-                           bookMoves.add(new Tuple<Move, Integer>(
+                           bookMoves.add(new TupleMoveWeight(
                                  move,
                                  score));
                         }
@@ -141,9 +139,9 @@ public class TheoryBook {
          }
 
          this.put(
-               Integer.valueOf(p.a.hashCode()),
+               new Integer(p.position.hashCode()),
                bookMoves,
-               p.b.booleanValue());
+               p.whiteToMove.booleanValue());
          fenStringLine= !fenStringLine;
       }
 
@@ -169,7 +167,7 @@ public class TheoryBook {
          Position key,
          boolean whiteBook) {
       return this.containsKey(
-            Integer.valueOf(key.hashCode()),
+            new Integer(key.hashCode()),
             whiteBook);
    }
 
@@ -183,36 +181,36 @@ public class TheoryBook {
       }
    }
 
-   public List<Tuple<Move, Integer>> put(
+   public List put(
          Integer key,
-         List<Tuple<Move, Integer>> value,
+         List value,
          boolean whiteBook) {
       if (whiteBook) {
-         return this.whiteBook.put(
+         return (List) this.whiteBook.put(
                key,
                value);
       } else {
-         return this.blackBook.put(
+         return (List) this.blackBook.put(
                key,
                value);
       }
    }
 
-   public List<Tuple<Move, Integer>> get(
+   public List get(
          Position key,
          boolean whiteBook) {
       return this.get(
-            Integer.valueOf(key.hashCode()),
+            new Integer(key.hashCode()),
             whiteBook);
    }
 
-   public List<Tuple<Move, Integer>> get(
+   public List get(
          Integer key,
          boolean whiteBook) {
       if (whiteBook) {
-         return this.whiteBook.get(key);
+         return (List) this.whiteBook.get(key);
       } else {
-         return this.blackBook.get(key);
+         return (List) this.blackBook.get(key);
       }
    }
 
@@ -225,7 +223,7 @@ public class TheoryBook {
       }
    }
 
-   private static class Table<K, V> extends LinkedHashMap<K, V> {
+   private static class Table extends LinkedHashMap {
       private static final long serialVersionUID = 1L;
       private final int         maxEntries;
 
@@ -239,6 +237,19 @@ public class TheoryBook {
          return size() > maxEntries;
       }
 
+   }
+   
+   public static class TupleMoveWeight {
+
+      public Move move;
+      public Integer weight;
+
+      public TupleMoveWeight(
+            Move move,
+            Integer weight) {
+         this.move= move;
+         this.weight= weight;
+      }
    }
 
 }

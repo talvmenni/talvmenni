@@ -2,11 +2,13 @@ package org.forritan.talvmenni.game;
 
 import java.util.Stack;
 
+import org.forritan.talvmenni.game.Position.Bitboard;
+
 
 public class MutablePosition extends AbstractPosition {
    
-   Stack<Bitboard> whiteBitboards;
-   Stack<Bitboard> blackBitboards;
+   Stack whiteBitboards;
+   Stack blackBitboards;
    
    /**
     * 
@@ -61,8 +63,8 @@ public class MutablePosition extends AbstractPosition {
             blackPawns,
             blackCastling,
             blackEnpassant);
-      this.whiteBitboards= new Stack<Bitboard>();
-      this.blackBitboards= new Stack<Bitboard>();
+      this.whiteBitboards= new Stack();
+      this.blackBitboards= new Stack();
    }
 
    /**
@@ -75,8 +77,8 @@ public class MutablePosition extends AbstractPosition {
       super(
             white,
             black);
-      this.whiteBitboards= new Stack<Bitboard>();
-      this.blackBitboards= new Stack<Bitboard>();
+      this.whiteBitboards= new Stack();
+      this.blackBitboards= new Stack();
    }
 
    public Position pushMove(
@@ -91,8 +93,8 @@ public class MutablePosition extends AbstractPosition {
    }
    
    public Position popMove() {
-      this.white= this.whiteBitboards.pop();
-      this.black= this.blackBitboards.pop();
+      this.white= (Bitboard) this.whiteBitboards.pop();
+      this.black= (Bitboard) this.blackBitboards.pop();
       return this;
    }
 

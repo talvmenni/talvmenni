@@ -2,7 +2,7 @@ package org.forritan.talvmenni.ui;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.Formatter;
+import java.util.Iterator;
 import java.util.List;
 
 import org.forritan.talvmenni.bitboard.Square;
@@ -314,10 +314,11 @@ public class ConsoleProtocol extends UiProtocolBase {
    }
 
    private String printHistory() {
-      StringBuilder result= new StringBuilder();
-      List<Move> history= MoveHistory.getInstance().getHistory();
+      StringBuffer result= new StringBuffer();
+      List history= MoveHistory.getInstance().getHistory();
       int number= 1;
-      for (Move move : history) {
+      for (Iterator it= history.iterator();it.hasNext();) {
+         Move move= (Move) it.next();
          if ((number++ % 2) != 0) {
             result.append(
                   number / 2).append(

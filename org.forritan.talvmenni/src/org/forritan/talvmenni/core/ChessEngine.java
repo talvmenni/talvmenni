@@ -6,22 +6,21 @@ import java.io.InputStreamReader;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
-import java.util.concurrent.Executors;
-import java.util.concurrent.LinkedBlockingQueue;
-import java.util.concurrent.ThreadFactory;
+import edu.emory.mathcs.util.concurrent.PlainThreadFactory;
+import edu.emory.mathcs.util.concurrent.DynamicArrayBlockingQueue;
+import edu.emory.mathcs.util.concurrent.ThreadFactory;
 
 import org.forritan.talvmenni.game.Move;
 import org.forritan.talvmenni.game.MoveHistory;
 import org.forritan.talvmenni.game.Position;
 import org.forritan.talvmenni.game.AbstractPosition;
 import org.forritan.talvmenni.game.Rules;
+import org.forritan.talvmenni.game.Position.TuplePositionBoolean;
 import org.forritan.talvmenni.strategy.Strategy;
 import org.forritan.talvmenni.ui.ConsoleProtocol;
 import org.forritan.talvmenni.ui.UciProtocol;
 import org.forritan.talvmenni.ui.UiProtocol;
 import org.forritan.talvmenni.ui.XboardProtocol;
-import org.forritan.util.Tuple;
-import org.forritan.util.debug.ObjectCreationStatistics;
 
 
 public class ChessEngine extends Observable implements Runnable {
@@ -30,8 +29,8 @@ public class ChessEngine extends Observable implements Runnable {
    private boolean                     running;
    private Protocol                    protocol;
    private ThreadFactory               threadFactory;
-   private LinkedBlockingQueue<String> inMessages;
-   private LinkedBlockingQueue<String> outMessages;
+   private DynamicArrayBlockingQueue   inMessages;
+   private DynamicArrayBlockingQueue   outMessages;
    private ProtocolHandler             protocolHandler;
 
    public static ChessEngine create(
@@ -45,9 +44,9 @@ public class ChessEngine extends Observable implements Runnable {
       this.running= false;
       this.protocol= new ProtocolImpl();
       this.strategy= strategy;
-      this.threadFactory= Executors.defaultThreadFactory();
-      this.inMessages= new LinkedBlockingQueue<String>();
-      this.outMessages= new LinkedBlockingQueue<String>();
+      this.threadFactory= new PlainThreadFactory();
+      this.inMessages= new DynamicArrayBlockingQueue();
+      this.outMessages= new DynamicArrayBlockingQueue();
    }
 
    public synchronized boolean isRunning() {
@@ -127,14 +126,14 @@ public class ChessEngine extends Observable implements Runnable {
 
       public Strategy getStrategy();
 
-      public ObjectCreationStatistics getObjectCreationStatistics();
+//      public ObjectCreationStatistics getObjectCreationStatistics();
 
       public DebugInfo getDebugInfo();
    }
 
    private class ProtocolImpl implements Protocol {
 
-      private ObjectCreationStatistics objectCreationStatistics;
+//      private ObjectCreationStatistics objectCreationStatistics;
       private DebugInfo                debugInfo;
       private UiProtocol               uiProtocol;
       private Position                 currentPosition;
@@ -144,12 +143,12 @@ public class ChessEngine extends Observable implements Runnable {
 
       public ProtocolImpl() {
          this.debugInfo= new DebugInfo();
-         this.objectCreationStatistics= new ObjectCreationStatistics();
+//         this.objectCreationStatistics= new ObjectCreationStatistics();
       }
 
-      public synchronized ObjectCreationStatistics getObjectCreationStatistics() {
-         return this.objectCreationStatistics;
-      }
+//      public synchronized ObjectCreationStatistics getObjectCreationStatistics() {
+//         return this.objectCreationStatistics;
+//      }
 
       public synchronized DebugInfo getDebugInfo() {
          return this.debugInfo;
@@ -241,23 +240,23 @@ public class ChessEngine extends Observable implements Runnable {
 
       public synchronized void setPositionFromFEN(
             String FENString) {
-         Tuple<Position, Boolean> tuple= Position.Factory.createPositionFromFEN(false, FENString);
-         if(tuple.b.booleanValue()) {
+         TuplePositionBoolean tuple= Position.Factory.createPositionFromFEN(false, FENString);
+         if(tuple.whiteToMove.booleanValue()) {
             this.whiteToMove();
          } else {
             this.blackToMove();
          }
-         this.setCurrentPosition(tuple.a);
+         this.setCurrentPosition(tuple.position);
       }
 
       public synchronized Move makeMove(
             long fromSquare,
             long toSquare,
             int promotionPiece) {
-         this.objectCreationStatistics
-               .post("ChessEngine.ProtocolImpl.makeMove(...)");
-         this.objectCreationStatistics
-               .post(ObjectCreationStatistics.ResetObjectCreationStats);
+//         this.objectCreationStatistics
+//               .post("ChessEngine.ProtocolImpl.makeMove(...)");
+//         this.objectCreationStatistics
+//               .post(ObjectCreationStatistics.ResetObjectCreationStats);
          Move move= new Move(
                this.getCurrentPosition(),
                fromSquare,
@@ -267,16 +266,16 @@ public class ChessEngine extends Observable implements Runnable {
                move);
          this.whiteToMove= !this.whiteToMove;
          this.setCurrentPosition(move.toPosition);
-         this.objectCreationStatistics
-               .post(ObjectCreationStatistics.PrintObjectCreationStats);
+//         this.objectCreationStatistics
+//               .post(ObjectCreationStatistics.PrintObjectCreationStats);
          return move;
       }
 
       public synchronized Move makeNextMove() {
-         this.objectCreationStatistics
-               .post("ChessEngine.ProtocolImpl.makeNextMove()");
-         this.objectCreationStatistics
-               .post(ObjectCreationStatistics.ResetObjectCreationStats);
+//         this.objectCreationStatistics
+//               .post("ChessEngine.ProtocolImpl.makeNextMove()");
+//         this.objectCreationStatistics
+//               .post(ObjectCreationStatistics.ResetObjectCreationStats);
          Position.Move nextMove= ChessEngine.this.strategy.getNextMove(
                this.getCurrentPosition(),
                this.whiteToMove);
@@ -292,8 +291,8 @@ public class ChessEngine extends Observable implements Runnable {
             this.whiteToMove= !this.whiteToMove;
             this.setCurrentPosition(move.toPosition);
          }
-         this.objectCreationStatistics
-               .post(ObjectCreationStatistics.PrintObjectCreationStats);
+//         this.objectCreationStatistics
+//               .post(ObjectCreationStatistics.PrintObjectCreationStats);
          return move;
       }
 
@@ -340,7 +339,7 @@ public class ChessEngine extends Observable implements Runnable {
       public void run() {
          while (ChessEngine.this.isRunning()) {
             try {
-               String message= ChessEngine.this.inMessages.take();
+               String message= (String) ChessEngine.this.inMessages.take();
                this.setChanged();
                this.notifyObservers(message);
                String reply= ChessEngine.this.protocol.processInput(message);
@@ -354,9 +353,9 @@ public class ChessEngine extends Observable implements Runnable {
                e.printStackTrace();
             }
          }
-         //XXX: Doesn't work properly just yet...
-         ChessEngine.this.getProtocol().getObjectCreationStatistics().post(
-               ObjectCreationStatistics.PrintObjectCreationSinceVMStartStats);
+//         //XXX: Doesn't work properly just yet...
+//         ChessEngine.this.getProtocol().getObjectCreationStatistics().post(
+//               ObjectCreationStatistics.PrintObjectCreationSinceVMStartStats);
 
       }
    }
@@ -396,7 +395,7 @@ public class ChessEngine extends Observable implements Runnable {
    public class DebugInfo extends Observable {
 
       public void postPossibleMoves(
-            List<Position.Move> moves) {
+            List moves) {
          this.setChanged();
          this.notifyObservers(moves.size()
                + " possible moves for "

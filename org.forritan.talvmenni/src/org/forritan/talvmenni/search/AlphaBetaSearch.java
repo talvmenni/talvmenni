@@ -1,13 +1,13 @@
 package org.forritan.talvmenni.search;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.forritan.talvmenni.evaluation.Evaluation;
 import org.forritan.talvmenni.game.Position;
 import org.forritan.talvmenni.game.AbstractPosition;
 import org.forritan.talvmenni.game.Position.Move;
-import org.forritan.util.Tuple;
 
 
 public class AlphaBetaSearch implements Search {
@@ -43,7 +43,7 @@ public class AlphaBetaSearch implements Search {
       return this.debugInfo;
    }
 
-   public List<Move> getBestMoves(
+   public List getBestMoves(
          Position p,
          Evaluation e,
          boolean whiteMove) {
@@ -60,7 +60,7 @@ public class AlphaBetaSearch implements Search {
       // If checkmate there is no need to search further...
       int beta= Evaluation.CHECKMATE_SCORE;
 
-      Tuple<Integer, List<Move>> result= this.alphaBeta(
+      TupleScoreMoves result= this.alphaBeta(
             p,
             e,
             whiteMove,
@@ -73,14 +73,14 @@ public class AlphaBetaSearch implements Search {
       this.debugInfo.postNodesPerSecond(
             time,
             this.movesSearched);
-      this.debugInfo.postBestMoves(result.b);
+      this.debugInfo.postBestMoves(result.moves);
 
-      return (result.b.size() > 0 ? result.b.subList(
+      return (result.moves.size() > 0 ? result.moves.subList(
             0,
-            1) : result.b);
+            1) : result.moves);
    }
 
-   private Tuple<Integer, List<Move>> alphaBeta(
+   private TupleScoreMoves alphaBeta(
          Position p,
          Evaluation e,
          boolean whiteMove,
@@ -88,17 +88,17 @@ public class AlphaBetaSearch implements Search {
          int alpha,
          int beta) {
 
-      Tuple<Integer, List<Move>> result= null;
+      TupleScoreMoves result= null;
 
       if (ply == 0) {
-         result= new Tuple<Integer, List<Move>>(
-               Integer.valueOf((e.getScore(p) * (whiteMove ? 1 : -1))),
-               new ArrayList<Move>());
+         result= new TupleScoreMoves(
+               new Integer((e.getScore(p) * (whiteMove ? 1 : -1))),
+               new ArrayList());
       } else {
-         List<Move> moves;
-         Tuple<Integer, List<Move>> best= new Tuple<Integer, List<Move>>(
-               Integer.valueOf(Integer.MIN_VALUE + 1),
-               new ArrayList<Move>());
+         List moves;
+         TupleScoreMoves best= new TupleScoreMoves(
+               new Integer(Integer.MIN_VALUE + 1),
+               new ArrayList());
 
          if (whiteMove) {
             moves= p.getWhite().getPossibleMoves();
@@ -107,8 +107,10 @@ public class AlphaBetaSearch implements Search {
          }
 
          if (moves.size() > 0) {
-            for (Move move : moves) {
-               if (best.a.intValue() >= beta) {
+            
+            for (Iterator it= moves.iterator(); it.hasNext();) {
+               Move move= (Move) it.next();
+               if (best.score.intValue() >= beta) {
 //                  this.debugInfo.postText("***break***");
                   break;
                }
@@ -119,10 +121,10 @@ public class AlphaBetaSearch implements Search {
                p= p.move(
                      move.from,
                      move.to);
-               if (best.a.intValue() > alpha) {
-                  alpha= best.a.intValue();
+               if (best.score.intValue() > alpha) {
+                  alpha= best.score.intValue();
                }
-               Tuple<Integer, List<Move>> value= alphaBeta(
+               TupleScoreMoves value= alphaBeta(
                      p,
                      e,
                      !whiteMove,
@@ -130,14 +132,14 @@ public class AlphaBetaSearch implements Search {
                      -beta,
                      -alpha);
                p.popMove();
-               value.a= Integer.valueOf(value.a.intValue()
+               value.score= new Integer(value.score.intValue()
                      * -1);
-               value.b.add(
+               value.moves.add(
                      0,
                      move);
                moveTime+= System.currentTimeMillis();
 
-               if (value.a.intValue() > best.a.intValue()) {
+               if (value.score.intValue() > best.score.intValue()) {
                   best= value;
                   if (whiteMove) {
                      p.getWhite().killerMove(
@@ -149,14 +151,14 @@ public class AlphaBetaSearch implements Search {
                   if (ply == this.ply) {
                      this.debugInfo.postCurrentBestMove(
                            move,
-                           best.a.intValue(),
+                           best.score.intValue(),
                            (this.movesSearched - movesSearchedBefore));
                      this.thinking.postThinking(
                            ply,
-                           (best.a.intValue() * (whiteMove ? 1 : -1)),
+                           (best.score.intValue() * (whiteMove ? 1 : -1)),
                            moveTime + 1,
                            (this.movesSearched - movesSearchedBefore),
-                           best.b.toString());
+                           best.moves.toString());
                   }
                }
             }
@@ -168,14 +170,14 @@ public class AlphaBetaSearch implements Search {
          } else {
             if (whiteMove ? p.getWhite().isChecked() : p.getBlack().isChecked()) {
                // Checkmate...
-               result= new Tuple<Integer, List<Move>>(
-                     Integer.valueOf(((-Evaluation.CHECKMATE_SCORE - ply))),
-                     new ArrayList<Move>());
+               result= new TupleScoreMoves(
+                     new Integer(((-Evaluation.CHECKMATE_SCORE - ply))),
+                     new ArrayList());
             } else {
                // Stalemate...
-               result= new Tuple<Integer, List<Move>>(
-                     Integer.valueOf(0),
-                     new ArrayList<Move>());
+               result= new TupleScoreMoves(
+                     new Integer(0),
+                     new ArrayList());
             }
          }
       }

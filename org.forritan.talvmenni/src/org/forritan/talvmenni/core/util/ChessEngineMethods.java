@@ -1,5 +1,6 @@
 package org.forritan.talvmenni.core.util;
 
+import java.util.Iterator;
 import java.util.List;
 
 import org.forritan.talvmenni.game.Position;
@@ -20,13 +21,15 @@ public class ChessEngineMethods {
          }
       } else {
          long result= 0;
-         List<Move> moves;
+         List moves;
          if (whiteMove) {
             moves= p.getWhite().getPossibleMoves();
          } else {
             moves= p.getBlack().getPossibleMoves();
          }
-         for (Move move : moves) {
+         
+         for (Iterator it= moves.iterator();it.hasNext();) {
+            Move move= (Move)it.next();
             result+= ChessEngineMethods.perft(
                   p.move(
                         move.from,

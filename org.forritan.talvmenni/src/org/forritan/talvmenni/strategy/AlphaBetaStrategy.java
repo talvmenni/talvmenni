@@ -10,7 +10,6 @@ import org.forritan.talvmenni.game.TheoryBook;
 import org.forritan.talvmenni.game.Position.Move;
 import org.forritan.talvmenni.search.AlphaBetaSearch;
 import org.forritan.talvmenni.search.Search;
-import org.forritan.util.Tuple;
 
 
 public class AlphaBetaStrategy extends AbstractStrategy {
@@ -26,7 +25,7 @@ public class AlphaBetaStrategy extends AbstractStrategy {
       this.evaluation= new SimpleMaterialAndPositionalEvaluation();
    }
 
-   protected List<Position.Move> search(
+   protected List search(
          Position position,
          boolean whiteToMove) {
       return this.search.getBestMoves(

@@ -53,7 +53,7 @@ public class TestSquareBits {
             + " | "
             + Square._A8
             + "\t Long hashcode: "
-            + Long.valueOf(
+            + new Long(
                   Square._A8).hashCode());
 
       System.out.println("_B8: "
@@ -63,7 +63,7 @@ public class TestSquareBits {
             + " | "
             + Square._B8
             + "\t Long hashcode: "
-            + Long.valueOf(
+            + new Long(
                   Square._B8).hashCode());
 
       System.out.println("_C8: "
@@ -73,7 +73,7 @@ public class TestSquareBits {
             + " | "
             + Square._C8
             + "\t Long hashcode: "
-            + Long.valueOf(
+            + new Long(
                   Square._C8).hashCode());
 
       System.out.println("_D8: "
@@ -83,7 +83,7 @@ public class TestSquareBits {
             + " | "
             + Square._D8
             + "\t Long hashcode: "
-            + Long.valueOf(
+            + new Long(
                   Square._D8).hashCode());
 
       System.out.println("_E8: "
@@ -93,7 +93,7 @@ public class TestSquareBits {
             + " | "
             + Square._E8
             + "\t Long hashcode: "
-            + Long.valueOf(
+            + new Long(
                   Square._E8).hashCode());
 
       System.out.println("_F8: "
@@ -103,7 +103,7 @@ public class TestSquareBits {
             + " | "
             + Square._F8
             + "\t Long hashcode: "
-            + Long.valueOf(
+            + new Long(
                   Square._F8).hashCode());
 
       System.out.println("_G8: "
@@ -113,7 +113,7 @@ public class TestSquareBits {
             + " | "
             + Square._G8
             + "\t Long hashcode: "
-            + Long.valueOf(
+            + new Long(
                   Square._G8).hashCode());
 
       System.out.println("_H8: "
@@ -123,7 +123,7 @@ public class TestSquareBits {
             + " | "
             + Square._H8
             + "\t Long hashcode: "
-            + Long.valueOf(
+            + new Long(
                   Square._H8).hashCode());
 
       System.out.println();
@@ -135,7 +135,7 @@ public class TestSquareBits {
             + " | "
             + Square._A7
             + "\t Long hashcode: "
-            + Long.valueOf(
+            + new Long(
                   Square._A7).hashCode());
 
       System.out.println("_B7: "
@@ -145,7 +145,7 @@ public class TestSquareBits {
             + " | "
             + Square._B7
             + "\t Long hashcode: "
-            + Long.valueOf(
+            + new Long(
                   Square._B7).hashCode());
 
       System.out.println("_C7: "
@@ -155,7 +155,7 @@ public class TestSquareBits {
             + " | "
             + Square._C7
             + "\t Long hashcode: "
-            + Long.valueOf(
+            + new Long(
                   Square._C7).hashCode());
 
       System.out.println("_D7: "
@@ -165,7 +165,7 @@ public class TestSquareBits {
             + " | "
             + Square._D7
             + "\t Long hashcode: "
-            + Long.valueOf(
+            + new Long(
                   Square._D7).hashCode());
 
       System.out.println("_E7: "
@@ -175,7 +175,7 @@ public class TestSquareBits {
             + " | "
             + Square._E7
             + "\t Long hashcode: "
-            + Long.valueOf(
+            + new Long(
                   Square._E7).hashCode());
 
       System.out.println("_F7: "
@@ -185,7 +185,7 @@ public class TestSquareBits {
             + " | "
             + Square._F7
             + "\t Long hashcode: "
-            + Long.valueOf(
+            + new Long(
                   Square._F7).hashCode());
 
       System.out.println("_G7: "
@@ -195,7 +195,7 @@ public class TestSquareBits {
             + " | "
             + Square._G7
             + "\t Long hashcode: "
-            + Long.valueOf(
+            + new Long(
                   Square._G7).hashCode());
 
       System.out.println("_H7: "
@@ -205,7 +205,7 @@ public class TestSquareBits {
             + " | "
             + Square._H7
             + "\t Long hashcode: "
-            + Long.valueOf(
+            + new Long(
                   Square._H7).hashCode());
 
       System.out.println();
@@ -217,7 +217,7 @@ public class TestSquareBits {
             + " | "
             + Square._A6
             + "\t Long hashcode: "
-            + Long.valueOf(
+            + new Long(
                   Square._A6).hashCode());
 
       System.out.println("_B6: "
@@ -227,7 +227,7 @@ public class TestSquareBits {
             + " | "
             + Square._B6
             + "\t Long hashcode: "
-            + Long.valueOf(
+            + new Long(
                   Square._B6).hashCode());
 
       System.out.println("_C6: "
@@ -237,7 +237,7 @@ public class TestSquareBits {
             + " | "
             + Square._C6
             + "\t Long hashcode: "
-            + Long.valueOf(
+            + new Long(
                   Square._C6).hashCode());
 
       System.out.println("_D6: "
@@ -247,7 +247,7 @@ public class TestSquareBits {
             + " | "
             + Square._D6
             + "\t Long hashcode: "
-            + Long.valueOf(
+            + new Long(
                   Square._D6).hashCode());
 
       System.out.println("_E6: "
@@ -257,7 +257,7 @@ public class TestSquareBits {
             + " | "
             + Square._E6
             + "\t Long hashcode: "
-            + Long.valueOf(
+            + new Long(
                   Square._E6).hashCode());
 
       System.out.println("_F6: "
@@ -267,7 +267,7 @@ public class TestSquareBits {
             + " | "
             + Square._F6
             + "\t Long hashcode: "
-            + Long.valueOf(
+            + new Long(
                   Square._F6).hashCode());
 
       System.out.println("_G6: "
@@ -277,7 +277,7 @@ public class TestSquareBits {
             + " | "
             + Square._G6
             + "\t Long hashcode: "
-            + Long.valueOf(
+            + new Long(
                   Square._G6).hashCode());
 
       System.out.println("_H6: "
@@ -287,7 +287,7 @@ public class TestSquareBits {
             + " | "
             + Square._H6
             + "\t Long hashcode: "
-            + Long.valueOf(
+            + new Long(
                   Square._H6).hashCode());
 
       System.out.println();
@@ -299,7 +299,7 @@ public class TestSquareBits {
             + " | "
             + Square._A5
             + "\t Long hashcode: "
-            + Long.valueOf(
+            + new Long(
                   Square._A5).hashCode());
 
       System.out.println("_B5: "
@@ -309,7 +309,7 @@ public class TestSquareBits {
             + " | "
             + Square._B5
             + "\t Long hashcode: "
-            + Long.valueOf(
+            + new Long(
                   Square._B5).hashCode());
 
       System.out.println("_C5: "
@@ -319,7 +319,7 @@ public class TestSquareBits {
             + " | "
             + Square._C5
             + "\t Long hashcode: "
-            + Long.valueOf(
+            + new Long(
                   Square._C5).hashCode());
 
       System.out.println("_D5: "
@@ -329,7 +329,7 @@ public class TestSquareBits {
             + " | "
             + Square._D5
             + "\t Long hashcode: "
-            + Long.valueOf(
+            + new Long(
                   Square._D5).hashCode());
 
       System.out.println("_E5: "
@@ -339,7 +339,7 @@ public class TestSquareBits {
             + " | "
             + Square._E5
             + "\t Long hashcode: "
-            + Long.valueOf(
+            + new Long(
                   Square._E5).hashCode());
 
       System.out.println("_F5: "
@@ -349,7 +349,7 @@ public class TestSquareBits {
             + " | "
             + Square._F5
             + "\t Long hashcode: "
-            + Long.valueOf(
+            + new Long(
                   Square._F5).hashCode());
 
       System.out.println("_G5: "
@@ -359,7 +359,7 @@ public class TestSquareBits {
             + " | "
             + Square._G5
             + "\t Long hashcode: "
-            + Long.valueOf(
+            + new Long(
                   Square._G5).hashCode());
 
       System.out.println("_H5: "
@@ -369,7 +369,7 @@ public class TestSquareBits {
             + " | "
             + Square._H5
             + "\t Long hashcode: "
-            + Long.valueOf(
+            + new Long(
                   Square._H5).hashCode());
 
       System.out.println();
@@ -381,7 +381,7 @@ public class TestSquareBits {
             + " | "
             + Square._A4
             + "\t Long hashcode: "
-            + Long.valueOf(
+            + new Long(
                   Square._A4).hashCode());
 
       System.out.println("_B4: "
@@ -391,7 +391,7 @@ public class TestSquareBits {
             + " | "
             + Square._B4
             + "\t Long hashcode: "
-            + Long.valueOf(
+            + new Long(
                   Square._B4).hashCode());
 
       System.out.println("_C4: "
@@ -401,7 +401,7 @@ public class TestSquareBits {
             + " | "
             + Square._C4
             + "\t Long hashcode: "
-            + Long.valueOf(
+            + new Long(
                   Square._C4).hashCode());
 
       System.out.println("_D4: "
@@ -411,7 +411,7 @@ public class TestSquareBits {
             + " | "
             + Square._D4
             + "\t Long hashcode: "
-            + Long.valueOf(
+            + new Long(
                   Square._D4).hashCode());
 
       System.out.println("_E4: "
@@ -421,7 +421,7 @@ public class TestSquareBits {
             + " | "
             + Square._E4
             + "\t Long hashcode: "
-            + Long.valueOf(
+            + new Long(
                   Square._E4).hashCode());
 
       System.out.println("_F4: "
@@ -431,7 +431,7 @@ public class TestSquareBits {
             + " | "
             + Square._F4
             + "\t Long hashcode: "
-            + Long.valueOf(
+            + new Long(
                   Square._F4).hashCode());
 
       System.out.println("_G4: "
@@ -441,7 +441,7 @@ public class TestSquareBits {
             + " | "
             + Square._G4
             + "\t Long hashcode: "
-            + Long.valueOf(
+            + new Long(
                   Square._G4).hashCode());
 
       System.out.println("_H4: "
@@ -451,7 +451,7 @@ public class TestSquareBits {
             + " | "
             + Square._H4
             + "\t Long hashcode: "
-            + Long.valueOf(
+            + new Long(
                   Square._H4).hashCode());
 
       System.out.println();
@@ -463,7 +463,7 @@ public class TestSquareBits {
             + " | "
             + Square._A3
             + "\t Long hashcode: "
-            + Long.valueOf(
+            + new Long(
                   Square._A3).hashCode());
 
       System.out.println("_B3: "
@@ -473,7 +473,7 @@ public class TestSquareBits {
             + " | "
             + Square._B3
             + "\t Long hashcode: "
-            + Long.valueOf(
+            + new Long(
                   Square._B3).hashCode());
 
       System.out.println("_C3: "
@@ -483,7 +483,7 @@ public class TestSquareBits {
             + " | "
             + Square._C3
             + "\t Long hashcode: "
-            + Long.valueOf(
+            + new Long(
                   Square._C3).hashCode());
 
       System.out.println("_D3: "
@@ -493,7 +493,7 @@ public class TestSquareBits {
             + " | "
             + Square._D3
             + "\t Long hashcode: "
-            + Long.valueOf(
+            + new Long(
                   Square._D3).hashCode());
 
       System.out.println("_E3: "
@@ -503,7 +503,7 @@ public class TestSquareBits {
             + " | "
             + Square._E3
             + "\t Long hashcode: "
-            + Long.valueOf(
+            + new Long(
                   Square._E3).hashCode());
 
       System.out.println("_F3: "
@@ -513,7 +513,7 @@ public class TestSquareBits {
             + " | "
             + Square._F3
             + "\t Long hashcode: "
-            + Long.valueOf(
+            + new Long(
                   Square._F3).hashCode());
 
       System.out.println("_G3: "
@@ -523,7 +523,7 @@ public class TestSquareBits {
             + " | "
             + Square._G3
             + "\t Long hashcode: "
-            + Long.valueOf(
+            + new Long(
                   Square._G3).hashCode());
 
       System.out.println("_H3: "
@@ -533,7 +533,7 @@ public class TestSquareBits {
             + " | "
             + Square._H3
             + "\t Long hashcode: "
-            + Long.valueOf(
+            + new Long(
                   Square._H3).hashCode());
 
       System.out.println();
@@ -545,7 +545,7 @@ public class TestSquareBits {
             + " | "
             + Square._A2
             + "\t Long hashcode: "
-            + Long.valueOf(
+            + new Long(
                   Square._A2).hashCode());
 
       System.out.println("_B2: "
@@ -555,7 +555,7 @@ public class TestSquareBits {
             + " | "
             + Square._B2
             + "\t Long hashcode: "
-            + Long.valueOf(
+            + new Long(
                   Square._B2).hashCode());
 
       System.out.println("_C2: "
@@ -565,7 +565,7 @@ public class TestSquareBits {
             + " | "
             + Square._C2
             + "\t Long hashcode: "
-            + Long.valueOf(
+            + new Long(
                   Square._C2).hashCode());
 
       System.out.println("_D2: "
@@ -575,7 +575,7 @@ public class TestSquareBits {
             + " | "
             + Square._D2
             + "\t Long hashcode: "
-            + Long.valueOf(
+            + new Long(
                   Square._D2).hashCode());
 
       System.out.println("_E2: "
@@ -585,7 +585,7 @@ public class TestSquareBits {
             + " | "
             + Square._E2
             + "\t Long hashcode: "
-            + Long.valueOf(
+            + new Long(
                   Square._E2).hashCode());
 
       System.out.println("_F2: "
@@ -595,7 +595,7 @@ public class TestSquareBits {
             + " | "
             + Square._F2
             + "\t Long hashcode: "
-            + Long.valueOf(
+            + new Long(
                   Square._F2).hashCode());
 
       System.out.println("_G2: "
@@ -605,7 +605,7 @@ public class TestSquareBits {
             + " | "
             + Square._G2
             + "\t Long hashcode: "
-            + Long.valueOf(
+            + new Long(
                   Square._G2).hashCode());
 
       System.out.println("_H2: "
@@ -615,7 +615,7 @@ public class TestSquareBits {
             + " | "
             + Square._H2
             + "\t Long hashcode: "
-            + Long.valueOf(
+            + new Long(
                   Square._H2).hashCode());
 
       System.out.println();
@@ -627,7 +627,7 @@ public class TestSquareBits {
             + " | "
             + Square._A1
             + "\t Long hashcode: "
-            + Long.valueOf(
+            + new Long(
                   Square._A1).hashCode());
 
       System.out.println("_B1: "
@@ -637,7 +637,7 @@ public class TestSquareBits {
             + " | "
             + Square._B1
             + "\t Long hashcode: "
-            + Long.valueOf(
+            + new Long(
                   Square._B1).hashCode());
 
       System.out.println("_C1: "
@@ -647,7 +647,7 @@ public class TestSquareBits {
             + " | "
             + Square._C1
             + "\t Long hashcode: "
-            + Long.valueOf(
+            + new Long(
                   Square._C1).hashCode());
 
       System.out.println("_D1: "
@@ -657,7 +657,7 @@ public class TestSquareBits {
             + " | "
             + Square._D1
             + "\t Long hashcode: "
-            + Long.valueOf(
+            + new Long(
                   Square._D1).hashCode());
 
       System.out.println("_E1: "
@@ -667,7 +667,7 @@ public class TestSquareBits {
             + " | "
             + Square._E1
             + "\t Long hashcode: "
-            + Long.valueOf(
+            + new Long(
                   Square._E1).hashCode());
 
       System.out.println("_F1: "
@@ -677,7 +677,7 @@ public class TestSquareBits {
             + " | "
             + Square._F1
             + "\t Long hashcode: "
-            + Long.valueOf(
+            + new Long(
                   Square._F1).hashCode());
 
       System.out.println("_G1: "
@@ -687,7 +687,7 @@ public class TestSquareBits {
             + " | "
             + Square._G1
             + "\t Long hashcode: "
-            + Long.valueOf(
+            + new Long(
                   Square._G1).hashCode());
 
       System.out.println("_H1: "
@@ -697,7 +697,7 @@ public class TestSquareBits {
             + " | "
             + Square._H1
             + "\t Long hashcode: "
-            + Long.valueOf(
+            + new Long(
                   Square._H1).hashCode());
 
       System.out.println();

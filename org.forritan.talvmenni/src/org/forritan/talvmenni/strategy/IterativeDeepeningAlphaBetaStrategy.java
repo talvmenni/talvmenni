@@ -10,7 +10,6 @@ import org.forritan.talvmenni.game.TheoryBook;
 import org.forritan.talvmenni.game.Position.Move;
 import org.forritan.talvmenni.search.AlphaBetaSearch;
 import org.forritan.talvmenni.search.Search;
-import org.forritan.util.Tuple;
 
 
 public class IterativeDeepeningAlphaBetaStrategy extends AbstractStrategy {
@@ -25,11 +24,11 @@ public class IterativeDeepeningAlphaBetaStrategy extends AbstractStrategy {
       this.evaluation= new SimpleMaterialAndPositionalEvaluation();
    }
 
-   protected List<Position.Move> search(
+   protected List search(
          Position position,
          boolean whiteToMove) {
       
-      List<Position.Move> result= null;
+      List result= null;
       Position mutablePosition= position.getMutable();
       for (int i= 1; i <= this.ply; i++) {
          this.search.setPly(i);

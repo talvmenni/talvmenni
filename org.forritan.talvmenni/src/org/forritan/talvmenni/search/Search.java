@@ -10,76 +10,117 @@ import org.forritan.talvmenni.game.Position;
 import org.forritan.talvmenni.game.AbstractPosition;
 import org.forritan.talvmenni.game.Position.Move;
 
+
 public interface Search {
-   
-   public void setPly(int ply);
-   public List<Position.Move> getBestMoves(Position p, Evaluation e, boolean whiteMove);
-   
+
+   public void setPly(
+         int ply);
+
+   public List getBestMoves(
+         Position p,
+         Evaluation e,
+         boolean whiteMove);
+
    public Thinking getThinking();
+
    public DebugInfo getDebugInfo();
-   
+
+   public static class TupleScoreMoves {
+
+      public Integer score;
+      public List    moves;
+
+      public TupleScoreMoves(
+            Integer score,
+            List moves) {
+         this.score= score;
+         this.moves= moves;
+      }
+   }
+
    public class Thinking extends Observable {
-      public void postThinking(int ply, int score, long time, int nodes, String pv) {
+      public void postThinking(
+            int ply,
+            int score,
+            long time,
+            int nodes,
+            String pv) {
          this.setChanged();
-         this.notifyObservers(ply + " " + score + " " + (time / 10) + " " + nodes + " " + pv);
+         this.notifyObservers(ply
+               + " "
+               + score
+               + " "
+               + (time / 10)
+               + " "
+               + nodes
+               + " "
+               + pv);
       }
    }
 
    public class DebugInfo extends Observable {
-      
-      public void postNodesPerSecond(long time, int nodes) {
+
+      public void postNodesPerSecond(
+            long time,
+            int nodes) {
          this.setChanged();
-         this.notifyObservers(
-               "Finished search of " 
-               + nodes 
-               + " positions in " 
-               + time 
-               + " milliseconds...\ni.e: " 
-               + 1L * nodes * 1000 / (time + 1) + " pr. second.");
+         this.notifyObservers("Finished search of "
+               + nodes
+               + " positions in "
+               + time
+               + " milliseconds...\ni.e: "
+               + 1L
+               * nodes
+               * 1000
+               / (time + 1)
+               + " pr. second.");
          // Hmmm... tricky one... add one
          // millisecond to the time to make sure that
          // we don't get division by zero
          // in notifyObservers call :-)
       }
 
-      public void postBestMoves(List<Move> moves) {
+      public void postBestMoves(
+            List moves) {
          this.setChanged();
-         this.notifyObservers(
-               "Best moves: " 
+         this.notifyObservers("Best moves: "
                + moves.toString());
       }
 
-      public void postCurrentBestMove(Move move, int score, int nodes) {
+      public void postCurrentBestMove(
+            Move move,
+            int score,
+            int nodes) {
          this.setChanged();
-         this.notifyObservers(
-               "[" 
-               + move.toString() 
-               + "] " 
-               + score 
-               + " and there are " 
-               + nodes 
+         this.notifyObservers("["
+               + move.toString()
+               + "] "
+               + score
+               + " and there are "
+               + nodes
                + " positions searched...");
       }
-            
-      public void postText(String text) {
+
+      public void postText(
+            String text) {
          this.setChanged();
          this.notifyObservers(text);
       }
-      
-      public void postPossibleMoves(List<Position.Move> moves) {
+
+      public void postPossibleMoves(
+            List moves) {
          this.setChanged();
-         this.notifyObservers(
-               moves.size() 
+         this.notifyObservers(moves.size()
                + " possible moves: "
                + moves.toString());
       }
 
-      public void postTranspositionHits(int hits) {
+      public void postTranspositionHits(
+            int hits) {
          this.setChanged();
-         this.notifyObservers(
-               "There where " +
-               hits +
-               " transposition hits...");
+         this.notifyObservers("There where "
+               + hits
+               + " transposition hits...");
       }
 
    }

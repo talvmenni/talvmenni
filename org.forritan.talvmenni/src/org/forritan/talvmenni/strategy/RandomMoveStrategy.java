@@ -12,7 +12,7 @@ public class RandomMoveStrategy extends AbstractStrategy {
       super(0, null);
    }
    
-   protected List<Position.Move> search(
+   protected List search(
          Position position,
          boolean whiteToMove) {
       if(whiteToMove) {

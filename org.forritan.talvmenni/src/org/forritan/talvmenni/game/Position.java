@@ -17,7 +17,6 @@ import org.forritan.talvmenni.bitboard.attacks.Rook;
 import org.forritan.talvmenni.bitboard.attacks.WhitePawn;
 import org.forritan.talvmenni.bitboard.paths.BlackPawnMoves;
 import org.forritan.talvmenni.bitboard.paths.WhitePawnMoves;
-import org.forritan.util.Tuple;
 
 
 public interface Position {
@@ -70,8 +69,8 @@ public interface Position {
 
       public final long                  allPieces;
 
-      private List<Move>                 possibleMoves;
-      private List<Move>                 killerMoves;
+      private List                       possibleMoves;
+      private List                       killerMoves;
       private long                       allCaptureMovesAttackedSquares;
       private boolean                    allCaptureMovesAttackedSquaresInitialized;
       private Boolean                    kingsSideCastlingLegal;
@@ -175,7 +174,7 @@ public interface Position {
       public void killerMove(
             Move move) {
          if (this.killerMoves == null) {
-            this.killerMoves= new ArrayList<Move>();
+            this.killerMoves= new ArrayList();
          }
          this.killerMoves.add(
                0,
@@ -185,9 +184,9 @@ public interface Position {
       public void updatePossibleMovesOrdering() {
          if (this.possibleMoves != null
                && this.killerMoves != null) {
-            List<Move> currentPossibleMoves= new ArrayList<Move>();
+            List currentPossibleMoves= new ArrayList();
             currentPossibleMoves.addAll(this.possibleMoves);
-            this.possibleMoves= new ArrayList<Move>();
+            this.possibleMoves= new ArrayList();
             this.possibleMoves.addAll(this.killerMoves);
             currentPossibleMoves.removeAll(this.killerMoves);
             this.possibleMoves.addAll(currentPossibleMoves);
@@ -195,9 +194,9 @@ public interface Position {
          }
       }
       
-      public List<Move> getPossibleMoves() {
+      public List getPossibleMoves() {
          if (this.possibleMoves == null) {
-            this.possibleMoves= new ArrayList<Move>();
+            this.possibleMoves= new ArrayList();
 
             BitboardIterator rooks= this.rooksIterator();
             while (rooks.hasNext()) {
@@ -317,7 +316,7 @@ public interface Position {
       }
 
       private void findMoves(
-            List<Move> result,
+            List result,
             long fromSquare,
             BitboardIterator moves) {
          while (moves.hasNext()) {
@@ -782,7 +781,7 @@ public interface Position {
       }
 
       
-      public static Tuple<Position, Boolean> createPositionFromFEN(boolean mutable,
+      public static TuplePositionBoolean createPositionFromFEN(boolean mutable,
             String FENString) {
          
          Boolean whiteMove= null;
@@ -935,7 +934,24 @@ public interface Position {
                blackCastling,
                blackEnpassant);
          
-         return new Tuple<Position, Boolean>(fenPosition, whiteMove);
+         return new TuplePositionBoolean(fenPosition, whiteMove);
       }            
+   }
+   
+   public static class TuplePositionBoolean {
+
+      public Position position;
+      public Boolean  whiteToMove;
+
+      /**
+       * @param position
+       * @param whiteMove
+       */
+      public TuplePositionBoolean(
+            Position position,
+            Boolean whiteMove) {
+         this.position= position;
+         this.whiteToMove= whiteMove;
+      }
    }
 }

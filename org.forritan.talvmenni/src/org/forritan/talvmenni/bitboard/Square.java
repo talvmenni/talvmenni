@@ -160,21 +160,21 @@ public interface Square {
 
    public static final long _EMPTY_BOARD = 0L;
    public static final long _FULL_BOARD  = -1L;
-   
+
    public static class Util {
-      
+
       /**
-       * de Bruijn sequence
-       * 0000 0011 1111 0111 1001 1101 0111 0001 1011 0100 1100 1011 0000 1010 1000 1001
-       * or in hex
-       * 3F79D71B4CB0A89
+       * de Bruijn sequence 0000 0011 1111 0111 1001 1101 0111 0001 1011 0100
+       * 1100 1011 0000 1010 1000 1001 or in hex 3F79D71B4CB0A89
+       * 
        * @see http://supertech.csail.mit.edu/papers/debruijn.ps
        * @see http://www.cs.princeton.edu/introcs/31datatype/DeBruijn.java.html
        */
-      public final static long DEBRUIJN64= 0x3f79d71b4cb0a89L;
-      
-      public static int index(long square) {
-//         return Long.numberOfLeadingZeros(square);
+      public final static long DEBRUIJN64 = 0x3f79d71b4cb0a89L;
+
+      public static int index(
+            long square) {
+         //         return Long.numberOfLeadingZeros(square);
          return Util.deBruijn64Index(square);
       }
 
@@ -184,8 +184,309 @@ public interface Square {
        */
       public static int deBruijn64Index(
             long square) {
-         square *= Util.DEBRUIJN64;
-         return ((int)(square >>> 58));
+         square*= Util.DEBRUIJN64;
+         return ((int) (square >>> 58));
+      }
+
+      // Bit Twiddling from J2SE 5.0 java.lang.Long... and as soon as Jini will
+      // with J2SE 5.0 this will be removed...
+
+      /**
+       * The number of bits used to represent a <tt>long</tt> value in two's
+       * complement binary form.
+       * 
+       * @since 1.5
+       */
+      public static final int SIZE = 64;
+
+      /**
+       * Returns an <tt>long</tt> value with at most a single one-bit, in the
+       * position of the highest-order ("leftmost") one-bit in the specified
+       * <tt>long</tt> value. Returns zero if the specified value has no
+       * one-bits in its two's complement binary representation, that is, if it
+       * is equal to zero.
+       * 
+       * @return an <tt>long</tt> value with a single one-bit, in the position
+       *         of the highest-order one-bit in the specified value, or zero if
+       *         the specified value is itself equal to zero.
+       * @since 1.5
+       */
+      public static long highestOneBit(
+            long i) {
+         // HD, Figure 3-1
+         i|= (i >> 1);
+         i|= (i >> 2);
+         i|= (i >> 4);
+         i|= (i >> 8);
+         i|= (i >> 16);
+         i|= (i >> 32);
+         return i
+               - (i >>> 1);
+      }
+
+      /**
+       * Returns an <tt>long</tt> value with at most a single one-bit, in the
+       * position of the lowest-order ("rightmost") one-bit in the specified
+       * <tt>long</tt> value. Returns zero if the specified value has no
+       * one-bits in its two's complement binary representation, that is, if it
+       * is equal to zero.
+       * 
+       * @return an <tt>long</tt> value with a single one-bit, in the position
+       *         of the lowest-order one-bit in the specified value, or zero if
+       *         the specified value is itself equal to zero.
+       * @since 1.5
+       */
+      public static long lowestOneBit(
+            long i) {
+         // HD, Section 2-1
+         return i
+               & -i;
+      }
+
+      /**
+       * Returns the number of zero bits preceding the highest-order
+       * ("leftmost") one-bit in the two's complement binary representation of
+       * the specified <tt>long</tt> value. Returns 64 if the specified value
+       * has no one-bits in its two's complement representation, in other words
+       * if it is equal to zero.
+       * 
+       * <p>
+       * Note that this method is closely related to the logarithm base 2. For
+       * all positive <tt>long</tt> values x:
+       * <ul>
+       * <li>floor(log <sub>2 </sub>(x)) =
+       * <tt>63 - numberOfLeadingZeros(x)</tt>
+       * <li>ceil(log <sub>2 </sub>(x)) =
+       * <tt>64 - numberOfLeadingZeros(x - 1)</tt>
+       * </ul>
+       * 
+       * @return the number of zero bits preceding the highest-order
+       *         ("leftmost") one-bit in the two's complement binary
+       *         representation of the specified <tt>long</tt> value, or 64 if
+       *         the value is equal to zero.
+       * @since 1.5
+       */
+      public static int numberOfLeadingZeros(
+            long i) {
+         // HD, Figure 5-6
+         if (i == 0) return 64;
+         int n= 1;
+         int x= (int) (i >>> 32);
+         if (x == 0) {
+            n+= 32;
+            x= (int) i;
+         }
+         if (x >>> 16 == 0) {
+            n+= 16;
+            x<<= 16;
+         }
+         if (x >>> 24 == 0) {
+            n+= 8;
+            x<<= 8;
+         }
+         if (x >>> 28 == 0) {
+            n+= 4;
+            x<<= 4;
+         }
+         if (x >>> 30 == 0) {
+            n+= 2;
+            x<<= 2;
+         }
+         n-= x >>> 31;
+         return n;
+      }
+
+      /**
+       * Returns the number of zero bits following the lowest-order
+       * ("rightmost") one-bit in the two's complement binary representation of
+       * the specified <tt>long</tt> value. Returns 64 if the specified value
+       * has no one-bits in its two's complement representation, in other words
+       * if it is equal to zero.
+       * 
+       * @return the number of zero bits following the lowest-order
+       *         ("rightmost") one-bit in the two's complement binary
+       *         representation of the specified <tt>long</tt> value, or 64 if
+       *         the value is equal to zero.
+       * @since 1.5
+       */
+      public static int numberOfTrailingZeros(
+            long i) {
+         // HD, Figure 5-14
+         int x, y;
+         if (i == 0) return 64;
+         int n= 63;
+         y= (int) i;
+         if (y != 0) {
+            n= n - 32;
+            x= y;
+         } else
+            x= (int) (i >>> 32);
+         y= x << 16;
+         if (y != 0) {
+            n= n - 16;
+            x= y;
+         }
+         y= x << 8;
+         if (y != 0) {
+            n= n - 8;
+            x= y;
+         }
+         y= x << 4;
+         if (y != 0) {
+            n= n - 4;
+            x= y;
+         }
+         y= x << 2;
+         if (y != 0) {
+            n= n - 2;
+            x= y;
+         }
+         return n
+               - ((x << 1) >>> 31);
+      }
+
+      /**
+       * Returns the number of one-bits in the two's complement binary
+       * representation of the specified <tt>long</tt> value. This function is
+       * sometimes referred to as the <i>population count </i>.
+       * 
+       * @return the number of one-bits in the two's complement binary
+       *         representation of the specified <tt>long</tt> value.
+       * @since 1.5
+       */
+      public static int bitCount(
+            long i) {
+         // HD, Figure 5-14
+         i= i
+               - ((i >>> 1) & 0x5555555555555555L);
+         i= (i & 0x3333333333333333L)
+               + ((i >>> 2) & 0x3333333333333333L);
+         i= (i + (i >>> 4)) & 0x0f0f0f0f0f0f0f0fL;
+         i= i
+               + (i >>> 8);
+         i= i
+               + (i >>> 16);
+         i= i
+               + (i >>> 32);
+         return (int) i & 0x7f;
+      }
+
+      /**
+       * Returns the value obtained by rotating the two's complement binary
+       * representation of the specified <tt>long</tt> value left by the
+       * specified number of bits. (Bits shifted out of the left hand, or
+       * high-order, side reenter on the right, or low-order.)
+       * 
+       * <p>
+       * Note that left rotation with a negative distance is equivalent to right
+       * rotation: <tt>rotateLeft(val, -distance) == rotateRight(val,
+       * distance)</tt>.
+       * Note also that rotation by any multiple of 64 is a no-op, so all but
+       * the last six bits of the rotation distance can be ignored, even if the
+       * distance is negative: <tt>rotateLeft(val,
+       * distance) == rotateLeft(val, distance & 0x3F)</tt>.
+       * 
+       * @return the value obtained by rotating the two's complement binary
+       *         representation of the specified <tt>long</tt> value left by
+       *         the specified number of bits.
+       * @since 1.5
+       */
+      public static long rotateLeft(
+            long i,
+            int distance) {
+         return (i << distance)
+               | (i >>> -distance);
+      }
+
+      /**
+       * Returns the value obtained by rotating the two's complement binary
+       * representation of the specified <tt>long</tt> value right by the
+       * specified number of bits. (Bits shifted out of the right hand, or
+       * low-order, side reenter on the left, or high-order.)
+       * 
+       * <p>
+       * Note that right rotation with a negative distance is equivalent to left
+       * rotation: <tt>rotateRight(val, -distance) == rotateLeft(val,
+       * distance)</tt>.
+       * Note also that rotation by any multiple of 64 is a no-op, so all but
+       * the last six bits of the rotation distance can be ignored, even if the
+       * distance is negative: <tt>rotateRight(val,
+       * distance) == rotateRight(val, distance & 0x3F)</tt>.
+       * 
+       * @return the value obtained by rotating the two's complement binary
+       *         representation of the specified <tt>long</tt> value right by
+       *         the specified number of bits.
+       * @since 1.5
+       */
+      public static long rotateRight(
+            long i,
+            int distance) {
+         return (i >>> distance)
+               | (i << -distance);
+      }
+
+      /**
+       * Returns the value obtained by reversing the order of the bits in the
+       * two's complement binary representation of the specified <tt>long</tt>
+       * value.
+       * 
+       * @return the value obtained by reversing order of the bits in the
+       *         specified <tt>long</tt> value.
+       * @since 1.5
+       */
+      public static long reverse(
+            long i) {
+         // HD, Figure 7-1
+         i= (i & 0x5555555555555555L) << 1
+               | (i >>> 1)
+               & 0x5555555555555555L;
+         i= (i & 0x3333333333333333L) << 2
+               | (i >>> 2)
+               & 0x3333333333333333L;
+         i= (i & 0x0f0f0f0f0f0f0f0fL) << 4
+               | (i >>> 4)
+               & 0x0f0f0f0f0f0f0f0fL;
+         i= (i & 0x00ff00ff00ff00ffL) << 8
+               | (i >>> 8)
+               & 0x00ff00ff00ff00ffL;
+         i= (i << 48)
+               | ((i & 0xffff0000L) << 16)
+               | ((i >>> 16) & 0xffff0000L)
+               | (i >>> 48);
+         return i;
+      }
+
+      /**
+       * Returns the signum function of the specified <tt>long</tt> value.
+       * (The return value is -1 if the specified value is negative; 0 if the
+       * specified value is zero; and 1 if the specified value is positive.)
+       * 
+       * @return the signum function of the specified <tt>long</tt> value.
+       * @since 1.5
+       */
+      public static int signum(
+            long i) {
+         // HD, Section 2-7
+         return (int) ((i >> 63) | (-i >>> 63));
+      }
+
+      /**
+       * Returns the value obtained by reversing the order of the bytes in the
+       * two's complement representation of the specified <tt>long</tt> value.
+       * 
+       * @return the value obtained by reversing the bytes in the specified
+       *         <tt>long</tt> value.
+       * @since 1.5
+       */
+      public static long reverseBytes(
+            long i) {
+         i= (i & 0x00ff00ff00ff00ffL) << 8
+               | (i >>> 8)
+               & 0x00ff00ff00ff00ffL;
+         return (i << 48)
+               | ((i & 0xffff0000L) << 16)
+               | ((i >>> 16) & 0xffff0000L)
+               | (i >>> 48);
       }
    }
 
