@@ -4,11 +4,17 @@ import java.util.ArrayList;
 
 public class TalvMenni {
    
-   public static final boolean DEBUG_WINDOW = false;
-   public final static String VERSION = "Version 0.1";
+   public static boolean TELLUSER_ALL_INPUT= false;
+   public static final boolean DEBUG_WINDOW= false;
+   public final static String NAME= "Talvmenni";
+   public final static String VERSION= "Version 0.1";
+   public static String DEBUG_NAME;
+   
 
    public static void main(
          String args[]) {
+      TELLUSER_ALL_INPUT= Boolean.getBoolean("org.forritan.talvmenni.telluser_all_input");
+      DEBUG_NAME= System.getProperty("org.forritan.talvmenni.debug_name");      
       ChessEngine chessEngine= ChessEngine.create();
       chessEngine.run();
    }

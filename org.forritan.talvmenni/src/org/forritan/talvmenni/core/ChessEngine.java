@@ -92,6 +92,8 @@ public class ChessEngine implements Runnable {
    public interface Protocol {
       public String processInput(String input);
 
+      public boolean isGo();
+      public boolean setGo(boolean go);
       public void newGame();
       public void stop();
       public void whiteToMove();
@@ -108,6 +110,7 @@ public class ChessEngine implements Runnable {
       private UiProtocol uiProtocol;
       private Position   currentPosition;
       private Rules      currentRules;
+      private boolean    go = false;
       private boolean    WhiteToMove = true;
       private boolean    computerPlaysWhite = false;
 
@@ -278,6 +281,14 @@ public class ChessEngine implements Runnable {
          
       }
 
+      public boolean isGo() {
+         return this.go;
+      }
+
+      public boolean setGo(boolean go) {
+         return this.go= go;
+      }
+
    }
 
    private class ProtocolHandler implements Runnable {
@@ -290,7 +301,7 @@ public class ChessEngine implements Runnable {
                String reply= ChessEngine.this.protocol
                      .processInput(ChessEngine.this.inMessages.take());
 
-               if (reply != null) {
+               if (reply != null && reply.length() > 0) {
                   if (TalvMenni.DEBUG_WINDOW) {
                      DebugWindow.updateTekst("From_Talvmenni: "
                            + reply);
