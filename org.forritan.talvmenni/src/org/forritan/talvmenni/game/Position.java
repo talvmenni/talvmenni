@@ -249,6 +249,8 @@ public class Position {
                blackEnpassant= Square._EMPTY_BOARD;
                //FIXME: set castling
             } else if (this.white.isPawn(from)) {
+
+               // First set en passant bits...
                if (((from & Rank._2) != Square._EMPTY_BOARD) &&
                      (to & Rank._4) != Square._EMPTY_BOARD) {
                   whiteEnpassant= WhitePawnMoves.create().getPathsFrom(
@@ -277,9 +279,8 @@ public class Position {
                         break;
                   }
                } else {
-                  whitePawns= whitePawns
-                  ^ from
-                  | to;
+                  whitePawns ^= from;
+                  whitePawns |= to;
                }
                
                //FIXME: set castling
@@ -306,7 +307,7 @@ public class Position {
             }
 
             // ... and clear any enpassant captures
-            if (this.black.isEnpassant(to) && this.white.isPawn(from)) {
+            if (this.black.isEnpassant(to) && this.white.isPawn(from) && ((to & Rank._6) != Square._EMPTY_BOARD)) {
                blackPawns= blackPawns
                      ^ (this.black.enpassant ^ (this.black.enpassant & WhitePawnCaptures
                            .create().getPathsFrom(
@@ -409,7 +410,7 @@ public class Position {
             }
 
             // ... and clear any enpassant captures
-            if (this.white.isEnpassant(to) && this.black.isPawn(from)) {
+            if (this.white.isEnpassant(to) && this.black.isPawn(from) && ((to & Rank._3) != Square._EMPTY_BOARD)) {
                whitePawns= whitePawns
                      ^ (this.white.enpassant ^ (this.white.enpassant & BlackPawnCaptures
                            .create().getPathsFrom(
