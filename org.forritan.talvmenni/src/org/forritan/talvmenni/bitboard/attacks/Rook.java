@@ -21,7 +21,7 @@ public class Rook {
 
       Map attackMap= attackMaps[Long.numberOfLeadingZeros(square)];
       
-      
+      //FIXME: !!!! Implementation missing...
       
       return result;
    }

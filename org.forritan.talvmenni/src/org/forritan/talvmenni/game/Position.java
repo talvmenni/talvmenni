@@ -188,32 +188,40 @@ public class Position {
                whiteKings= whiteKings
                      ^ from
                      | to;
-               //TODO: set castling and enpassant
+               whiteEnpassant= 0L;
+               blackEnpassant= 0L;
+               //FIXME: set castling and enpassant
             } else if (this.white.isQueen(from)) {
                whiteQueens= whiteQueens
                      ^ from
                      | to;
-               //TODO: set castling and enpassant
+               whiteEnpassant= 0L;
+               blackEnpassant= 0L;
+               //FIXME: set castling and enpassant
             } else if (this.white.isRook(from)) {
                whiteRooks= whiteRooks
                      ^ from
                      | to;
-               //TODO: set castling and enpassant
+               whiteEnpassant= 0L;
+               blackEnpassant= 0L;
+               //FIXME: set castling and enpassant
             } else if (this.white.isBishop(from)) {
                whiteBishops= whiteBishops
                      ^ from
                      | to;
-               //TODO: set castling and enpassant
+               whiteEnpassant= 0L;
+               blackEnpassant= 0L;
+               //FIXME: set castling and enpassant
             } else if (this.white.isKnight(from)) {
                whiteKnights= whiteKnights
                      ^ from
                      | to;
-               //TODO: set castling and enpassant
+               //FIXME: set castling and enpassant
             } else if (this.white.isPawn(from)) {
                whitePawns= whitePawns
                      ^ from
                      | to;
-               //TODO: set castling and enpassant
+               //FIXME: set castling and enpassant
             }
 
             //... and clear any captures
@@ -242,32 +250,32 @@ public class Position {
                blackKings= blackKings
                      ^ from
                      | to;
-               //TODO: set castling and enpassant
+               //FIXME: set castling and enpassant
             } else if (this.black.isQueen(from)) {
                blackQueens= blackQueens
                      ^ from
                      | to;
-               //TODO: set castling and enpassant
+               //FIXME: set castling and enpassant
             } else if (this.black.isRook(from)) {
                blackRooks= blackRooks
                      ^ from
                      | to;
-               //TODO: set castling and enpassant
+               //FIXME: set castling and enpassant
             } else if (this.black.isBishop(from)) {
                blackBishops= blackBishops
                      ^ from
                      | to;
-               //TODO: set castling and enpassant
+               //FIXME: set castling and enpassant
             } else if (this.black.isKnight(from)) {
                blackKnights= blackKnights
                      ^ from
                      | to;
-               //TODO: set castling and enpassant
+               //FIXME: set castling and enpassant
             } else if (this.black.isPawn(from)) {
                blackPawns= blackPawns
                      ^ from
                      | to;
-               //TODO: set castling and enpassant
+               //FIXME: set castling and enpassant
             }
 
             //... and clear any captures
@@ -321,8 +329,7 @@ public class Position {
    private boolean isLegalMove(
          long from,
          long to) {
-      
-      //TODO: !!!! Implementation missing...
+      //FIXME: !!!! Implementation missing...
       return true;
    }
 
