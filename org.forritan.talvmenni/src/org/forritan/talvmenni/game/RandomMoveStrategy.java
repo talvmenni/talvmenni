@@ -4,13 +4,12 @@ import java.util.List;
 import java.util.Observable;
 import java.util.Random;
 
-import org.forritan.talvmenni.game.ImmutablePosition.Move;
 import org.forritan.talvmenni.search.Search;
 
 public class RandomMoveStrategy extends Observable implements Strategy {
 
-   public Move getNextMove(Position position, boolean whiteToMove) {
-         List<Move> possibleMoves;
+   public Position.Move getNextMove(Position position, boolean whiteToMove) {
+         List<Position.Move> possibleMoves;
          if(whiteToMove) {
             possibleMoves= position.getWhite().getPossibleMoves();
          } else {
@@ -26,7 +25,7 @@ public class RandomMoveStrategy extends Observable implements Strategy {
    }
 
    public int getPromotionPiece() {
-      return ImmutablePosition.PromotionPiece.KNIGHT;
+      return Position.PromotionPiece.KNIGHT;
    }
 
    public Observable getObservable() {

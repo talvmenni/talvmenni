@@ -1,5 +1,6 @@
 import org.forritan.talvmenni.bitboard.Square;
 import org.forritan.talvmenni.bitboard.attacks.Queen;
+import org.forritan.talvmenni.game.ImmutablePosition;
 import org.forritan.talvmenni.game.Position;
 
 public class TestSpeedOnQueenAttacks {
@@ -14,7 +15,7 @@ public class TestSpeedOnQueenAttacks {
             + " times...");
 
       long time= -System.currentTimeMillis();
-      Position p= Position.create(
+      Position p= ImmutablePosition.create(
             Square._E1, // whiteKings
             Square._G4, // whiteQueens
             Square._A1

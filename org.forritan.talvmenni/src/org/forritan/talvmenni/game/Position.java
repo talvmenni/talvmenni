@@ -1,7 +1,8 @@
 package org.forritan.talvmenni.game;
 
+import org.forritan.talvmenni.bitboard.Square;
+import org.forritan.talvmenni.bitboard.Squares;
 import org.forritan.talvmenni.game.ImmutablePosition.Bitboard;
-import org.forritan.talvmenni.game.ImmutablePosition.Move;
 
 
 public interface Position {
@@ -40,6 +41,36 @@ public interface Position {
       public final static int BISHOP= 2;
       public final static int KNIGHT= 3;      
       public final static String[] STRINGS= new String[] {"q", "r", "b", "n"};
+   }
+
+   public static class Move {
+      public final long from;
+      public final long to;
+
+      public Move(long from, long to) {
+         this.from= from;
+         this.to= to;
+      }
+      
+      public String toString() {
+         Square sq= Squares.create();
+         return sq.getSquareName(from)
+               + sq.getSquareName(to);
+      }
+      
+      public boolean equals(Move otherMove) {
+         return (this.from == otherMove.from) 
+         && (this.to == otherMove.to);
+      }
+      
+      public boolean equals(Object obj) {
+         if(obj instanceof Position.Move) {
+            return this.equals((Position.Move) obj);
+         } else {
+            return false;
+         }
+      }
+      
    }
 
 }

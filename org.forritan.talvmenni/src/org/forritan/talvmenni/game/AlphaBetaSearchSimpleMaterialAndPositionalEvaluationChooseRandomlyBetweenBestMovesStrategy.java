@@ -5,7 +5,6 @@ import java.util.Random;
 
 import org.forritan.talvmenni.evaluation.Evaluation;
 import org.forritan.talvmenni.evaluation.SimpleMaterialAndPositionalEvaluation;
-import org.forritan.talvmenni.game.ImmutablePosition.Move;
 import org.forritan.talvmenni.search.AlphaBetaSearch;
 import org.forritan.talvmenni.search.Search;
 
@@ -19,8 +18,8 @@ public class AlphaBetaSearchSimpleMaterialAndPositionalEvaluationChooseRandomlyB
       this.evaluation= new SimpleMaterialAndPositionalEvaluation();
    }
    
-   public Move getNextMove(Position position, boolean whiteToMove) {
-         List<Move> bestMoves= this.search.getBestMoves(position, this.evaluation, whiteToMove);
+   public Position.Move getNextMove(Position position, boolean whiteToMove) {
+         List<Position.Move> bestMoves= this.search.getBestMoves(position, this.evaluation, whiteToMove);
 
          if(!bestMoves.isEmpty()) {
             int chosenMoveIndex= new Random().nextInt(bestMoves.size());
@@ -31,7 +30,7 @@ public class AlphaBetaSearchSimpleMaterialAndPositionalEvaluationChooseRandomlyB
    }
 
    public int getPromotionPiece() {
-      return ImmutablePosition.PromotionPiece.DEFAULT;
+      return Position.PromotionPiece.DEFAULT;
    }
    
    public Search getSearch() {

@@ -6,7 +6,7 @@ import java.util.Observable;
 import org.forritan.talvmenni.evaluation.Evaluation;
 import org.forritan.talvmenni.game.ImmutablePosition;
 import org.forritan.talvmenni.game.Position;
-import org.forritan.talvmenni.game.ImmutablePosition.Move;
+import org.forritan.talvmenni.game.Position.Move;
 
 public interface Search {
    

@@ -2,6 +2,7 @@ package org.forritan.talvmenni.evaluation;
 
 import org.forritan.talvmenni.bitboard.Rank;
 import org.forritan.talvmenni.bitboard.Square;
+import org.forritan.talvmenni.game.ImmutablePosition;
 import org.forritan.talvmenni.game.Position;
 
 import junit.framework.Assert;
@@ -10,13 +11,13 @@ import junit.framework.TestCase;
 public class SimpleMaterialEvaluationTest extends TestCase {
 
    public void testGetScoreOnInitialPosition() {
-      Position p= Position.createInitial();
+      Position p= ImmutablePosition.createInitial();
       Evaluation e= new SimpleMaterialEvaluation();
       Assert.assertEquals(0, e.getScore(p));
    }
    
    public void testGetScoreAllWhitePiecesOnlyBlackKing() {
-      Position p= Position.create(
+      Position p= ImmutablePosition.create(
             Square._E1, // whiteKings
             Square._D1, // whiteQueens
             Square._A1
@@ -44,7 +45,7 @@ public class SimpleMaterialEvaluationTest extends TestCase {
    }
    
    public void testGetScoreAllBlackPiecesOnlyWhiteKing() {
-      Position p= Position.create(
+      Position p= ImmutablePosition.create(
             Square._E1, // whiteKings
             Square._EMPTY_BOARD, // whiteQueens
             Square._EMPTY_BOARD, // whiteRooks

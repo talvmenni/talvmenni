@@ -7,7 +7,7 @@ import java.util.Random;
 
 import org.forritan.talvmenni.evaluation.Evaluation;
 import org.forritan.talvmenni.evaluation.SimpleMaterialEvaluation;
-import org.forritan.talvmenni.game.ImmutablePosition.Move;
+import org.forritan.talvmenni.game.Position.Move;
 import org.forritan.talvmenni.search.FullSearch;
 import org.forritan.talvmenni.search.Search;
 

@@ -1,3 +1,4 @@
+import org.forritan.talvmenni.game.ImmutablePosition;
 import org.forritan.talvmenni.game.Position;
 
 
@@ -7,19 +8,19 @@ public class TestSpeedOnMakeRandomMove {
 
       int warmup= 100000;
      
-      Position p= Position.createInitial();      
+      Position p= ImmutablePosition.createInitial();      
       for (int i= 0; i < warmup; i++) {
-         Position.Move move= p.getRandomMove((i % 2) == 0);
+         ImmutablePosition.Move move= p.getRandomMove((i % 2) == 0);
          if(move != null) {
             p= p.move(move.from, move.to);
          } else {
-            p= Position.createInitial();
+            p= ImmutablePosition.createInitial();
          }
       }
       
       
       
-      p= Position.createInitial();
+      p= ImmutablePosition.createInitial();
       int howMany= 1000000;
       System.out.println("Making "
             + howMany
@@ -28,11 +29,11 @@ public class TestSpeedOnMakeRandomMove {
 
       long time= -System.currentTimeMillis();
       for (int i= 0; i < howMany; i++) {
-         Position.Move move= p.getRandomMove((i % 2) == 0);
+         ImmutablePosition.Move move= p.getRandomMove((i % 2) == 0);
          if(move != null) {
             p= p.move(move.from, move.to);
          } else {
-            p= Position.createInitial();
+            p= ImmutablePosition.createInitial();
             System.out.print(".");
          }
       }

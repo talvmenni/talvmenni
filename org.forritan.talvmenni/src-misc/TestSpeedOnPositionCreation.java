@@ -1,6 +1,6 @@
 import org.forritan.talvmenni.game.Move;
 import org.forritan.talvmenni.game.MoveHistory;
-import org.forritan.talvmenni.game.Position;
+import org.forritan.talvmenni.game.ImmutablePosition;
 
 
 public class TestSpeedOnPositionCreation {
@@ -14,7 +14,7 @@ public class TestSpeedOnPositionCreation {
             + " positions...");
 
       long time= -System.currentTimeMillis();
-      Position initialPosition= Position.createInitial();
+      ImmutablePosition initialPosition= ImmutablePosition.createInitial();
 
       for (int i= 0; i < howMany; i++) {
          long from= 1L << (i % 32);
@@ -23,7 +23,7 @@ public class TestSpeedOnPositionCreation {
                initialPosition,
                from,
                to, 
-               Position.PromotionPiece.DEFAULT);
+               ImmutablePosition.PromotionPiece.DEFAULT);
          if (howMany < 1001) {
             MoveHistory.getInstance().add(
                   m);

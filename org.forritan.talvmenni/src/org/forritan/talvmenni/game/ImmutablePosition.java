@@ -24,7 +24,7 @@ import org.forritan.talvmenni.core.TalvMenni;
 import org.forritan.talvmenni.ui.DebugWindow;
 
 
-public class ImmutablePosition implements Position {
+public class ImmutablePosition extends PositionFactory {
    
    public static int positionsCreated;
    public static int nodes= 1;
@@ -493,37 +493,7 @@ public class ImmutablePosition implements Position {
          return null;
       }      
    }
-   
-   public static class Move {
-      public final long from;
-      public final long to;
-
-      public Move(long from, long to) {
-         this.from= from;
-         this.to= to;
-      }
       
-      public String toString() {
-         Square sq= Squares.create();
-         return sq.getSquareName(from)
-               + sq.getSquareName(to);
-      }
-      
-      public boolean equals(Move otherMove) {
-         return (this.from == otherMove.from) 
-         && (this.to == otherMove.to);
-      }
-      
-      public boolean equals(Object obj) {
-         if(obj instanceof ImmutablePosition.Move) {
-            return this.equals((ImmutablePosition.Move) obj);
-         } else {
-            return false;
-         }
-      }
-      
-   }
-   
    public class Bitboard {
       public final boolean  white;
       public final ImmutablePosition parent;

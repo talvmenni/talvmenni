@@ -1,6 +1,7 @@
 package org.forritan.talvmenni.bitboard.game;
 
 import org.forritan.talvmenni.bitboard.Square;
+import org.forritan.talvmenni.game.ImmutablePosition;
 import org.forritan.talvmenni.game.Position;
 import org.forritan.talvmenni.game.Rules;
 
@@ -11,7 +12,7 @@ import junit.framework.TestCase;
 public class RulesTest extends TestCase {
 
    public void testLegalPawnMovesFromInitialPosition() {
-      Position p= Position.createInitial();
+      Position p= ImmutablePosition.createInitial();
       Assert.assertTrue(
             "Should be legal to move pawn at initial position A2 to A3",
             Rules.isMoveLegal(
@@ -127,23 +128,23 @@ public class RulesTest extends TestCase {
    }
 
    public void testLegalRookMovesFromInitialPosition() {
-      Position p= Position.createInitial();
+      Position p= ImmutablePosition.createInitial();
    }
 
    public void testLegalBishopMovesFromInitialPosition() {
-      Position p= Position.createInitial();
+      Position p= ImmutablePosition.createInitial();
    }
 
    public void testLegalQueenMovesFromInitialPosition() {
-      Position p= Position.createInitial();
+      Position p= ImmutablePosition.createInitial();
    }
 
    public void testLegalKingMovesFromInitialPosition() {
-      Position p= Position.createInitial();
+      Position p= ImmutablePosition.createInitial();
    }
 
    public void testLegalKnightMovesFromInitialPosition() {
-      Position p= Position.createInitial();
+      Position p= ImmutablePosition.createInitial();
       Assert
             .assertTrue(
                   "Should be legal to move white knight at initial position B1 to A3",
