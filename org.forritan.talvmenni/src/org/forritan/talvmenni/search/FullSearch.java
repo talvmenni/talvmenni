@@ -41,6 +41,8 @@ public class FullSearch extends Observable implements Search {
       for(Move move : moves) {
          this.movesSearched++;
          MoveScoreTuple score= this.getBestMove(p.move(move.from, move.to), e, !whiteMove, depth - 1);
+         this.setChanged();
+         this.notifyObservers("[" + move.toString() + "] " + score.score + "    |    " + this.movesSearched + " searched...");
          if(bestScore == null || (whiteMove ? score.score > bestScore.score : score.score < bestScore.score)) {
             bestScore= score;
             result.clear();
@@ -53,7 +55,15 @@ public class FullSearch extends Observable implements Search {
       time += System.currentTimeMillis() + 1; // Hmmm... tricky one... add one millisecond to make sure that we don't get division by zero in notify call below :-) 
       
       this.setChanged();
-      this.notifyObservers("Searched " + this.movesSearched + " in just " + time + " milliseconds... i.e: " + 1L * this.movesSearched * 1000 / time + " pr. second.");
+      this.notifyObservers(
+            "\nFinished search of " 
+            + this.movesSearched 
+            + " positions in just " 
+            + time 
+            + " milliseconds...\ni.e: " 
+            + 1L * this.movesSearched * 1000 / time + " pr. second."
+            + "\nBest moves: " 
+            + result.toString() + "\n");
       
       return result;
    }
