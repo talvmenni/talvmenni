@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Observable;
 import java.util.Random;
 
+import org.forritan.talvmenni.TalvMenni;
 import org.forritan.talvmenni.knowledge.Position;
 import org.forritan.talvmenni.knowledge.TheoryBook;
 import org.forritan.talvmenni.knowledge.Position.Move;
@@ -123,6 +124,8 @@ public abstract class AbstractStrategy implements Strategy {
    public Position.Move getNextMove(
          Position position,
          boolean whiteToMove) {
+      
+      long time= -System.currentTimeMillis();
 
       Move result= getPossibleBookMove(
             position,
@@ -145,6 +148,12 @@ public abstract class AbstractStrategy implements Strategy {
          bestMoves= this.search(
                position,
                whiteToMove);
+      }
+      
+      time += System.currentTimeMillis();
+      
+      if(time < TalvMenni.MINIMUM_MOVE_DELAY) {
+         
       }
 
       if (!bestMoves.isEmpty()) {

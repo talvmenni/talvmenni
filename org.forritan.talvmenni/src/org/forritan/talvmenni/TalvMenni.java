@@ -23,6 +23,12 @@ public class TalvMenni {
    public static String              DEBUG_NAME;
 
    /**
+    * Default 0 - Minimum time in milli seconds for moving. Should probably be
+    * something 600 when playing as human player on FICS og ICC...  ;-)
+    */
+   public static long MINIMUM_MOVE_DELAY = 0;
+
+   /**
     * Default PLY = 4 Minimum for being able to detect that we are getting
     * checkmated...
     */
@@ -67,6 +73,12 @@ public class TalvMenni {
          String args[]) {
 
       ThreadFactory threadFactory= TalvMenni.getThreadFactory();
+
+      String minimumMoveDelay= System.getProperty("minimumMoveDelay");
+      if (minimumMoveDelay != null) {
+         MINIMUM_MOVE_DELAY= Long.valueOf(
+               minimumMoveDelay).intValue();
+      }
 
       String searchDepth= System.getProperty("ply");
       if (searchDepth != null) {
