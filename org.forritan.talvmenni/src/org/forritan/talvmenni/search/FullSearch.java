@@ -36,8 +36,6 @@ public class FullSearch extends Observable implements Search {
          moves= p.black.getPossibleMoves();         
       }
       
-     
-      
       for(Move move : moves) {
          this.movesSearched++;
          MoveScoreTuple score= this.getBestMove(p.move(move.from, move.to), e, !whiteMove, depth - 1);
@@ -96,7 +94,7 @@ public class FullSearch extends Observable implements Search {
             }         
             result= new MoveScoreTuple(currentBestMove, bestScore.score + e.getScore(p));
          } else {
-            result= new MoveScoreTuple(null, (whiteMove ? Integer.MAX_VALUE : Integer.MIN_VALUE));            
+            result= new MoveScoreTuple(null, (whiteMove ? 3900 : -3900));            
          }
       } else {
          
@@ -119,7 +117,7 @@ public class FullSearch extends Observable implements Search {
                }
             }
          } else {
-            result= new MoveScoreTuple(null, (whiteMove ? Integer.MAX_VALUE : Integer.MIN_VALUE));            
+            result= new MoveScoreTuple(null, (whiteMove ? bestScore + 3900 : bestScore - 3900));            
          }
       }
       
