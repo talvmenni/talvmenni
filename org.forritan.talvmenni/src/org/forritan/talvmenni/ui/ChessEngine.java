@@ -40,4 +40,35 @@ public class ChessEngine {
 
    }
 
+   /**
+    * 
+    */
+   public void newGame() {
+      // TODO Auto-generated method stub
+      
+   }
+
+   /**
+    * @param xboardMessage
+    * @return
+    */
+   public boolean CheckLegalMove(String xboardMessage) {
+      // TODO Auto-generated method stub
+      return false;
+   }
+
+   /**
+    * 
+    */
+   public void NewMove(String xboardMessage) {
+
+      //update board
+      if (xboardMessage.equals("d2d4")) {
+         System.out.println("move d7d5");
+      } else if (xboardMessage.equals("e2e4")) {
+         System.out.println("move c7c5");
+      }
+      
+   }
+
 }

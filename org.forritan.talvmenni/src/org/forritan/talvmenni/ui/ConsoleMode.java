@@ -8,6 +8,7 @@ import java.io.InputStreamReader;
 public class ConsoleMode {
    private String  prompt;
    private boolean isRunning;
+   ChessEngine     AChessEngine = new ChessEngine();
 
    public ConsoleMode() {
       isRunning= true;
@@ -43,33 +44,46 @@ public class ConsoleMode {
          //Just ignore it...
       } else if ("new".equalsIgnoreCase(input)) // Start a new game
       {
-         ChessEngine ChessEngine= new ChessEngine();
-         ChessEngine.startEngine();
+         AChessEngine.newGame();
          System.out.println(this.prompt
-               + "Talvmenni has started...");
-      } else if ("white".equalsIgnoreCase(input)) // Stop the game
+               + "New game has been setup");
+      } else if ("white".equalsIgnoreCase(input)) // white to move
       {
-//         ChessEngine.WhiteToMove();
+         AChessEngine.WhiteToMove();
          System.out.println(this.prompt
                + "White to move...");
       } else if ("black".equalsIgnoreCase(input)) // black to move
       {
-//         ChessEngine.BlackToMove();
+         AChessEngine.BlackToMove();
          System.out.println(this.prompt
                + "Black to move...");
-      } else if ("force".equalsIgnoreCase(input)) // white to move
+      } else if ("go".equalsIgnoreCase(input)) // Stop the engine
       {
-//         ChessEngine.stopEngine();
+         AChessEngine.startEngine();
+         System.out.println(this.prompt
+               + "Talvmenni is started...");
+      } else if ("force".equalsIgnoreCase(input)) // Stop the engine
+      {
+         AChessEngine.stopEngine();
          System.out.println(this.prompt
                + "Talvmenni has been stopped...");
-      } else if ("q".equalsIgnoreCase(input)
+      } else if ("q".equalsIgnoreCase(input) // quit and exit
             || "quit".equalsIgnoreCase(input)
             || "exit".equalsIgnoreCase(input)) {
+         AChessEngine= null;
          System.out.println(this.prompt
                + "Bye...");
          System.out.flush();
          this.isRunning= false;
+
+      } else if (AChessEngine.CheckLegalMove(input)) {
+         AChessEngine.NewMove(input);
+      } else {
+         System.out.println(this.prompt
+               + "Unknown command: "
+               + input.toString());
       }
+      ;
    }
 
    private void welcomeMessage() {
