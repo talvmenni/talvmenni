@@ -1,5 +1,6 @@
 package org.forritan.talvmenni.core;
 
+import org.forritan.talvmenni.ui.IoWindow;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -17,6 +18,7 @@ public class ChessEngine implements Runnable {
    private LinkedBlockingQueue outMessages;
 
    public static ChessEngine create() {
+      new IoWindow();
       return new ChessEngine();
    }
 
@@ -37,8 +39,7 @@ public class ChessEngine implements Runnable {
       return this.running;
    }
 
-   public void setRunning(
-         boolean running) {
+   public void setRunning(boolean running) {
       this.running= running;
    }
 
@@ -48,18 +49,14 @@ public class ChessEngine implements Runnable {
       }
 
       this.running= true;
-      this.threadFactory.newThread(
-            new ProtocolHandler()).start();
-      this.threadFactory.newThread(
-            new InStreamHandler()).start();
-      this.threadFactory.newThread(
-            new OutStreamHandler()).start();
+      this.threadFactory.newThread(new ProtocolHandler()).start();
+      this.threadFactory.newThread(new InStreamHandler()).start();
+      this.threadFactory.newThread(new OutStreamHandler()).start();
    }
 
    private class Protocol {
 
-      public String processInput(
-            String theInput) {
+      public String processInput(String theInput) {
 
          if (TalvMenni.CROUCHING_TIGER_HIDDEN_DEBUG) {
             System.err.println("DEBUG: ChessEngine.Protocol.processInput( = "
@@ -70,7 +67,6 @@ public class ChessEngine implements Runnable {
          String theOutput= null;
 
          // Callbacks to chessEngine? Evaluation etc...
-
          if (theInput.equalsIgnoreCase("xboard")) {
             theOutput= "feature myname=\"TALVMENNI v 0.1\" done=1";
             //Change protocol to XboardProtocol?
@@ -106,7 +102,10 @@ public class ChessEngine implements Runnable {
             try {
                String reply= ChessEngine.this.protocol
                      .processInput((String) ChessEngine.this.inMessages.take());
+
+               
                if (reply != null) {
+                  IoWindow.updateTekst("ToUI: "+reply);
                   ChessEngine.this.outMessages.add(reply);
                }
             } catch (InterruptedException e) {
@@ -137,9 +136,8 @@ public class ChessEngine implements Runnable {
             System.err.println("DEBUG: ChessEngine.InStreamHandler.run()");
          }
 
-         BufferedReader inReader= new BufferedReader(
-               new InputStreamReader(
-                     System.in));
+         BufferedReader inReader= new BufferedReader(new InputStreamReader(
+               System.in));
 
          String inputMessage= "";
 
@@ -158,6 +156,7 @@ public class ChessEngine implements Runnable {
             }
             if (inputMessage != null) {
                ChessEngine.this.inMessages.add(inputMessage);
+               IoWindow.updateTekst("FromUI: "+inputMessage);
             }
             inputMessage= null;
 
