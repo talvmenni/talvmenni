@@ -12,9 +12,83 @@ public class Squares implements Square {
 //   private final Map<Long, String> squareNameMap;
 
    private Squares() {     
-      for (int i= 0; i < this.bitmaps.length; i++) {
-         this.bitmaps[i]= (1L << (63 - i));
-      }
+//      for (int i= 0; i < this.bitmaps.length; i++) {
+//         this.bitmaps[i]= (1L << (63 - i));
+//      }
+     
+      this.bitmaps[Square.Util.index(Square._A1)]= Square._A1;
+      this.bitmaps[Square.Util.index(Square._A2)]= Square._A2;
+      this.bitmaps[Square.Util.index(Square._A3)]= Square._A3;
+      this.bitmaps[Square.Util.index(Square._A4)]= Square._A4;
+      this.bitmaps[Square.Util.index(Square._A5)]= Square._A5;
+      this.bitmaps[Square.Util.index(Square._A6)]= Square._A6;
+      this.bitmaps[Square.Util.index(Square._A7)]= Square._A7;
+      this.bitmaps[Square.Util.index(Square._A8)]= Square._A8;
+
+      this.bitmaps[Square.Util.index(Square._B1)]= Square._B1;
+      this.bitmaps[Square.Util.index(Square._B2)]= Square._B2;
+      this.bitmaps[Square.Util.index(Square._B3)]= Square._B3;
+      this.bitmaps[Square.Util.index(Square._B4)]= Square._B4;
+      this.bitmaps[Square.Util.index(Square._B5)]= Square._B5;
+      this.bitmaps[Square.Util.index(Square._B6)]= Square._B6;
+      this.bitmaps[Square.Util.index(Square._B7)]= Square._B7;
+      this.bitmaps[Square.Util.index(Square._B8)]= Square._B8;
+
+      this.bitmaps[Square.Util.index(Square._C1)]= Square._C1;
+      this.bitmaps[Square.Util.index(Square._C2)]= Square._C2;
+      this.bitmaps[Square.Util.index(Square._C3)]= Square._C3;
+      this.bitmaps[Square.Util.index(Square._C4)]= Square._C4;
+      this.bitmaps[Square.Util.index(Square._C5)]= Square._C5;
+      this.bitmaps[Square.Util.index(Square._C6)]= Square._C6;
+      this.bitmaps[Square.Util.index(Square._C7)]= Square._C7;
+      this.bitmaps[Square.Util.index(Square._C8)]= Square._C8;
+
+      this.bitmaps[Square.Util.index(Square._D1)]= Square._D1;
+      this.bitmaps[Square.Util.index(Square._D2)]= Square._D2;
+      this.bitmaps[Square.Util.index(Square._D3)]= Square._D3;
+      this.bitmaps[Square.Util.index(Square._D4)]= Square._D4;
+      this.bitmaps[Square.Util.index(Square._D5)]= Square._D5;
+      this.bitmaps[Square.Util.index(Square._D6)]= Square._D6;
+      this.bitmaps[Square.Util.index(Square._D7)]= Square._D7;
+      this.bitmaps[Square.Util.index(Square._D8)]= Square._D8;
+
+      this.bitmaps[Square.Util.index(Square._E1)]= Square._E1;
+      this.bitmaps[Square.Util.index(Square._E2)]= Square._E2;
+      this.bitmaps[Square.Util.index(Square._E3)]= Square._E3;
+      this.bitmaps[Square.Util.index(Square._E4)]= Square._E4;
+      this.bitmaps[Square.Util.index(Square._E5)]= Square._E5;
+      this.bitmaps[Square.Util.index(Square._E6)]= Square._E6;
+      this.bitmaps[Square.Util.index(Square._E7)]= Square._E7;
+      this.bitmaps[Square.Util.index(Square._E8)]= Square._E8;
+
+      this.bitmaps[Square.Util.index(Square._F1)]= Square._F1;
+      this.bitmaps[Square.Util.index(Square._F2)]= Square._F2;
+      this.bitmaps[Square.Util.index(Square._F3)]= Square._F3;
+      this.bitmaps[Square.Util.index(Square._F4)]= Square._F4;
+      this.bitmaps[Square.Util.index(Square._F5)]= Square._F5;
+      this.bitmaps[Square.Util.index(Square._F6)]= Square._F6;
+      this.bitmaps[Square.Util.index(Square._F7)]= Square._F7;
+      this.bitmaps[Square.Util.index(Square._F8)]= Square._F8;
+
+      this.bitmaps[Square.Util.index(Square._G1)]= Square._G1;
+      this.bitmaps[Square.Util.index(Square._G2)]= Square._G2;
+      this.bitmaps[Square.Util.index(Square._G3)]= Square._G3;
+      this.bitmaps[Square.Util.index(Square._G4)]= Square._G4;
+      this.bitmaps[Square.Util.index(Square._G5)]= Square._G5;
+      this.bitmaps[Square.Util.index(Square._G6)]= Square._G6;
+      this.bitmaps[Square.Util.index(Square._G7)]= Square._G7;
+      this.bitmaps[Square.Util.index(Square._G8)]= Square._G8;
+
+      this.bitmaps[Square.Util.index(Square._H1)]= Square._H1;
+      this.bitmaps[Square.Util.index(Square._H2)]= Square._H2;
+      this.bitmaps[Square.Util.index(Square._H3)]= Square._H3;
+      this.bitmaps[Square.Util.index(Square._H4)]= Square._H4;
+      this.bitmaps[Square.Util.index(Square._H5)]= Square._H5;
+      this.bitmaps[Square.Util.index(Square._H6)]= Square._H6;
+      this.bitmaps[Square.Util.index(Square._H7)]= Square._H7;
+      this.bitmaps[Square.Util.index(Square._H8)]= Square._H8;
+
+      
       
       this.squareNames[Square.Util.index(Square._A1)]= "a1";
       this.squareNames[Square.Util.index(Square._A2)]= "a2";
@@ -162,80 +236,6 @@ public class Squares implements Square {
       this.bitmapsMap.put("H6", Long.valueOf(Square._H6));
       this.bitmapsMap.put("H7", Long.valueOf(Square._H7));
       this.bitmapsMap.put("H8", Long.valueOf(Square._H8));
-
-//      this.squareNameMap= new HashMap<Long, String>();
-//      this.squareNameMap.put(Long.valueOf(Square._A1), "a1");
-//      this.squareNameMap.put(Long.valueOf(Square._A2), "a2");
-//      this.squareNameMap.put(Long.valueOf(Square._A3), "a3");
-//      this.squareNameMap.put(Long.valueOf(Square._A4), "a4");
-//      this.squareNameMap.put(Long.valueOf(Square._A5), "a5");
-//      this.squareNameMap.put(Long.valueOf(Square._A6), "a6");
-//      this.squareNameMap.put(Long.valueOf(Square._A7), "a7");
-//      this.squareNameMap.put(Long.valueOf(Square._A8), "a8");
-//
-//      this.squareNameMap.put(Long.valueOf(Square._B1), "b1");
-//      this.squareNameMap.put(Long.valueOf(Square._B2), "b2");
-//      this.squareNameMap.put(Long.valueOf(Square._B3), "b3");
-//      this.squareNameMap.put(Long.valueOf(Square._B4), "b4");
-//      this.squareNameMap.put(Long.valueOf(Square._B5), "b5");
-//      this.squareNameMap.put(Long.valueOf(Square._B6), "b6");
-//      this.squareNameMap.put(Long.valueOf(Square._B7), "b7");
-//      this.squareNameMap.put(Long.valueOf(Square._B8), "b8");
-//
-//      this.squareNameMap.put(Long.valueOf(Square._C1), "c1");
-//      this.squareNameMap.put(Long.valueOf(Square._C2), "c2");
-//      this.squareNameMap.put(Long.valueOf(Square._C3), "c3");
-//      this.squareNameMap.put(Long.valueOf(Square._C4), "c4");
-//      this.squareNameMap.put(Long.valueOf(Square._C5), "c5");
-//      this.squareNameMap.put(Long.valueOf(Square._C6), "c6");
-//      this.squareNameMap.put(Long.valueOf(Square._C7), "c7");
-//      this.squareNameMap.put(Long.valueOf(Square._C8), "c8");
-//
-//      this.squareNameMap.put(Long.valueOf(Square._D1), "d1");
-//      this.squareNameMap.put(Long.valueOf(Square._D2), "d2");
-//      this.squareNameMap.put(Long.valueOf(Square._D3), "d3");
-//      this.squareNameMap.put(Long.valueOf(Square._D4), "d4");
-//      this.squareNameMap.put(Long.valueOf(Square._D5), "d5");
-//      this.squareNameMap.put(Long.valueOf(Square._D6), "d6");
-//      this.squareNameMap.put(Long.valueOf(Square._D7), "d7");
-//      this.squareNameMap.put(Long.valueOf(Square._D8), "d8");
-//
-//      this.squareNameMap.put(Long.valueOf(Square._E1), "e1");
-//      this.squareNameMap.put(Long.valueOf(Square._E2), "e2");
-//      this.squareNameMap.put(Long.valueOf(Square._E3), "e3");
-//      this.squareNameMap.put(Long.valueOf(Square._E4), "e4");
-//      this.squareNameMap.put(Long.valueOf(Square._E5), "e5");
-//      this.squareNameMap.put(Long.valueOf(Square._E6), "e6");
-//      this.squareNameMap.put(Long.valueOf(Square._E7), "e7");
-//      this.squareNameMap.put(Long.valueOf(Square._E8), "e8");
-//      
-//      this.squareNameMap.put(Long.valueOf(Square._F1), "f1");
-//      this.squareNameMap.put(Long.valueOf(Square._F2), "f2");
-//      this.squareNameMap.put(Long.valueOf(Square._F3), "f3");
-//      this.squareNameMap.put(Long.valueOf(Square._F4), "f4");
-//      this.squareNameMap.put(Long.valueOf(Square._F5), "f5");
-//      this.squareNameMap.put(Long.valueOf(Square._F6), "f6");
-//      this.squareNameMap.put(Long.valueOf(Square._F7), "f7");
-//      this.squareNameMap.put(Long.valueOf(Square._F8), "f8");
-//
-//      this.squareNameMap.put(Long.valueOf(Square._G1), "g1");
-//      this.squareNameMap.put(Long.valueOf(Square._G2), "g2");
-//      this.squareNameMap.put(Long.valueOf(Square._G3), "g3");
-//      this.squareNameMap.put(Long.valueOf(Square._G4), "g4");
-//      this.squareNameMap.put(Long.valueOf(Square._G5), "g5");
-//      this.squareNameMap.put(Long.valueOf(Square._G6), "g6");
-//      this.squareNameMap.put(Long.valueOf(Square._G7), "g7");
-//      this.squareNameMap.put(Long.valueOf(Square._G8), "g8");
-//
-//      this.squareNameMap.put(Long.valueOf(Square._H1), "h1");
-//      this.squareNameMap.put(Long.valueOf(Square._H2), "h2");
-//      this.squareNameMap.put(Long.valueOf(Square._H3), "h3");
-//      this.squareNameMap.put(Long.valueOf(Square._H4), "h4");
-//      this.squareNameMap.put(Long.valueOf(Square._H5), "h5");
-//      this.squareNameMap.put(Long.valueOf(Square._H6), "h6");
-//      this.squareNameMap.put(Long.valueOf(Square._H7), "h7");
-//      this.squareNameMap.put(Long.valueOf(Square._H8), "h8");
-
    }
 
    public static Square create() {
@@ -258,11 +258,6 @@ public class Squares implements Square {
          String squareNumber) {
       return ((Long)this.bitmapsMap.get(squareNumber)).longValue();
    }
-
-//   public String getSquareName_old(
-//         long square) {
-//      return (String)this.squareNameMap.get(Long.valueOf(square));
-//   }
 
    public String getSquareName(
          long square) {

@@ -23,140 +23,140 @@ public class SquaresTest extends TestCase {
       Square square= Squares.create();
       long sq;
 
-      sq= square.getSquare(0);
+      sq= square.getSquare(Square.Util.index(Square._A8));
       Assert.assertTrue(sq == Square._A8);
-      sq= square.getSquare(1);
+      sq= square.getSquare(Square.Util.index(Square._B8));
       Assert.assertTrue(sq == Square._B8);
-      sq= square.getSquare(2);
+      sq= square.getSquare(Square.Util.index(Square._C8));
       Assert.assertTrue(sq == Square._C8);
-      sq= square.getSquare(3);
+      sq= square.getSquare(Square.Util.index(Square._D8));
       Assert.assertTrue(sq == Square._D8);
-      sq= square.getSquare(4);
+      sq= square.getSquare(Square.Util.index(Square._E8));
       Assert.assertTrue(sq == Square._E8);
-      sq= square.getSquare(5);
+      sq= square.getSquare(Square.Util.index(Square._F8));
       Assert.assertTrue(sq == Square._F8);
-      sq= square.getSquare(6);
+      sq= square.getSquare(Square.Util.index(Square._G8));
       Assert.assertTrue(sq == Square._G8);
-      sq= square.getSquare(7);
+      sq= square.getSquare(Square.Util.index(Square._H8));
       Assert.assertTrue(sq == Square._H8);
 
-      sq= square.getSquare(8);
+      sq= square.getSquare(Square.Util.index(Square._A7));
       Assert.assertTrue(sq == Square._A7);
-      sq= square.getSquare(9);
+      sq= square.getSquare(Square.Util.index(Square._B7));
       Assert.assertTrue(sq == Square._B7);
-      sq= square.getSquare(10);
+      sq= square.getSquare(Square.Util.index(Square._C7));
       Assert.assertTrue(sq == Square._C7);
-      sq= square.getSquare(11);
+      sq= square.getSquare(Square.Util.index(Square._D7));
       Assert.assertTrue(sq == Square._D7);
-      sq= square.getSquare(12);
+      sq= square.getSquare(Square.Util.index(Square._E7));
       Assert.assertTrue(sq == Square._E7);
-      sq= square.getSquare(13);
+      sq= square.getSquare(Square.Util.index(Square._F7));
       Assert.assertTrue(sq == Square._F7);
-      sq= square.getSquare(14);
+      sq= square.getSquare(Square.Util.index(Square._G7));
       Assert.assertTrue(sq == Square._G7);
-      sq= square.getSquare(15);
+      sq= square.getSquare(Square.Util.index(Square._H7));
       Assert.assertTrue(sq == Square._H7);
 
-      sq= square.getSquare(16);
+      sq= square.getSquare(Square.Util.index(Square._A6));
       Assert.assertTrue(sq == Square._A6);
-      sq= square.getSquare(17);
+      sq= square.getSquare(Square.Util.index(Square._B6));
       Assert.assertTrue(sq == Square._B6);
-      sq= square.getSquare(18);
+      sq= square.getSquare(Square.Util.index(Square._C6));
       Assert.assertTrue(sq == Square._C6);
-      sq= square.getSquare(19);
+      sq= square.getSquare(Square.Util.index(Square._D6));
       Assert.assertTrue(sq == Square._D6);
-      sq= square.getSquare(20);
+      sq= square.getSquare(Square.Util.index(Square._E6));
       Assert.assertTrue(sq == Square._E6);
-      sq= square.getSquare(21);
+      sq= square.getSquare(Square.Util.index(Square._F6));
       Assert.assertTrue(sq == Square._F6);
-      sq= square.getSquare(22);
+      sq= square.getSquare(Square.Util.index(Square._G6));
       Assert.assertTrue(sq == Square._G6);
-      sq= square.getSquare(23);
+      sq= square.getSquare(Square.Util.index(Square._H6));
       Assert.assertTrue(sq == Square._H6);
 
-      sq= square.getSquare(24);
+      sq= square.getSquare(Square.Util.index(Square._A5));
       Assert.assertTrue(sq == Square._A5);
-      sq= square.getSquare(25);
+      sq= square.getSquare(Square.Util.index(Square._B5));
       Assert.assertTrue(sq == Square._B5);
-      sq= square.getSquare(26);
+      sq= square.getSquare(Square.Util.index(Square._C5));
       Assert.assertTrue(sq == Square._C5);
-      sq= square.getSquare(27);
+      sq= square.getSquare(Square.Util.index(Square._D5));
       Assert.assertTrue(sq == Square._D5);
-      sq= square.getSquare(28);
+      sq= square.getSquare(Square.Util.index(Square._E5));
       Assert.assertTrue(sq == Square._E5);
-      sq= square.getSquare(29);
+      sq= square.getSquare(Square.Util.index(Square._F5));
       Assert.assertTrue(sq == Square._F5);
-      sq= square.getSquare(30);
+      sq= square.getSquare(Square.Util.index(Square._G5));
       Assert.assertTrue(sq == Square._G5);
-      sq= square.getSquare(31);
+      sq= square.getSquare(Square.Util.index(Square._H5));
       Assert.assertTrue(sq == Square._H5);
 
-      sq= square.getSquare(32);
+      sq= square.getSquare(Square.Util.index(Square._A4));
       Assert.assertTrue(sq == Square._A4);
-      sq= square.getSquare(33);
+      sq= square.getSquare(Square.Util.index(Square._B4));
       Assert.assertTrue(sq == Square._B4);
-      sq= square.getSquare(34);
+      sq= square.getSquare(Square.Util.index(Square._C4));
       Assert.assertTrue(sq == Square._C4);
-      sq= square.getSquare(35);
+      sq= square.getSquare(Square.Util.index(Square._D4));
       Assert.assertTrue(sq == Square._D4);
-      sq= square.getSquare(36);
+      sq= square.getSquare(Square.Util.index(Square._E4));
       Assert.assertTrue(sq == Square._E4);
-      sq= square.getSquare(37);
+      sq= square.getSquare(Square.Util.index(Square._F4));
       Assert.assertTrue(sq == Square._F4);
-      sq= square.getSquare(38);
+      sq= square.getSquare(Square.Util.index(Square._G4));
       Assert.assertTrue(sq == Square._G4);
-      sq= square.getSquare(39);
+      sq= square.getSquare(Square.Util.index(Square._H4));
       Assert.assertTrue(sq == Square._H4);
 
-      sq= square.getSquare(40);
+      sq= square.getSquare(Square.Util.index(Square._A3));
       Assert.assertTrue(sq == Square._A3);
-      sq= square.getSquare(41);
+      sq= square.getSquare(Square.Util.index(Square._B3));
       Assert.assertTrue(sq == Square._B3);
-      sq= square.getSquare(42);
+      sq= square.getSquare(Square.Util.index(Square._C3));
       Assert.assertTrue(sq == Square._C3);
-      sq= square.getSquare(43);
+      sq= square.getSquare(Square.Util.index(Square._D3));
       Assert.assertTrue(sq == Square._D3);
-      sq= square.getSquare(44);
+      sq= square.getSquare(Square.Util.index(Square._E3));
       Assert.assertTrue(sq == Square._E3);
-      sq= square.getSquare(45);
+      sq= square.getSquare(Square.Util.index(Square._F3));
       Assert.assertTrue(sq == Square._F3);
-      sq= square.getSquare(46);
+      sq= square.getSquare(Square.Util.index(Square._G3));
       Assert.assertTrue(sq == Square._G3);
-      sq= square.getSquare(47);
+      sq= square.getSquare(Square.Util.index(Square._H3));
       Assert.assertTrue(sq == Square._H3);
 
-      sq= square.getSquare(48);
+      sq= square.getSquare(Square.Util.index(Square._A2));
       Assert.assertTrue(sq == Square._A2);
-      sq= square.getSquare(49);
+      sq= square.getSquare(Square.Util.index(Square._B2));
       Assert.assertTrue(sq == Square._B2);
-      sq= square.getSquare(50);
+      sq= square.getSquare(Square.Util.index(Square._C2));
       Assert.assertTrue(sq == Square._C2);
-      sq= square.getSquare(51);
+      sq= square.getSquare(Square.Util.index(Square._D2));
       Assert.assertTrue(sq == Square._D2);
-      sq= square.getSquare(52);
+      sq= square.getSquare(Square.Util.index(Square._E2));
       Assert.assertTrue(sq == Square._E2);
-      sq= square.getSquare(53);
+      sq= square.getSquare(Square.Util.index(Square._F2));
       Assert.assertTrue(sq == Square._F2);
-      sq= square.getSquare(54);
+      sq= square.getSquare(Square.Util.index(Square._G2));
       Assert.assertTrue(sq == Square._G2);
-      sq= square.getSquare(55);
+      sq= square.getSquare(Square.Util.index(Square._H2));
       Assert.assertTrue(sq == Square._H2);
 
-      sq= square.getSquare(56);
+      sq= square.getSquare(Square.Util.index(Square._A1));
       Assert.assertTrue(sq == Square._A1);
-      sq= square.getSquare(57);
+      sq= square.getSquare(Square.Util.index(Square._B1));
       Assert.assertTrue(sq == Square._B1);
-      sq= square.getSquare(58);
+      sq= square.getSquare(Square.Util.index(Square._C1));
       Assert.assertTrue(sq == Square._C1);
-      sq= square.getSquare(59);
+      sq= square.getSquare(Square.Util.index(Square._D1));
       Assert.assertTrue(sq == Square._D1);
-      sq= square.getSquare(60);
+      sq= square.getSquare(Square.Util.index(Square._E1));
       Assert.assertTrue(sq == Square._E1);
-      sq= square.getSquare(61);
+      sq= square.getSquare(Square.Util.index(Square._F1));
       Assert.assertTrue(sq == Square._F1);
-      sq= square.getSquare(62);
+      sq= square.getSquare(Square.Util.index(Square._G1));
       Assert.assertTrue(sq == Square._G1);
-      sq= square.getSquare(63);
+      sq= square.getSquare(Square.Util.index(Square._H1));
       Assert.assertTrue(sq == Square._H1);
 
       sq= square.getSquare(64);
@@ -311,6 +311,72 @@ public class SquaresTest extends TestCase {
    public void testGetSquareName() {
       Square square= Squares.create();
       String[] names= new String[] {
+//*/
+            "H1",
+            "G1",
+            "H7",
+            "F1",
+            "G8",
+            "G7",
+            "D4",
+            "E1",
+            "C8",
+            "F8",
+            "F7",
+            "F6",
+            "B5",
+            "C4",
+            "G3",
+            "D1",
+            "B8",
+            "A7",
+            "E8",
+            "D5",
+            "C7",
+            "E7",
+            "E6",
+            "B3",
+            "C6",
+            "A5",
+            "G5",
+            "B4",
+            "H4",
+            "F3",
+            "D2",
+            "C1",
+            "A8",
+            "A6",
+            "H8",
+            "E4",
+            "D8",
+            "G6",
+            "C5",
+            "H3",
+            "B7",
+            "E5",
+            "D7",
+            "C3",
+            "D6",
+            "H5",
+            "A3",
+            "E2",
+            "B6",
+            "F4",
+            "H6",
+            "A2",
+            "F5",
+            "D3",
+            "A4",
+            "F2",
+            "G4",
+            "B2",
+            "E3",
+            "G2",
+            "C2",
+            "H2",
+            "A1",
+            "B1"
+/*/
             "A8",
             "B8",
             "C8",
@@ -374,7 +440,9 @@ public class SquaresTest extends TestCase {
             "E1",
             "F1",
             "G1",
-            "H1",};
+            "H1"
+//*/
+      };
       for (int i= 0; i < names.length; i++) {
          Assert.assertEquals(
                names[i],

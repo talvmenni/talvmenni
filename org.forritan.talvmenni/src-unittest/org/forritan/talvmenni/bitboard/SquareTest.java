@@ -26,6 +26,88 @@ public class SquareTest extends TestCase {
       super.tearDown();
    }
 
+   public void testDeBruijnSequence() {
+      Assert.assertEquals(
+            "0000001111110111100111010111000110110100110010110000101010001001",
+            (this.zeroPrefix[Long.toBinaryString(
+                  Square.Util.DEBRUIJN64).length() - 1] + Long.toBinaryString(Square.Util.DEBRUIJN64)));
+   }
+
+   public void testDeBruijnIndex() {
+      Assert.assertEquals(62, Square.Util.deBruijn64Index(Square._A1));
+      Assert.assertEquals(51, Square.Util.deBruijn64Index(Square._A2));
+      Assert.assertEquals(46, Square.Util.deBruijn64Index(Square._A3));
+      Assert.assertEquals(54, Square.Util.deBruijn64Index(Square._A4));
+      Assert.assertEquals(25, Square.Util.deBruijn64Index(Square._A5));
+      Assert.assertEquals(33, Square.Util.deBruijn64Index(Square._A6));
+      Assert.assertEquals(17, Square.Util.deBruijn64Index(Square._A7));
+      Assert.assertEquals(32, Square.Util.deBruijn64Index(Square._A8));
+
+      Assert.assertEquals(63, Square.Util.deBruijn64Index(Square._B1));
+      Assert.assertEquals(57, Square.Util.deBruijn64Index(Square._B2));
+      Assert.assertEquals(23, Square.Util.deBruijn64Index(Square._B3));
+      Assert.assertEquals(27, Square.Util.deBruijn64Index(Square._B4));
+      Assert.assertEquals(12, Square.Util.deBruijn64Index(Square._B5));
+      Assert.assertEquals(48, Square.Util.deBruijn64Index(Square._B6));
+      Assert.assertEquals(40, Square.Util.deBruijn64Index(Square._B7));
+      Assert.assertEquals(16, Square.Util.deBruijn64Index(Square._B8));
+
+      Assert.assertEquals(31, Square.Util.deBruijn64Index(Square._C1));
+      Assert.assertEquals(60, Square.Util.deBruijn64Index(Square._C2));
+      Assert.assertEquals(43, Square.Util.deBruijn64Index(Square._C3));
+      Assert.assertEquals(13, Square.Util.deBruijn64Index(Square._C4));
+      Assert.assertEquals(38, Square.Util.deBruijn64Index(Square._C5));
+      Assert.assertEquals(24, Square.Util.deBruijn64Index(Square._C6));
+      Assert.assertEquals(20, Square.Util.deBruijn64Index(Square._C7));
+      Assert.assertEquals(8, Square.Util.deBruijn64Index(Square._C8));
+
+      Assert.assertEquals(15, Square.Util.deBruijn64Index(Square._D1));
+      Assert.assertEquals(30, Square.Util.deBruijn64Index(Square._D2));
+      Assert.assertEquals(53, Square.Util.deBruijn64Index(Square._D3));
+      Assert.assertEquals(6, Square.Util.deBruijn64Index(Square._D4));
+      Assert.assertEquals(19, Square.Util.deBruijn64Index(Square._D5));
+      Assert.assertEquals(44, Square.Util.deBruijn64Index(Square._D6));
+      Assert.assertEquals(42, Square.Util.deBruijn64Index(Square._D7));
+      Assert.assertEquals(36, Square.Util.deBruijn64Index(Square._D8));
+
+      Assert.assertEquals(7, Square.Util.deBruijn64Index(Square._E1));
+      Assert.assertEquals(47, Square.Util.deBruijn64Index(Square._E2));
+      Assert.assertEquals(58, Square.Util.deBruijn64Index(Square._E3));
+      Assert.assertEquals(35, Square.Util.deBruijn64Index(Square._E4));
+      Assert.assertEquals(41, Square.Util.deBruijn64Index(Square._E5));
+      Assert.assertEquals(22, Square.Util.deBruijn64Index(Square._E6));
+      Assert.assertEquals(21, Square.Util.deBruijn64Index(Square._E7));
+      Assert.assertEquals(18, Square.Util.deBruijn64Index(Square._E8));
+   
+      Assert.assertEquals(3, Square.Util.deBruijn64Index(Square._F1));
+      Assert.assertEquals(55, Square.Util.deBruijn64Index(Square._F2));
+      Assert.assertEquals(29, Square.Util.deBruijn64Index(Square._F3));
+      Assert.assertEquals(49, Square.Util.deBruijn64Index(Square._F4));
+      Assert.assertEquals(52, Square.Util.deBruijn64Index(Square._F5));
+      Assert.assertEquals(11, Square.Util.deBruijn64Index(Square._F6));
+      Assert.assertEquals(10, Square.Util.deBruijn64Index(Square._F7));
+      Assert.assertEquals(9, Square.Util.deBruijn64Index(Square._F8));
+   
+      Assert.assertEquals(1, Square.Util.deBruijn64Index(Square._G1));
+      Assert.assertEquals(59, Square.Util.deBruijn64Index(Square._G2));
+      Assert.assertEquals(14, Square.Util.deBruijn64Index(Square._G3));
+      Assert.assertEquals(56, Square.Util.deBruijn64Index(Square._G4));
+      Assert.assertEquals(26, Square.Util.deBruijn64Index(Square._G5));
+      Assert.assertEquals(37, Square.Util.deBruijn64Index(Square._G6));
+      Assert.assertEquals(5, Square.Util.deBruijn64Index(Square._G7));
+      Assert.assertEquals(4, Square.Util.deBruijn64Index(Square._G8));
+   
+      Assert.assertEquals(0, Square.Util.deBruijn64Index(Square._H1));
+      Assert.assertEquals(61, Square.Util.deBruijn64Index(Square._H2));
+      Assert.assertEquals(39, Square.Util.deBruijn64Index(Square._H3));
+      Assert.assertEquals(28, Square.Util.deBruijn64Index(Square._H4));
+      Assert.assertEquals(45, Square.Util.deBruijn64Index(Square._H5));
+      Assert.assertEquals(50, Square.Util.deBruijn64Index(Square._H6));
+      Assert.assertEquals(2, Square.Util.deBruijn64Index(Square._H7));
+      Assert.assertEquals(34, Square.Util.deBruijn64Index(Square._H8));
+   
+   }
+   
    public void testA1() {
       Assert.assertEquals(
             ""

@@ -159,9 +159,30 @@ public interface Square {
    public static final long _FULL_BOARD  = -1L;
    
    public static class Util {
+      
+      /**
+       * de Bruijn sequence
+       * 0000 0011 1111 0111 1001 1101 0111 0001 1011 0100 1100 1011 0000 1010 1000 1001
+       * or in hex
+       * 3F79D71B4CB0A89
+       * @see http://supertech.csail.mit.edu/papers/debruijn.ps
+       * @see http://www.cs.princeton.edu/introcs/31datatype/DeBruijn.java.html
+       */
+      public final static long DEBRUIJN64= 0x3f79d71b4cb0a89L;
+      
       public static int index(long square) {
-         return Long.numberOfLeadingZeros(square);
-//         return this.debruijn64(square);
+//         return Long.numberOfLeadingZeros(square);
+         return Util.deBruijn64Index(square);
+      }
+
+      /**
+       * @param square
+       * @return a unique index between 0 and 63
+       */
+      static int deBruijn64Index(
+            long square) {
+         square *= Util.DEBRUIJN64;
+         return ((int)(square >>> 58));
       }
    }
 
