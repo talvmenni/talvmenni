@@ -82,13 +82,18 @@ font-size: 80%;
 background-color: #ffffff;
 }
 
-.t {
-background-color: #E97F0D;
+.white {
+background-color: #ffffca;
 height: 40px;
 }
 
-.tt {
+.black {
 background-color: #ED9435;
+height: 40px;
+}
+
+.t {
+background-color: #E97F0D;
 height: 40px;
 }
 
@@ -107,7 +112,7 @@ width: 300px;
 
 .footer {
 background-color: #E97F0D;
-font-size: 80%;
+font-size: 60%;
 padding: 2px;
 }
 
@@ -139,11 +144,11 @@ A.footerl:active {
 
 <table align="center" border="0" cellpadding="2" cellspacing="1" width="100%">
 <tbody><tr class="header">
-<td></td>
-<td class="tt"></td>
-<td></td>
-<td class="tt"></td>
-<td></td>
+<td class="black"></td>
+<td class="white"></td>
+<td class="black"></td>
+<td class="white"></td>
+<td class="black"></td>
 <td class="t"></td>
 <td class="t"></td>
 <td class="t"></td>
@@ -153,10 +158,10 @@ A.footerl:active {
 <td class="t"></td>
 </tr>
 <tr class="header">
-<td class="t"></td>
-<td></td>
-<td class="tt"></td>
-<td></td>
+<td class="white"></td>
+<td class="black"></td>
+<td class="white"></td>
+<td class="black"></td>
 <td class="t"></td>
 <td class="t"></td>
 <td class="t"></td>
@@ -167,9 +172,9 @@ A.footerl:active {
 <td class="t"></td>
 </tr>
 <tr class="header">
-<td class="t"></td>
-<td class="t"></td>
-<td></td>
+<td class="black"></td>
+<td class="white"></td>
+<td class="black"></td>
 <td class="t"></td>
 <td class="t"></td>
 <td class="t"></td>
@@ -187,9 +192,10 @@ A.footerl:active {
 <td>
 <div class="sectionLinks">
 <a href="#" style="border-top: 1px solid rgb(204, 102, 51);">Home</a>
-<a href="#">About Us</a>
-<a href="#">Download</a>
-<a href="#">News</a> <a href="#">Computer Chess</a>
+<a href="http://sourceforge.net/projects/talvmenni">@SourceForge</a>
+<a href="http://sourceforge.net/project/showfiles.php?group_id=109363&package_id=118096&release_id=241971">Download</a>
+<a href="http://sourceforge.net/news/?group_id=109363">News</a>
+<a href="http://www.google.com/search?hl=en&ie=UTF-8&q=Computer+chess&btnG=Google+Search">Computer Chess</a>
 </div>
 </td>
 </tr>
@@ -199,18 +205,20 @@ A.footerl:active {
 <tbody><tr>
 <td>
 <h4>Abstract</h4>
-The goal of the Talvmenni project is to develop an OpenSource 
-chess engine written in Java. We want to demonstrate that Java can be tuned 
-to a point, where it is almost up to the performance of an application, that was 
-directly compiled to native code. Even clean object-oriented design does not 
-necessarily generate an overhead, that makes high-performance computing 
-virtually impossible.
- <p></p>
+The goal of the Talvmenni project is to develop an open source 
+distributed chess engine based on Java (Jini/JavaSpaces). Most chess-engines are written
+in c/c++ and on what seems to be a rather low abstraction level. The first goal of the
+project is to explore the possibilty of using a higher abstraction level and still using
+efficient data structures like bit-boards. The second goal of the project is to see if using
+the master/worker idiom in JavaSpaces can be utilized in this context. The sourcecode will
+be written in Java (J2SE 5.0) and thus will run on any OS that supports Java (J2SE 5.0).
+<p></p>
 
 <p></p><h4>The Engine</h4>Below some of talvmenni's features:
-<ul><li>Supports both winboard and UCI-protocols.</li>
-<li>Estimated rating 2800 :)</li>
-<li>Does not use milk in coffie.</li>
+<ul>
+<li>Supports both winboard and UCI-protocols.</li>
+<li>Estimated rating 2900 :)</li>
+<li>Does not use milk in it's coffee.</li>
 <li>...</li>
 </ul>
 
