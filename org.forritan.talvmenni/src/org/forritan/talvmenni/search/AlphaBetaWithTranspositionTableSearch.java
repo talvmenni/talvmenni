@@ -3,6 +3,7 @@ package org.forritan.talvmenni.search;
 import java.util.Iterator;
 import java.util.List;
 
+import org.forritan.talvmenni.knowledge.HistoryHeuristic;
 import org.forritan.talvmenni.knowledge.Position;
 import org.forritan.talvmenni.knowledge.Transposition;
 import org.forritan.talvmenni.knowledge.Position.Move;
@@ -15,6 +16,7 @@ import org.forritan.talvmenni.search.PrincipalVariation.Thinking;
 public class AlphaBetaWithTranspositionTableSearch implements Search {
 
    private PrincipalVariation pv;
+   private HistoryHeuristic   historyHeuristic;
    private Transposition      transposition;
    private int                ply;
    private final boolean      useMoveOrdering;
@@ -42,6 +44,7 @@ public class AlphaBetaWithTranspositionTableSearch implements Search {
       this.useMoveOrdering= useMoveOrdering;
       this.transposition= transposition;
       this.pv= pv;
+      this.historyHeuristic= HistoryHeuristic.getInstance();
    }
 
    public void setPly(
@@ -164,6 +167,8 @@ public class AlphaBetaWithTranspositionTableSearch implements Search {
          } else {
             moves= p.getBlack().getPossibleMoves();
          }
+         
+         moves= this.historyHeuristic.sort(moves);
 
          if (moves.size() > 0) {
             for (Iterator it= moves.iterator(); it.hasNext();) {
@@ -215,6 +220,7 @@ public class AlphaBetaWithTranspositionTableSearch implements Search {
                               move);
                      }
                   }
+                  this.historyHeuristic.updateWithSufficient(move, ply);
                }
             }
 

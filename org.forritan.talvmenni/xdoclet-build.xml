@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="XDoclet Generator" default="_generation_">
+<path id="xdoclet.classpath">
+<fileset dir="D:/development/eclipse/extensions/myeclipse/eclipse/plugins/com.genuitec.jboss.ide.eclipse.xdoclet.core_3.8.1">
+<include name="*.jar"/>
+</fileset><pathelement location="D:/project/BS/ProjectTalvmenni/org.forritan.talvmenni/bin"/>
+<pathelement location="D:/development/eclipse/3.1M3/eclipse/plugins/org.junit_3.8.1/junit.jar"/>
+<pathelement location="D:/java/jdk1.5.0/jre/lib/rt.jar"/>
+<pathelement location="D:/java/jdk1.5.0/jre/lib/jsse.jar"/>
+<pathelement location="D:/java/jdk1.5.0/jre/lib/jce.jar"/>
+<pathelement location="D:/java/jdk1.5.0/jre/lib/charsets.jar"/>
+<pathelement location="D:/java/jdk1.5.0/jre/lib/ext/dnsns.jar"/>
+<pathelement location="D:/java/jdk1.5.0/jre/lib/ext/jsk-policy.jar"/>
+<pathelement location="D:/java/jdk1.5.0/jre/lib/ext/localedata.jar"/>
+<pathelement location="D:/java/jdk1.5.0/jre/lib/ext/sunjce_provider.jar"/>
+<pathelement location="D:/java/jdk1.5.0/jre/lib/ext/sunpkcs11.jar"/>
+<pathelement location="D:/project/BS/ProjectTalvmenni/org.forritan.talvmenni/lib/fiddler.jar"/>
+<pathelement location="D:/project/BS/ProjectTalvmenni/org.forritan.talvmenni/lib/jini-core.jar"/>
+<pathelement location="D:/project/BS/ProjectTalvmenni/org.forritan.talvmenni/lib/jini-ext.jar"/>
+<pathelement location="D:/project/BS/ProjectTalvmenni/org.forritan.talvmenni/lib/emory-util.jar"/>
+<pathelement location="D:/project/BS/ProjectTalvmenni/org.forritan.talvmenni/lib/trove.jar"/>
+<pathelement location="D:/project/BS/ProjectTalvmenni/org.forritan.talvmenni.worker/bin"/>
+<pathelement location="D:/java/j2sdk1.4.2_06/jre/lib/rt.jar"/>
+<pathelement location="D:/java/j2sdk1.4.2_06/jre/lib/sunrsasign.jar"/>
+<pathelement location="D:/java/j2sdk1.4.2_06/jre/lib/jsse.jar"/>
+<pathelement location="D:/java/j2sdk1.4.2_06/jre/lib/jce.jar"/>
+<pathelement location="D:/java/j2sdk1.4.2_06/jre/lib/charsets.jar"/>
+<pathelement location="D:/java/j2sdk1.4.2_06/jre/lib/ext/dnsns.jar"/>
+<pathelement location="D:/java/j2sdk1.4.2_06/jre/lib/ext/jsk-policy.jar"/>
+<pathelement location="D:/java/j2sdk1.4.2_06/jre/lib/ext/ldapsec.jar"/>
+<pathelement location="D:/java/j2sdk1.4.2_06/jre/lib/ext/localedata.jar"/>
+<pathelement location="D:/java/j2sdk1.4.2_06/jre/lib/ext/sunjce_provider.jar"/>
+<pathelement location="D:/project/BS/ProjectTalvmenni/org.forritan.talvmenni.worker/lib/fiddler.jar"/>
+<pathelement location="D:/project/BS/ProjectTalvmenni/org.forritan.talvmenni.worker/lib/jini-core.jar"/>
+<pathelement location="D:/project/BS/ProjectTalvmenni/org.forritan.talvmenni.worker/lib/jini-ext.jar"/>
+</path>
+<target name="_generation_" depends=""/>
+</project>

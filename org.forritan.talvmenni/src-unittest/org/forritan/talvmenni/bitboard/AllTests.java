@@ -22,10 +22,11 @@ public class AllTests {
       suite.addTestSuite(RookMaskTest.class);
       //$JUnit-END$
 
-      suite.addTest(org.forritan.talvmenni.bitboard.paths.AllTests.suite());
       suite.addTest(org.forritan.talvmenni.bitboard.attacks.AllTests.suite());
       suite.addTest(org.forritan.talvmenni.bitboard.knowledge.AllTests.suite());
       suite.addTest(org.forritan.talvmenni.bitboard.knowledge.evaluation.AllTests.suite());
+      suite.addTest(org.forritan.talvmenni.bitboard.paths.AllTests.suite());
+      suite.addTest(org.forritan.talvmenni.evaluation.AllTests.suite());
 
       return suite;
    }

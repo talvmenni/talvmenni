@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.forritan.talvmenni.knowledge.HistoryHeuristic;
 import org.forritan.talvmenni.knowledge.Position;
 import org.forritan.talvmenni.knowledge.Transposition;
 import org.forritan.talvmenni.knowledge.Position.Move;
@@ -16,6 +17,7 @@ import org.forritan.talvmenni.search.PrincipalVariation.Thinking;
 public class MTDfSearch implements Search {
 
    private PrincipalVariation pv;
+   private HistoryHeuristic   historyHeuristic;
    private Transposition      transposition;
    private int                ply;
    private final boolean      useMoveOrdering;
@@ -45,6 +47,7 @@ public class MTDfSearch implements Search {
       this.useMoveOrdering= useMoveOrdering;
       this.transposition= transposition;
       this.pv= pv;
+      this.historyHeuristic= HistoryHeuristic.getInstance();
    }
 
    public void setPly(
@@ -85,9 +88,9 @@ public class MTDfSearch implements Search {
 
       this.pv.clearPrincipalVariation();
 
-//      System.err.println("Possible moves: "
-//            + (whiteMove ? p.getWhite().getPossibleMoves().toString() : p
-//                  .getBlack().getPossibleMoves().toString()));
+      //      System.err.println("Possible moves: "
+      //            + (whiteMove ? p.getWhite().getPossibleMoves().toString() : p
+      //                  .getBlack().getPossibleMoves().toString()));
 
       int result= this.mtdf(
             p,
@@ -96,18 +99,18 @@ public class MTDfSearch implements Search {
             this.firstGuess,
             ply);
 
-//      System.err.println("*** at ply = "
-//            + ply
-//            + " : best result = "
-//            + result
-//            + " MTDfSearch ***");
-//
-//      System.err.println("White transposition: "
-//            + this.transposition.size(true));
-//      System.err.println("Black transposition: "
-//            + this.transposition.size(false));
-//
-//      System.err.println();
+      //      System.err.println("*** at ply = "
+      //            + ply
+      //            + " : best result = "
+      //            + result
+      //            + " MTDfSearch ***");
+      //
+      //      System.err.println("White transposition: "
+      //            + this.transposition.size(true));
+      //      System.err.println("Black transposition: "
+      //            + this.transposition.size(false));
+      //
+      //      System.err.println();
 
       time+= System.currentTimeMillis();
 
@@ -137,11 +140,11 @@ public class MTDfSearch implements Search {
       int lowerbound= -2
             * Evaluation.CHECKMATE_SCORE;
 
-//      int movesSearchedBefore= this.movesSearched;
-//      long moveTime= -System.currentTimeMillis();
+      //      int movesSearchedBefore= this.movesSearched;
+      //      long moveTime= -System.currentTimeMillis();
 
-//      int alphaBetaCalls= 0;
-//      List nullWindowValues= new ArrayList();
+      //      int alphaBetaCalls= 0;
+      //      List nullWindowValues= new ArrayList();
 
       do {
          int beta;
@@ -151,11 +154,11 @@ public class MTDfSearch implements Search {
             beta= score;
          }
 
-//         alphaBetaCalls++;
-//         nullWindowValues.add(("["
-//               + (beta - 1)
-//               + " - "
-//               + beta + "]"));
+         //         alphaBetaCalls++;
+         //         nullWindowValues.add(("["
+         //               + (beta - 1)
+         //               + " - "
+         //               + beta + "]"));
 
          score= this.alphaBetaWithMemory(
                p,
@@ -172,34 +175,34 @@ public class MTDfSearch implements Search {
          }
       } while (lowerbound < upperbound);
 
-//      moveTime+= System.currentTimeMillis();
-//      this.pv.updatePV(
-//            d,
-//            moveTime,
-//            (this.movesSearched - movesSearchedBefore),
-//            score);
+      //      moveTime+= System.currentTimeMillis();
+      //      this.pv.updatePV(
+      //            d,
+      //            moveTime,
+      //            (this.movesSearched - movesSearchedBefore),
+      //            score);
 
-//      System.err.println("Best move: "
-//            + ((Move) this.pv.getBestMoveAsList().get(
-//                  0)));
-//      System.err.println("PV: bestLine: "
-//            + this.pv.getCurrentBestLine().toString());
-//      System.err.println("AlphaBetaCalls: "
-//            + alphaBetaCalls);
-//      System.err.println("Nullwindows called: "
-//            + nullWindowValues.toString());
+      //      System.err.println("Best move: "
+      //            + ((Move) this.pv.getBestMoveAsList().get(
+      //                  0)));
+      //      System.err.println("PV: bestLine: "
+      //            + this.pv.getCurrentBestLine().toString());
+      //      System.err.println("AlphaBetaCalls: "
+      //            + alphaBetaCalls);
+      //      System.err.println("Nullwindows called: "
+      //            + nullWindowValues.toString());
 
-//      if (this.useMoveOrdering) {
-//         if (whiteMove) {
-//            p.getWhite().betterMove(
-//                  (Move) this.pv.getBestMoveAsList().get(
-//                        0));
-//         } else {
-//            p.getBlack().betterMove(
-//                  (Move) this.pv.getBestMoveAsList().get(
-//                        0));
-//         }
-//      }
+      //      if (this.useMoveOrdering) {
+      //         if (whiteMove) {
+      //            p.getWhite().betterMove(
+      //                  (Move) this.pv.getBestMoveAsList().get(
+      //                        0));
+      //         } else {
+      //            p.getBlack().betterMove(
+      //                  (Move) this.pv.getBestMoveAsList().get(
+      //                        0));
+      //         }
+      //      }
 
       return score;
    }
@@ -253,12 +256,14 @@ public class MTDfSearch implements Search {
          List moves;
          int whiteBest= Integer.MIN_VALUE + 1;
          int blackBest= Integer.MAX_VALUE;
-         
+
          if (whiteMove) {
             moves= p.getWhite().getPossibleMoves();
          } else {
             moves= p.getBlack().getPossibleMoves();
          }
+
+         moves= historyHeuristic.sort(moves);
 
          if (moves.size() > 0) {
 
@@ -296,11 +301,11 @@ public class MTDfSearch implements Search {
 
                   this.pv.pop();
                   p.popMove();
-                  
+
                   moveTime+= System.currentTimeMillis();
 
                   if (g > whiteBest) {
-                     whiteBest= g;                    
+                     whiteBest= g;
                      this.pv.updatePV(
                            d,
                            moveTime,
@@ -310,6 +315,9 @@ public class MTDfSearch implements Search {
                         p.getWhite().betterMove(
                               move);
                      }
+                     historyHeuristic.updateWithSufficient(
+                           move,
+                           ply);
                   }
                }
 
@@ -352,7 +360,7 @@ public class MTDfSearch implements Search {
                   moveTime+= System.currentTimeMillis();
 
                   if (g < blackBest) {
-                     blackBest= g;                    
+                     blackBest= g;
                      this.pv.updatePV(
                            d,
                            moveTime,

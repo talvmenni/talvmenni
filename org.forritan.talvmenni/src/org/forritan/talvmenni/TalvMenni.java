@@ -15,8 +15,8 @@ import edu.emory.mathcs.util.concurrent.ThreadFactory;
 
 public class TalvMenni {
 
-   public final static String        NAME                      = "Talvmenni";
-   public final static String        VERSION                   = "0.0.1";
+   public final static String        NAME                          = "Talvmenni";
+   public final static String        VERSION                       = "0.0.1";
 
    public static String              DEBUG_NAME;
 
@@ -24,7 +24,7 @@ public class TalvMenni {
     * Default PLY = 4 Minimum for being able to detect that we are getting
     * checkmated...
     */
-   public static int                 PLY                       = 4;
+   public static int                 PLY                           = 4;
 
    /**
     * Default MAX_TRANSPOSITION_ENTRIES - Maximum number of entries in each of
@@ -32,13 +32,20 @@ public class TalvMenni {
     * MAX_TRANSPOSITION_ENTRIES is reached the eldest entry will be removed
     * before a new entry is added.
     */
-   public static int                 MAX_TRANSPOSITION_ENTRIES = 150000;
+   public static int                 MAX_TRANSPOSITION_ENTRIES     = 125000;
+
+   /**
+    * Default MAX_HISTORY_HEURISTIC_ENTRIES - Maximum number of entries in the
+    * history heuristic table. If MAX_HISTORY_HEURISTIC_ENTRIES is reached the
+    * eldest entry will be removed before a new entry is added.
+    */
+   public static int                 MAX_HISTORY_HEURISTIC_ENTRIES = 250000;
 
    /**
     * Very experimental :) Partition search - e.g.: Entries in transposition
     * will evaluate as equal if the pieces - excluding pawns - are equal...
     */
-   public static final boolean       PARTITION_SEARCH          = false;
+   public static final boolean       PARTITION_SEARCH              = false;
 
    private static PlainThreadFactory threadFactory;
 
@@ -72,12 +79,19 @@ public class TalvMenni {
                MaxTranpositionEntries).intValue();
       }
 
+      String MaxHistoryHeuristicEntries= System
+            .getProperty("MaxHistoryHeuristicEntries");
+      if (MaxHistoryHeuristicEntries != null) {
+         MAX_HISTORY_HEURISTIC_ENTRIES= Integer.valueOf(
+               MaxHistoryHeuristicEntries).intValue();
+      }
+
       final TheoryBook book= new TheoryBook(
             140000);
 
       final ChessEngine chessEngine= ChessEngine
 
-            // Choose strategy
+      // Choose strategy
 
             //      .create(new
             // RandomMoveStrategy(PrincipalVariation.Factory.create(0)));
@@ -87,21 +101,21 @@ public class TalvMenni {
             //                  book,
             //                  PrincipalVariation.Factory.create(PLY - 1)));
 
-            //            .create(new IterativeDeepeningMTDfWithTranspositionTableStrategy(
-            //                  PLY,
-            //                  new Transposition(
-            //                        MAX_TRANSPOSITION_ENTRIES),
-            //                  true,
-            //                  book,
-            //                  PrincipalVariation.Factory.create(PLY)));
-
-            .create(new IterativeDeepeningAlphaBetaWithTranspositionTableStrategy(
+            .create(new IterativeDeepeningMTDfWithTranspositionTableStrategy(
                   PLY,
                   new Transposition(
                         MAX_TRANSPOSITION_ENTRIES),
                   true,
                   book,
                   PrincipalVariation.Factory.create(PLY)));
+
+      //            .create(new IterativeDeepeningAlphaBetaWithTranspositionTableStrategy(
+      //                  PLY,
+      //                  new Transposition(
+      //                        MAX_TRANSPOSITION_ENTRIES),
+      //                  true,
+      //                  book,
+      //                  PrincipalVariation.Factory.create(PLY)));
 
       //            .create(new IterativeDeepeningAndReductionAlphaBetaStrategy(
       //                  PLY,
