@@ -1,5 +1,6 @@
 package org.forritan.talvmenni.evaluation;
 
+import org.forritan.talvmenni.game.ImmutablePosition;
 import org.forritan.talvmenni.game.Position;
 
 public interface Evaluation {

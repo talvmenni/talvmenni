@@ -13,6 +13,7 @@ import java.util.concurrent.ThreadFactory;
 
 import org.forritan.talvmenni.bitboard.Square;
 import org.forritan.talvmenni.bitboard.Squares;
+import org.forritan.talvmenni.game.ImmutablePosition;
 import org.forritan.talvmenni.game.Move;
 import org.forritan.talvmenni.game.MoveHistory;
 import org.forritan.talvmenni.game.Position;
@@ -141,7 +142,7 @@ public class ChessEngine extends Observable implements Runnable {
       }
 
       public void newGame() {
-         this.setCurrentPosition(Position.createInitial());
+         this.setCurrentPosition(ImmutablePosition.createInitial());
          MoveHistory.getInstance().reset();
          this.WhiteToMove = true;
          this.go= true;
@@ -172,9 +173,9 @@ public class ChessEngine extends Observable implements Runnable {
          this.currentPosition= position;
          if(this.currentPosition != null) {
             if(this.WhiteToMove) {
-               this.debugInfo.postPossibleMoves(this.currentPosition.white.getPossibleMoves());
+               this.debugInfo.postPossibleMoves(this.currentPosition.getWhite().getPossibleMoves());
             } else {
-               this.debugInfo.postPossibleMoves(this.currentPosition.black.getPossibleMoves());
+               this.debugInfo.postPossibleMoves(this.currentPosition.getBlack().getPossibleMoves());
             }
          }
       }
@@ -266,7 +267,7 @@ public class ChessEngine extends Observable implements Runnable {
         }
          
          
-         Position FenPosition = Position.create(whiteKings, whiteQueens, whiteRooks, whiteBishops,
+         ImmutablePosition FenPosition = ImmutablePosition.create(whiteKings, whiteQueens, whiteRooks, whiteBishops,
                whiteKnights, whitePawns, whiteCastling, whiteEnpassant,
                blackKings, blackQueens, blackRooks, blackBishops,
                blackKnights, blackPawns, blackCastling, blackEnpassant);
@@ -285,7 +286,7 @@ public class ChessEngine extends Observable implements Runnable {
       }
       
       public Move makeNextMove() {
-         Position.Move nextMove= ChessEngine.this.strategy.getNextMove(this.getCurrentPosition(), this.WhiteToMove);
+         ImmutablePosition.Move nextMove= ChessEngine.this.strategy.getNextMove(this.getCurrentPosition(), this.WhiteToMove);
          Move move= null;
          if(nextMove != null) {
             move= new Move(this.getCurrentPosition(), nextMove.from, nextMove.to, ChessEngine.this.strategy.getPromotionPiece());
@@ -385,7 +386,7 @@ public class ChessEngine extends Observable implements Runnable {
    
    public class DebugInfo extends Observable {
       
-      public void postPossibleMoves(List<Position.Move> moves) {
+      public void postPossibleMoves(List<ImmutablePosition.Move> moves) {
          this.setChanged();
          this.notifyObservers(
                moves.size() 

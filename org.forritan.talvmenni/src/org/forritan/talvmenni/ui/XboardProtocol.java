@@ -4,7 +4,7 @@ import org.forritan.talvmenni.bitboard.Squares;
 import org.forritan.talvmenni.core.ChessEngine;
 import org.forritan.talvmenni.core.TalvMenni;
 import org.forritan.talvmenni.game.Move;
-import org.forritan.talvmenni.game.Position;
+import org.forritan.talvmenni.game.ImmutablePosition;
 
 
 public class XboardProtocol extends UiProtocolBase {
@@ -55,15 +55,15 @@ public class XboardProtocol extends UiProtocolBase {
          String moveString= theInput.substring(
                8).trim();
 
-         int promotionPiece= Position.PromotionPiece.DEFAULT;
+         int promotionPiece= ImmutablePosition.PromotionPiece.DEFAULT;
 
          if (moveString.length() > 4) {
             String promoteTo= moveString.substring(
                   4,
                   5);
-            for (int i= 0; i < Position.PromotionPiece.STRINGS.length; i++) {
+            for (int i= 0; i < ImmutablePosition.PromotionPiece.STRINGS.length; i++) {
                if (promoteTo
-                     .equalsIgnoreCase(Position.PromotionPiece.STRINGS[i])) {
+                     .equalsIgnoreCase(ImmutablePosition.PromotionPiece.STRINGS[i])) {
                   promotionPiece= i;
                }
             }
@@ -89,13 +89,13 @@ public class XboardProtocol extends UiProtocolBase {
                      + move.toString();
             } else {
                if (this.protocol.isWhiteToMove()) {
-                  if (this.protocol.getCurrentPosition().white.isChecked()) {
+                  if (this.protocol.getCurrentPosition().getWhite().isChecked()) {
                      theOutput+= "0-1 {Black mates}";
                   } else {
                      theOutput+= "1/2-1/2 {Stalemate}";
                   }
                } else {
-                  if (this.protocol.getCurrentPosition().black.isChecked()) {
+                  if (this.protocol.getCurrentPosition().getBlack().isChecked()) {
                      theOutput+= "1-0 {White mates}";
                   } else {
                      theOutput+= "1/2-1/2 {Stalemate}";
@@ -114,13 +114,13 @@ public class XboardProtocol extends UiProtocolBase {
                   + move.toString();
          } else {
             if (this.protocol.isWhiteToMove()) {
-               if (this.protocol.getCurrentPosition().white.isChecked()) {
+               if (this.protocol.getCurrentPosition().getWhite().isChecked()) {
                   theOutput+= "0-1 {Black mates}";
                } else {
                   theOutput+= "1/2-1/2 {Stalemate}";
                }
             } else {
-               if (this.protocol.getCurrentPosition().black.isChecked()) {
+               if (this.protocol.getCurrentPosition().getBlack().isChecked()) {
                   theOutput+= "1-0 {White mates}";
                } else {
                   theOutput+= "1/2-1/2 {Stalemate}";

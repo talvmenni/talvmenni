@@ -7,8 +7,9 @@ import java.util.List;
 import java.util.Observable;
 
 import org.forritan.talvmenni.evaluation.Evaluation;
+import org.forritan.talvmenni.game.ImmutablePosition;
 import org.forritan.talvmenni.game.Position;
-import org.forritan.talvmenni.game.Position.Move;
+import org.forritan.talvmenni.game.ImmutablePosition.Move;
 
 public class FullSearch implements Search {
    
@@ -37,7 +38,7 @@ public class FullSearch implements Search {
          Evaluation e,
          boolean whiteMove) {
       
-      Position.nodes++;
+      ImmutablePosition.nodes++;
       
       long time= -System.currentTimeMillis();
       this.movesSearched= 0;
@@ -47,9 +48,9 @@ public class FullSearch implements Search {
       
       List<Move> moves;
       if(whiteMove) {
-         moves= p.white.getPossibleMoves();         
+         moves= p.getWhite().getPossibleMoves();         
       } else {
-         moves= p.black.getPossibleMoves();         
+         moves= p.getBlack().getPossibleMoves();         
       }
       
       for(Move move : moves) {
@@ -86,7 +87,7 @@ public class FullSearch implements Search {
          boolean whiteMove,
          int depth) {
 
-      Position.nodes++;
+      ImmutablePosition.nodes++;
       
       MoveScoreTuple result= new MoveScoreTuple(null, 0);
       if(depth > 1) {
@@ -94,9 +95,9 @@ public class FullSearch implements Search {
          MoveScoreTuple bestScore= null;
          
          if(whiteMove) {
-            moves= p.white.getPossibleMoves();         
+            moves= p.getWhite().getPossibleMoves();         
          } else {
-            moves= p.black.getPossibleMoves();         
+            moves= p.getBlack().getPossibleMoves();         
          }
          
          if(moves.size() > 0) {
@@ -114,13 +115,13 @@ public class FullSearch implements Search {
             
          } else {
             if(whiteMove){
-               if(p.white.isChecked()) {
+               if(p.getWhite().isChecked()) {
                   result= new MoveScoreTuple(null, -20000 + depth); // Checkmate
                } else {
                   result= new MoveScoreTuple(null, 0);  // Stalemate
                }
              } else {
-               if(p.black.isChecked()) {
+               if(p.getBlack().isChecked()) {
                   result= new MoveScoreTuple(null, 20000 - depth); // Checkmate
                } else {
                   result= new MoveScoreTuple(null, 0);  // Stalemate
@@ -131,9 +132,9 @@ public class FullSearch implements Search {
          List<Move> moves;
          int bestScore= 0;
          if(whiteMove) {
-            moves= p.white.getPossibleMoves();
+            moves= p.getWhite().getPossibleMoves();
          } else {
-            moves= p.black.getPossibleMoves();         
+            moves= p.getBlack().getPossibleMoves();         
          }
          
          if(moves.size() > 0) {
@@ -148,7 +149,7 @@ public class FullSearch implements Search {
             }
          } else {
             if(whiteMove){
-               if(p.white.isChecked()) {
+               if(p.getWhite().isChecked()) {
                   result= new MoveScoreTuple(null, -20000 + depth); // Black
                                                                       // wins by
                                                                       // checkmate
@@ -156,7 +157,7 @@ public class FullSearch implements Search {
                   result= new MoveScoreTuple(null,  0);  // Stalemate
                }
              } else {
-               if(p.black.isChecked()) {
+               if(p.getBlack().isChecked()) {
                   result= new MoveScoreTuple(null,  20000 - depth); // White
                                                                        // wins
                                                                        // by

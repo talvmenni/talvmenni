@@ -6,6 +6,7 @@ import org.forritan.talvmenni.bitboard.BitboardIterator;
 import org.forritan.talvmenni.bitboard.BishopMasks;
 import org.forritan.talvmenni.bitboard.Square;
 import org.forritan.talvmenni.bitboard.paths.Bishops;
+import org.forritan.talvmenni.game.ImmutablePosition;
 import org.forritan.talvmenni.game.Position;
 
 
@@ -16,13 +17,13 @@ public class Bishop {
          Position p) {
       long result= Square._EMPTY_BOARD;
       
-      if(!p.white.isAnyPieceOnPosition(square) && !p.black.isAnyPieceOnPosition(square)) {
+      if(!p.getWhite().isAnyPieceOnPosition(square) && !p.getBlack().isAnyPieceOnPosition(square)) {
        return result;
     }
 
       long allPiecesOnPath= Bishops.create().getPathsFrom(
                 square)
-                & (p.white.allPieces | p.black.allPieces);
+                & (p.getWhite().allPieces | p.getBlack().allPieces);
 
       //Check NorthWest from square...
       long northWestPath= Square._EMPTY_BOARD;
@@ -76,10 +77,10 @@ public class Bishop {
       northEastPath |= BishopMasks.create().getNorthEast2SouthWestMaskFrom(square);            
       result |= ~northEastPath;
       
-      if(p.white.isAnyPieceOnPosition(square)) {
-         result &= ~p.white.allPieces;
+      if(p.getWhite().isAnyPieceOnPosition(square)) {
+         result &= ~p.getWhite().allPieces;
       } else {
-         result &= ~p.black.allPieces;
+         result &= ~p.getBlack().allPieces;
       }
           
     return result;

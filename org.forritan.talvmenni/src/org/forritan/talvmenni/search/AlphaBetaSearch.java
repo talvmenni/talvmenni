@@ -7,8 +7,9 @@ import java.util.List;
 import java.util.Observable;
 
 import org.forritan.talvmenni.evaluation.Evaluation;
+import org.forritan.talvmenni.game.ImmutablePosition;
 import org.forritan.talvmenni.game.Position;
-import org.forritan.talvmenni.game.Position.Move;
+import org.forritan.talvmenni.game.ImmutablePosition.Move;
 
 public class AlphaBetaSearch implements Search {
    
@@ -40,7 +41,7 @@ public class AlphaBetaSearch implements Search {
       int alpha= Integer.MIN_VALUE + 1; // Very important!!! Can't be Integer.MIN_VALUE, because Integer.MIN_VALUE == -Integer.MIN_VALUE
       int beta= Integer.MAX_VALUE;
             
-      Position.nodes++;
+      ImmutablePosition.nodes++;
       
       long time= -System.currentTimeMillis();
       this.movesSearched= 0;
@@ -50,9 +51,9 @@ public class AlphaBetaSearch implements Search {
       
       List<Move> moves;
       if(whiteMove) {
-         moves= p.white.getPossibleMoves();         
+         moves= p.getWhite().getPossibleMoves();         
       } else {
-         moves= p.black.getPossibleMoves();         
+         moves= p.getBlack().getPossibleMoves();         
       }
       
       for(Move move : moves) {
@@ -102,7 +103,7 @@ public class AlphaBetaSearch implements Search {
          int alpha,
          int beta) {
 
-      Position.nodes++;
+      ImmutablePosition.nodes++;
       
       MoveScoreTuple result= new MoveScoreTuple(null, 0);
       if(depth > 1) {
@@ -110,9 +111,9 @@ public class AlphaBetaSearch implements Search {
          MoveScoreTuple bestScore= null;
          
          if(whiteMove) {
-            moves= p.white.getPossibleMoves();         
+            moves= p.getWhite().getPossibleMoves();         
          } else {
-            moves= p.black.getPossibleMoves();         
+            moves= p.getBlack().getPossibleMoves();         
          }
          
          if(moves.size() > 0) {
@@ -136,13 +137,13 @@ public class AlphaBetaSearch implements Search {
             
          } else {
             if(whiteMove){
-               if(p.white.isChecked()) {
+               if(p.getWhite().isChecked()) {
                   result= new MoveScoreTuple(null, -20000 + depth); // Checkmate
                } else {
                   result= new MoveScoreTuple(null, 0);  // Stalemate
                }
              } else {
-               if(p.black.isChecked()) {
+               if(p.getBlack().isChecked()) {
                   result= new MoveScoreTuple(null, 20000 - depth); // Checkmate
                } else {
                   result= new MoveScoreTuple(null, 0);  // Stalemate
@@ -153,9 +154,9 @@ public class AlphaBetaSearch implements Search {
          List<Move> moves;
          int bestScore= 0;
          if(whiteMove) {
-            moves= p.white.getPossibleMoves();
+            moves= p.getWhite().getPossibleMoves();
          } else {
-            moves= p.black.getPossibleMoves();         
+            moves= p.getBlack().getPossibleMoves();         
          }
          
          if(moves.size() > 0) {
@@ -170,7 +171,7 @@ public class AlphaBetaSearch implements Search {
             }
          } else {
             if(whiteMove){
-               if(p.white.isChecked()) {
+               if(p.getWhite().isChecked()) {
                   result= new MoveScoreTuple(null, -20000 + depth); // Black
                                                                       // wins by
                                                                       // checkmate
@@ -178,7 +179,7 @@ public class AlphaBetaSearch implements Search {
                   result= new MoveScoreTuple(null,  0);  // Stalemate
                }
              } else {
-               if(p.black.isChecked()) {
+               if(p.getBlack().isChecked()) {
                   result= new MoveScoreTuple(null,  20000 - depth); // White
                                                                        // wins
                                                                        // by

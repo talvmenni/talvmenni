@@ -1,6 +1,7 @@
 package org.forritan.talvmenni.bitboard.attacks;
 
 import org.forritan.talvmenni.bitboard.paths.Knights;
+import org.forritan.talvmenni.game.ImmutablePosition;
 import org.forritan.talvmenni.game.Position;
 
 
@@ -10,16 +11,16 @@ public class Knight {
          long square,
          Position p) {
 
-      if (p.white.isKnight(square)) {
+      if (p.getWhite().isKnight(square)) {
          return Knights.create().getPathsFrom(
                square)
                ^ (Knights.create().getPathsFrom(
-                     square) & p.white.allPieces);
-      } else if (p.black.isKnight(square)) { return Knights.create()
+                     square) & p.getWhite().allPieces);
+      } else if (p.getBlack().isKnight(square)) { return Knights.create()
             .getPathsFrom(
                   square)
             ^ (Knights.create().getPathsFrom(
-                  square) & p.black.allPieces); }
+                  square) & p.getBlack().allPieces); }
 
       return 0L;
    }

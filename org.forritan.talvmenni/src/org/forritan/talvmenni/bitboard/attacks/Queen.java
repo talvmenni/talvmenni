@@ -3,6 +3,7 @@ package org.forritan.talvmenni.bitboard.attacks;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.forritan.talvmenni.game.ImmutablePosition;
 import org.forritan.talvmenni.game.Position;
 
 

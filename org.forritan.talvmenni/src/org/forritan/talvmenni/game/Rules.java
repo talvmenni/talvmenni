@@ -10,11 +10,11 @@ public class Rules {
 
       boolean result;
 
-      Position.Bitboard bitboardMoving;
+      ImmutablePosition.Bitboard bitboardMoving;
       if (whiteToMove) {
-         bitboardMoving= position.white;
+         bitboardMoving= position.getWhite();
       } else {
-         bitboardMoving= position.black;
+         bitboardMoving= position.getBlack();
       }
 
       result= bitboardMoving.isAnyPieceOnPosition(from)

@@ -6,6 +6,7 @@ import org.forritan.talvmenni.bitboard.BitboardIterator;
 import org.forritan.talvmenni.bitboard.RookMasks;
 import org.forritan.talvmenni.bitboard.Square;
 import org.forritan.talvmenni.bitboard.paths.Rooks;
+import org.forritan.talvmenni.game.ImmutablePosition;
 import org.forritan.talvmenni.game.Position;
 
 
@@ -17,13 +18,13 @@ public class Rook {
 
         long result= Square._EMPTY_BOARD;
         
-        if(!p.white.isAnyPieceOnPosition(square) && !p.black.isAnyPieceOnPosition(square)) {
+        if(!p.getWhite().isAnyPieceOnPosition(square) && !p.getBlack().isAnyPieceOnPosition(square)) {
          return result;
       }
 
         long allPiecesOnPath= Rooks.create().getPathsFrom(
                   square)
-                  & (p.white.allPieces | p.black.allPieces);
+                  & (p.getWhite().allPieces | p.getBlack().allPieces);
 
         //Check North from square...
         long northPath= Square._EMPTY_BOARD;
@@ -77,10 +78,10 @@ public class Rook {
         westPath |= RookMasks.create().getWest2EastMaskFrom(square);            
         result |= ~westPath;
         
-        if(p.white.isAnyPieceOnPosition(square)) {
-           result &= ~p.white.allPieces;
+        if(p.getWhite().isAnyPieceOnPosition(square)) {
+           result &= ~p.getWhite().allPieces;
         } else {
-           result &= ~p.black.allPieces;
+           result &= ~p.getBlack().allPieces;
         }
             
       return result;

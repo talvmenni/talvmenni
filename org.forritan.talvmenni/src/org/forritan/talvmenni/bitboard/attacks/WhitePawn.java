@@ -3,6 +3,7 @@ package org.forritan.talvmenni.bitboard.attacks;
 import org.forritan.talvmenni.bitboard.Rank;
 import org.forritan.talvmenni.bitboard.paths.WhitePawnCaptures;
 import org.forritan.talvmenni.bitboard.paths.WhitePawnMoves;
+import org.forritan.talvmenni.game.ImmutablePosition;
 import org.forritan.talvmenni.game.Position;
 
 
@@ -14,8 +15,8 @@ public class WhitePawn {
       long result= 0L;
       result= WhitePawnCaptures.create().getPathsFrom(
             square);
-      result&= ~p.white.allPieces;
-      result&= p.black.allPieces;
+      result&= ~p.getWhite().allPieces;
+      result&= p.getBlack().allPieces;
       return result;
    }
 
@@ -24,9 +25,9 @@ public class WhitePawn {
          Position p) {
       long result= WhitePawnMoves.create().getPathsFrom(
             square);
-      result&= ~p.black.allPieces;
-      result&= ~p.white.allPieces;
-      result&= ~(((p.white.allPieces | p.black.allPieces) & Rank._3 & (square << 8)) << 8);
+      result&= ~p.getBlack().allPieces;
+      result&= ~p.getWhite().allPieces;
+      result&= ~(((p.getWhite().allPieces | p.getBlack().allPieces) & Rank._3 & (square << 8)) << 8);
       return result;
    }
 }

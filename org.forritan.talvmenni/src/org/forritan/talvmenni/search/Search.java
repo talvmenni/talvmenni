@@ -4,12 +4,13 @@ import java.util.List;
 import java.util.Observable;
 
 import org.forritan.talvmenni.evaluation.Evaluation;
+import org.forritan.talvmenni.game.ImmutablePosition;
 import org.forritan.talvmenni.game.Position;
-import org.forritan.talvmenni.game.Position.Move;
+import org.forritan.talvmenni.game.ImmutablePosition.Move;
 
 public interface Search {
    
-   public List<Position.Move> getBestMoves(Position p, Evaluation e, boolean whiteMove);
+   public List<ImmutablePosition.Move> getBestMoves(Position p, Evaluation e, boolean whiteMove);
    
    public Thinking getThinking();
    public DebugInfo getDebugInfo();
@@ -62,10 +63,10 @@ public interface Search {
          this.notifyObservers(
                "---------------------------\n" +
                "Positions created: " 
-               + Position.positionsCreated 
+               + ImmutablePosition.positionsCreated 
                + "\n"
                + "Average possible moves: " 
-               + Position.positionsCreated / Position.nodes
+               + ImmutablePosition.positionsCreated / ImmutablePosition.nodes
                + "\n"
                + "---------------------------\n");
       }

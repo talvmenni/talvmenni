@@ -8,6 +8,7 @@ import org.forritan.talvmenni.bitboard.Squares;
 import org.forritan.talvmenni.core.ChessEngine.Protocol;
 import org.forritan.talvmenni.game.Move;
 import org.forritan.talvmenni.game.MoveHistory;
+import org.forritan.talvmenni.game.ImmutablePosition;
 import org.forritan.talvmenni.game.Position;
 
 public class ConsoleProtocol extends UiProtocolBase {
@@ -151,18 +152,18 @@ public class ConsoleProtocol extends UiProtocolBase {
                         3,
                         4)).intValue())).toUpperCase();
       
-      int promotionPiece= Position.PromotionPiece.DEFAULT;;
+      int promotionPiece= ImmutablePosition.PromotionPiece.DEFAULT;;
 
       if(theMove.length() > 4) {
          String promoteTo= theMove.substring(4, 5);
          if(promoteTo.equalsIgnoreCase("q")) {
-            promotionPiece= Position.PromotionPiece.QUEEN;               
+            promotionPiece= ImmutablePosition.PromotionPiece.QUEEN;               
          } else if(promoteTo.equalsIgnoreCase("r")) {
-            promotionPiece= Position.PromotionPiece.ROOK;               
+            promotionPiece= ImmutablePosition.PromotionPiece.ROOK;               
          } else if(promoteTo.equalsIgnoreCase("b")) {
-            promotionPiece= Position.PromotionPiece.BISHOP;               
+            promotionPiece= ImmutablePosition.PromotionPiece.BISHOP;               
          } else if(promoteTo.equalsIgnoreCase("n")) {
-            promotionPiece= Position.PromotionPiece.KNIGHT;                              
+            promotionPiece= ImmutablePosition.PromotionPiece.KNIGHT;                              
          } 
       }
 
@@ -248,9 +249,9 @@ public class ConsoleProtocol extends UiProtocolBase {
    private String printPossibleMoves()
    {
       if(this.protocol.isWhiteToMove()) {
-         return this.protocol.getCurrentPosition().white.getPossibleMoves().toString();
+         return this.protocol.getCurrentPosition().getWhite().getPossibleMoves().toString();
       } else {
-         return this.protocol.getCurrentPosition().black.getPossibleMoves().toString();
+         return this.protocol.getCurrentPosition().getBlack().getPossibleMoves().toString();
       }
    }
    private String printHistory() {
@@ -274,9 +275,9 @@ public class ConsoleProtocol extends UiProtocolBase {
       if (currentPosition == null)
       { System.out.println("ERROR: No game created");
          return false;}
-      if (currentPosition.white.isAnyPieceOnPosition(fromSquare) && !this.protocol.isWhiteToMove())
+      if (currentPosition.getWhite().isAnyPieceOnPosition(fromSquare) && !this.protocol.isWhiteToMove())
           return false;
-      if (currentPosition.black.isAnyPieceOnPosition(fromSquare) && this.protocol.isWhiteToMove())
+      if (currentPosition.getBlack().isAnyPieceOnPosition(fromSquare) && this.protocol.isWhiteToMove())
          return false;
       if (!currentPosition.isLegalMove(fromSquare, toSquare))
          return false;
@@ -287,29 +288,29 @@ public class ConsoleProtocol extends UiProtocolBase {
          long square) {
       Position currentPosition= this.protocol.getCurrentPosition();
       if (currentPosition != null) {
-         if (currentPosition.white.isPawn(square))
+         if (currentPosition.getWhite().isPawn(square))
             return "P";
-         else if (currentPosition.black.isPawn(square))
+         else if (currentPosition.getBlack().isPawn(square))
             return "p";
-         else if (currentPosition.white.isRook(square))
+         else if (currentPosition.getWhite().isRook(square))
             return "R";
-         else if (currentPosition.black.isRook(square))
+         else if (currentPosition.getBlack().isRook(square))
             return "r";
-         else if (currentPosition.white.isBishop(square))
+         else if (currentPosition.getWhite().isBishop(square))
             return "B";
-         else if (currentPosition.black.isBishop(square))
+         else if (currentPosition.getBlack().isBishop(square))
             return "b";
-         else if (currentPosition.white.isKnight(square))
+         else if (currentPosition.getWhite().isKnight(square))
             return "N";
-         else if (currentPosition.black.isKnight(square))
+         else if (currentPosition.getBlack().isKnight(square))
             return "n";
-         else if (currentPosition.white.isQueen(square))
+         else if (currentPosition.getWhite().isQueen(square))
             return "Q";
-         else if (currentPosition.black.isQueen(square))
+         else if (currentPosition.getBlack().isQueen(square))
             return "q";
-         else if (currentPosition.white.isKing(square))
+         else if (currentPosition.getWhite().isKing(square))
             return "K";
-         else if (currentPosition.black.isKing(square))
+         else if (currentPosition.getBlack().isKing(square))
             return "k";
          else
             return ".";
@@ -332,7 +333,7 @@ public class ConsoleProtocol extends UiProtocolBase {
 
               sq= square2.getSquare(square);
               
-              if ((!board.white.isAnyPieceOnPosition(sq)) && (!board.black.isAnyPieceOnPosition(sq))) {
+              if ((!board.getWhite().isAnyPieceOnPosition(sq)) && (!board.getBlack().isAnyPieceOnPosition(sq))) {
                   countEmptySquares++;
               }
 
