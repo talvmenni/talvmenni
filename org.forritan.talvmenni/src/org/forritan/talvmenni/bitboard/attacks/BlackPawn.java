@@ -1,6 +1,7 @@
 package org.forritan.talvmenni.bitboard.attacks;
 
 import org.forritan.talvmenni.bitboard.Rank;
+import org.forritan.talvmenni.bitboard.Square;
 import org.forritan.talvmenni.bitboard.paths.BlackPawnCaptures;
 import org.forritan.talvmenni.bitboard.paths.BlackPawnMoves;
 import org.forritan.talvmenni.bitboard.paths.WhitePawnCaptures;
@@ -18,11 +19,13 @@ public class BlackPawn {
             square);
       result&= ~p.getBlack().allPieces;
       result&= p.getWhite().allPieces;
-
-      result |= ((BlackPawnCaptures.create().getPathsFrom(
-            square)
-            & p.getWhite().enpassant)
-            & Rank._3);
+      
+      if(p.getWhite().enpassant != Square._EMPTY_BOARD) {
+         result |= ((BlackPawnCaptures.create().getPathsFrom(
+               square)
+               & p.getWhite().enpassant)
+               & Rank._3);
+      }
 
       return result;
    }
