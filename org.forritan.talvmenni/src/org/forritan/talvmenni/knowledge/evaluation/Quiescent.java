@@ -81,10 +81,10 @@ public class Quiescent {
          List moves;
 
          if (whiteMove) {
-            this.historyHeuristic.sortMoveList(p.getWhite());
+//            this.historyHeuristic.sortMoveList(p.getWhite());
             moves= p.getWhite().getPossibleCaptureMoves();
          } else {
-            this.historyHeuristic.sortMoveList(p.getBlack());
+//            this.historyHeuristic.sortMoveList(p.getBlack());
             moves= p.getBlack().getPossibleCaptureMoves();
          }
 
