@@ -12,6 +12,7 @@ public class AllTests {
       suite.addTestSuite(RookTest.class);
       suite.addTestSuite(BishopTest.class);
       suite.addTestSuite(KnightTest.class);
+      suite.addTestSuite(QueenTest.class);
       //$JUnit-END$
       return suite;
    }
