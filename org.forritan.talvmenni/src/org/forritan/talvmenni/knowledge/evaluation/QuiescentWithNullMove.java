@@ -44,7 +44,7 @@ public class QuiescentWithNullMove {
                   alpha,
                   beta);
 
-      int score= (e.getScore(p) * (whiteMove ? 1 : -1));
+      int score= (e.getScore(p, whiteMove) * (whiteMove ? 1 : -1));
 
       if ((ply - 1 - TalvMenni.NULL_MOVE_REDUCTION) >= 0) {
          int nullMoveScore= -this.search.alphaBeta(

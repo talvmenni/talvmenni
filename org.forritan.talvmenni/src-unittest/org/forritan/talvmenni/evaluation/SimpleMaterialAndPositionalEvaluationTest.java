@@ -23,7 +23,7 @@ public class SimpleMaterialAndPositionalEvaluationTest extends TestCase {
       Evaluation e= new SimpleMaterialAndPositionalEvaluation();
       Assert.assertEquals(
             0,
-            e.getScore(p));
+            e.getScore(p, true));
    }
 
    public void testGetScoreAllWhitePiecesOnlyBlackKing() {
@@ -56,19 +56,19 @@ public class SimpleMaterialAndPositionalEvaluationTest extends TestCase {
       Evaluation e= new SimpleMaterialAndPositionalEvaluation();
       Assert.assertEquals(
             8
-                  * Evaluation.PAWN
+                  * Evaluation.PAWN_IN_OPENING_GAME
                   + 2
-                  * Evaluation.KNIGHT
+                  * Evaluation.KNIGHT_IN_OPENING_GAME
                   + 2
-                  * Evaluation.BISHOP
+                  * Evaluation.BISHOP_IN_OPENING_GAME
                   + 2
-                  * Evaluation.ROOK
-                  + Evaluation.QUEEN
+                  * Evaluation.ROOK_IN_OPENING_GAME
+                  + Evaluation.QUEEN_IN_OPENING_GAME
                   + 8
-                  * Evaluation.POSITION_OUTER_BORDER
+                  * Evaluation.POSITION_OUTER_BORDER_IN_OPENING_GAME
                   + 6
-                  * Evaluation.POSITION_MIDDLE_BORDER,
-            e.getScore(p));
+                  * Evaluation.POSITION_MIDDLE_BORDER_IN_OPENING_GAME,
+            e.getScore(p, true));
    }
 
    public void testGetScoreAllBlackPiecesOnlyWhiteKing() {
@@ -102,17 +102,17 @@ public class SimpleMaterialAndPositionalEvaluationTest extends TestCase {
       Assert
             .assertEquals(
                   -(8
-                        * Evaluation.PAWN
+                        * Evaluation.PAWN_IN_OPENING_GAME
                         + 2
-                        * Evaluation.KNIGHT
+                        * Evaluation.KNIGHT_IN_OPENING_GAME
                         + 2
-                        * Evaluation.BISHOP
+                        * Evaluation.BISHOP_IN_OPENING_GAME
                         + 2
-                        * Evaluation.ROOK
-                        + Evaluation.QUEEN
+                        * Evaluation.ROOK_IN_OPENING_GAME
+                        + Evaluation.QUEEN_IN_OPENING_GAME
                         + 8
-                        * Evaluation.POSITION_OUTER_BORDER + 6 * Evaluation.POSITION_MIDDLE_BORDER),
-                  e.getScore(p));
+                        * Evaluation.POSITION_OUTER_BORDER_IN_OPENING_GAME + 6 * Evaluation.POSITION_MIDDLE_BORDER_IN_OPENING_GAME),
+                  e.getScore(p, true));
    }
 
 }

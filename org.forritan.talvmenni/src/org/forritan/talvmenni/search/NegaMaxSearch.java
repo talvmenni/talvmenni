@@ -92,7 +92,7 @@ public class NegaMaxSearch implements Search {
       int result;
       if (ply == 0) {
          this.pv.updateLastExaminedLine();
-         result= (e.getScore(p) * (whiteMove ? 1 : -1));
+         result= (e.getScore(p, whiteMove) * (whiteMove ? 1 : -1));
       } else {
          List moves;
          int best= Integer.MIN_VALUE + 1;

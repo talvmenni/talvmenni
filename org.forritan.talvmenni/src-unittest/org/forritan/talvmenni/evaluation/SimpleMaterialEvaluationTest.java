@@ -23,7 +23,7 @@ public class SimpleMaterialEvaluationTest extends TestCase {
       Evaluation e= new SimpleMaterialEvaluation();
       Assert.assertEquals(
             0,
-            e.getScore(p));
+            e.getScore(p, true));
    }
 
    public void testGetScoreAllWhitePiecesOnlyBlackKing() {
@@ -56,15 +56,15 @@ public class SimpleMaterialEvaluationTest extends TestCase {
       Evaluation e= new SimpleMaterialEvaluation();
       Assert.assertEquals(
             8
-                  * Evaluation.PAWN
+                  * Evaluation.PAWN_IN_OPENING_GAME
                   + 2
-                  * Evaluation.KNIGHT
+                  * Evaluation.KNIGHT_IN_OPENING_GAME
                   + 2
-                  * Evaluation.BISHOP
+                  * Evaluation.BISHOP_IN_OPENING_GAME
                   + 2
-                  * Evaluation.ROOK
-                  + Evaluation.QUEEN,
-            e.getScore(p));
+                  * Evaluation.ROOK_IN_OPENING_GAME
+                  + Evaluation.QUEEN_IN_OPENING_GAME,
+            e.getScore(p, true));
    }
 
    public void testGetScoreAllBlackPiecesOnlyWhiteKing() {
@@ -97,14 +97,15 @@ public class SimpleMaterialEvaluationTest extends TestCase {
       Evaluation e= new SimpleMaterialEvaluation();
       Assert.assertEquals(
             -(8
-                  * Evaluation.PAWN
+                  * Evaluation.PAWN_IN_OPENING_GAME
                   + 2
-                  * Evaluation.KNIGHT
+                  * Evaluation.KNIGHT_IN_OPENING_GAME
                   + 2
-                  * Evaluation.BISHOP
+                  * Evaluation.BISHOP_IN_OPENING_GAME
                   + 2
-                  * Evaluation.ROOK + Evaluation.QUEEN),
-            e.getScore(p));
+                  * Evaluation.ROOK_IN_OPENING_GAME 
+                  + Evaluation.QUEEN_IN_OPENING_GAME),
+            e.getScore(p, true));
    }
 
 }

@@ -111,7 +111,7 @@ public class AlphaBetaSearch implements Search {
       int result;
 
       if (ply == 0) {
-         result= (e.getScore(p) * (whiteMove ? 1 : -1));
+         result= (e.getScore(p, whiteMove) * (whiteMove ? 1 : -1));
          this.pv.updateLastExaminedLine();
       } else {
          List moves;

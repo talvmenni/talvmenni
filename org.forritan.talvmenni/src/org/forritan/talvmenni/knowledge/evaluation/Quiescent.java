@@ -67,7 +67,7 @@ public class Quiescent {
                   alpha,
                   beta);
 
-      int score= (e.getScore(p) * (whiteMove ? 1 : -1));
+      int score= (e.getScore(p, whiteMove) * (whiteMove ? 1 : -1));
 //      this.pv.updateLastExaminedLine();
 
       if ((this.maxDepth + ply) > 0) {
