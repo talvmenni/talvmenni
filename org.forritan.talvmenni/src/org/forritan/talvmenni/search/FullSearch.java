@@ -48,6 +48,7 @@ public class FullSearch extends Observable implements Search {
          long moveTime= -System.currentTimeMillis();
          int movesSearchedBeforeMove= this.movesSearched++;
          MoveScoreTuple score= this.getBestMove(p.move(move.from, move.to), e, !whiteMove, depth - 1);
+         score.add(move, e.getScore(p));
          this.setChanged();
          this.notifyObservers("[" + move.toString() + "] " + score.getScore() + " and there are " + (this.movesSearched - movesSearchedBeforeMove) + " positions searched...");
          if(bestScore == null || (whiteMove ? score.getScore() > bestScore.getScore() : score.getScore() < bestScore.getScore())) {
@@ -58,7 +59,6 @@ public class FullSearch extends Observable implements Search {
             this.thinking.postThinking(depth, bestScore.getScore(), moveTime, this.movesSearched, bestScore.getMoveList().toString());
          }else if(bestScore != null && score.getScore() == bestScore.getScore()) {
             result.add(move);
-            this.thinking.postThinking(depth, bestScore.getScore(), moveTime, this.movesSearched, bestScore.getMoveList().toString());
          }
       }
       
@@ -88,7 +88,7 @@ public class FullSearch extends Observable implements Search {
          boolean whiteMove,
          int depth) {
 
-      MoveScoreTuple result= null;
+      MoveScoreTuple result= new MoveScoreTuple(null, 0);
       if(depth > 1) {
           List<Move> moves;
          MoveScoreTuple bestScore= null;
@@ -104,6 +104,8 @@ public class FullSearch extends Observable implements Search {
             for(Move move : moves) {
                this.movesSearched++;
                MoveScoreTuple score= this.getBestMove(p.move(move.from, move.to), e, !whiteMove, depth - 1);
+               System.err.println("score: " + score);
+               System.err.println("bestScore: " + bestScore);
                if(bestScore == null || (whiteMove ? score.getScore() > bestScore.getScore() : score.getScore() < bestScore.getScore())) {
                   bestScore= score;
                   currentBestMove= move;
@@ -190,7 +192,7 @@ public class FullSearch extends Observable implements Search {
       
       public void add(Move move, int score) {
          if(move != null) {
-            this.moves.add(this.moves.size(), move);
+            this.moves.add(0, move);
          }
          this.score += score;
       }
