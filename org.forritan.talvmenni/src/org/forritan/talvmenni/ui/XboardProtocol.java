@@ -23,10 +23,10 @@ public class XboardProtocol extends UiProtocolBase {
 
       if (theInput.equalsIgnoreCase("protover 2")) {
          theOutput= "feature usermove=1 "
-               + "time=0 "
+               + "time=0 " //We have not implemented timecontrol yet
                + "sigint=0 "
                + "sigterm=0 "
-               + "analyze=0 "
+               + "analyze=0 " //We have not implemented analyze yet
                + "myname=\"TALVMENNI v 0.1\""
                + "done=1";
       }
