@@ -3,16 +3,16 @@ package org.forritan.talvmenni.bitboard.paths;
 import org.forritan.talvmenni.bitboard.Square;
 
 
-public interface WhitePawnKill extends Pawn {
+public interface WhitePawnCapture extends Pawn {
 
-   public static final long _PATHS_FROM_A1 = 0L;
-   public static final long _PATHS_FROM_B1 = 0L;
-   public static final long _PATHS_FROM_C1 = 0L;
-   public static final long _PATHS_FROM_D1 = 0L;
-   public static final long _PATHS_FROM_E1 = 0L;
-   public static final long _PATHS_FROM_F1 = 0L;
-   public static final long _PATHS_FROM_G1 = 0L;
-   public static final long _PATHS_FROM_H1 = 0L;
+   public static final long _PATHS_FROM_A1 = Square._EMPTY_BOARD;
+   public static final long _PATHS_FROM_B1 = Square._EMPTY_BOARD;
+   public static final long _PATHS_FROM_C1 = Square._EMPTY_BOARD;
+   public static final long _PATHS_FROM_D1 = Square._EMPTY_BOARD;
+   public static final long _PATHS_FROM_E1 = Square._EMPTY_BOARD;
+   public static final long _PATHS_FROM_F1 = Square._EMPTY_BOARD;
+   public static final long _PATHS_FROM_G1 = Square._EMPTY_BOARD;
+   public static final long _PATHS_FROM_H1 = Square._EMPTY_BOARD;
    public static final long _PATHS_FROM_A2 = Square._B3;
    public static final long _PATHS_FROM_B2 = Square._A3
                                                  | Square._C3;
@@ -98,13 +98,13 @@ public interface WhitePawnKill extends Pawn {
                                                  | Square._H8;
    public static final long _PATHS_FROM_H7 = Square._G8;
 
-   public static final long _PATHS_FROM_A8 = 0L;
-   public static final long _PATHS_FROM_B8 = 0L;
-   public static final long _PATHS_FROM_C8 = 0L;
-   public static final long _PATHS_FROM_D8 = 0L;
-   public static final long _PATHS_FROM_E8 = 0L;
-   public static final long _PATHS_FROM_F8 = 0L;
-   public static final long _PATHS_FROM_G8 = 0L;
-   public static final long _PATHS_FROM_H8 = 0L;
+   public static final long _PATHS_FROM_A8 = Square._EMPTY_BOARD;
+   public static final long _PATHS_FROM_B8 = Square._EMPTY_BOARD;
+   public static final long _PATHS_FROM_C8 = Square._EMPTY_BOARD;
+   public static final long _PATHS_FROM_D8 = Square._EMPTY_BOARD;
+   public static final long _PATHS_FROM_E8 = Square._EMPTY_BOARD;
+   public static final long _PATHS_FROM_F8 = Square._EMPTY_BOARD;
+   public static final long _PATHS_FROM_G8 = Square._EMPTY_BOARD;
+   public static final long _PATHS_FROM_H8 = Square._EMPTY_BOARD;
 
 }

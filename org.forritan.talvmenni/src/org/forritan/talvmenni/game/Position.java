@@ -12,9 +12,9 @@ import org.forritan.talvmenni.bitboard.attacks.Knight;
 import org.forritan.talvmenni.bitboard.attacks.Queen;
 import org.forritan.talvmenni.bitboard.attacks.Rook;
 import org.forritan.talvmenni.bitboard.attacks.WhitePawn;
-import org.forritan.talvmenni.bitboard.paths.BlackPawnKills;
+import org.forritan.talvmenni.bitboard.paths.BlackPawnCaptures;
 import org.forritan.talvmenni.bitboard.paths.BlackPawnMoves;
-import org.forritan.talvmenni.bitboard.paths.WhitePawnKills;
+import org.forritan.talvmenni.bitboard.paths.WhitePawnCaptures;
 import org.forritan.talvmenni.bitboard.paths.WhitePawnMoves;
 
 
@@ -274,7 +274,7 @@ public class Position {
             if (!this.black.isAnyPieceOnPosition(to)
                   && this.black.isEnpassant(to)) {
                blackPawns= blackPawns
-                     ^ (this.black.enpassant ^ (this.black.enpassant & WhitePawnKills
+                     ^ (this.black.enpassant ^ (this.black.enpassant & WhitePawnCaptures
                            .create().getPathsFrom(
                                  from)));
             }
@@ -360,7 +360,7 @@ public class Position {
             if (!this.white.isAnyPieceOnPosition(to)
                   && this.white.isEnpassant(to)) {
                whitePawns= whitePawns
-                     ^ (this.white.enpassant ^ (this.white.enpassant & BlackPawnKills
+                     ^ (this.white.enpassant ^ (this.white.enpassant & BlackPawnCaptures
                            .create().getPathsFrom(
                                  from)));
             }
@@ -418,10 +418,10 @@ public class Position {
 
       if (piecesNotMoved) {
          if (whiteToMove) {
-            return (p.black.getAllKillerMovesAttackedSquares() ^ (Square._E1
+            return (p.black.getAllCaptureMovesAttackedSquares() ^ (Square._E1
                   | Square._F1 | Square._G1)) == 0L;
          } else {
-            return (p.white.getAllKillerMovesAttackedSquares() ^ (Square._E8
+            return (p.white.getAllCaptureMovesAttackedSquares() ^ (Square._E8
                   | Square._F8 | Square._G8)) == 0L;
          }
       } else {
@@ -451,10 +451,10 @@ public class Position {
 
       if (piecesNotMoved) {
          if (whiteToMove) {
-            return (p.black.getAllKillerMovesAttackedSquares() ^ (Square._C1
+            return (p.black.getAllCaptureMovesAttackedSquares() ^ (Square._C1
                   | Square._D1 | Square._E1)) == 0L;
          } else {
-            return (p.white.getAllKillerMovesAttackedSquares() ^ (Square._C8
+            return (p.white.getAllCaptureMovesAttackedSquares() ^ (Square._C8
                   | Square._D8 | Square._E8)) == 0L;
          }
       } else {
@@ -463,12 +463,12 @@ public class Position {
 
    }
 
-   public long getAllSquaresAttackedByWhiteKillerMove() {
-      return this.white.getAllKillerMovesAttackedSquares();
+   public long getAllSquaresAttackedByWhiteCaptureMove() {
+      return this.white.getAllCaptureMovesAttackedSquares();
    }
 
-   public long getAllSquaresAttackedByBlackKillerMove() {
-      return this.black.getAllKillerMovesAttackedSquares();
+   public long getAllSquaresAttackedByBlackCaptureMove() {
+      return this.black.getAllCaptureMovesAttackedSquares();
    }
 
    public class Bitboard {
@@ -605,7 +605,7 @@ public class Position {
          return ((this.enpassant & position) != 0L);
       }
 
-      private long getAllKillerMovesAttackedSquares() {
+      private long getAllCaptureMovesAttackedSquares() {
          long result= Squares._EMPTY_BOARD;
 
          Iterator kings= this.kingsIterator();
@@ -652,12 +652,12 @@ public class Position {
          while (pawns.hasNext()) {
             if (this.white) {
                long square= ((Long) pawns.next()).longValue();
-               result|= WhitePawn.killerMovesAttacksFrom(
+               result|= WhitePawn.captureMovesAttacksFrom(
                      square,
                      this.parent);
             } else {
                long square= ((Long) pawns.next()).longValue();
-               result|= BlackPawn.killerMovesAttacksFrom(
+               result|= BlackPawn.captureMovesAttacksFrom(
                      square,
                      this.parent);
             }

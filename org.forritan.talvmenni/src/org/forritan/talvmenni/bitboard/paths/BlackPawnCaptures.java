@@ -1,24 +1,24 @@
 package org.forritan.talvmenni.bitboard.paths;
 
 
-public class BlackPawnKills implements BlackPawnKill {
+public class BlackPawnCaptures implements BlackPawnCapture {
 
-   private static BlackPawnKills      instance;
+   private static BlackPawnCaptures      instance;
    private static final long[] bitmaps = new long[64];
    
    public static Pawn create() {
-      if (BlackPawnKills.instance == null) {
-         BlackPawnKills.instance= new BlackPawnKills();
+      if (BlackPawnCaptures.instance == null) {
+         BlackPawnCaptures.instance= new BlackPawnCaptures();
       }
-      return BlackPawnKills.instance;
+      return BlackPawnCaptures.instance;
    }
 
-   private BlackPawnKills() {
+   private BlackPawnCaptures() {
    }
 
    public long getPathsFrom(
          long square) {
-      return BlackPawnKills.bitmaps[Long.numberOfLeadingZeros(square)];
+      return BlackPawnCaptures.bitmaps[Long.numberOfLeadingZeros(square)];
    }
    
    static {

@@ -625,7 +625,7 @@ public class PositionTest extends TestCase {
       long attacks;
       Position p= Position.createInitial();
 
-      attacks= p.getAllSquaresAttackedByWhiteKillerMove();
+      attacks= p.getAllSquaresAttackedByWhiteCaptureMove();
       Assert.assertEquals(
             ""
                   + //
@@ -647,7 +647,7 @@ public class PositionTest extends TestCase {
             (this.zeroPrefix[Long.toBinaryString(
                   attacks).length() - 1] + Long.toBinaryString(attacks)));
 
-      attacks= p.getAllSquaresAttackedByBlackKillerMove();
+      attacks= p.getAllSquaresAttackedByBlackCaptureMove();
       Assert.assertEquals(
             ""
                   + //
@@ -693,7 +693,7 @@ public class PositionTest extends TestCase {
             Square._EMPTY_BOARD // blackEnpassant
             );
 
-      attacks= p.getAllSquaresAttackedByWhiteKillerMove();
+      attacks= p.getAllSquaresAttackedByWhiteCaptureMove();
       Assert.assertEquals(
             ""
                   + //
@@ -715,7 +715,7 @@ public class PositionTest extends TestCase {
             (this.zeroPrefix[Long.toBinaryString(
                   attacks).length() - 1] + Long.toBinaryString(attacks)));
 
-      attacks= p.getAllSquaresAttackedByBlackKillerMove();
+      attacks= p.getAllSquaresAttackedByBlackCaptureMove();
       Assert.assertEquals(
             ""
                   + //

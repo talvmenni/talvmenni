@@ -29,7 +29,7 @@ public class WhitePawnKillTest extends TestCase {
    }
 
    public void testWhitePawnPathsFromA1() {
-      Pawn pawn= WhitePawnKills.create();
+      Pawn pawn= WhitePawnCaptures.create();
       Assert.assertEquals(
             ""
                   + //
@@ -54,7 +54,7 @@ public class WhitePawnKillTest extends TestCase {
    }
 
    public void testWhitePawnPathsFromB1() {
-      Pawn pawn= WhitePawnKills.create();
+      Pawn pawn= WhitePawnCaptures.create();
       Assert.assertEquals(
             ""
                   + //
@@ -79,7 +79,7 @@ public class WhitePawnKillTest extends TestCase {
    }
 
    public void testWhitePawnPathsFromC1() {
-      Pawn pawn= WhitePawnKills.create();
+      Pawn pawn= WhitePawnCaptures.create();
       Assert.assertEquals(
             ""
                   + //
@@ -104,7 +104,7 @@ public class WhitePawnKillTest extends TestCase {
    }
 
    public void testWhitePawnPathsFromD1() {
-      Pawn pawn= WhitePawnKills.create();
+      Pawn pawn= WhitePawnCaptures.create();
       Assert.assertEquals(
             ""
                   + //
@@ -129,7 +129,7 @@ public class WhitePawnKillTest extends TestCase {
    }
 
    public void testWhitePawnPathsFromE1() {
-      Pawn pawn= WhitePawnKills.create();
+      Pawn pawn= WhitePawnCaptures.create();
       Assert.assertEquals(
             ""
                   + //
@@ -154,7 +154,7 @@ public class WhitePawnKillTest extends TestCase {
    }
 
    public void testWhitePawnPathsFromF1() {
-      Pawn pawn= WhitePawnKills.create();
+      Pawn pawn= WhitePawnCaptures.create();
       Assert.assertEquals(
             ""
                   + //
@@ -179,7 +179,7 @@ public class WhitePawnKillTest extends TestCase {
    }
 
    public void testWhitePawnPathsFromG1() {
-      Pawn pawn= WhitePawnKills.create();
+      Pawn pawn= WhitePawnCaptures.create();
       Assert.assertEquals(
             ""
                   + //
@@ -204,7 +204,7 @@ public class WhitePawnKillTest extends TestCase {
    }
 
    public void testWhitePawnPathsFromH1() {
-      Pawn pawn= WhitePawnKills.create();
+      Pawn pawn= WhitePawnCaptures.create();
       Assert.assertEquals(
             ""
                   + //
@@ -229,7 +229,7 @@ public class WhitePawnKillTest extends TestCase {
    }
 
    public void testWhitePawnPathsFromA2() {
-      Pawn pawn= WhitePawnKills.create();
+      Pawn pawn= WhitePawnCaptures.create();
       Assert.assertEquals(
             ""
                   + //
@@ -254,7 +254,7 @@ public class WhitePawnKillTest extends TestCase {
    }
 
    public void testWhitePawnPathsFromB2() {
-      Pawn pawn= WhitePawnKills.create();
+      Pawn pawn= WhitePawnCaptures.create();
       Assert.assertEquals(
             ""
                   + //
@@ -279,7 +279,7 @@ public class WhitePawnKillTest extends TestCase {
    }
 
    public void testWhitePawnPathsFromC2() {
-      Pawn pawn= WhitePawnKills.create();
+      Pawn pawn= WhitePawnCaptures.create();
       Assert.assertEquals(
             ""
                   + //
@@ -304,7 +304,7 @@ public class WhitePawnKillTest extends TestCase {
    }
 
    public void testWhitePawnPathsFromD2() {
-      Pawn pawn= WhitePawnKills.create();
+      Pawn pawn= WhitePawnCaptures.create();
       Assert.assertEquals(
             ""
                   + //
@@ -329,7 +329,7 @@ public class WhitePawnKillTest extends TestCase {
    }
 
    public void testWhitePawnPathsFromE2() {
-      Pawn pawn= WhitePawnKills.create();
+      Pawn pawn= WhitePawnCaptures.create();
       Assert.assertEquals(
             ""
                   + //
@@ -354,7 +354,7 @@ public class WhitePawnKillTest extends TestCase {
    }
 
    public void testWhitePawnPathsFromF2() {
-      Pawn pawn= WhitePawnKills.create();
+      Pawn pawn= WhitePawnCaptures.create();
       Assert.assertEquals(
             ""
                   + //
@@ -379,7 +379,7 @@ public class WhitePawnKillTest extends TestCase {
    }
 
    public void testWhitePawnPathsFromG2() {
-      Pawn pawn= WhitePawnKills.create();
+      Pawn pawn= WhitePawnCaptures.create();
       Assert.assertEquals(
             ""
                   + //
@@ -404,7 +404,7 @@ public class WhitePawnKillTest extends TestCase {
    }
 
    public void testWhitePawnPathsFromH2() {
-      Pawn pawn= WhitePawnKills.create();
+      Pawn pawn= WhitePawnCaptures.create();
       Assert.assertEquals(
             ""
                   + //
@@ -429,7 +429,7 @@ public class WhitePawnKillTest extends TestCase {
    }
    
    public void testWhitePawnPathsFromA3() {
-      Pawn pawn= WhitePawnKills.create();
+      Pawn pawn= WhitePawnCaptures.create();
       Assert.assertEquals(
             ""
                   + //
@@ -454,7 +454,7 @@ public class WhitePawnKillTest extends TestCase {
    }
 
    public void testWhitePawnPathsFromB3() {
-      Pawn pawn= WhitePawnKills.create();
+      Pawn pawn= WhitePawnCaptures.create();
       Assert.assertEquals(
             ""
                   + //
@@ -479,7 +479,7 @@ public class WhitePawnKillTest extends TestCase {
    }
 
    public void testWhitePawnPathsFromC3() {
-      Pawn pawn= WhitePawnKills.create();
+      Pawn pawn= WhitePawnCaptures.create();
       Assert.assertEquals(
             ""
                   + //
@@ -504,7 +504,7 @@ public class WhitePawnKillTest extends TestCase {
    }
 
    public void testWhitePawnPathsFromD3() {
-      Pawn pawn= WhitePawnKills.create();
+      Pawn pawn= WhitePawnCaptures.create();
       Assert.assertEquals(
             ""
                   + //
@@ -529,7 +529,7 @@ public class WhitePawnKillTest extends TestCase {
    }
 
    public void testWhitePawnPathsFromE3() {
-      Pawn pawn= WhitePawnKills.create();
+      Pawn pawn= WhitePawnCaptures.create();
       Assert.assertEquals(
             ""
                   + //
@@ -554,7 +554,7 @@ public class WhitePawnKillTest extends TestCase {
    }
 
    public void testWhitePawnPathsFromF3() {
-      Pawn pawn= WhitePawnKills.create();
+      Pawn pawn= WhitePawnCaptures.create();
       Assert.assertEquals(
             ""
                   + //
@@ -579,7 +579,7 @@ public class WhitePawnKillTest extends TestCase {
    }
 
    public void testWhitePawnPathsFromG3() {
-      Pawn pawn= WhitePawnKills.create();
+      Pawn pawn= WhitePawnCaptures.create();
       Assert.assertEquals(
             ""
                   + //
@@ -604,7 +604,7 @@ public class WhitePawnKillTest extends TestCase {
    }
 
    public void testWhitePawnPathsFromH3() {
-      Pawn pawn= WhitePawnKills.create();
+      Pawn pawn= WhitePawnCaptures.create();
       Assert.assertEquals(
             ""
                   + //
@@ -629,7 +629,7 @@ public class WhitePawnKillTest extends TestCase {
    }
 
    public void testWhitePawnPathsFromA4() {
-      Pawn pawn= WhitePawnKills.create();
+      Pawn pawn= WhitePawnCaptures.create();
       Assert.assertEquals(
             ""
                   + //
@@ -654,7 +654,7 @@ public class WhitePawnKillTest extends TestCase {
    }
 
    public void testWhitePawnPathsFromB4() {
-      Pawn pawn= WhitePawnKills.create();
+      Pawn pawn= WhitePawnCaptures.create();
       Assert.assertEquals(
             ""
                   + //
@@ -679,7 +679,7 @@ public class WhitePawnKillTest extends TestCase {
    }
 
    public void testWhitePawnPathsFromC4() {
-      Pawn pawn= WhitePawnKills.create();
+      Pawn pawn= WhitePawnCaptures.create();
       Assert.assertEquals(
             ""
                   + //
@@ -704,7 +704,7 @@ public class WhitePawnKillTest extends TestCase {
    }
 
    public void testWhitePawnPathsFromD4() {
-      Pawn pawn= WhitePawnKills.create();
+      Pawn pawn= WhitePawnCaptures.create();
       Assert.assertEquals(
             ""
                   + //
@@ -729,7 +729,7 @@ public class WhitePawnKillTest extends TestCase {
    }
 
    public void testWhitePawnPathsFromE4() {
-      Pawn pawn= WhitePawnKills.create();
+      Pawn pawn= WhitePawnCaptures.create();
       Assert.assertEquals(
             ""
                   + //
@@ -754,7 +754,7 @@ public class WhitePawnKillTest extends TestCase {
    }
 
    public void testWhitePawnPathsFromF4() {
-      Pawn pawn= WhitePawnKills.create();
+      Pawn pawn= WhitePawnCaptures.create();
       Assert.assertEquals(
             ""
                   + //
@@ -779,7 +779,7 @@ public class WhitePawnKillTest extends TestCase {
    }
 
    public void testWhitePawnPathsFromG4() {
-      Pawn pawn= WhitePawnKills.create();
+      Pawn pawn= WhitePawnCaptures.create();
       Assert.assertEquals(
             ""
                   + //
@@ -804,7 +804,7 @@ public class WhitePawnKillTest extends TestCase {
    }
 
    public void testWhitePawnPathsFromH4() {
-      Pawn pawn= WhitePawnKills.create();
+      Pawn pawn= WhitePawnCaptures.create();
       Assert.assertEquals(
             ""
                   + //
@@ -829,7 +829,7 @@ public class WhitePawnKillTest extends TestCase {
    }
 
    public void testWhitePawnPathsFromA5() {
-      Pawn pawn= WhitePawnKills.create();
+      Pawn pawn= WhitePawnCaptures.create();
       Assert.assertEquals(
             ""
                   + //
@@ -854,7 +854,7 @@ public class WhitePawnKillTest extends TestCase {
    }
 
    public void testWhitePawnPathsFromB5() {
-      Pawn pawn= WhitePawnKills.create();
+      Pawn pawn= WhitePawnCaptures.create();
       Assert.assertEquals(
             ""
                   + //
@@ -879,7 +879,7 @@ public class WhitePawnKillTest extends TestCase {
    }
 
    public void testWhitePawnPathsFromC5() {
-      Pawn pawn= WhitePawnKills.create();
+      Pawn pawn= WhitePawnCaptures.create();
       Assert.assertEquals(
             ""
                   + //
@@ -904,7 +904,7 @@ public class WhitePawnKillTest extends TestCase {
    }
 
    public void testWhitePawnPathsFromD5() {
-      Pawn pawn= WhitePawnKills.create();
+      Pawn pawn= WhitePawnCaptures.create();
       Assert.assertEquals(
             ""
                   + //
@@ -929,7 +929,7 @@ public class WhitePawnKillTest extends TestCase {
    }
 
    public void testWhitePawnPathsFromE5() {
-      Pawn pawn= WhitePawnKills.create();
+      Pawn pawn= WhitePawnCaptures.create();
       Assert.assertEquals(
             ""
                   + //
@@ -954,7 +954,7 @@ public class WhitePawnKillTest extends TestCase {
    }
 
    public void testWhitePawnPathsFromF5() {
-      Pawn pawn= WhitePawnKills.create();
+      Pawn pawn= WhitePawnCaptures.create();
       Assert.assertEquals(
             ""
                   + //
@@ -979,7 +979,7 @@ public class WhitePawnKillTest extends TestCase {
    }
 
    public void testWhitePawnPathsFromG5() {
-      Pawn pawn= WhitePawnKills.create();
+      Pawn pawn= WhitePawnCaptures.create();
       Assert.assertEquals(
             ""
                   + //
@@ -1004,7 +1004,7 @@ public class WhitePawnKillTest extends TestCase {
    }
 
    public void testWhitePawnPathsFromH5() {
-      Pawn pawn= WhitePawnKills.create();
+      Pawn pawn= WhitePawnCaptures.create();
       Assert.assertEquals(
             ""
                   + //
@@ -1029,7 +1029,7 @@ public class WhitePawnKillTest extends TestCase {
    }
 
    public void testWhitePawnPathsFromA6() {
-      Pawn pawn= WhitePawnKills.create();
+      Pawn pawn= WhitePawnCaptures.create();
       Assert.assertEquals(
             ""
                   + //
@@ -1054,7 +1054,7 @@ public class WhitePawnKillTest extends TestCase {
    }
 
    public void testWhitePawnPathsFromB6() {
-      Pawn pawn= WhitePawnKills.create();
+      Pawn pawn= WhitePawnCaptures.create();
       Assert.assertEquals(
             ""
                   + //
@@ -1079,7 +1079,7 @@ public class WhitePawnKillTest extends TestCase {
    }
 
    public void testWhitePawnPathsFromC6() {
-      Pawn pawn= WhitePawnKills.create();
+      Pawn pawn= WhitePawnCaptures.create();
       Assert.assertEquals(
             ""
                   + //
@@ -1104,7 +1104,7 @@ public class WhitePawnKillTest extends TestCase {
    }
 
    public void testWhitePawnPathsFromD6() {
-      Pawn pawn= WhitePawnKills.create();
+      Pawn pawn= WhitePawnCaptures.create();
       Assert.assertEquals(
             ""
                   + //
@@ -1129,7 +1129,7 @@ public class WhitePawnKillTest extends TestCase {
    }
 
    public void testWhitePawnPathsFromE6() {
-      Pawn pawn= WhitePawnKills.create();
+      Pawn pawn= WhitePawnCaptures.create();
       Assert.assertEquals(
             ""
                   + //
@@ -1154,7 +1154,7 @@ public class WhitePawnKillTest extends TestCase {
    }
 
    public void testWhitePawnPathsFromF6() {
-      Pawn pawn= WhitePawnKills.create();
+      Pawn pawn= WhitePawnCaptures.create();
       Assert.assertEquals(
             ""
                   + //
@@ -1179,7 +1179,7 @@ public class WhitePawnKillTest extends TestCase {
    }
 
    public void testWhitePawnPathsFromG6() {
-      Pawn pawn= WhitePawnKills.create();
+      Pawn pawn= WhitePawnCaptures.create();
       Assert.assertEquals(
             ""
                   + //
@@ -1204,7 +1204,7 @@ public class WhitePawnKillTest extends TestCase {
    }
 
    public void testWhitePawnPathsFromH6() {
-      Pawn pawn= WhitePawnKills.create();
+      Pawn pawn= WhitePawnCaptures.create();
       Assert.assertEquals(
             ""
                   + //
@@ -1229,7 +1229,7 @@ public class WhitePawnKillTest extends TestCase {
    }
 
    public void testWhitePawnPathsFromA7() {
-      Pawn pawn= WhitePawnKills.create();
+      Pawn pawn= WhitePawnCaptures.create();
       Assert.assertEquals(
             ""
                   + //
@@ -1254,7 +1254,7 @@ public class WhitePawnKillTest extends TestCase {
    }
 
    public void testWhitePawnPathsFromB7() {
-      Pawn pawn= WhitePawnKills.create();
+      Pawn pawn= WhitePawnCaptures.create();
       Assert.assertEquals(
             ""
                   + //
@@ -1279,7 +1279,7 @@ public class WhitePawnKillTest extends TestCase {
    }
 
    public void testWhitePawnPathsFromC7() {
-      Pawn pawn= WhitePawnKills.create();
+      Pawn pawn= WhitePawnCaptures.create();
       Assert.assertEquals(
             ""
                   + //
@@ -1304,7 +1304,7 @@ public class WhitePawnKillTest extends TestCase {
    }
 
    public void testWhitePawnPathsFromD7() {
-      Pawn pawn= WhitePawnKills.create();
+      Pawn pawn= WhitePawnCaptures.create();
       Assert.assertEquals(
             ""
                   + //
@@ -1329,7 +1329,7 @@ public class WhitePawnKillTest extends TestCase {
    }
 
    public void testWhitePawnPathsFromE7() {
-      Pawn pawn= WhitePawnKills.create();
+      Pawn pawn= WhitePawnCaptures.create();
       Assert.assertEquals(
             ""
                   + //
@@ -1354,7 +1354,7 @@ public class WhitePawnKillTest extends TestCase {
    }
 
    public void testWhitePawnPathsFromF7() {
-      Pawn pawn= WhitePawnKills.create();
+      Pawn pawn= WhitePawnCaptures.create();
       Assert.assertEquals(
             ""
                   + //
@@ -1379,7 +1379,7 @@ public class WhitePawnKillTest extends TestCase {
    }
 
    public void testWhitePawnPathsFromG7() {
-      Pawn pawn= WhitePawnKills.create();
+      Pawn pawn= WhitePawnCaptures.create();
       Assert.assertEquals(
             ""
                   + //
@@ -1404,7 +1404,7 @@ public class WhitePawnKillTest extends TestCase {
    }
 
    public void testWhitePawnPathsFromH7() {
-      Pawn pawn= WhitePawnKills.create();
+      Pawn pawn= WhitePawnCaptures.create();
       Assert.assertEquals(
             ""
                   + //
@@ -1429,7 +1429,7 @@ public class WhitePawnKillTest extends TestCase {
    }
 
    public void testWhitePawnPathsFromA8() {
-      Pawn pawn= WhitePawnKills.create();
+      Pawn pawn= WhitePawnCaptures.create();
       Assert.assertEquals(
             ""
                   + //
@@ -1454,7 +1454,7 @@ public class WhitePawnKillTest extends TestCase {
    }
 
    public void testWhitePawnPathsFromB8() {
-      Pawn pawn= WhitePawnKills.create();
+      Pawn pawn= WhitePawnCaptures.create();
       Assert.assertEquals(
             ""
                   + //
@@ -1479,7 +1479,7 @@ public class WhitePawnKillTest extends TestCase {
    }
 
    public void testWhitePawnPathsFromC8() {
-      Pawn pawn= WhitePawnKills.create();
+      Pawn pawn= WhitePawnCaptures.create();
       Assert.assertEquals(
             ""
                   + //
@@ -1504,7 +1504,7 @@ public class WhitePawnKillTest extends TestCase {
    }
 
    public void testWhitePawnPathsFromD8() {
-      Pawn pawn= WhitePawnKills.create();
+      Pawn pawn= WhitePawnCaptures.create();
       Assert.assertEquals(
             ""
                   + //
@@ -1529,7 +1529,7 @@ public class WhitePawnKillTest extends TestCase {
    }
 
    public void testWhitePawnPathsFromE8() {
-      Pawn pawn= WhitePawnKills.create();
+      Pawn pawn= WhitePawnCaptures.create();
       Assert.assertEquals(
             ""
                   + //
@@ -1554,7 +1554,7 @@ public class WhitePawnKillTest extends TestCase {
    }
 
    public void testWhitePawnPathsFromF8() {
-      Pawn pawn= WhitePawnKills.create();
+      Pawn pawn= WhitePawnCaptures.create();
       Assert.assertEquals(
             ""
                   + //
@@ -1579,7 +1579,7 @@ public class WhitePawnKillTest extends TestCase {
    }
 
    public void testWhitePawnPathsFromG8() {
-      Pawn pawn= WhitePawnKills.create();
+      Pawn pawn= WhitePawnCaptures.create();
       Assert.assertEquals(
             ""
                   + //
@@ -1604,7 +1604,7 @@ public class WhitePawnKillTest extends TestCase {
    }
 
    public void testWhitePawnPathsFromH8() {
-      Pawn pawn= WhitePawnKills.create();
+      Pawn pawn= WhitePawnCaptures.create();
       Assert.assertEquals(
             ""
                   + //

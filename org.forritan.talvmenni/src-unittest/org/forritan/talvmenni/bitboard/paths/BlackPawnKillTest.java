@@ -29,7 +29,7 @@ public class BlackPawnKillTest extends TestCase {
    }
 
    public void testBlackPawnPathsFromA1() {
-      Pawn pawn= BlackPawnKills.create();
+      Pawn pawn= BlackPawnCaptures.create();
       Assert.assertEquals(
             ""
                   + //
@@ -54,7 +54,7 @@ public class BlackPawnKillTest extends TestCase {
    }
 
    public void testBlackPawnPathsFromB1() {
-      Pawn pawn= BlackPawnKills.create();
+      Pawn pawn= BlackPawnCaptures.create();
       Assert.assertEquals(
             ""
                   + //
@@ -79,7 +79,7 @@ public class BlackPawnKillTest extends TestCase {
    }
 
    public void testBlackPawnPathsFromC1() {
-      Pawn pawn= BlackPawnKills.create();
+      Pawn pawn= BlackPawnCaptures.create();
       Assert.assertEquals(
             ""
                   + //
@@ -104,7 +104,7 @@ public class BlackPawnKillTest extends TestCase {
    }
 
    public void testBlackPawnPathsFromD1() {
-      Pawn pawn= BlackPawnKills.create();
+      Pawn pawn= BlackPawnCaptures.create();
       Assert.assertEquals(
             ""
                   + //
@@ -129,7 +129,7 @@ public class BlackPawnKillTest extends TestCase {
    }
 
    public void testBlackPawnPathsFromE1() {
-      Pawn pawn= BlackPawnKills.create();
+      Pawn pawn= BlackPawnCaptures.create();
       Assert.assertEquals(
             ""
                   + //
@@ -154,7 +154,7 @@ public class BlackPawnKillTest extends TestCase {
    }
 
    public void testBlackPawnPathsFromF1() {
-      Pawn pawn= BlackPawnKills.create();
+      Pawn pawn= BlackPawnCaptures.create();
       Assert.assertEquals(
             ""
                   + //
@@ -179,7 +179,7 @@ public class BlackPawnKillTest extends TestCase {
    }
 
    public void testBlackPawnPathsFromG1() {
-      Pawn pawn= BlackPawnKills.create();
+      Pawn pawn= BlackPawnCaptures.create();
       Assert.assertEquals(
             ""
                   + //
@@ -204,7 +204,7 @@ public class BlackPawnKillTest extends TestCase {
    }
 
    public void testBlackPawnPathsFromH1() {
-      Pawn pawn= BlackPawnKills.create();
+      Pawn pawn= BlackPawnCaptures.create();
       Assert.assertEquals(
             ""
                   + //
@@ -229,7 +229,7 @@ public class BlackPawnKillTest extends TestCase {
    }
 
    public void testBlackPawnPathsFromA2() {
-      Pawn pawn= BlackPawnKills.create();
+      Pawn pawn= BlackPawnCaptures.create();
       Assert.assertEquals(
             ""
                   + //
@@ -254,7 +254,7 @@ public class BlackPawnKillTest extends TestCase {
    }
 
    public void testBlackPawnPathsFromB2() {
-      Pawn pawn= BlackPawnKills.create();
+      Pawn pawn= BlackPawnCaptures.create();
       Assert.assertEquals(
             ""
                   + //
@@ -279,7 +279,7 @@ public class BlackPawnKillTest extends TestCase {
    }
 
    public void testBlackPawnPathsFromC2() {
-      Pawn pawn= BlackPawnKills.create();
+      Pawn pawn= BlackPawnCaptures.create();
       Assert.assertEquals(
             ""
                   + //
@@ -304,7 +304,7 @@ public class BlackPawnKillTest extends TestCase {
    }
 
    public void testBlackPawnPathsFromD2() {
-      Pawn pawn= BlackPawnKills.create();
+      Pawn pawn= BlackPawnCaptures.create();
       Assert.assertEquals(
             ""
                   + //
@@ -329,7 +329,7 @@ public class BlackPawnKillTest extends TestCase {
    }
 
    public void testBlackPawnPathsFromE2() {
-      Pawn pawn= BlackPawnKills.create();
+      Pawn pawn= BlackPawnCaptures.create();
       Assert.assertEquals(
             ""
                   + //
@@ -354,7 +354,7 @@ public class BlackPawnKillTest extends TestCase {
    }
 
    public void testBlackPawnPathsFromF2() {
-      Pawn pawn= BlackPawnKills.create();
+      Pawn pawn= BlackPawnCaptures.create();
       Assert.assertEquals(
             ""
                   + //
@@ -379,7 +379,7 @@ public class BlackPawnKillTest extends TestCase {
    }
 
    public void testBlackPawnPathsFromG2() {
-      Pawn pawn= BlackPawnKills.create();
+      Pawn pawn= BlackPawnCaptures.create();
       Assert.assertEquals(
             ""
                   + //
@@ -404,7 +404,7 @@ public class BlackPawnKillTest extends TestCase {
    }
 
    public void testBlackPawnPathsFromH2() {
-      Pawn pawn= BlackPawnKills.create();
+      Pawn pawn= BlackPawnCaptures.create();
       Assert.assertEquals(
             ""
                   + //
@@ -429,7 +429,7 @@ public class BlackPawnKillTest extends TestCase {
    }
 
    public void testBlackPawnPathsFromA3() {
-      Pawn pawn= BlackPawnKills.create();
+      Pawn pawn= BlackPawnCaptures.create();
       Assert.assertEquals(
             ""
                   + //
@@ -454,7 +454,7 @@ public class BlackPawnKillTest extends TestCase {
    }
 
    public void testBlackPawnPathsFromB3() {
-      Pawn pawn= BlackPawnKills.create();
+      Pawn pawn= BlackPawnCaptures.create();
       Assert.assertEquals(
             ""
                   + //
@@ -479,7 +479,7 @@ public class BlackPawnKillTest extends TestCase {
    }
 
    public void testBlackPawnPathsFromC3() {
-      Pawn pawn= BlackPawnKills.create();
+      Pawn pawn= BlackPawnCaptures.create();
       Assert.assertEquals(
             ""
                   + //
@@ -504,7 +504,7 @@ public class BlackPawnKillTest extends TestCase {
    }
 
    public void testBlackPawnPathsFromD3() {
-      Pawn pawn= BlackPawnKills.create();
+      Pawn pawn= BlackPawnCaptures.create();
       Assert.assertEquals(
             ""
                   + //
@@ -529,7 +529,7 @@ public class BlackPawnKillTest extends TestCase {
    }
 
    public void testBlackPawnPathsFromE3() {
-      Pawn pawn= BlackPawnKills.create();
+      Pawn pawn= BlackPawnCaptures.create();
       Assert.assertEquals(
             ""
                   + //
@@ -554,7 +554,7 @@ public class BlackPawnKillTest extends TestCase {
    }
 
    public void testBlackPawnPathsFromF3() {
-      Pawn pawn= BlackPawnKills.create();
+      Pawn pawn= BlackPawnCaptures.create();
       Assert.assertEquals(
             ""
                   + //
@@ -579,7 +579,7 @@ public class BlackPawnKillTest extends TestCase {
    }
 
    public void testBlackPawnPathsFromG3() {
-      Pawn pawn= BlackPawnKills.create();
+      Pawn pawn= BlackPawnCaptures.create();
       Assert.assertEquals(
             ""
                   + //
@@ -604,7 +604,7 @@ public class BlackPawnKillTest extends TestCase {
    }
 
    public void testBlackPawnPathsFromH3() {
-      Pawn pawn= BlackPawnKills.create();
+      Pawn pawn= BlackPawnCaptures.create();
       Assert.assertEquals(
             ""
                   + //
@@ -629,7 +629,7 @@ public class BlackPawnKillTest extends TestCase {
    }
 
    public void testBlackPawnPathsFromA4() {
-      Pawn pawn= BlackPawnKills.create();
+      Pawn pawn= BlackPawnCaptures.create();
       Assert.assertEquals(
             ""
                   + //
@@ -654,7 +654,7 @@ public class BlackPawnKillTest extends TestCase {
    }
 
    public void testBlackPawnPathsFromB4() {
-      Pawn pawn= BlackPawnKills.create();
+      Pawn pawn= BlackPawnCaptures.create();
       Assert.assertEquals(
             ""
                   + //
@@ -679,7 +679,7 @@ public class BlackPawnKillTest extends TestCase {
    }
 
    public void testBlackPawnPathsFromC4() {
-      Pawn pawn= BlackPawnKills.create();
+      Pawn pawn= BlackPawnCaptures.create();
       Assert.assertEquals(
             ""
                   + //
@@ -704,7 +704,7 @@ public class BlackPawnKillTest extends TestCase {
    }
 
    public void testBlackPawnPathsFromD4() {
-      Pawn pawn= BlackPawnKills.create();
+      Pawn pawn= BlackPawnCaptures.create();
       Assert.assertEquals(
             ""
                   + //
@@ -729,7 +729,7 @@ public class BlackPawnKillTest extends TestCase {
    }
 
    public void testBlackPawnPathsFromE4() {
-      Pawn pawn= BlackPawnKills.create();
+      Pawn pawn= BlackPawnCaptures.create();
       Assert.assertEquals(
             ""
                   + //
@@ -754,7 +754,7 @@ public class BlackPawnKillTest extends TestCase {
    }
 
    public void testBlackPawnPathsFromF4() {
-      Pawn pawn= BlackPawnKills.create();
+      Pawn pawn= BlackPawnCaptures.create();
       Assert.assertEquals(
             ""
                   + //
@@ -779,7 +779,7 @@ public class BlackPawnKillTest extends TestCase {
    }
 
    public void testBlackPawnPathsFromG4() {
-      Pawn pawn= BlackPawnKills.create();
+      Pawn pawn= BlackPawnCaptures.create();
       Assert.assertEquals(
             ""
                   + //
@@ -804,7 +804,7 @@ public class BlackPawnKillTest extends TestCase {
    }
 
    public void testBlackPawnPathsFromH4() {
-      Pawn pawn= BlackPawnKills.create();
+      Pawn pawn= BlackPawnCaptures.create();
       Assert.assertEquals(
             ""
                   + //
@@ -829,7 +829,7 @@ public class BlackPawnKillTest extends TestCase {
    }
 
    public void testBlackPawnPathsFromA5() {
-      Pawn pawn= BlackPawnKills.create();
+      Pawn pawn= BlackPawnCaptures.create();
       Assert.assertEquals(
             ""
                   + //
@@ -854,7 +854,7 @@ public class BlackPawnKillTest extends TestCase {
    }
 
    public void testBlackPawnPathsFromB5() {
-      Pawn pawn= BlackPawnKills.create();
+      Pawn pawn= BlackPawnCaptures.create();
       Assert.assertEquals(
             ""
                   + //
@@ -879,7 +879,7 @@ public class BlackPawnKillTest extends TestCase {
    }
 
    public void testBlackPawnPathsFromC5() {
-      Pawn pawn= BlackPawnKills.create();
+      Pawn pawn= BlackPawnCaptures.create();
       Assert.assertEquals(
             ""
                   + //
@@ -904,7 +904,7 @@ public class BlackPawnKillTest extends TestCase {
    }
 
    public void testBlackPawnPathsFromD5() {
-      Pawn pawn= BlackPawnKills.create();
+      Pawn pawn= BlackPawnCaptures.create();
       Assert.assertEquals(
             ""
                   + //
@@ -929,7 +929,7 @@ public class BlackPawnKillTest extends TestCase {
    }
 
    public void testBlackPawnPathsFromE5() {
-      Pawn pawn= BlackPawnKills.create();
+      Pawn pawn= BlackPawnCaptures.create();
       Assert.assertEquals(
             ""
                   + //
@@ -954,7 +954,7 @@ public class BlackPawnKillTest extends TestCase {
    }
 
    public void testBlackPawnPathsFromF5() {
-      Pawn pawn= BlackPawnKills.create();
+      Pawn pawn= BlackPawnCaptures.create();
       Assert.assertEquals(
             ""
                   + //
@@ -979,7 +979,7 @@ public class BlackPawnKillTest extends TestCase {
    }
 
    public void testBlackPawnPathsFromG5() {
-      Pawn pawn= BlackPawnKills.create();
+      Pawn pawn= BlackPawnCaptures.create();
       Assert.assertEquals(
             ""
                   + //
@@ -1004,7 +1004,7 @@ public class BlackPawnKillTest extends TestCase {
    }
 
    public void testBlackPawnPathsFromH5() {
-      Pawn pawn= BlackPawnKills.create();
+      Pawn pawn= BlackPawnCaptures.create();
       Assert.assertEquals(
             ""
                   + //
@@ -1029,7 +1029,7 @@ public class BlackPawnKillTest extends TestCase {
    }
 
    public void testBlackPawnPathsFromA6() {
-      Pawn pawn= BlackPawnKills.create();
+      Pawn pawn= BlackPawnCaptures.create();
       Assert.assertEquals(
             ""
                   + //
@@ -1054,7 +1054,7 @@ public class BlackPawnKillTest extends TestCase {
    }
 
    public void testBlackPawnPathsFromB6() {
-      Pawn pawn= BlackPawnKills.create();
+      Pawn pawn= BlackPawnCaptures.create();
       Assert.assertEquals(
             ""
                   + //
@@ -1079,7 +1079,7 @@ public class BlackPawnKillTest extends TestCase {
    }
 
    public void testBlackPawnPathsFromC6() {
-      Pawn pawn= BlackPawnKills.create();
+      Pawn pawn= BlackPawnCaptures.create();
       Assert.assertEquals(
             ""
                   + //
@@ -1104,7 +1104,7 @@ public class BlackPawnKillTest extends TestCase {
    }
 
    public void testBlackPawnPathsFromD6() {
-      Pawn pawn= BlackPawnKills.create();
+      Pawn pawn= BlackPawnCaptures.create();
       Assert.assertEquals(
             ""
                   + //
@@ -1129,7 +1129,7 @@ public class BlackPawnKillTest extends TestCase {
    }
 
    public void testBlackPawnPathsFromE6() {
-      Pawn pawn= BlackPawnKills.create();
+      Pawn pawn= BlackPawnCaptures.create();
       Assert.assertEquals(
             ""
                   + //
@@ -1154,7 +1154,7 @@ public class BlackPawnKillTest extends TestCase {
    }
 
    public void testBlackPawnPathsFromF6() {
-      Pawn pawn= BlackPawnKills.create();
+      Pawn pawn= BlackPawnCaptures.create();
       Assert.assertEquals(
             ""
                   + //
@@ -1179,7 +1179,7 @@ public class BlackPawnKillTest extends TestCase {
    }
 
    public void testBlackPawnPathsFromG6() {
-      Pawn pawn= BlackPawnKills.create();
+      Pawn pawn= BlackPawnCaptures.create();
       Assert.assertEquals(
             ""
                   + //
@@ -1204,7 +1204,7 @@ public class BlackPawnKillTest extends TestCase {
    }
 
    public void testBlackPawnPathsFromH6() {
-      Pawn pawn= BlackPawnKills.create();
+      Pawn pawn= BlackPawnCaptures.create();
       Assert.assertEquals(
             ""
                   + //
@@ -1229,7 +1229,7 @@ public class BlackPawnKillTest extends TestCase {
    }
 
    public void testBlackPawnPathsFromA7() {
-      Pawn pawn= BlackPawnKills.create();
+      Pawn pawn= BlackPawnCaptures.create();
       Assert.assertEquals(
             ""
                   + //
@@ -1254,7 +1254,7 @@ public class BlackPawnKillTest extends TestCase {
    }
 
    public void testBlackPawnPathsFromB7() {
-      Pawn pawn= BlackPawnKills.create();
+      Pawn pawn= BlackPawnCaptures.create();
       Assert.assertEquals(
             ""
                   + //
@@ -1279,7 +1279,7 @@ public class BlackPawnKillTest extends TestCase {
    }
 
    public void testBlackPawnPathsFromC7() {
-      Pawn pawn= BlackPawnKills.create();
+      Pawn pawn= BlackPawnCaptures.create();
       Assert.assertEquals(
             ""
                   + //
@@ -1304,7 +1304,7 @@ public class BlackPawnKillTest extends TestCase {
    }
 
    public void testBlackPawnPathsFromD7() {
-      Pawn pawn= BlackPawnKills.create();
+      Pawn pawn= BlackPawnCaptures.create();
       Assert.assertEquals(
             ""
                   + //
@@ -1329,7 +1329,7 @@ public class BlackPawnKillTest extends TestCase {
    }
 
    public void testBlackPawnPathsFromE7() {
-      Pawn pawn= BlackPawnKills.create();
+      Pawn pawn= BlackPawnCaptures.create();
       Assert.assertEquals(
             ""
                   + //
@@ -1354,7 +1354,7 @@ public class BlackPawnKillTest extends TestCase {
    }
 
    public void testBlackPawnPathsFromF7() {
-      Pawn pawn= BlackPawnKills.create();
+      Pawn pawn= BlackPawnCaptures.create();
       Assert.assertEquals(
             ""
                   + //
@@ -1379,7 +1379,7 @@ public class BlackPawnKillTest extends TestCase {
    }
 
    public void testBlackPawnPathsFromG7() {
-      Pawn pawn= BlackPawnKills.create();
+      Pawn pawn= BlackPawnCaptures.create();
       Assert.assertEquals(
             ""
                   + //
@@ -1404,7 +1404,7 @@ public class BlackPawnKillTest extends TestCase {
    }
 
    public void testBlackPawnPathsFromH7() {
-      Pawn pawn= BlackPawnKills.create();
+      Pawn pawn= BlackPawnCaptures.create();
       Assert.assertEquals(
             ""
                   + //
@@ -1429,7 +1429,7 @@ public class BlackPawnKillTest extends TestCase {
    }
 
    public void testBlackPawnPathsFromA8() {
-      Pawn pawn= BlackPawnKills.create();
+      Pawn pawn= BlackPawnCaptures.create();
       Assert.assertEquals(
             ""
                   + //
@@ -1454,7 +1454,7 @@ public class BlackPawnKillTest extends TestCase {
    }
 
    public void testBlackPawnPathsFromB8() {
-      Pawn pawn= BlackPawnKills.create();
+      Pawn pawn= BlackPawnCaptures.create();
       Assert.assertEquals(
             ""
                   + //
@@ -1479,7 +1479,7 @@ public class BlackPawnKillTest extends TestCase {
    }
 
    public void testBlackPawnPathsFromC8() {
-      Pawn pawn= BlackPawnKills.create();
+      Pawn pawn= BlackPawnCaptures.create();
       Assert.assertEquals(
             ""
                   + //
@@ -1504,7 +1504,7 @@ public class BlackPawnKillTest extends TestCase {
    }
 
    public void testBlackPawnPathsFromD8() {
-      Pawn pawn= BlackPawnKills.create();
+      Pawn pawn= BlackPawnCaptures.create();
       Assert.assertEquals(
             ""
                   + //
@@ -1529,7 +1529,7 @@ public class BlackPawnKillTest extends TestCase {
    }
 
    public void testBlackPawnPathsFromE8() {
-      Pawn pawn= BlackPawnKills.create();
+      Pawn pawn= BlackPawnCaptures.create();
       Assert.assertEquals(
             ""
                   + //
@@ -1554,7 +1554,7 @@ public class BlackPawnKillTest extends TestCase {
    }
 
    public void testBlackPawnPathsFromF8() {
-      Pawn pawn= BlackPawnKills.create();
+      Pawn pawn= BlackPawnCaptures.create();
       Assert.assertEquals(
             ""
                   + //
@@ -1579,7 +1579,7 @@ public class BlackPawnKillTest extends TestCase {
    }
 
    public void testBlackPawnPathsFromG8() {
-      Pawn pawn= BlackPawnKills.create();
+      Pawn pawn= BlackPawnCaptures.create();
       Assert.assertEquals(
             ""
                   + //
@@ -1604,7 +1604,7 @@ public class BlackPawnKillTest extends TestCase {
    }
 
    public void testBlackPawnPathsFromH8() {
-      Pawn pawn= BlackPawnKills.create();
+      Pawn pawn= BlackPawnCaptures.create();
       Assert.assertEquals(
             ""
                   + //

@@ -1,18 +1,18 @@
 package org.forritan.talvmenni.bitboard.attacks;
 
-import org.forritan.talvmenni.bitboard.paths.WhitePawnKills;
+import org.forritan.talvmenni.bitboard.paths.WhitePawnCaptures;
 import org.forritan.talvmenni.game.Position;
 
 
 public class WhitePawn {
 
-   public static long killerMovesAttacksFrom(
+   public static long captureMovesAttacksFrom(
          long square,
          Position p) {
       long result= 0L;
-      return WhitePawnKills.create().getPathsFrom(
+      return WhitePawnCaptures.create().getPathsFrom(
             square)
-            ^ (WhitePawnKills.create().getPathsFrom(
+            ^ (WhitePawnCaptures.create().getPathsFrom(
                   square) & p.white.allPieces);
    }
 }
