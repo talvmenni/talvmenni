@@ -89,6 +89,10 @@ public class ConsoleProtocol extends UiProtocolBase {
       if ("fen".equalsIgnoreCase(theInput)) {
          theOutput= getStringFEN();
       }
+      if (theInput.toUpperCase().startsWith("LOADBOOK")) {
+       	String theFile= theInput.substring(9);
+          theOutput= OpeningBook.loadBook(theFile);
+       }
 
    if (theInput.toUpperCase().startsWith("SETBOARD")) {
       	String theFEN= theInput.substring(8);
