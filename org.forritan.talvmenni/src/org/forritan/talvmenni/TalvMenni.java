@@ -26,12 +26,12 @@ public class TalvMenni {
     * Default PLY = 4 Minimum for being able to detect that we are getting
     * checkmated...
     */
-   public static int                 PLY                           = 3;
+   public static int                 PLY                           = 4;
 
    /**
-    * Default QUIESCENT_MAX_DEPTH = 1000 ;-)
+    * Default QUIESCENT_MAX_DEPTH = 16 - ply seems like a resonable value ;-)
     */
-   public static int                 QUIESCENT_MAX_DEPTH           = 1000;
+   public static int                 QUIESCENT_MAX_DEPTH           = 16 - PLY;
 
    /**
     * Default MAX_TRANSPOSITION_ENTRIES - Maximum number of entries in each of

@@ -247,6 +247,8 @@ public interface Position extends Serializable {
       }
 
       public void updatePossibleMovesOrdering() {
+         this.getPossibleMoves(); // Initialize 
+
          if (this.possibleMoves != null
                && this.betterOrderMoves != null) {
             List currentPossibleMoves= new ArrayList();
@@ -258,6 +260,22 @@ public interface Position extends Serializable {
             this.betterOrderMoves= null;
          }
       }
+      
+      public void updateMoveOrderingCapturesFirst() {
+         this.getPossibleMoves(); // Initialize 
+         this.getPossibleCaptureMoves(); // Initialize 
+         
+         if (this.possibleMoves != null
+               && this.possibleCaptureMoves != null) {
+            List currentPossibleMoves= new ArrayList();
+            currentPossibleMoves.addAll(this.possibleMoves);
+            this.possibleMoves= new ArrayList();
+            this.possibleMoves.addAll(this.possibleCaptureMoves);
+            currentPossibleMoves.removeAll(this.possibleCaptureMoves);
+            this.possibleMoves.addAll(currentPossibleMoves);
+         }         
+      }
+      
 
       public List getPossibleCaptureMoves() {
          if (this.possibleCaptureMoves == null) {

@@ -180,9 +180,11 @@ public class AlphaBetaWithQuiescentAndTranspositionTableSearch implements
 
          if (whiteMove) {
             this.historyHeuristic.sortMoveList(p.getWhite());
+            p.getWhite().updateMoveOrderingCapturesFirst();
             moves= p.getWhite().getPossibleMoves();
          } else {
             this.historyHeuristic.sortMoveList(p.getBlack());
+            p.getBlack().updateMoveOrderingCapturesFirst();
             moves= p.getBlack().getPossibleMoves();
          }
 

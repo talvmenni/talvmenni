@@ -125,9 +125,9 @@ public class Quiescent {
                         (this.movesSearched - movesSearchedBefore),
                         (alpha * (whiteMove ? 1 : -1)));
 
-                  this.historyHeuristic.updateWithSufficient(
-                        move,
-                        0); // i.e.: add only 1 to this move 
+//                  this.historyHeuristic.updateWithSufficient(
+//                        move,
+//                        0); // i.e.: add only 1 to this move 
                }
             }
          } else {
