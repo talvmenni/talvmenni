@@ -5,6 +5,8 @@ import org.forritan.talvmenni.bitboard.Square;
 import org.forritan.talvmenni.knowledge.AbstractPosition;
 import org.forritan.talvmenni.knowledge.ImmutablePosition;
 import org.forritan.talvmenni.knowledge.Position;
+import org.forritan.talvmenni.knowledge.evaluation.Evaluation;
+import org.forritan.talvmenni.knowledge.evaluation.SimpleMaterialEvaluation;
 
 import junit.framework.Assert;
 import junit.framework.TestCase;

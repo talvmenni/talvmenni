@@ -48,6 +48,23 @@ public class MutablePartitionSearchPosition extends MutablePosition {
             black);
    }
 
+   public int hashCode() {
+      return this.getWhite().partitionSearchHashCode()
+            ^ this.getBlack().partitionSearchHashCode();
+   }
+
+   public boolean equals(
+         Object o) {
+      if (o instanceof Position) {
+         return this.getWhite().partitionSearchEquals(
+               ((Position) o).getWhite())
+               && this.getBlack().partitionSearchEquals(
+                     ((Position) o).getBlack());
+      } else {
+         return false;
+      }
+   }
+
    public Position getImmutable() {
       return Position.Factory.create(true, false, this.getWhite(), this.getBlack());
    }

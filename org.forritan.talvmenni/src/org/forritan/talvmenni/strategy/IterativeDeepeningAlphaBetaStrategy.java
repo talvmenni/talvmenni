@@ -2,9 +2,9 @@ package org.forritan.talvmenni.strategy;
 
 import java.util.List;
 
-import org.forritan.talvmenni.evaluation.MaterialAndPositionalEvaluation;
 import org.forritan.talvmenni.knowledge.Position;
 import org.forritan.talvmenni.knowledge.TheoryBook;
+import org.forritan.talvmenni.knowledge.evaluation.SimpleMaterialAndPositionalEvaluation;
 import org.forritan.talvmenni.search.AlphaBetaSearch;
 import org.forritan.talvmenni.search.PrincipalVariation;
 
@@ -20,7 +20,7 @@ public class IterativeDeepeningAlphaBetaStrategy extends AbstractStrategy {
             book,
             pv,
             new AlphaBetaSearch(),
-            new MaterialAndPositionalEvaluation());
+            new SimpleMaterialAndPositionalEvaluation());
    }
 
    protected List search(

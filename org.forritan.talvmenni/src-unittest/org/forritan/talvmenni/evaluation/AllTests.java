@@ -19,7 +19,7 @@ public class AllTests {
 
    public static Test suite() {
       TestSuite suite = new TestSuite(
-         "Test for org.forritan.talvmenni.evaluation");
+         "Test for org.forritan.talvmenni.knowledge.evaluation");
       //$JUnit-BEGIN$
       suite.addTestSuite(SimpleMaterialEvaluationTest.class);
       suite.addTestSuite(SimpleMaterialAndPositionalEvaluationTest.class);

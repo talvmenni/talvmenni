@@ -4,15 +4,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Observable;
-import java.util.Observer;
 
-import org.forritan.talvmenni.ChessEngine;
-import org.forritan.talvmenni.evaluation.Evaluation;
-import org.forritan.talvmenni.evaluation.MaterialAndPositionalEvaluation;
 import org.forritan.talvmenni.knowledge.Position;
 import org.forritan.talvmenni.knowledge.TheoryBook;
 import org.forritan.talvmenni.knowledge.Position.Move;
+import org.forritan.talvmenni.knowledge.evaluation.Evaluation;
+import org.forritan.talvmenni.knowledge.evaluation.SimpleMaterialAndPositionalEvaluation;
 import org.forritan.talvmenni.masterworker.generic.Result;
 import org.forritan.talvmenni.search.AlphaBetaSearch;
 import org.forritan.talvmenni.search.PrincipalVariation;
@@ -33,7 +30,7 @@ public class SimpleOneLevelAlphaBetaParallelStrategy extends
             pv,
             new AlphaBetaSearch(
                   ply - 1),
-            new MaterialAndPositionalEvaluation());
+            new SimpleMaterialAndPositionalEvaluation());
 
       try {
          this.master= new SimpleOneLevelAlphaBetaMaster();

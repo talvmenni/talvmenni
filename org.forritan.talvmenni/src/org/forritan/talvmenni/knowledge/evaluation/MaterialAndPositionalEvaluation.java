@@ -1,4 +1,4 @@
-package org.forritan.talvmenni.evaluation;
+package org.forritan.talvmenni.knowledge.evaluation;
 
 import java.util.Iterator;
 import org.forritan.talvmenni.bitboard.BitboardIterator;

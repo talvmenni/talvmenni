@@ -5,11 +5,11 @@ import java.util.List;
 import java.util.Observable;
 
 import org.forritan.talvmenni.ChessEngine;
-import org.forritan.talvmenni.evaluation.Evaluation;
 import org.forritan.talvmenni.knowledge.AbstractPosition;
 import org.forritan.talvmenni.knowledge.ImmutablePosition;
 import org.forritan.talvmenni.knowledge.Position;
 import org.forritan.talvmenni.knowledge.Position.Move;
+import org.forritan.talvmenni.knowledge.evaluation.Evaluation;
 
 import org.forritan.talvmenni.search.PrincipalVariation.DebugInfo;
 import org.forritan.talvmenni.search.PrincipalVariation.Thinking;

@@ -35,9 +35,8 @@ public class TalvMenni {
 
    /**
     * Very experimental :)
-    * Partition search - Entries in transposition will evaluate as equal if the
-    * pieces - excluding pawns - are equal and the _number_ of pawns/enpassant-bit is
-    * the same...  
+    * Partition search - e.g.: Entries in transposition will evaluate as equal 
+    * if the pieces - excluding pawns - are equal...
     */
    public static final boolean       PARTITION_SEARCH          = false;
 

@@ -59,9 +59,6 @@ public interface Position extends Serializable {
 
       public static final long serialVersionUID = 1L;
 
-      public final static int  SEED             = 17;
-      public final static int  PRIME_FACTOR     = 37;
-
       public final int         hashCode;
       public final int         partitionSearchHashCode;
 
@@ -129,6 +126,8 @@ public interface Position extends Serializable {
                | this.knights
                | this.pawns;
 
+         int  SEED             = 17;
+         int  PRIME_FACTOR     = 37;
          int hash= SEED;
          hash= PRIME_FACTOR
                * hash

@@ -10,10 +10,10 @@ import net.jini.core.transaction.TransactionException;
 import net.jini.space.JavaSpace;
 
 import org.forritan.talvmenni.TalvMenni;
-import org.forritan.talvmenni.evaluation.Evaluation;
 import org.forritan.talvmenni.knowledge.TheoryBook;
 import org.forritan.talvmenni.knowledge.Transposition;
 import org.forritan.talvmenni.knowledge.Position.Move;
+import org.forritan.talvmenni.knowledge.evaluation.Evaluation;
 import org.forritan.talvmenni.masterworker.generic.Command;
 import org.forritan.talvmenni.masterworker.generic.Result;
 import org.forritan.talvmenni.masterworker.generic.Task;
