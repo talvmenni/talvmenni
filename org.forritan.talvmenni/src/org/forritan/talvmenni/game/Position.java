@@ -217,47 +217,49 @@ public class Position {
                whiteKings= whiteKings
                      ^ from
                      | to;
-               whiteEnpassant= 0L;
-               blackEnpassant= 0L;
+               whiteEnpassant= Square._EMPTY_BOARD;
+               blackEnpassant= Square._EMPTY_BOARD;
                //FIXME: set castling
             } else if (this.white.isQueen(from)) {
                whiteQueens= whiteQueens
                      ^ from
                      | to;
-               whiteEnpassant= 0L;
-               blackEnpassant= 0L;
+               whiteEnpassant= Square._EMPTY_BOARD;
+               blackEnpassant= Square._EMPTY_BOARD;
                //FIXME: set castling
             } else if (this.white.isRook(from)) {
                whiteRooks= whiteRooks
                      ^ from
                      | to;
-               whiteEnpassant= 0L;
-               blackEnpassant= 0L;
+               whiteEnpassant= Square._EMPTY_BOARD;
+               blackEnpassant= Square._EMPTY_BOARD;
                //FIXME: set castling
             } else if (this.white.isBishop(from)) {
                whiteBishops= whiteBishops
                      ^ from
                      | to;
-               whiteEnpassant= 0L;
-               blackEnpassant= 0L;
+               whiteEnpassant= Square._EMPTY_BOARD;
+               blackEnpassant= Square._EMPTY_BOARD;
                //FIXME: set castling
             } else if (this.white.isKnight(from)) {
                whiteKnights= whiteKnights
                      ^ from
                      | to;
-               whiteEnpassant= 0L;
-               blackEnpassant= 0L;
+               whiteEnpassant= Square._EMPTY_BOARD;
+               blackEnpassant= Square._EMPTY_BOARD;
                //FIXME: set castling
             } else if (this.white.isPawn(from)) {
-               if ((WhitePawnMoves.create().getPathsFrom(
-                     from) & Rank._3) != 0L) {
+               if (((from & Rank._2) != Square._EMPTY_BOARD) &&
+                     (to & Rank._4) != Square._EMPTY_BOARD) {
                   whiteEnpassant= WhitePawnMoves.create().getPathsFrom(
                         from);
                } else {
-                  whiteEnpassant= 0L;
+                  whiteEnpassant= Square._EMPTY_BOARD;
                }
-               blackEnpassant= 0L;
+               blackEnpassant= Square._EMPTY_BOARD;
+               
 
+               // Check promotion
                if((~Rank._7 & from) == Squares._EMPTY_BOARD) {
                   whitePawns ^= from;
                   switch (promotionPiece) {
@@ -317,47 +319,47 @@ public class Position {
                blackKings= blackKings
                      ^ from
                      | to;
-               whiteEnpassant= 0L;
-               blackEnpassant= 0L;
+               whiteEnpassant= Square._EMPTY_BOARD;
+               blackEnpassant= Square._EMPTY_BOARD;
                //FIXME: set castling
             } else if (this.black.isQueen(from)) {
                blackQueens= blackQueens
                      ^ from
                      | to;
-               whiteEnpassant= 0L;
-               blackEnpassant= 0L;
+               whiteEnpassant= Square._EMPTY_BOARD;
+               blackEnpassant= Square._EMPTY_BOARD;
                //FIXME: set castling
             } else if (this.black.isRook(from)) {
                blackRooks= blackRooks
                      ^ from
                      | to;
-               whiteEnpassant= 0L;
-               blackEnpassant= 0L;
+               whiteEnpassant= Square._EMPTY_BOARD;
+               blackEnpassant= Square._EMPTY_BOARD;
                //FIXME: set castling
             } else if (this.black.isBishop(from)) {
                blackBishops= blackBishops
                      ^ from
                      | to;
-               whiteEnpassant= 0L;
-               blackEnpassant= 0L;
+               whiteEnpassant= Square._EMPTY_BOARD;
+               blackEnpassant= Square._EMPTY_BOARD;
                //FIXME: set castling
             } else if (this.black.isKnight(from)) {
                blackKnights= blackKnights
                      ^ from
                      | to;
-               whiteEnpassant= 0L;
-               blackEnpassant= 0L;
+               whiteEnpassant= Square._EMPTY_BOARD;
+               blackEnpassant= Square._EMPTY_BOARD;
                //FIXME: set castling
             } else if (this.black.isPawn(from)) {
 
-               if ((BlackPawnMoves.create().getPathsFrom(
-                     from) & Rank._6) != 0L) {
+               if ( ((from & Rank._7) != Square._EMPTY_BOARD) &&
+                     ((to & Rank._5) != Square._EMPTY_BOARD) ) {
                   blackEnpassant= BlackPawnMoves.create().getPathsFrom(
                         from);
                } else {
-                  blackEnpassant= 0L;
+                  blackEnpassant= Square._EMPTY_BOARD;
                }
-               whiteEnpassant= 0L;
+               whiteEnpassant= Square._EMPTY_BOARD;
 
                if((~Rank._2 & from) == Squares._EMPTY_BOARD) {
                   blackPawns ^= from;
@@ -652,18 +654,18 @@ public class Position {
          boolean piecesNotMoved;
 
          if (white) {
-            piecesNotMoved= (~this.castling & (Square._E1 | Square._H1)) == 0L;
+            piecesNotMoved= (~this.castling & (Square._E1 | Square._H1)) == Square._EMPTY_BOARD;
          } else {
-            piecesNotMoved= (~this.castling & (Square._E8 | Square._H8)) == 0L;
+            piecesNotMoved= (~this.castling & (Square._E8 | Square._H8)) == Square._EMPTY_BOARD;
          }
 
          if (piecesNotMoved) {
             if (white) {
                return (~this.parent.black.getAllCaptureMovesAttackedSquares() & (Square._E1
-                     | Square._F1 | Square._G1)) == 0L;
+                     | Square._F1 | Square._G1)) == Square._EMPTY_BOARD;
             } else {
                return (~this.parent.white.getAllCaptureMovesAttackedSquares() & (Square._E8
-                     | Square._F8 | Square._G8)) == 0L;
+                     | Square._F8 | Square._G8)) == Square._EMPTY_BOARD;
             }
          } else {
             return false;
@@ -679,20 +681,20 @@ public class Position {
          boolean piecesNotMoved;
 
          if (white) {
-            piecesNotMoved= (~this.castling & (Square._A1 | Square._E1)) == 0L;
+            piecesNotMoved= (~this.castling & (Square._A1 | Square._E1)) == Square._EMPTY_BOARD;
          } else {
-            piecesNotMoved= (~this.castling & (Square._A8 | Square._E8)) == 0L;
+            piecesNotMoved= (~this.castling & (Square._A8 | Square._E8)) == Square._EMPTY_BOARD;
          }
 
          if (piecesNotMoved) {
             if (white) {
                return ((~this.parent.black.getAllCaptureMovesAttackedSquares() & (Square._C1
-                     | Square._D1 | Square._E1)) == 0L) &&
-                     (( ~(this.allPieces | this.parent.black.allPieces) & Square._B1) == 0L);
+                     | Square._D1 | Square._E1)) == Square._EMPTY_BOARD) &&
+                     (( ~(this.allPieces | this.parent.black.allPieces) & Square._B1) == Square._EMPTY_BOARD);
             } else {
                return ((~this.parent.white.getAllCaptureMovesAttackedSquares() & (Square._C8
-                     | Square._D8 | Square._E8)) == 0L) &&
-                     (( ~(this.allPieces | this.parent.black.allPieces) & Square._B8) == 0L);
+                     | Square._D8 | Square._E8)) == Square._EMPTY_BOARD) &&
+                     (( ~(this.allPieces | this.parent.black.allPieces) & Square._B8) == Square._EMPTY_BOARD);
             }
          } else {
             return false;
@@ -701,7 +703,7 @@ public class Position {
       }
 
       public long getAllPawnsReadyForPromotion() {
-         return 0L;
+         return Square._EMPTY_BOARD;
       }
 
       public boolean isChecked() {
@@ -751,42 +753,42 @@ public class Position {
 
       public boolean isAnyPieceOnPosition(
             long position) {
-         return ((this.allPieces & position) != 0L);
+         return ((this.allPieces & position) != Square._EMPTY_BOARD);
       }
 
       public boolean isKing(
             long position) {
-         return ((this.kings & position) != 0L);
+         return ((this.kings & position) != Square._EMPTY_BOARD);
       }
 
       public boolean isQueen(
             long position) {
-         return ((this.queens & position) != 0L);
+         return ((this.queens & position) != Square._EMPTY_BOARD);
       }
 
       public boolean isRook(
             long position) {
-         return ((this.rooks & position) != 0L);
+         return ((this.rooks & position) != Square._EMPTY_BOARD);
       }
 
       public boolean isBishop(
             long position) {
-         return ((this.bishops & position) != 0L);
+         return ((this.bishops & position) != Square._EMPTY_BOARD);
       }
 
       public boolean isKnight(
             long position) {
-         return ((this.knights & position) != 0L);
+         return ((this.knights & position) != Square._EMPTY_BOARD);
       }
 
       public boolean isPawn(
             long position) {
-         return ((this.pawns & position) != 0L);
+         return ((this.pawns & position) != Square._EMPTY_BOARD);
       }
 
       public boolean isEnpassant(
             long position) {
-         return ((this.enpassant & position) != 0L);
+         return ((this.enpassant & position) != Square._EMPTY_BOARD);
       }
 
       private long getAllCaptureMovesAttackedSquares() {
