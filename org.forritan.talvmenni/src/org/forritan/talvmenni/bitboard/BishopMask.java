@@ -401,7 +401,7 @@ public interface BishopMask {
                                                                           | BackSlashDiagonal._A2B1
                                                                           | BackSlashDiagonal._A1A1;
 
-   public static final long _NORTHEAST2SOUTHWEST_FROM_DIAGONALC8H3  = BackSlashDiagonal._C8H3
+   public static final long _NORTHEAST2SOUTHWEST_FROM_DIAGONAL_C8H3  = BackSlashDiagonal._C8H3
                                                                           | BackSlashDiagonal._B8H2
                                                                           | BackSlashDiagonal._A8H1
                                                                           | BackSlashDiagonal._A7G1
