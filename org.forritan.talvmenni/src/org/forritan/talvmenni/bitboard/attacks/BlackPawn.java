@@ -8,27 +8,23 @@ import org.forritan.talvmenni.game.Position;
 
 public class BlackPawn {
 
-   public static long captureMoveAttacksFrom(
-         long square,
-         Position p) {
+   public static long captureMoveAttacksFrom(long square, Position p) {
       long result= 0L;
-      result= BlackPawnCaptures.create().getPathsFrom(
-            square);
-      result &= ~p.black.allPieces;
-      result &= p.white.allPieces;
-      return result; 
-   }
-   
-   public static long moveAttacksFrom(
-         long square,
-         Position p) {
-      long result= 0L;
-      result= BlackPawnMoves.create().getPathsFrom(
-            square);
-      result &= ~p.black.allPieces;
-      result &= ~p.white.allPieces;
-      result &= ~(((p.white.allPieces | p.black.allPieces)& Rank._6) >> 8);
-      return result; 
+      result= BlackPawnCaptures.create().getPathsFrom(square);
+      result&= ~p.black.allPieces;
+      result&= p.white.allPieces;
+      return result;
    }
 
+   public static long moveAttacksFrom(long square, Position p) {
+      long result= 0L;
+      result= BlackPawnMoves.create().getPathsFrom(square);
+      result&= ~p.black.allPieces;
+      result&= ~p.white.allPieces;
+      if ((square & Rank._7) != 0L) {
+         result&= ~(((p.white.allPieces | p.black.allPieces) & Rank._6) >> 8);
+      }
+
+      return result;
+   }
 }
