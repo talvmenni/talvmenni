@@ -72,6 +72,17 @@ public class AlphaBetaSearch implements Search {
             result.add(move);
             this.thinking.postThinking(depth, bestScore.getScore(), moveTime, this.movesSearched, bestScore.getMoveList().toString());
          }
+         if(whiteMove) {
+            if(bestScore != null && bestScore.score > alpha) {
+               alpha= bestScore.score;
+            }
+         } else {
+            if(bestScore != null && bestScore.score < beta) {
+               beta= bestScore.score;
+            }
+         }
+         this.debugInfo.postText("Alpha: " + alpha + " and Beta: " + beta);
+
       }
       
       time += System.currentTimeMillis(); 
