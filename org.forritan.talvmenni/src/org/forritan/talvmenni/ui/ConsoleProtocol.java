@@ -65,6 +65,16 @@ public class ConsoleProtocol extends UiProtocolBase {
          this.protocol.setGo(false);
          theOutput= "Computer-thinking off\n";
       } else if (theInput.toUpperCase().startsWith(
+            "PERFTM")) {
+         String plyString= theInput.substring(
+               6).trim();
+         try {
+            theOutput= this.perftm(Integer.parseInt(plyString));
+         } catch (NumberFormatException e) {
+            theOutput= "NumberFormatException: perft "
+                  + plyString;
+         }
+      } else if (theInput.toUpperCase().startsWith(
             "PERFT")) {
          String plyString= theInput.substring(
                5).trim();
@@ -300,6 +310,14 @@ public class ConsoleProtocol extends UiProtocolBase {
          return this.protocol.getCurrentPosition().getBlack()
                .getPossibleMoves().toString();
       }
+   }
+
+   private String perftm(
+         int ply) {
+      return ChessEngineMethods.perftm(
+            this.protocol.getCurrentPosition().getImmutable(),
+            this.protocol.isWhiteToMove(),
+            ply);
    }
 
    private String perft(
