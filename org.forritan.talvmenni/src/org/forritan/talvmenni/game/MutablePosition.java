@@ -119,7 +119,7 @@ public class MutablePosition extends PositionFactory {
    }
 
    public Position getImmutable() {
-      return PositionFactory.createImmutable(this.getWhite(), this.getBlack());
+      return PositionFactory.create(false, this.getWhite(), this.getBlack());
    }
 
    public Position getMutable() {

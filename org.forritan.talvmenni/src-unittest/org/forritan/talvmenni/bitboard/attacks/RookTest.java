@@ -7,6 +7,7 @@ import org.forritan.talvmenni.bitboard.Square;
 import org.forritan.talvmenni.bitboard.attacks.Rook;
 import org.forritan.talvmenni.game.ImmutablePosition;
 import org.forritan.talvmenni.game.Position;
+import org.forritan.talvmenni.game.PositionFactory;
 
 
 public class RookTest extends TestCase {
@@ -24,7 +25,8 @@ public class RookTest extends TestCase {
    }
 
    public void testRookAttacks1() {
-      Position p= ImmutablePosition.createImmutable(
+      Position p= PositionFactory.create(
+            false,
             Square._E1, // whiteKings
             Square._G4, // whiteQueens
             Square._A1

@@ -8,6 +8,7 @@ import org.forritan.talvmenni.core.ChessEngine.Protocol;
 import org.forritan.talvmenni.game.ImmutablePosition;
 import org.forritan.talvmenni.game.Move;
 import org.forritan.talvmenni.game.MoveHistory;
+import org.forritan.talvmenni.game.OpeningBook;
 import org.forritan.talvmenni.game.Position;
 
 public class ConsoleProtocol extends UiProtocolBase {

@@ -16,7 +16,7 @@ public class TestSpeedOnPositionCreation {
             + " mutable positions...");
 
       long time= -System.currentTimeMillis();
-      Position initialPosition= PositionFactory.createInitialMutable();
+      Position initialPosition= PositionFactory.createInitial(true);
 
       for (int i= 0; i < howMany; i++) {
          long from= 1L << (i % 32);
@@ -50,7 +50,7 @@ public class TestSpeedOnPositionCreation {
             + " immutable positions...");
 
       time= -System.currentTimeMillis();
-      initialPosition= PositionFactory.createInitialImmutable();
+      initialPosition= PositionFactory.createInitial(false);
 
       for (int i= 0; i < howMany; i++) {
          long from= 1L << (i % 32);

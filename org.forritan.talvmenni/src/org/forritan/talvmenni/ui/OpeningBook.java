@@ -10,18 +10,18 @@ public class OpeningBook {
    static String[] variation;
 
    public static String loadBook(
-         String theFile) {
+         String fileName) {
       String theOutput= "Opening book: "
-            + theFile
+            + fileName
             + " loaded with success";
       FileReader bookReader= null;
       
       try {
          bookReader= new FileReader(
-               theFile);
+               fileName);
       } catch (FileNotFoundException e) {
          theOutput= "file not found: "
-               + theFile;
+               + fileName;
       }
 
       BufferedReader BookBuffer= new BufferedReader(

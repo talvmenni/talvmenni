@@ -75,7 +75,8 @@ public class ImmutablePosition extends PositionFactory {
    public Position pushMove(
          Bitboard white,
          Bitboard black) {
-      return PositionFactory.createImmutable(
+      return PositionFactory.create(
+            false,
             white,
             black);
    }
@@ -89,6 +90,6 @@ public class ImmutablePosition extends PositionFactory {
    }
 
    public synchronized Position getMutable() {
-      return PositionFactory.createMutable(this.getWhite(), this.getBlack());
+      return PositionFactory.create(true, this.getWhite(), this.getBlack());
    }
 }
