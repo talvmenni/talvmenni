@@ -153,7 +153,10 @@ public abstract class AbstractStrategy implements Strategy {
       time += System.currentTimeMillis();
       
       if(time < TalvMenni.MINIMUM_MOVE_DELAY) {
-         
+         try {
+            Thread.sleep(TalvMenni.MINIMUM_MOVE_DELAY - time);
+         } catch (InterruptedException e) {
+         }
       }
 
       if (!bestMoves.isEmpty()) {
