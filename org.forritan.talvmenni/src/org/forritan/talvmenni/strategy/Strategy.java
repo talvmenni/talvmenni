@@ -13,6 +13,7 @@ public interface Strategy extends Serializable {
    
    public static final long serialVersionUID = 1L; 
    
+//   public void abortCalculation();
    public Position.Move getNextMove(Position position, boolean whiteToMove);
    
    public Search getSearch();

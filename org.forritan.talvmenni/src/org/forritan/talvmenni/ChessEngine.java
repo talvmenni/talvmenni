@@ -345,10 +345,6 @@ public class ChessEngine extends Observable implements Runnable {
                e.printStackTrace();
             }
          }
-         //         //XXX: Doesn't work properly just yet...
-         //         ChessEngine.this.getProtocol().getObjectCreationStatistics().post(
-         //               ObjectCreationStatistics.PrintObjectCreationSinceVMStartStats);
-
       }
    }
 

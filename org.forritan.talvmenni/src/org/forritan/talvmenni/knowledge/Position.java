@@ -2,6 +2,7 @@ package org.forritan.talvmenni.knowledge;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.StringTokenizer;
 
@@ -78,6 +79,7 @@ public interface Position extends Serializable {
       public final long        allPieces;
 
       private List             possibleMoves;
+      private List             possibleCaptureMoves;
       private List             betterOrderMoves;
       private long             allCaptureMovesAttackedSquares;
       private boolean          allCaptureMovesAttackedSquaresInitialized;
@@ -255,6 +257,29 @@ public interface Position extends Serializable {
             this.possibleMoves.addAll(currentPossibleMoves);
             this.betterOrderMoves= null;
          }
+      }
+
+      public List getPossibleCaptureMoves() {
+         if (this.possibleCaptureMoves == null) {
+            this.possibleCaptureMoves= new ArrayList();
+
+            long allPossibleOpponentCaptures= this
+                  .getAllCaptureMovesAttackedSquares();
+            
+            if (this.whiteBoard) {
+               allPossibleOpponentCaptures &= this.parent.getBlack().allPieces;
+            } else {
+               allPossibleOpponentCaptures &= this.parent.getWhite().allPieces;
+            }
+            
+            for(Iterator it= this.getPossibleMoves().iterator(); it.hasNext(); ) {
+               Move move= (Move) it.next();
+               if((move.to & allPossibleOpponentCaptures) != Square._EMPTY_BOARD) {
+                  this.possibleCaptureMoves.add(0, move);
+               }
+            }
+         }
+         return this.possibleCaptureMoves;
       }
 
       public List getPossibleMoves() {

@@ -51,7 +51,7 @@ public interface Evaluation extends Serializable {
    public static final int KNIGHT= 331;
    public static final int PAWN= 101;
    
-   public static final int KING= (9 * QUEEN) + (2 * ROOK) + (2 * BISHOP) + (2 * KNIGHT) + 1;
+   public static final int KING= (9 * QUEEN) + (2 * ROOK) + (2 * BISHOP) + (2 * KNIGHT) + 2;
    public static final int CHECKMATE_SCORE = (2 * KING) + 3;
 
    public static final int POSITION_CORE= 23;
