@@ -27,16 +27,6 @@ public class HistoryHeuristic implements Serializable {
             TalvMenni.MAX_HISTORY_HEURISTIC_ENTRIES);
    }
 
-   /**
-    * @deprecated Use no-arg constructor instead...
-    */  
-   public static HistoryHeuristic getInstance() {
-      if (HistoryHeuristic.instance == null) {
-         HistoryHeuristic.instance= new HistoryHeuristic();
-      }
-      return HistoryHeuristic.instance;
-   }
-
    public void clear() {
       this.historyMap.clear();
    }

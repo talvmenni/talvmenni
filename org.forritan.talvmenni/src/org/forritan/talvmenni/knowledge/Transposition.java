@@ -149,7 +149,9 @@ public class Transposition implements Serializable {
 
    }
 
-   public static class Entry {
+   public static class Entry implements Serializable {
+
+      public static final long serialVersionUID = 1L;
 
       public int upperBound;
       public int exactScore;

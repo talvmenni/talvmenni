@@ -20,6 +20,8 @@ public class AlphaBetaWithQuiescentAndTranspositionTableSearch implements
       Search {
 
    private int lastScore;
+   private int finalAlpha;
+   private int finalBeta;
 
    public int getLastScore() {
       return this.lastScore;
@@ -280,6 +282,9 @@ public class AlphaBetaWithQuiescentAndTranspositionTableSearch implements
             ply,
             Transposition.Entry.Type.EXACT);
 
+      this.finalAlpha= alpha;
+      this.finalBeta= beta;
+
       return result;
    }
 
@@ -291,4 +296,13 @@ public class AlphaBetaWithQuiescentAndTranspositionTableSearch implements
          HistoryHeuristic historyHeuristic) {
       this.historyHeuristic= historyHeuristic;
    }
+   
+   public int getFinalAlpha() {
+      return this.finalAlpha;
+   }
+   
+   public int getFinalBeta() {
+      return this.finalBeta;
+   }
+
 }

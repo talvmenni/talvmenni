@@ -15,6 +15,8 @@ import org.forritan.talvmenni.search.PrincipalVariation.Thinking;
 public class AlphaBetaSearch implements Search {
 
    private int lastScore;
+   private int finalAlpha;
+   private int finalBeta;
 
    public int getLastScore() {
       return this.lastScore;
@@ -193,14 +195,27 @@ public class AlphaBetaSearch implements Search {
             this.pv.updateLastExaminedLine();
          }
       }
+      
+      this.finalAlpha= alpha;
+      this.finalBeta= beta;
 
       return result;
    }
+   
    public HistoryHeuristic getHistoryHeuristic() {
-      return historyHeuristic;
+      return this.historyHeuristic;
    }
+   
    public void setHistoryHeuristic(
          HistoryHeuristic historyHeuristic) {
       this.historyHeuristic= historyHeuristic;
+   }
+   
+   public int getFinalAlpha() {
+      return this.finalAlpha;
+   }
+   
+   public int getFinalBeta() {
+      return this.finalBeta;
    }
 }

@@ -103,7 +103,13 @@ public class SimpleOneLevelAlphaBetaParallelStrategy extends
                      Boolean.valueOf(!this.whiteToMove),
                      new Integer(
                            this.ply));
-               this.writeTask(task);
+               try {
+                  this.writeTask(task);
+               } catch (IOException e) {
+                  e.printStackTrace();
+               } catch (InterruptedException e) {
+                  e.printStackTrace();
+               }
             }
          }
 
@@ -114,11 +120,18 @@ public class SimpleOneLevelAlphaBetaParallelStrategy extends
 
          this.bestResult= null;
          for (int i= 0; i < this.numberOfTasks; i++) {
-            SimpleOneLevelAlphaBetaResult result= (SimpleOneLevelAlphaBetaResult) this
-                  .takeResult(template);
-            if (this.bestResult == null
-                  || this.bestResult.score.intValue() > result.score.intValue()) {
-               this.bestResult= result;
+            SimpleOneLevelAlphaBetaResult result= null;
+            try {
+               result= (SimpleOneLevelAlphaBetaResult) this
+                     .takeResult(template);
+            } catch (IOException e) {
+               e.printStackTrace();
+            }
+            if(result != null) {
+               if (this.bestResult == null
+                     || this.bestResult.score.intValue() > result.score.intValue()) {
+                  this.bestResult= result;
+               }
             }
          }
       }

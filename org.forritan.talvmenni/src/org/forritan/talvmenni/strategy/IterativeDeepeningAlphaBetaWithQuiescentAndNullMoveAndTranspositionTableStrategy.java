@@ -47,9 +47,6 @@ public class IterativeDeepeningAlphaBetaWithQuiescentAndNullMoveAndTransposition
                mutablePosition,
                this.evaluation,
                whiteToMove);
-//         if (this.search.getLastScore() >= Evaluation.CHECKMATE_SCORE) {
-//            break;
-//         }
       }
 
       return result;

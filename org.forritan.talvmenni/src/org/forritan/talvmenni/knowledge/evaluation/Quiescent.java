@@ -1,5 +1,6 @@
 package org.forritan.talvmenni.knowledge.evaluation;
 
+import java.io.Serializable;
 import java.util.Iterator;
 import java.util.List;
 
@@ -12,13 +13,15 @@ import org.forritan.talvmenni.search.AlphaBetaSearch;
 import org.forritan.talvmenni.search.PrincipalVariation;
 
 
-public class Quiescent {
+public class Quiescent implements Serializable {
 
-   private int                maxDepth;
-   private AlphaBetaSearch    search;
+   public static final long serialVersionUID = 1L;
 
-   private int                movesSearched;
-   private int                transpositionHits;
+   private int              maxDepth;
+   private AlphaBetaSearch  search;
+
+   private int              movesSearched;
+   private int              transpositionHits;
 
    public Quiescent(
          PrincipalVariation pv,
@@ -44,7 +47,9 @@ public class Quiescent {
                   alpha,
                   beta);
 
-      int score= (e.getScore(p, whiteMove) * (whiteMove ? 1 : -1));
+      int score= (e.getScore(
+            p,
+            whiteMove) * (whiteMove ? 1 : -1));
 
       if ((this.maxDepth + ply) > 0) {
 

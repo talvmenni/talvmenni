@@ -18,12 +18,12 @@ import org.forritan.talvmenni.search.PrincipalVariation.Thinking;
 
 public abstract class AbstractStrategy implements Strategy {
 
-   protected DebugInfo          debugInfo;
-   protected TheoryBook         book;
-   protected Search             search;
-   protected PrincipalVariation pv;
-   protected Evaluation         evaluation;
-   protected int                ply;
+   protected DebugInfo            debugInfo;
+   protected transient TheoryBook book;
+   protected Search               search;
+   protected PrincipalVariation   pv;
+   protected Evaluation           evaluation;
+   protected int                  ply;
 
    public AbstractStrategy(
          int ply,
@@ -124,7 +124,7 @@ public abstract class AbstractStrategy implements Strategy {
    public Position.Move getNextMove(
          Position position,
          boolean whiteToMove) {
-      
+
       long time= -System.currentTimeMillis();
 
       Move result= getPossibleBookMove(
@@ -149,13 +149,14 @@ public abstract class AbstractStrategy implements Strategy {
                position,
                whiteToMove);
       }
-      
-      time += System.currentTimeMillis();
-      
-      if(time < TalvMenni.MINIMUM_MOVE_DELAY) {
+
+      time+= System.currentTimeMillis();
+
+      if (time < TalvMenni.MINIMUM_MOVE_DELAY) {
          try {
             this.debugInfo.postText("Whooooaaa!!! Lets wait a little...");
-            Thread.sleep(TalvMenni.MINIMUM_MOVE_DELAY - time);
+            Thread.sleep(TalvMenni.MINIMUM_MOVE_DELAY
+                  - time);
          } catch (InterruptedException e) {
          }
       }

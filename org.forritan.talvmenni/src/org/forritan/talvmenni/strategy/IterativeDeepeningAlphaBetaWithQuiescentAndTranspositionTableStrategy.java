@@ -3,6 +3,7 @@ package org.forritan.talvmenni.strategy;
 import java.util.List;
 
 import org.forritan.talvmenni.knowledge.Draw;
+import org.forritan.talvmenni.knowledge.HistoryHeuristic;
 import org.forritan.talvmenni.knowledge.Position;
 import org.forritan.talvmenni.knowledge.TheoryBook;
 import org.forritan.talvmenni.knowledge.Transposition;
@@ -46,9 +47,6 @@ public class IterativeDeepeningAlphaBetaWithQuiescentAndTranspositionTableStrate
                mutablePosition,
                this.evaluation,
                whiteToMove);
-//         if (this.search.getLastScore() >= Evaluation.CHECKMATE_SCORE) {
-//            break;
-//         }
       }
 
       return result;

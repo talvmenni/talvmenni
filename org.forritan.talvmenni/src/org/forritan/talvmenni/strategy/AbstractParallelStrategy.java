@@ -22,10 +22,11 @@ import org.forritan.talvmenni.search.PrincipalVariation;
 import org.forritan.talvmenni.search.Search;
 import org.forritan.util.jini.ServiceLocator;
 
+import edu.emory.mathcs.util.concurrent.PlainThreadFactory;
+import edu.emory.mathcs.util.concurrent.ThreadFactory;
+
 
 public abstract class AbstractParallelStrategy extends AbstractStrategy {
-
-   public JavaSpace space = null;
 
    public AbstractParallelStrategy(
          int ply,
@@ -39,64 +40,68 @@ public abstract class AbstractParallelStrategy extends AbstractStrategy {
             pv,
             search,
             evaluation);
-      try {
-         this.space= (JavaSpace) ServiceLocator.getService(JavaSpace.class);
 
-         final ChessEngineWorker worker= new ChessEngineWorker();
-         worker.transposition= new Transposition();
-         worker.search= search;
-         worker.evaluation= evaluation;
+      final ChessEngineWorker workerTemplate= new ChessEngineWorker();
+      final ChessEngineWorker worker= new ChessEngineWorker();
+      worker.transposition= new Transposition();
+      worker.search= search;
+      worker.evaluation= evaluation;
 
-         TalvMenni.getThreadFactory().newThread(
-               new Runnable() {
-                  public void run() {
+      ChessEngineWorker.getThreadFactory().newThread(
+            new Runnable() {
+               public void run() {
+                  int workerNumber= 1;
+                  while (true) {
+                     worker.name= "Talvmenni ChessEngineWorker #"
+                           + workerNumber;
+                     try {
+                        ServiceLocator.getJavaSpaceInstance().write(
+                              worker,
+                              null,
+                              Lease.FOREVER);
+                        workerNumber++;
+                        worker.name= null;
+                     } catch (RemoteException e) {
+                        e.printStackTrace();
+                     } catch (TransactionException e) {
+                        e.printStackTrace();
+                     } catch (IOException e) {
+                        e.printStackTrace();
+                     } catch (InterruptedException e) {
+                        e.printStackTrace();
+                     }
                      while (true) {
                         try {
-                           AbstractParallelStrategy.this.space.write(
-                                 worker,
-                                 null,
-                                 Lease.FOREVER);
+                           if (ServiceLocator.getJavaSpaceInstance()
+                                 .readIfExists(
+                                       workerTemplate,
+                                       null,
+                                       1000L) == null) {
+                              break;
+                           }
+                           Thread.sleep(3000);
                         } catch (RemoteException e) {
+                           e.printStackTrace();
+                        } catch (UnusableEntryException e) {
                            e.printStackTrace();
                         } catch (TransactionException e) {
                            e.printStackTrace();
-                        }
-                        while (true) {
-                           try {
-                              if (AbstractParallelStrategy.this.space
-                                    .readIfExists(
-                                          worker,
-                                          null,
-                                          1000L) == null) {
-                                 break;
-                              }
-                              Thread.sleep(3000);
-                           } catch (RemoteException e) {
-                              e.printStackTrace();
-                           } catch (UnusableEntryException e) {
-                              e.printStackTrace();
-                           } catch (TransactionException e) {
-                              e.printStackTrace();
-                           } catch (InterruptedException e) {
-                              e.printStackTrace();
-                           }
+                        } catch (InterruptedException e) {
+                           e.printStackTrace();
+                        } catch (IOException e) {
+                           // TODO Auto-generated catch block
+                           e.printStackTrace();
                         }
                      }
                   }
-               }).start();
+               }
+            }).start();
 
-      } catch (IOException e) {
-         e.printStackTrace();
-      } catch (InterruptedException e) {
-         e.printStackTrace();
-      }
    }
 
    public static abstract class ChessEngineMaster implements Runnable {
-      private JavaSpace space;
 
       public ChessEngineMaster() throws IOException, InterruptedException {
-         space= (JavaSpace) ServiceLocator.getService(JavaSpace.class);
       }
 
       public synchronized void run() {
@@ -109,9 +114,9 @@ public abstract class AbstractParallelStrategy extends AbstractStrategy {
       protected abstract void collectResults();
 
       protected void writeTask(
-            ChessEngineTask task) {
+            Entry task) throws IOException, InterruptedException {
          try {
-            space.write(
+            ServiceLocator.getJavaSpaceInstance().write(
                   task,
                   null,
                   Lease.FOREVER);
@@ -123,9 +128,9 @@ public abstract class AbstractParallelStrategy extends AbstractStrategy {
       }
 
       protected Result takeResult(
-            Result template) {
+            Result template) throws IOException {
          try {
-            Result result= (Result) space.take(
+            Result result= (Result) ServiceLocator.getJavaSpaceInstance().take(
                   template,
                   null,
                   Long.MAX_VALUE);
@@ -145,11 +150,21 @@ public abstract class AbstractParallelStrategy extends AbstractStrategy {
 
    public static class ChessEngineWorker extends Task {
 
-      public JavaSpace        space            = null;
-      public Transposition    transposition    = null;
-      public HistoryHeuristic historyHeuristic = null;
-      public Search           search           = null;
-      public Evaluation       evaluation       = null;
+      public String                               name             = null;
+      public transient Transposition              transposition    = null;
+      public transient HistoryHeuristic           historyHeuristic = null;
+      public Search                               search           = null;
+      public Evaluation                           evaluation       = null;
+      private ChessEngineTask                     task;
+
+      private static transient PlainThreadFactory threadFactory;
+
+      public synchronized static ThreadFactory getThreadFactory() {
+         if (ChessEngineWorker.threadFactory == null) {
+            ChessEngineWorker.threadFactory= new PlainThreadFactory();
+         }
+         return ChessEngineWorker.threadFactory;
+      }
 
       public ChessEngineWorker() {
          this.transposition= new Transposition();
@@ -158,30 +173,27 @@ public abstract class AbstractParallelStrategy extends AbstractStrategy {
 
       public Result execute() {
          try {
-            this.space= (JavaSpace) ServiceLocator.getService(JavaSpace.class);
-
             ChessEngineTask taskTemplate= new ChessEngineTask();
 
             while (true) {
-               System.out.println("Looking for new chesstask...");
+               System.out.println(this.name
+                     + " looking for new chesstask...");
                try {
-                  ChessEngineTask task= (ChessEngineTask) space.take(
-                        taskTemplate,
-                        null,
-                        Lease.FOREVER);
+                  task= (ChessEngineTask) ServiceLocator.getJavaSpaceInstance()
+                        .take(
+                              taskTemplate,
+                              null,
+                              Long.MAX_VALUE);
+                  if (task != null) {
+                     task.worker= this;
 
-                  task.worker= this;
-
-                  System.out.println("Evaluating "
-                        + task.getMove().toString()
-                        + "...");
-
-                  Result result= task.execute();
-                  if (result != null) {
-                     space.write(
-                           result,
-                           null,
-                           Lease.FOREVER);
+                     Result result= task.execute();
+                     if (result != null) {
+                        ServiceLocator.getJavaSpaceInstance().write(
+                              result,
+                              null,
+                              Lease.FOREVER);
+                     }
                   }
                } catch (RemoteException e) {
                   System.out.println(e);
@@ -195,10 +207,17 @@ public abstract class AbstractParallelStrategy extends AbstractStrategy {
             }
          } catch (IOException e) {
             e.printStackTrace();
-         } catch (InterruptedException e) {
-            e.printStackTrace();
          }
          return null;
+      }
+
+      public ChessEngineTask getTask() {
+         return this.task;
+      }
+
+      public void setTask(
+            ChessEngineTask task) {
+         this.task= task;
       }
    }
 
@@ -220,5 +239,4 @@ public abstract class AbstractParallelStrategy extends AbstractStrategy {
       }
 
    }
-
 }
