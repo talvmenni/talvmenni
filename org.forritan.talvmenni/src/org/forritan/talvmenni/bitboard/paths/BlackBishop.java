@@ -3,7 +3,7 @@ package org.forritan.talvmenni.bitboard.paths;
 import org.forritan.talvmenni.bitboard.Square;
 
 
-public interface BlackBishop {
+public interface BlackBishop extends Bishop {
 
    public static final long _PATHS_FROM_A1 = Square._B2
                                                  | Square._C3

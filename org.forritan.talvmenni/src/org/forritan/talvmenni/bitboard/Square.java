@@ -1,8 +1,8 @@
 package org.forritan.talvmenni.bitboard;
 
-public class Square {
-
-   public static final long[] bitmaps = new long[64];
+public interface Square {
+   
+   public long getSquare(int squareNumber);
 
    public static final int    A8      = 0;
    public static final int    B8      = 1;
@@ -147,11 +147,5 @@ public class Square {
    public static final long   _F1     = 1L << 2;
    public static final long   _G1     = 1L << 1;
    public static final long   _H1     = 1L << 0;
-
-   static {
-      for (int i= 0; i < Square.bitmaps.length; i++) {
-         Square.bitmaps[i]= (1L << (63 - i));
-      }
-   }
-
+   
 }

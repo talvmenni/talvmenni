@@ -4,6 +4,9 @@ import org.forritan.talvmenni.bitboard.Square;
 
 
 public interface King {
+   
+   public long getPathsFrom(long square);
+   
    public static final long _PATHS_FROM_A1 = Square._B1
                                                  | Square._A2
                                                  | Square._B2;
@@ -461,5 +464,5 @@ public interface King {
    public static final long _PATHS_FROM_H8 = Square._G8
                                                  | Square._G7
                                                  | Square._H7;
-
+   
 }

@@ -3,7 +3,7 @@ package org.forritan.talvmenni.bitboard.paths;
 import org.forritan.talvmenni.bitboard.Square;
 
 
-public interface WhitePawn {
+public interface WhitePawn extends Pawn {
 
    public static final long _PATHS_FROM_A1 = 0L;
    public static final long _PATHS_FROM_B1 = 0L;

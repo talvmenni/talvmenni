@@ -11,9 +11,10 @@ public class AllTests {
       //$JUnit-BEGIN$
       suite.addTestSuite(RookTest.class);
       suite.addTestSuite(QueenTest.class);
+      suite.addTestSuite(WhitePawnTest.class);
       suite.addTestSuite(BishopTest.class);
       suite.addTestSuite(KnightTest.class);
-      suite.addTestSuite(WhitePawnTest.class);
+      suite.addTestSuite(BlackPawnTest.class);
       //$JUnit-END$
       return suite;
    }
