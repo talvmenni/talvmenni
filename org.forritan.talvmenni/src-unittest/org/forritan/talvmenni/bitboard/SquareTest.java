@@ -1753,4 +1753,53 @@ public class SquareTest extends TestCase {
             Square._H8,
             square.getSquare(Square.H8));
    }
+
+   public void testEmptyBoard() {
+      Assert.assertEquals(
+            ""
+                  + //
+                  "00000000"
+                  + // A8-H8
+                  "00000000"
+                  + // A7-H7
+                  "00000000"
+                  + // A6-H6
+                  "00000000"
+                  + // A5-H5
+                  "00000000"
+                  + // A4-H4
+                  "00000000"
+                  + // A3-H3
+                  "00000000"
+                  + // A2-H2
+                  "00000000", // A1-H1
+            (this.zeroPrefix[Long.toBinaryString(
+                  Square._EMPTY_BOARD).length() - 1] + Long
+                  .toBinaryString(Square._EMPTY_BOARD)));
+   }
+
+   public void testFullBoard() {
+      Assert.assertEquals(
+            ""
+                  + //
+                  "11111111"
+                  + // A8-H8
+                  "11111111"
+                  + // A7-H7
+                  "11111111"
+                  + // A6-H6
+                  "11111111"
+                  + // A5-H5
+                  "11111111"
+                  + // A4-H4
+                  "11111111"
+                  + // A3-H3
+                  "11111111"
+                  + // A2-H2
+                  "11111111", // A1-H1
+            (this.zeroPrefix[Long.toBinaryString(
+                  Square._FULL_BOARD).length() - 1] + Long
+                  .toBinaryString(Square._FULL_BOARD)));
+   }
+
 }

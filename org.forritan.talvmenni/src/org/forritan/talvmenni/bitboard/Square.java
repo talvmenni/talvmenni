@@ -151,5 +151,6 @@ public interface Square {
    public static final long   _H1     = 1L << 0;
    
    public static final long _EMPTY_BOARD = 0L;
+   public static final long _FULL_BOARD = -1L;
    
 }
