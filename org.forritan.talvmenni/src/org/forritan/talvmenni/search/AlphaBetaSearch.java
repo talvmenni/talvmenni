@@ -146,7 +146,8 @@ public class AlphaBetaSearch implements Search {
                p.popMove();
             }         
             result= bestScore;
-            result.add(currentBestMove, 0);
+            result.add(currentBestMove, e.getScore(p));
+//            result.add(currentBestMove, 0);
             
          } else {
             if(whiteMove){
