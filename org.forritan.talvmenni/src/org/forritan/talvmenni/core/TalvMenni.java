@@ -36,20 +36,20 @@ public class TalvMenni {
          ChessEngine.create(new IterativeDeepeningAlphaBetaSearchSimpleMaterialAndPositionalEvaluationChooseRandomlyBetweenBestMovesStrategy(SEARCH_DEPTH));
 
       if (Boolean.getBoolean("debug_window")) {
-         Thread debugWindowThread= threadFactory.newThread(new Runnable() {
+         Thread windowThread= threadFactory.newThread(new Runnable() {
             public void run() {
-               DebugWindow debugWindow= new DebugWindow(TalvMenni.NAME + " | " + TalvMenni.DEBUG_NAME);
-               chessEngine.addObserver(debugWindow);
+               DebugWindow window= new DebugWindow(TalvMenni.NAME + " | " + TalvMenni.DEBUG_NAME);
+               chessEngine.addObserver(window);
             }
          });
-         debugWindowThread.start();
+         windowThread.start();
       }
 
       if (Boolean.getBoolean("object_statisics_window")) {
          Thread windowThread= threadFactory.newThread(new Runnable() {
             public void run() {
                ObjectStatisticsWindow window = new ObjectStatisticsWindow(TalvMenni.NAME + " | Object creations statistics");
-               chessEngine.getProtocol().getObjectCreationStatisticsInfo().addObserver(window);
+               chessEngine.getProtocol().getObjectCreationStatistics().addObserver(window);
             }
          });
          windowThread.start();
