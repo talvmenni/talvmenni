@@ -5,6 +5,7 @@ import java.util.StringTokenizer;
 
 import org.forritan.talvmenni.bitboard.Square;
 import org.forritan.talvmenni.bitboard.Squares;
+import org.forritan.talvmenni.core.TalvMenni;
 import org.forritan.talvmenni.core.ChessEngine.Protocol;
 import org.forritan.talvmenni.game.Move;
 import org.forritan.talvmenni.game.MoveHistory;
@@ -71,11 +72,31 @@ public class ConsoleProtocol extends UiProtocolBase {
          String theMove= theInput.substring(
                4).trim();
 
+         
+         if(TalvMenni.OBJECT_STATISICS) {
+            System.err.println("----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|");
+            System.err.println("ConsoleProtocol.processInput(String) - String==\"MOVE\"");
+            ___resetObjectCreationStats();
+         }
          theOutput= makeMove(theMove); // usermove
+         if(TalvMenni.OBJECT_STATISICS) {
+            ___printObjectCreationStats(System.err);
+            System.err.println("----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|");
+         }
+
       }
 
       if ((theInput.equalsIgnoreCase("?")) && (this.protocol.isGo())) {
+         if(TalvMenni.OBJECT_STATISICS) {
+            System.err.println("----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|");
+            System.err.println("ConsoleProtocol.processInput(String) - String==\"?\"");
+            ___resetObjectCreationStats();
+         }
          Move move= this.protocol.makeNextMove();
+         if(TalvMenni.OBJECT_STATISICS) {
+            ___printObjectCreationStats(System.err);
+            System.err.println("----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|");
+         }
          if(move != null) {
            theOutput = getStringBoard();
          }

@@ -22,11 +22,7 @@ public class Move {
          int promotionPiece) {
       this.time= System.currentTimeMillis();
       this.promotionPiece= promotionPiece;
-      if(fromPosition instanceof MutablePosition) {
-         this.fromPosition= PositionFactory.createImmutable(fromPosition.getWhite(), fromPosition.getBlack());         
-      } else {
-         this.fromPosition= fromPosition;
-      }
+      this.fromPosition= fromPosition.getImmutable();
       this.whiteMove= this.fromPosition.getWhite().isAnyPieceOnPosition(fromSquare);
       this.toPosition= fromPosition.move(
             fromSquare,
@@ -42,11 +38,7 @@ public class Move {
          long toSquare) {
       this.time= System.currentTimeMillis();
       this.promotionPiece= Position.PromotionPiece.DEFAULT;
-      if(fromPosition instanceof MutablePosition) {
-         this.fromPosition= PositionFactory.createImmutable(fromPosition.getWhite(), fromPosition.getBlack());         
-      } else {
-         this.fromPosition= fromPosition;
-      }
+      this.fromPosition= fromPosition.getImmutable();
       this.whiteMove= this.fromPosition.getWhite().isAnyPieceOnPosition(fromSquare);
       this.toPosition= fromPosition.move(
             fromSquare,

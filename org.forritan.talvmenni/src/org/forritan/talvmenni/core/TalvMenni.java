@@ -8,6 +8,8 @@ import org.forritan.talvmenni.ui.DebugWindow;
 
 
 public class TalvMenni {
+   
+   public final static boolean OBJECT_STATISICS= true;
 
    public final static String NAME    = "Talvmenni";
    public final static String VERSION = "0.1";
@@ -18,6 +20,7 @@ public class TalvMenni {
 
    public static void main(
          String args[]) {
+      
       ThreadFactory threadFactory= Executors.defaultThreadFactory();
 
       DEBUG_NAME= System.getProperty("debug_name");

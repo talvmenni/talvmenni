@@ -166,11 +166,11 @@ public class ChessEngine extends Observable implements Runnable {
          return this.currentRules;
       }
 
-      public Position getCurrentPosition() {
+      public synchronized Position getCurrentPosition() {
          return this.currentPosition;
       }
 
-      public void setCurrentPosition(Position position) {
+      public synchronized void setCurrentPosition(Position position) {
          if(position != null) {
             this.currentPosition= position.getImmutable();
             if(this.WhiteToMove) {
@@ -181,7 +181,7 @@ public class ChessEngine extends Observable implements Runnable {
          }
       }
       
-      public Move makeMove(long fromSquare, long toSquare) {
+      public synchronized Move makeMove(long fromSquare, long toSquare) {
          return this.makeMove(fromSquare, toSquare, ChessEngine.this.strategy.getPromotionPiece());
       }
       
