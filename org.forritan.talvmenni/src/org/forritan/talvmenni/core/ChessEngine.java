@@ -46,10 +46,6 @@ public class ChessEngine implements Runnable {
 
    private ChessEngine() {
 
-      if (TalvMenni.CROUCHING_TIGER_HIDDEN_DEBUG) {
-         System.err.println("DEBUG: ChessEngine()");
-      }
-
       this.running= false;
       this.protocol= new ProtocolImpl();
       this.threadFactory= Executors.defaultThreadFactory();
@@ -66,10 +62,6 @@ public class ChessEngine implements Runnable {
    }
 
    public void run() {
-      if (TalvMenni.CROUCHING_TIGER_HIDDEN_DEBUG) {
-         System.err.println("DEBUG: ChessEngine.run()");
-      }
-
       this.running= true;
       this.threadFactory.newThread(new ProtocolHandler()).start();
       this.threadFactory.newThread(new InStreamHandler()).start();
@@ -91,12 +83,6 @@ public class ChessEngine implements Runnable {
       private boolean    WhiteToMove;
 
       public String processInput(String theInput) {
-
-         if (TalvMenni.CROUCHING_TIGER_HIDDEN_DEBUG) {
-            System.err.println("DEBUG: ChessEngine.Protocol.processInput( = "
-                  + theInput
-                  + " )");
-         }
 
          String theOutput= null;
 
@@ -144,16 +130,7 @@ public class ChessEngine implements Runnable {
 
       public void run() {
 
-         if (TalvMenni.CROUCHING_TIGER_HIDDEN_DEBUG) {
-            System.err.println("DEBUG: ChessEngine.ProtocolHandler.run()");
-         }
-
          while (ChessEngine.this.isRunning()) {
-
-            if (TalvMenni.CROUCHING_TIGER_HIDDEN_DEBUG) {
-               System.err
-                     .println("DEBUG: ChessEngine.ProtocolHandler.run() - start loop");
-            }
 
             try {
                String reply= ChessEngine.this.protocol
@@ -170,30 +147,13 @@ public class ChessEngine implements Runnable {
             } catch (InterruptedException e) {
                e.printStackTrace();
             }
-
-            if (TalvMenni.CROUCHING_TIGER_HIDDEN_DEBUG) {
-               System.err
-                     .println("DEBUG: ChessEngine.ProtocolHandler.run() - end loop");
-            }
-
          }
-
-         if (TalvMenni.CROUCHING_TIGER_HIDDEN_DEBUG) {
-            System.err
-                  .println("DEBUG: ChessEngine.ProtocolHandler.run() - thread terminates");
-         }
-
       }
-
    }
 
    private class InStreamHandler implements Runnable {
 
       public void run() {
-
-         if (TalvMenni.CROUCHING_TIGER_HIDDEN_DEBUG) {
-            System.err.println("DEBUG: ChessEngine.InStreamHandler.run()");
-         }
 
          BufferedReader inReader= new BufferedReader(new InputStreamReader(
                System.in));
@@ -201,11 +161,6 @@ public class ChessEngine implements Runnable {
          String inputMessage= "";
 
          while (ChessEngine.this.isRunning()) {
-
-            if (TalvMenni.CROUCHING_TIGER_HIDDEN_DEBUG) {
-               System.err
-                     .println("DEBUG: ChessEngine.InStreamHandler.run() - start loop");
-            }
 
             try {
                inputMessage= inReader.readLine();
@@ -222,19 +177,7 @@ public class ChessEngine implements Runnable {
 
             }
             inputMessage= null;
-
-            if (TalvMenni.CROUCHING_TIGER_HIDDEN_DEBUG) {
-               System.err
-                     .println("DEBUG: ChessEngine.InStreamHandler.run() - end loop");
-            }
-
          }
-
-         if (TalvMenni.CROUCHING_TIGER_HIDDEN_DEBUG) {
-            System.err
-                  .println("DEBUG: ChessEngine.InStreamHandler.run() - thread terminates");
-         }
-
       }
    }
 
@@ -242,36 +185,14 @@ public class ChessEngine implements Runnable {
 
       public void run() {
 
-         if (TalvMenni.CROUCHING_TIGER_HIDDEN_DEBUG) {
-            System.err.println("DEBUG: ChessEngine.OutStreamHandler.run()");
-         }
-
          while (ChessEngine.this.isRunning()) {
-
-            if (TalvMenni.CROUCHING_TIGER_HIDDEN_DEBUG) {
-               System.err
-                     .println("DEBUG: ChessEngine.OutStreamHandler.run() - start loop");
-            }
 
             try {
                System.out.println((String) ChessEngine.this.outMessages.take());
             } catch (InterruptedException e) {
                e.printStackTrace();
             }
-
-            if (TalvMenni.CROUCHING_TIGER_HIDDEN_DEBUG) {
-               System.err
-                     .println("DEBUG: ChessEngine.OutStreamHandler.run() - end loop");
-            }
-
          }
-
-         if (TalvMenni.CROUCHING_TIGER_HIDDEN_DEBUG) {
-            System.err
-                  .println("DEBUG: ChessEngine.OutStreamHandler.run() - thread terminates");
-         }
-
       }
-
    }
 }

@@ -528,28 +528,8 @@ public class Position {
 
          public Object next() {
             long result= Long.lowestOneBit(this.bitboard);
-
-            if (TalvMenni.CROUCHING_TIGER_HIDDEN_DEBUG) {
-               System.err.println("DEBUG: this.bitboard= "
-                     + this.bitboard
-                     + " : "
-                     + Long.toBinaryString(this.bitboard));
-               System.err.println("DEBUG: result= "
-                     + result
-                     + " : "
-                     + Long.toBinaryString(result));
-            }
-
             this.bitboard= this.bitboard
                   ^ result;
-
-            if (TalvMenni.CROUCHING_TIGER_HIDDEN_DEBUG) {
-               System.err.println("DEBUG: this.bitboard= "
-                     + this.bitboard
-                     + " : "
-                     + Long.toBinaryString(this.bitboard));
-            }
-
             return Long.valueOf(result);
          }
 
