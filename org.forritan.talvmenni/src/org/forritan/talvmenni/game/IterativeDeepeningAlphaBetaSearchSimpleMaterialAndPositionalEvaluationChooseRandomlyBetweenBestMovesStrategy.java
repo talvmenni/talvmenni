@@ -25,7 +25,7 @@ public class IterativeDeepeningAlphaBetaSearchSimpleMaterialAndPositionalEvaluat
       List<Position.Move> bestMoves= null;
          for (int i= 0; i <= this.ply; i++) {
             this.search.setPly(i);
-            bestMoves= this.search.getBestMoves(position, this.evaluation, whiteToMove);            
+            bestMoves= this.search.getBestMoves(position.getMutable(), this.evaluation, whiteToMove);            
          }
          if(bestMoves != null && !bestMoves.isEmpty()) {
             int chosenMoveIndex= new Random().nextInt(bestMoves.size());
