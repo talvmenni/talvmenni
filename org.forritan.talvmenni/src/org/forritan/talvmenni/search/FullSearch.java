@@ -24,6 +24,7 @@ public class FullSearch extends Observable implements Search {
          boolean whiteMove) {
       
       long time= -System.currentTimeMillis();
+      this.movesSearched= 0;
       
       List<Move> result= new ArrayList<Move>();
       MoveScoreTuple bestScore= null;
