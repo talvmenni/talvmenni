@@ -319,7 +319,7 @@ public class TalvMenni {
 
                return new ParallelIterativDeepeningAlphaBetaWithTranspositionTableStrategy(
                      PLY,
-                     2,
+                     4,
                      new Transposition(),
                      true,
                      book,
@@ -329,7 +329,7 @@ public class TalvMenni {
 
                return new ParallelIterativDeepeningAlphaBetaWithQuiescentAndTranspositionTableStrategy(
                      PLY,
-                     2,
+                     4,
                      new Transposition(),
                      true,
                      book,

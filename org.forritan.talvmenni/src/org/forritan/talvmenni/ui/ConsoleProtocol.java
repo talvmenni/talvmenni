@@ -69,9 +69,10 @@ public class ConsoleProtocol extends UiProtocolBase {
          String plyString= theInput.substring(
                5).trim();
          try {
-            theOutput= this.perft(Integer.parseInt(plyString));            
+            theOutput= this.perft(Integer.parseInt(plyString));
          } catch (NumberFormatException e) {
-            theOutput= "NumberFormatException: perft " + plyString;
+            theOutput= "NumberFormatException: perft "
+                  + plyString;
          }
       } else if (theInput.toUpperCase().startsWith(
             "MOVE")) {
@@ -82,9 +83,12 @@ public class ConsoleProtocol extends UiProtocolBase {
             && (this.protocol.isGo())) {
          Move move= this.protocol.makeNextMove();
          if (move != null) {
-            theOutput= ConsoleProtocol.getStringBoard(
-                  this.protocol.getCurrentPosition(),
-                  this.getWhoIsToMove());
+            theOutput= "Moved "
+                  + move
+                  + "...\n"
+                  + ConsoleProtocol.getStringBoard(
+                        this.protocol.getCurrentPosition(),
+                        this.getWhoIsToMove());
          } else {
             theOutput= getWhoIsToMove()
                   + " is checkmated!\n";
@@ -316,7 +320,7 @@ public class ConsoleProtocol extends UiProtocolBase {
       StringBuffer result= new StringBuffer();
       List history= MoveHistory.getInstance().getHistory();
       int number= 1;
-      for (Iterator it= history.iterator();it.hasNext();) {
+      for (Iterator it= history.iterator(); it.hasNext();) {
          Move move= (Move) it.next();
          if ((number++ % 2) != 0) {
             result.append(
