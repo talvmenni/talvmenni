@@ -30,6 +30,7 @@ public class ChessEngine implements Runnable {
       ChessEngine engine= new ChessEngine();
 
       if (TalvMenni.DEBUG_WINDOW) {
+         //TODO: !!!! Skal flytast / gerast asynkront / órogvar i/o við WinBoard
          long time= -System.currentTimeMillis();
          new DebugWindow();
          time+= System.currentTimeMillis();
@@ -78,10 +79,12 @@ public class ChessEngine implements Runnable {
    }
 
    public interface Protocol {
-      public String processInput(String input);
+      public String processInput(
+            String input);
+
       public void stop();
    }
-   
+
    private class ProtocolImpl implements Protocol {
 
       private UiProtocol uiProtocol;
