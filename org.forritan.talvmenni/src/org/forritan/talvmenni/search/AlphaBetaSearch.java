@@ -10,7 +10,7 @@ import org.forritan.talvmenni.game.Position.Move;
 import org.forritan.util.Tuple;
 
 
-public class NewAlphaBetaSearch implements Search {
+public class AlphaBetaSearch implements Search {
 
    private Thinking  thinking;
    private DebugInfo debugInfo;
@@ -18,12 +18,12 @@ public class NewAlphaBetaSearch implements Search {
 
    private int       movesSearched;
 
-   public NewAlphaBetaSearch() {
+   public AlphaBetaSearch() {
       this(
             0);
    }
 
-   public NewAlphaBetaSearch(
+   public AlphaBetaSearch(
          int ply) {
       this.ply= ply;
       this.thinking= new Thinking();

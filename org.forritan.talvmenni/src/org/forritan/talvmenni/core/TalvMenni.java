@@ -6,7 +6,7 @@ import java.util.concurrent.ThreadFactory;
 
 import org.forritan.talvmenni.game.TheoryBook;
 import org.forritan.talvmenni.strategy.MiniMaxSearchSimpleMaterialAndPositionalEvaluationChooseRandomlyBetweenBestMovesStrategy;
-import org.forritan.talvmenni.strategy.NewAlphaBetaStrategy;
+import org.forritan.talvmenni.strategy.AlphaBetaStrategy;
 import org.forritan.talvmenni.ui.DebugWindow;
 import org.forritan.util.debug.ExceptionLoggingWindowHandler;
 import org.forritan.util.debug.ObjectStatisticsWindow;
@@ -60,7 +60,7 @@ public class TalvMenni {
       final TheoryBook book= new TheoryBook(140000);
 
       final ChessEngine chessEngine= ChessEngine
-      .create(new NewAlphaBetaStrategy(
+      .create(new AlphaBetaStrategy(
             PLY,
             book));
 //      .create(new MiniMaxSearchSimpleMaterialAndPositionalEvaluationChooseRandomlyBetweenBestMovesStrategy(

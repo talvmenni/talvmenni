@@ -8,12 +8,12 @@ import org.forritan.talvmenni.evaluation.SimpleMaterialAndPositionalEvaluation;
 import org.forritan.talvmenni.game.Position;
 import org.forritan.talvmenni.game.TheoryBook;
 import org.forritan.talvmenni.game.Position.Move;
-import org.forritan.talvmenni.search.NewAlphaBetaSearch;
+import org.forritan.talvmenni.search.AlphaBetaSearch;
 import org.forritan.talvmenni.search.Search;
 import org.forritan.util.Tuple;
 
 
-public class NewAlphaBetaStrategy
+public class AlphaBetaStrategy
       implements Strategy {
 
    private DebugInfo  debugInfo;
@@ -22,11 +22,11 @@ public class NewAlphaBetaStrategy
    private Search     search;
    private Evaluation evaluation;
 
-   public NewAlphaBetaStrategy(
+   public AlphaBetaStrategy(
          int ply,
          TheoryBook book) {
       this.debugInfo= new DebugInfo();
-      this.search= new NewAlphaBetaSearch(
+      this.search= new AlphaBetaSearch(
             ply);
       this.evaluation= new SimpleMaterialAndPositionalEvaluation();
       this.book= book;
