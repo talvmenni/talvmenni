@@ -28,7 +28,7 @@ public interface Search {
          this.notifyObservers(
                "Finished search of " 
                + nodes 
-               + " positions in just " 
+               + " positions in " 
                + time 
                + " milliseconds...\ni.e: " 
                + 1L * nodes * 1000 / (time + 1) + " pr. second.");
