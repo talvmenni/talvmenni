@@ -9,9 +9,16 @@ import org.forritan.talvmenni.game.TheoryBook;
 import org.forritan.talvmenni.game.Position.Move;
 import org.forritan.talvmenni.game.Position.PromotionPiece;
 import org.forritan.talvmenni.search.Search;
+import org.forritan.talvmenni.strategy.Strategy.DebugInfo;
 
 public class RandomMoveStrategy extends Observable implements Strategy {
+   
+   private DebugInfo debugInfo;
 
+   public RandomMoveStrategy() {
+      this.debugInfo= new DebugInfo();
+   }
+   
    public Position.Move getNextMove(Position position, boolean whiteToMove) {
          List<Position.Move> possibleMoves;
          if(whiteToMove) {
@@ -42,6 +49,10 @@ public class RandomMoveStrategy extends Observable implements Strategy {
    
    public TheoryBook getTheoryBook() {
       return null;
+   }
+
+   public DebugInfo getDebugInfo() {
+      return this.debugInfo;
    }
 
 

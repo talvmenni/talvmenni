@@ -39,17 +39,18 @@ public class TheoryBook {
                p= PositionFactory.createPositionFromFEN(
                      false,
                      line);
-               if(this.containsKey(p.a)) {
+               if (this.containsKey(p.a)) {
                   p.a= this.get(p.a);
                }
             } catch (IllegalArgumentException e) {
                fenStringLine= !fenStringLine; //try to read new fenString next
-                                              // time also...
+               // time also...
                //XXX: Remove...
-               System.err.println("IllegalArgumentException: [FENString] at lineNumber " 
-                     + lineNumber
-                     + ": "
-                     + line);
+               System.err
+                     .println("IllegalArgumentException: [FENString] at lineNumber "
+                           + lineNumber
+                           + ": "
+                           + line);
             }
          } else {
             Square sq= Squares.create();
@@ -68,10 +69,23 @@ public class TheoryBook {
                   Position.Move move= new Position.Move(
                         sq.getSquare(from),
                         sq.getSquare(to));
-
-                  Integer score= Integer.valueOf(moveAndScore.substring(
-                        5,
-                        (moveAndScore.length() - 1)));
+                  Integer score= null;
+                  try {
+                     score= Integer.valueOf(moveAndScore.substring(
+                           5,
+                           (moveAndScore.length() - 1)));
+                  } catch (NumberFormatException e) {
+                     score= Integer.valueOf(0); 
+                     System.err
+                     .println("NumberFormatException: [FENString] at lineNumber "
+                           + lineNumber
+                           + ": "
+                           + line);
+                     System.err
+                     .println("NumberFormatException: [moveAndScore]: "
+                           + moveAndScore);
+                     
+                  }
 
                   if (p.b.booleanValue()) {
                      p.a.getWhite().addBookMove(

@@ -4,9 +4,8 @@ import java.io.IOException;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
 
-import org.forritan.talvmenni.game.Position;
 import org.forritan.talvmenni.game.TheoryBook;
-import org.forritan.talvmenni.strategy.AlphaBetaSearchSimpleMaterialAndPositionalEvaluationChooseRandomlyBetweenBestMovesStrategy;
+import org.forritan.talvmenni.strategy.MiniMaxSearchSimpleMaterialAndPositionalEvaluationChooseRandomlyBetweenBestMovesStrategy;
 import org.forritan.talvmenni.ui.DebugWindow;
 import org.forritan.util.debug.ExceptionLoggingWindowHandler;
 import org.forritan.util.debug.ObjectStatisticsWindow;
@@ -16,11 +15,6 @@ public class TalvMenni {
 
    public final static String NAME                      = "Talvmenni";
    public final static String VERSION                   = "0.0.1";
-
-   /**
-    * Opening book file name
-    */
-   public static String       OPENING_BOOK;
 
    public static String       DEBUG_NAME;
 
@@ -43,33 +37,17 @@ public class TalvMenni {
 
       ThreadFactory threadFactory= Executors.defaultThreadFactory();
 
-      final TheoryBook book= new TheoryBook();
-      OPENING_BOOK= System.getProperty("opening_book");
-      if (OPENING_BOOK != null) {
-
-         Thread loadBookThread= threadFactory.newThread(new Runnable() {
-            public void run() {
-               try {
-                  book.loadBook(OPENING_BOOK);
-               } catch (IOException e) {
-                  
-
-               }
-            }
-         });
-         loadBookThread.start();
-      }
-
-      DEBUG_NAME= System.getProperty("debug_name");
-      if (DEBUG_NAME == null) {
-         DEBUG_NAME= "AlphaBeta";
-      }
-
       String searchDepth= System.getProperty("ply");
       if (searchDepth != null) {
          PLY= Integer.valueOf(
                searchDepth).intValue();
       }
+
+      DEBUG_NAME= System.getProperty("debug_name");
+      if (DEBUG_NAME == null) {
+         DEBUG_NAME= "Minimax [" + PLY + " ply]";
+      }
+
 
       String MaxTranpositionEntries= System
             .getProperty("MaxTranpositionEntries");
@@ -77,9 +55,11 @@ public class TalvMenni {
          MAX_TRANSPOSITION_ENTRIES= Integer.valueOf(
                MaxTranpositionEntries).intValue();
       }
+      
+      final TheoryBook book= new TheoryBook();
 
       final ChessEngine chessEngine= ChessEngine
-            .create(new AlphaBetaSearchSimpleMaterialAndPositionalEvaluationChooseRandomlyBetweenBestMovesStrategy(
+            .create(new MiniMaxSearchSimpleMaterialAndPositionalEvaluationChooseRandomlyBetweenBestMovesStrategy(
                   PLY,
                   book));
       //,new Transposition(MAX_TRANSPOSITION_ENTRIES)));
@@ -123,6 +103,22 @@ public class TalvMenni {
          });
          windowThread.start();
       }
+      
+      if (System.getProperty("opening_book") != null) {
+
+         Thread loadBookThread= threadFactory.newThread(new Runnable() {
+            public void run() {
+               try {
+                  chessEngine.getProtocol().getDebugInfo().postText("Loading openingbook: " + System.getProperty("opening_book") + "...");
+                  book.loadBook(System.getProperty("opening_book"));
+                  chessEngine.getProtocol().getDebugInfo().postText("Finnished loading openingbook...");
+               } catch (IOException e) {
+               }
+            }
+         });
+         loadBookThread.start();
+      }
+
 
       chessEngine.run();
    }

@@ -12,14 +12,18 @@ import org.forritan.talvmenni.game.Position.PromotionPiece;
 import org.forritan.talvmenni.search.AlphaBetaSearch;
 import org.forritan.talvmenni.search.AlphaBetaUsingKillerMoveOrderingSearch;
 import org.forritan.talvmenni.search.Search;
+import org.forritan.talvmenni.strategy.Strategy.DebugInfo;
 
 public class IterativeDeepeningAlphaBetaSearchUsingKillerMoveOrderingSimpleMaterialAndPositionalEvaluationChooseRandomlyBetweenBestMovesStrategy implements Strategy {
 
+   private DebugInfo debugInfo;
+   
    private Search search;
    private Evaluation evaluation;
    private int ply;
    
    public IterativeDeepeningAlphaBetaSearchUsingKillerMoveOrderingSimpleMaterialAndPositionalEvaluationChooseRandomlyBetweenBestMovesStrategy(int ply) {
+      this.debugInfo= new DebugInfo();
       this.search= new AlphaBetaUsingKillerMoveOrderingSearch();
       this.evaluation= new SimpleMaterialAndPositionalEvaluation();
       this.ply= ply;
@@ -50,6 +54,10 @@ public class IterativeDeepeningAlphaBetaSearchUsingKillerMoveOrderingSimpleMater
    
    public TheoryBook getTheoryBook() {
       return null;
+   }
+
+   public DebugInfo getDebugInfo() {
+      return this.debugInfo;
    }
 
 }

@@ -14,13 +14,17 @@ import org.forritan.talvmenni.game.Position.Move;
 import org.forritan.talvmenni.game.Position.PromotionPiece;
 import org.forritan.talvmenni.search.MiniMaxSearch;
 import org.forritan.talvmenni.search.Search;
+import org.forritan.talvmenni.strategy.Strategy.DebugInfo;
 
 public class MiniMaxSearchSimpleMaterialEvaluationChooseRandomlyBetweenBestMovesStrategy implements Strategy {
 
+   private DebugInfo debugInfo;
+   
    private Search search;
    private Evaluation evaluation;
    
    public MiniMaxSearchSimpleMaterialEvaluationChooseRandomlyBetweenBestMovesStrategy(int ply) {
+      this.debugInfo= new DebugInfo();
       this.search= new MiniMaxSearch(ply);
       this.evaluation= new SimpleMaterialEvaluation();
    }
@@ -46,6 +50,10 @@ public class MiniMaxSearchSimpleMaterialEvaluationChooseRandomlyBetweenBestMoves
    
    public TheoryBook getTheoryBook() {
       return null;
+   }
+
+   public DebugInfo getDebugInfo() {
+      return this.debugInfo;
    }
 
 }
