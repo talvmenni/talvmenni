@@ -58,12 +58,10 @@ public class SimpleMaterialAndPositionalEvaluation implements Evaluation {
          result += Evaluation.POSITION_GUARD_REWARD;         
       }
 
-      for (Iterator it= new BitboardIterator((position.white.getAllPawnsReadyForPromotion())); it.hasNext();) {
-         it.next();
-         result += Evaluation.POSITION_PAWN_READY_FOR_PROMOTION;         
+      if(position.black.isChecked()) {
+         result += Evaluation.CHECK_REWARD;                  
       }
-
-      
+            
       
       for (Iterator it= position.black.kingsIterator(); it.hasNext();) {
          it.next();
@@ -112,13 +110,10 @@ public class SimpleMaterialAndPositionalEvaluation implements Evaluation {
          result -= Evaluation.POSITION_GUARD_REWARD;         
       }
       
-      for (Iterator it= new BitboardIterator((position.black.getAllPawnsReadyForPromotion())); it.hasNext();) {
-         it.next();
-         result -= Evaluation.POSITION_PAWN_READY_FOR_PROMOTION;         
+      if(position.white.isChecked()) {
+         result -= Evaluation.CHECK_REWARD;                  
       }
-
-      
-      
+                  
       return result;
    }
 }

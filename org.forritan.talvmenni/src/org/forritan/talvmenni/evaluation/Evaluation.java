@@ -17,7 +17,7 @@ public interface Evaluation {
    public static final int POSITION_OUTER_BORDER= 12;
 
    public static final int POSITION_GUARD_REWARD= 10;
-   public static final int POSITION_PAWN_READY_FOR_PROMOTION= 5;
+   public static final int CHECK_REWARD = 30;
 
    public int getScore(Position position);
    
