@@ -22,7 +22,7 @@ public class HistoryHeuristic implements Serializable {
 
    private Map                     historyMap;
 
-   private HistoryHeuristic() {
+   public HistoryHeuristic() {
       this.historyMap= new Table(
             TalvMenni.MAX_HISTORY_HEURISTIC_ENTRIES);
    }

@@ -24,7 +24,7 @@ public class Draw implements Serializable {
    }
    
    
-   private Draw() {
+   public Draw() {
       this.positionRepetitions= new HashMap();
       this.moveStack= new Stack();
    }
