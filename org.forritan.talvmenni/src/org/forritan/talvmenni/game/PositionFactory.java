@@ -367,9 +367,9 @@ public abstract class PositionFactory implements Position {
 
       if (st.hasMoreTokens()) {
          String targetSquareStr= st.nextToken().toUpperCase();
-         if (targetSquareStr != "-") {
+         if (!"-".equalsIgnoreCase(targetSquareStr)) {
             long targetSquare= Squares.create().getSquare(
-                  targetSquareStr);
+                  targetSquareStr.toUpperCase());
             if (whiteMove.booleanValue()) {
                if ((blackPawns & (targetSquare >> 8)) != Square._EMPTY_BOARD) {
                   blackEnpassant= BlackPawnMoves.create().getPathsFrom(

@@ -1,7 +1,6 @@
 package org.forritan.talvmenni.game;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import org.forritan.talvmenni.bitboard.BitboardIterator;
@@ -14,6 +13,7 @@ import org.forritan.talvmenni.bitboard.attacks.Knight;
 import org.forritan.talvmenni.bitboard.attacks.Queen;
 import org.forritan.talvmenni.bitboard.attacks.Rook;
 import org.forritan.talvmenni.bitboard.attacks.WhitePawn;
+import org.forritan.util.Tuple;
 
 
 public interface Position {
@@ -88,33 +88,34 @@ public interface Position {
    }
 
    public class Bitboard {
-      
-      public final static int SEED= 17;
-      public final static int PRIME_FACTOR= 37;
 
-      public final int     hashCode;
+      public final static int            SEED         = 17;
+      public final static int            PRIME_FACTOR = 37;
 
-      public final boolean  whiteBoard;
-      public final Position parent;
+      public final int                   hashCode;
 
-      public final long     kings;
-      public final long     queens;
-      public final long     rooks;
-      public final long     bishops;
-      public final long     knights;
-      public final long     pawns;
+      public final boolean               whiteBoard;
+      public final Position              parent;
 
-      public final long     castling;
-      public final long     enpassant;
+      public final long                  kings;
+      public final long                  queens;
+      public final long                  rooks;
+      public final long                  bishops;
+      public final long                  knights;
+      public final long                  pawns;
 
-      public final long     allPieces;
+      public final long                  castling;
+      public final long                  enpassant;
 
-      private List<Move>    possibleMoves;
-      private List<Move>    killerMoves;
-      private long          allCaptureMovesAttackedSquares;
-      private boolean       allCaptureMovesAttackedSquaresInitialized;
-      private Boolean       kingsSideCastlingLegal;
-      private Boolean       queensSideCastlingLegal;
+      public final long                  allPieces;
+
+      private List<Move>                 possibleMoves;
+      private List<Move>                 killerMoves;
+      private List<Tuple<Move, Integer>> bookMoves;
+      private long                       allCaptureMovesAttackedSquares;
+      private boolean                    allCaptureMovesAttackedSquaresInitialized;
+      private Boolean                    kingsSideCastlingLegal;
+      private Boolean                    queensSideCastlingLegal;
 
       /**
        * @param white
@@ -159,38 +160,60 @@ public interface Position {
                | this.pawns;
 
          int hash= SEED;
-         hash= PRIME_FACTOR * hash + ((int) (this.kings ^ (this.kings >>> 32)));
-         hash= PRIME_FACTOR * hash + ((int) (this.queens ^ (this.queens >>> 32)));
-         hash= PRIME_FACTOR * hash + ((int) (this.rooks ^ (this.rooks >>> 32)));
-         hash= PRIME_FACTOR * hash + ((int) (this.bishops ^ (this.bishops >>> 32)));
-         hash= PRIME_FACTOR * hash + ((int) (this.knights ^ (this.knights >>> 32)));
-         hash= PRIME_FACTOR * hash + ((int) (this.pawns ^ (this.pawns >>> 32)));
-         hash= PRIME_FACTOR * hash + ((int) (this.enpassant ^ (this.enpassant >>> 32)));
-         hash= PRIME_FACTOR * hash + ((int) (this.castling ^ (this.castling >>> 32)));
-         hash= PRIME_FACTOR * hash + (whiteBoard ? 0 : 1);
-         
+         hash= PRIME_FACTOR
+               * hash
+               + ((int) (this.kings ^ (this.kings >>> 32)));
+         hash= PRIME_FACTOR
+               * hash
+               + ((int) (this.queens ^ (this.queens >>> 32)));
+         hash= PRIME_FACTOR
+               * hash
+               + ((int) (this.rooks ^ (this.rooks >>> 32)));
+         hash= PRIME_FACTOR
+               * hash
+               + ((int) (this.bishops ^ (this.bishops >>> 32)));
+         hash= PRIME_FACTOR
+               * hash
+               + ((int) (this.knights ^ (this.knights >>> 32)));
+         hash= PRIME_FACTOR
+               * hash
+               + ((int) (this.pawns ^ (this.pawns >>> 32)));
+         hash= PRIME_FACTOR
+               * hash
+               + ((int) (this.enpassant ^ (this.enpassant >>> 32)));
+         hash= PRIME_FACTOR
+               * hash
+               + ((int) (this.castling ^ (this.castling >>> 32)));
+         hash= PRIME_FACTOR
+               * hash
+               + (whiteBoard ? 0 : 1);
+
          this.hashCode= hash;
+
+         this.bookMoves= new ArrayList<Tuple<Move, Integer>>();
       }
 
-      public boolean equals(Object o) {
-         if(o instanceof Bitboard) {
+      public boolean equals(
+            Object o) {
+         if (o instanceof Bitboard) {
             return (this.whiteBoard == ((Bitboard) o).whiteBoard)
-            && (this.kings == ((Bitboard) o).kings)
-            && (this.queens == ((Bitboard) o).queens)
-            && (this.rooks == ((Bitboard) o).rooks)
-            && (this.bishops == ((Bitboard) o).bishops)
-            && (this.knights == ((Bitboard) o).knights)
-            && (this.pawns == ((Bitboard) o).pawns)
-            && (this.castling == ((Bitboard) o).castling)
-            && (this.enpassant == ((Bitboard) o).enpassant);
+                  && (this.kings == ((Bitboard) o).kings)
+                  && (this.queens == ((Bitboard) o).queens)
+                  && (this.rooks == ((Bitboard) o).rooks)
+                  && (this.bishops == ((Bitboard) o).bishops)
+                  && (this.knights == ((Bitboard) o).knights)
+                  && (this.pawns == ((Bitboard) o).pawns)
+                  && (this.castling == ((Bitboard) o).castling)
+                  && (this.enpassant == ((Bitboard) o).enpassant);
          } else {
             return false;
          }
       }
-      
+
       public int hashCode() {
          return this.hashCode;
       }
+
       public void killerMove(
             Move move) {
          if (this.killerMoves == null) {
@@ -214,6 +237,18 @@ public interface Position {
          }
       }
 
+      public List<Tuple<Move, Integer>> getBookMoves() {
+         return this.bookMoves;
+      }
+      
+      public void addBookMove(Move move, int score) {
+            if(this.getPossibleMoves().contains(move)) {
+               if(!this.bookMoves.contains(move)) {
+                  this.bookMoves.add(new Tuple<Move, Integer>(move, Integer.valueOf(score)));
+               }               
+            }
+      }
+      
       public List<Move> getPossibleMoves() {
          if (this.possibleMoves == null) {
             this.possibleMoves= new ArrayList<Move>();

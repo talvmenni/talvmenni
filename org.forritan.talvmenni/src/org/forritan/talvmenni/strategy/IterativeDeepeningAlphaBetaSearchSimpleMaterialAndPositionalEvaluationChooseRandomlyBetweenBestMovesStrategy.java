@@ -6,6 +6,7 @@ import java.util.Random;
 import org.forritan.talvmenni.evaluation.Evaluation;
 import org.forritan.talvmenni.evaluation.SimpleMaterialAndPositionalEvaluation;
 import org.forritan.talvmenni.game.Position;
+import org.forritan.talvmenni.game.TheoryBook;
 import org.forritan.talvmenni.game.Position.Move;
 import org.forritan.talvmenni.game.Position.PromotionPiece;
 import org.forritan.talvmenni.search.AlphaBetaSearch;
@@ -45,4 +46,9 @@ public class IterativeDeepeningAlphaBetaSearchSimpleMaterialAndPositionalEvaluat
    public Search getSearch() {
       return this.search;
    }
+   
+   public TheoryBook getTheoryBook() {
+      return null;
+   }
+
 }

@@ -6,6 +6,7 @@ import java.util.Random;
 import org.forritan.talvmenni.evaluation.Evaluation;
 import org.forritan.talvmenni.evaluation.SimpleMaterialAndPositionalEvaluation;
 import org.forritan.talvmenni.game.Position;
+import org.forritan.talvmenni.game.TheoryBook;
 import org.forritan.talvmenni.game.Transposition;
 import org.forritan.talvmenni.search.AlphaBetaUsingKillerMoveOrderingAndTranspositionTableSearch;
 import org.forritan.talvmenni.search.Search;
@@ -64,4 +65,9 @@ public class IterativeDeepeningAlphaBetaSearchUsingKillerMoveOrderingAndTranposi
    public Search getSearch() {
       return this.search;
    }
+   
+   public TheoryBook getTheoryBook() {
+      return null;
+   }
+
 }

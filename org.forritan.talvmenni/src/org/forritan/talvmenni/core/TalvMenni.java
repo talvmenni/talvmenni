@@ -1,8 +1,11 @@
 package org.forritan.talvmenni.core;
 
+import java.io.IOException;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
 
+import org.forritan.talvmenni.game.Position;
+import org.forritan.talvmenni.game.TheoryBook;
 import org.forritan.talvmenni.strategy.AlphaBetaSearchSimpleMaterialAndPositionalEvaluationChooseRandomlyBetweenBestMovesStrategy;
 import org.forritan.talvmenni.ui.DebugWindow;
 import org.forritan.util.debug.ExceptionLoggingWindowHandler;
@@ -11,29 +14,51 @@ import org.forritan.util.debug.ObjectStatisticsWindow;
 
 public class TalvMenni {
 
-   public final static String NAME         = "Talvmenni";
-   public final static String VERSION      = "0.0.1";
+   public final static String NAME                      = "Talvmenni";
+   public final static String VERSION                   = "0.0.1";
+
+   /**
+    * Opening book file name
+    */
+   public static String       OPENING_BOOK;
 
    public static String       DEBUG_NAME;
 
    /**
-    * Default PLY = 4 
-    * Minimum for being able to detect that we are getting checkmated...
+    * Default PLY = 4 Minimum for being able to detect that we are getting
+    * checkmated...
     */
-   public static int          PLY = 4;                   
+   public static int          PLY                       = 4;
 
    /**
-    * Default MAX_TRANSPOSITION_ENTRIES = 100000
-    * Maximum number of entries in each of the transposition tables (currently 
-    * white and black). If MAX_TRANSPOSITION_ENTRIES is reached the eldest
-    * entry will be removed before a new entry is added.
+    * Default MAX_TRANSPOSITION_ENTRIES = 100000 Maximum number of entries in
+    * each of the transposition tables (currently white and black). If
+    * MAX_TRANSPOSITION_ENTRIES is reached the eldest entry will be removed
+    * before a new entry is added.
     */
    public static int          MAX_TRANSPOSITION_ENTRIES = 100000;
-   
+
    public static void main(
          String args[]) {
 
       ThreadFactory threadFactory= Executors.defaultThreadFactory();
+
+      final TheoryBook book= new TheoryBook();
+      OPENING_BOOK= System.getProperty("opening_book");
+      if (OPENING_BOOK != null) {
+
+         Thread loadBookThread= threadFactory.newThread(new Runnable() {
+            public void run() {
+               try {
+                  book.loadBook(OPENING_BOOK);
+               } catch (IOException e) {
+                  
+
+               }
+            }
+         });
+         loadBookThread.start();
+      }
 
       DEBUG_NAME= System.getProperty("debug_name");
       if (DEBUG_NAME == null) {
@@ -46,23 +71,25 @@ public class TalvMenni {
                searchDepth).intValue();
       }
 
-      String MaxTranpositionEntries= System.getProperty("MaxTranpositionEntries");
+      String MaxTranpositionEntries= System
+            .getProperty("MaxTranpositionEntries");
       if (MaxTranpositionEntries != null) {
          MAX_TRANSPOSITION_ENTRIES= Integer.valueOf(
                MaxTranpositionEntries).intValue();
       }
 
       final ChessEngine chessEngine= ChessEngine
-            .create(
-                  new AlphaBetaSearchSimpleMaterialAndPositionalEvaluationChooseRandomlyBetweenBestMovesStrategy(
-                  PLY));
-                  //,new Transposition(MAX_TRANSPOSITION_ENTRIES)));
+            .create(new AlphaBetaSearchSimpleMaterialAndPositionalEvaluationChooseRandomlyBetweenBestMovesStrategy(
+                  PLY,
+                  book));
+      //,new Transposition(MAX_TRANSPOSITION_ENTRIES)));
 
       if (Boolean.getBoolean("exception_logging_window")) {
          Thread windowThread= threadFactory.newThread(new Runnable() {
             public void run() {
-               Thread.setDefaultUncaughtExceptionHandler(
-                     ExceptionLoggingWindowHandler.getInstance());
+               Thread
+                     .setDefaultUncaughtExceptionHandler(ExceptionLoggingWindowHandler
+                           .getInstance());
             }
          });
          windowThread.start();
@@ -73,9 +100,9 @@ public class TalvMenni {
             public void run() {
                ObjectStatisticsWindow window= new ObjectStatisticsWindow(
                      TalvMenni.NAME
-                     + " | "
-                     + TalvMenni.DEBUG_NAME
-                     + " | Object creations statistics");
+                           + " | "
+                           + TalvMenni.DEBUG_NAME
+                           + " | Object creations statistics");
                chessEngine.getProtocol().getObjectCreationStatistics()
                      .addObserver(
                            window);
@@ -96,7 +123,6 @@ public class TalvMenni {
          });
          windowThread.start();
       }
-
 
       chessEngine.run();
    }

@@ -1,12 +1,12 @@
 package org.forritan.util;
 
-public class Tuple<T1, T2> {
-   public final T1 a;
-   public final T2 b;
+public class Tuple<A, B> {
+   public A a;
+   public B b;
    
-   public Tuple(T1 o1, T2 o2) {
-      this.a= o1;
-      this.b= o2;
+   public Tuple(A a, B b) {
+      this.a= a;
+      this.b= b;
    }
 
 }
