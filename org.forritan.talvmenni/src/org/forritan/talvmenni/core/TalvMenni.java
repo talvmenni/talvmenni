@@ -5,8 +5,8 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
 
 import org.forritan.talvmenni.game.TheoryBook;
-import org.forritan.talvmenni.strategy.MiniMaxSearchSimpleMaterialAndPositionalEvaluationChooseRandomlyBetweenBestMovesStrategy;
-import org.forritan.talvmenni.strategy.AlphaBetaStrategy;
+import org.forritan.talvmenni.game.Transposition;
+import org.forritan.talvmenni.strategy.AlphaBetaWithTranspositionTableStrategy;
 import org.forritan.talvmenni.ui.DebugWindow;
 import org.forritan.util.debug.ExceptionLoggingWindowHandler;
 import org.forritan.util.debug.ObjectStatisticsWindow;
@@ -46,9 +46,10 @@ public class TalvMenni {
 
       DEBUG_NAME= System.getProperty("debug_name");
       if (DEBUG_NAME == null) {
-         DEBUG_NAME= "NewAlphaBeta [" + PLY + " ply]";
+         DEBUG_NAME= "NewAlphaBeta ["
+               + PLY
+               + " ply]";
       }
-
 
       String MaxTranpositionEntries= System
             .getProperty("MaxTranpositionEntries");
@@ -56,22 +57,29 @@ public class TalvMenni {
          MAX_TRANSPOSITION_ENTRIES= Integer.valueOf(
                MaxTranpositionEntries).intValue();
       }
-      
-      final TheoryBook book= new TheoryBook(140000);
+
+      final TheoryBook book= new TheoryBook(
+            140000);
 
       final ChessEngine chessEngine= ChessEngine
-      .create(new AlphaBetaStrategy(
-            PLY,
-            book));
-//      .create(new MiniMaxSearchSimpleMaterialAndPositionalEvaluationChooseRandomlyBetweenBestMovesStrategy(
-//            PLY,
-//            book));
-//      .create(new MiniMaxOpeningBookWithDelayStrategy(
-//            PLY,
-//            new Transposition(MAX_TRANSPOSITION_ENTRIES),
-//            book,
-//            2000,
-//            4200));
+            .create(new AlphaBetaWithTranspositionTableStrategy(
+                  PLY,
+                  new Transposition(
+                        MAX_TRANSPOSITION_ENTRIES),
+                  book));
+      //      .create(new AlphaBetaStrategy(
+      //            PLY,
+      //            book));
+      //      .create(new
+      // MiniMaxSearchSimpleMaterialAndPositionalEvaluationChooseRandomlyBetweenBestMovesStrategy(
+      //            PLY,
+      //            book));
+      //      .create(new MiniMaxOpeningBookWithDelayStrategy(
+      //            PLY,
+      //            new Transposition(MAX_TRANSPOSITION_ENTRIES),
+      //            book,
+      //            2000,
+      //            4200));
 
       if (Boolean.getBoolean("exception_logging_window")) {
          Thread windowThread= threadFactory.newThread(new Runnable() {
@@ -112,22 +120,25 @@ public class TalvMenni {
          });
          windowThread.start();
       }
-      
+
       if (System.getProperty("opening_book") != null) {
 
          Thread loadBookThread= threadFactory.newThread(new Runnable() {
             public void run() {
                try {
-                  chessEngine.getProtocol().getDebugInfo().postText("Loading openingbook: " + System.getProperty("opening_book") + "...");
+                  chessEngine.getProtocol().getDebugInfo().postText(
+                        "Loading openingbook: "
+                              + System.getProperty("opening_book")
+                              + "...");
                   book.loadBook(System.getProperty("opening_book"));
-                  chessEngine.getProtocol().getDebugInfo().postText("Finnished loading openingbook...");
+                  chessEngine.getProtocol().getDebugInfo().postText(
+                        "Finnished loading openingbook...");
                } catch (IOException e) {
                }
             }
          });
          loadBookThread.start();
       }
-
 
       chessEngine.run();
    }

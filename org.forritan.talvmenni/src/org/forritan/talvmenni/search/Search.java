@@ -87,6 +87,14 @@ public interface Search {
                + moves.toString());
       }
 
+      public void postTranspositionHits(int hits) {
+         this.setChanged();
+         this.notifyObservers(
+               "There where " +
+               hits +
+               " transposition hits...");
+      }
+
    }
 
 }

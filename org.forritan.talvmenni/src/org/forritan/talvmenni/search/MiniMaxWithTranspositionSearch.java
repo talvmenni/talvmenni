@@ -10,6 +10,7 @@ import org.forritan.talvmenni.game.Position;
 import org.forritan.talvmenni.game.PositionFactory;
 import org.forritan.talvmenni.game.Transposition;
 import org.forritan.talvmenni.game.Position.Move;
+import org.forritan.util.ThreeTuple;
 
 
 public class MiniMaxWithTranspositionSearch implements Search {
@@ -132,12 +133,12 @@ public class MiniMaxWithTranspositionSearch implements Search {
       MoveScoreTuple result= new MoveScoreTuple(
             null,
             0);
+      
       if (ply > 1) {
-
          if(this.transposition.contains(p, whiteMove)) {
-            Transposition.Entry entry= this.transposition.get(p, whiteMove);
-            if(entry.ply >= ply) {
-               result.update(entry.moves, entry.score);
+            ThreeTuple<Integer, Integer, List<Move>> entry= this.transposition.get(p, whiteMove);
+            if(entry.a.intValue() >= ply) {
+               result.update(entry.c, entry.b.intValue());
                return result;
             }            
          }

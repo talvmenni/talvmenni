@@ -5,31 +5,22 @@ import java.util.List;
 import java.util.Map;
 
 import org.forritan.talvmenni.game.Position.Move;
+import org.forritan.util.ThreeTuple;
 
 
 public class Transposition {
+   
+   // Table<Position.hashCode(), new ThreeTuple<ply, score, moves>>
 
-   private Table<Position, Entry> whiteTable;
-   private Table<Position, Entry> blackTable;
+   private Table<Integer, ThreeTuple<Integer, Integer, List<Move>>> whiteTable;
+   private Table<Integer, ThreeTuple<Integer, Integer, List<Move>>> blackTable;
 
-   public Transposition(int maxEntries) {
-      this.whiteTable= new Table<Position, Entry>(maxEntries);
-      this.blackTable= new Table<Position, Entry>(maxEntries);
-   }
-
-   public static class Entry {
-      public List<Move> moves;
-      public int        score;
-      public int        ply;
-
-      private Entry(
-            List<Move> moves,
-            int score,
-            int ply) {
-         this.moves= moves;
-         this.score= score;
-         this.ply= ply;
-      }
+   public Transposition(
+         int maxEntries) {
+      this.whiteTable= new Table<Integer, ThreeTuple<Integer, Integer, List<Move>>>(
+            maxEntries);
+      this.blackTable= new Table<Integer, ThreeTuple<Integer, Integer, List<Move>>>(
+            maxEntries);
    }
 
    public int size(
@@ -54,19 +45,19 @@ public class Transposition {
          Position p,
          boolean white) {
       if (white) {
-         return this.whiteTable.containsKey(p);
+         return this.whiteTable.containsKey(Integer.valueOf(p.hashCode()));
       } else {
-         return this.blackTable.containsKey(p);
+         return this.blackTable.containsKey(Integer.valueOf(p.hashCode()));
       }
    }
 
-   public Entry get(
+   public ThreeTuple<Integer, Integer, List<Move>> get(
          Position p,
          boolean white) {
       if (white) {
-         return this.whiteTable.get(p);
+         return this.whiteTable.get(Integer.valueOf(p.hashCode()));
       } else {
-         return this.blackTable.get(p);
+         return this.blackTable.get(Integer.valueOf(p.hashCode()));
       }
    }
 
@@ -78,40 +69,40 @@ public class Transposition {
          int ply) {
 
       if (white) {
-         if (this.whiteTable.containsKey(position)) {
-            Entry e= this.whiteTable.get(position);
-            if (e.ply < ply
-                  || (e.ply == ply && e.score < score)) {
-               e.ply= ply;
-               e.score= score;
-               e.moves.clear();
-               e.moves.addAll(moves);
+         if (this.whiteTable.containsKey(Integer.valueOf(position.hashCode()))) {
+            ThreeTuple<Integer, Integer, List<Move>> entry= this.whiteTable.get(Integer.valueOf(position.hashCode()));
+            if (entry.a.intValue() < ply
+                  || (entry.a.intValue() == ply && entry.b.intValue() < score)) {
+               entry.a= Integer.valueOf(ply);
+               entry.b= Integer.valueOf(score);
+               entry.c.clear();
+               entry.c.addAll(moves);
             }
          } else {
             this.whiteTable.put(
-                  position.getImmutable(),
-                  new Entry(
-                        moves,
-                        score,
-                        ply));
+                  Integer.valueOf(position.hashCode()),
+                  new ThreeTuple<Integer, Integer, List<Move>>(
+                        Integer.valueOf(ply),
+                        Integer.valueOf(score),
+                        moves));
          }
       } else {
-         if (this.blackTable.containsKey(position)) {
-            Entry e= this.blackTable.get(position);
-            if (e.ply > ply
-                  || (e.ply == ply && e.score > score)) {
-               e.ply= ply;
-               e.score= score;
-               e.moves.clear();
-               e.moves.addAll(moves);
+         if (this.blackTable.containsKey(Integer.valueOf(position.hashCode()))) {
+            ThreeTuple<Integer, Integer, List<Move>> entry= this.blackTable.get(Integer.valueOf(position.hashCode()));
+            if (entry.a.intValue() > ply
+                  || (entry.a.intValue() == ply && entry.b.intValue() > score)) {
+               entry.a= Integer.valueOf(ply);;
+               entry.b= Integer.valueOf(score);
+               entry.c.clear();
+               entry.c.addAll(moves);
             }
          } else {
             this.blackTable.put(
-                  position.getImmutable(),
-                  new Entry(
-                        moves,
-                        score,
-                        ply));
+                  Integer.valueOf(position.hashCode()),
+                  new ThreeTuple<Integer, Integer, List<Move>>(
+                        Integer.valueOf(ply),
+                        Integer.valueOf(score),
+                        moves));
          }
       }
    }
@@ -127,9 +118,10 @@ public class Transposition {
 
    private static class Table<K, V> extends LinkedHashMap<K, V> {
       private static final long serialVersionUID = 1L;
-      private final int maxEntries;
-      
-      public Table(int maxEntries) {
+      private final int         maxEntries;
+
+      public Table(
+            int maxEntries) {
          this.maxEntries= maxEntries;
       }
 
