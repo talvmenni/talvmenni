@@ -40,19 +40,19 @@ public class SimpleMaterialAndPositionalEvaluation implements Evaluation {
          result += Evaluation.PAWN;         
       }
       
-      for (Iterator it= new BitboardIterator(((position.getWhite().allPieces & ~position.getWhite().kings) & Board._CORE)); it.hasNext();) {
+      for (Iterator it= new BitboardIterator(((position.getWhite().allPieces & ~(position.getWhite().kings | position.getWhite().queens )) & Board._CORE)); it.hasNext();) {
          it.next();
          result += Evaluation.POSITION_CORE;         
       }
-      for (Iterator it= new BitboardIterator(((position.getWhite().allPieces & ~position.getWhite().kings) & Board._INNER_BORDER)); it.hasNext();) {
+      for (Iterator it= new BitboardIterator(((position.getWhite().allPieces & ~(position.getWhite().kings | position.getWhite().queens )) & Board._INNER_BORDER)); it.hasNext();) {
          it.next();
          result += Evaluation.POSITION_INNER_BORDER;         
       }
-      for (Iterator it= new BitboardIterator(((position.getWhite().allPieces & ~position.getWhite().kings) & Board._MIDDLE_BORDER)); it.hasNext();) {
+      for (Iterator it= new BitboardIterator(((position.getWhite().allPieces & ~(position.getWhite().kings | position.getWhite().queens )) & Board._MIDDLE_BORDER)); it.hasNext();) {
          it.next();
          result += Evaluation.POSITION_MIDDLE_BORDER;         
       }
-      for (Iterator it= new BitboardIterator(((position.getWhite().allPieces & ~position.getWhite().kings) & Board._OUTER_BORDER)); it.hasNext();) {
+      for (Iterator it= new BitboardIterator(((position.getWhite().allPieces & ~(position.getWhite().kings | position.getWhite().queens )) & Board._OUTER_BORDER)); it.hasNext();) {
          it.next();
          result += Evaluation.POSITION_OUTER_BORDER;         
       }
@@ -94,19 +94,19 @@ public class SimpleMaterialAndPositionalEvaluation implements Evaluation {
          result -= Evaluation.PAWN;         
       }
       
-      for (Iterator it= new BitboardIterator(((position.getBlack().allPieces & ~position.getBlack().kings) & Board._CORE)); it.hasNext();) {
+      for (Iterator it= new BitboardIterator(((position.getBlack().allPieces & ~(position.getBlack().kings | position.getBlack().queens )) & Board._CORE)); it.hasNext();) {
          it.next();
          result -= Evaluation.POSITION_CORE;         
       }
-      for (Iterator it= new BitboardIterator(((position.getBlack().allPieces & ~position.getBlack().kings) & Board._INNER_BORDER)); it.hasNext();) {
+      for (Iterator it= new BitboardIterator(((position.getBlack().allPieces & ~(position.getBlack().kings | position.getBlack().queens )) & Board._INNER_BORDER)); it.hasNext();) {
          it.next();
          result -= Evaluation.POSITION_INNER_BORDER;         
       }
-      for (Iterator it= new BitboardIterator(((position.getBlack().allPieces & ~position.getBlack().kings) & Board._MIDDLE_BORDER)); it.hasNext();) {
+      for (Iterator it= new BitboardIterator(((position.getBlack().allPieces & ~(position.getBlack().kings | position.getBlack().queens )) & Board._MIDDLE_BORDER)); it.hasNext();) {
          it.next();
          result -= Evaluation.POSITION_MIDDLE_BORDER;         
       }
-      for (Iterator it= new BitboardIterator(((position.getBlack().allPieces & ~position.getBlack().kings) & Board._OUTER_BORDER)); it.hasNext();) {
+      for (Iterator it= new BitboardIterator(((position.getBlack().allPieces & ~(position.getBlack().kings | position.getBlack().queens )) & Board._OUTER_BORDER)); it.hasNext();) {
          it.next();
          result -= Evaluation.POSITION_OUTER_BORDER;         
       }

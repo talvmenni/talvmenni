@@ -127,7 +127,7 @@ public class Transposition {
 
    private static class Table<K, V> extends LinkedHashMap<K, V> {
       private static final long serialVersionUID = 1L;
-      private static final int  MAX_ENTRIES      = 20000;
+      private static final int  MAX_ENTRIES      = 100000;
 
       protected boolean removeEldestEntry(
             Map.Entry eldest) {
@@ -135,6 +135,5 @@ public class Transposition {
       }
 
    }
-   //   
 }
 
