@@ -44,7 +44,9 @@ public class ConsoleProtocol extends UiProtocolBase {
       if ("history".equalsIgnoreCase(theInput)) {
          theOutput= printHistory();
       }
-
+      if ("possible".equalsIgnoreCase(theInput)) {
+         theOutput= printPossibleMoves();
+      }
       if ("new".equalsIgnoreCase(theInput)) {
          this.protocol.newGame();
          theOutput= "Setting up a new game...\n\n"
@@ -70,8 +72,14 @@ public class ConsoleProtocol extends UiProtocolBase {
          org.forritan.talvmenni.game.Position.Move move= this.protocol
          .getCurrentPosition().getRandomMove(
                this.protocol.isWhiteToMove());
+         if (move != null)
+         {
          this.protocol.makeMove(move.from, move.to, Position.PromotionPiece.DEFAULT);
-         theOutput = getBoardPosition();                  
+         theOutput = getBoardPosition();
+         }
+         else
+         {theOutput = getWhoIsToMove()+" is checkmated!\n";                  
+            }
       }
       
       if ("position".equalsIgnoreCase(theInput)) {
@@ -264,7 +272,14 @@ public class ConsoleProtocol extends UiProtocolBase {
 
       return message;
    }
-
+   private String printPossibleMoves()
+   {
+      if(this.protocol.isWhiteToMove()) {
+         return this.protocol.getCurrentPosition().white.getPossibleMoves().toString();
+      } else {
+         return this.protocol.getCurrentPosition().black.getPossibleMoves().toString();
+      }
+   }
    private String printHistory() {
       StringBuilder result= new StringBuilder();
       List<Move> history= MoveHistory.getInstance().getHistory();
