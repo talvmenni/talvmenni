@@ -218,54 +218,6 @@ public interface Position {
          if (this.possibleMoves == null) {
             this.possibleMoves= new ArrayList<Move>();
 
-            BitboardIterator kings= this.kingsIterator();
-            while (kings.hasNext()) {
-               long fromSquare= kings.nextBitboard();
-               findMoves(
-                     this.possibleMoves,
-                     fromSquare,
-                     new BitboardIterator(
-                           King.attacksFrom(
-                                 fromSquare,
-                                 this.parent)));
-            }
-
-            if (this.isQueensSideCastlingLegal()) {
-               if (this.whiteBoard) {
-                  this.possibleMoves.add(new Move(
-                        Square._E1,
-                        Square._C1));
-               } else {
-                  this.possibleMoves.add(new Move(
-                        Square._E8,
-                        Square._C8));
-               }
-            }
-
-            if (this.isKingsSideCastlingLegal()) {
-               if (this.whiteBoard) {
-                  this.possibleMoves.add(new Move(
-                        Square._E1,
-                        Square._G1));
-               } else {
-                  this.possibleMoves.add(new Move(
-                        Square._E8,
-                        Square._G8));
-               }
-            }
-
-            BitboardIterator queens= this.queensIterator();
-            while (queens.hasNext()) {
-               long fromSquare= queens.nextBitboard();
-               findMoves(
-                     this.possibleMoves,
-                     fromSquare,
-                     new BitboardIterator(
-                           Queen.attacksFrom(
-                                 fromSquare,
-                                 this.parent)));
-            }
-
             BitboardIterator rooks= this.rooksIterator();
             while (rooks.hasNext()) {
                long fromSquare= rooks.nextBitboard();
@@ -302,6 +254,18 @@ public interface Position {
                                  this.parent)));
             }
 
+            BitboardIterator queens= this.queensIterator();
+            while (queens.hasNext()) {
+               long fromSquare= queens.nextBitboard();
+               findMoves(
+                     this.possibleMoves,
+                     fromSquare,
+                     new BitboardIterator(
+                           Queen.attacksFrom(
+                                 fromSquare,
+                                 this.parent)));
+            }
+
             BitboardIterator pawns= this.pawnsIterator();
             while (pawns.hasNext()) {
                long fromSquare= pawns.nextBitboard();
@@ -329,6 +293,42 @@ public interface Position {
                                           fromSquare,
                                           this.parent)));
                }
+            }
+         }
+
+         BitboardIterator kings= this.kingsIterator();
+         while (kings.hasNext()) {
+            long fromSquare= kings.nextBitboard();
+            findMoves(
+                  this.possibleMoves,
+                  fromSquare,
+                  new BitboardIterator(
+                        King.attacksFrom(
+                              fromSquare,
+                              this.parent)));
+         }
+
+         if (this.isQueensSideCastlingLegal()) {
+            if (this.whiteBoard) {
+               this.possibleMoves.add(new Move(
+                     Square._E1,
+                     Square._C1));
+            } else {
+               this.possibleMoves.add(new Move(
+                     Square._E8,
+                     Square._C8));
+            }
+         }
+
+         if (this.isKingsSideCastlingLegal()) {
+            if (this.whiteBoard) {
+               this.possibleMoves.add(new Move(
+                     Square._E1,
+                     Square._G1));
+            } else {
+               this.possibleMoves.add(new Move(
+                     Square._E8,
+                     Square._G8));
             }
          }
 
