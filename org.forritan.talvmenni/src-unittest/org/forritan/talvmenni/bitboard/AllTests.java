@@ -14,6 +14,7 @@ public class AllTests {
       suite.addTestSuite(RankTest.class);
       suite.addTest(org.forritan.talvmenni.bitboard.paths.AllTests.suite());
       suite.addTest(org.forritan.talvmenni.bitboard.attacks.AllTests.suite());
+      suite.addTest(org.forritan.talvmenni.bitboard.game.AllTests.suite());
       //$JUnit-END$
       return suite;
    }
