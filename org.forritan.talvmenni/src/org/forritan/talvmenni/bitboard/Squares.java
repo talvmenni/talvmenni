@@ -171,7 +171,12 @@ public class Squares implements Square {
 
    public long getSquare(
          int squareNumber) {
-      return this.bitmaps[squareNumber];
+      //XXX: Maybe no no test is better... for speed.
+      if(squareNumber < 0 || squareNumber > 63) {
+         return 0L;
+      } else {
+         return this.bitmaps[squareNumber];
+      }
    }
 
    public long getSquare(
