@@ -228,20 +228,12 @@ public class ParallelIterativDeepeningAlphaBetaWithQuiescentAndTranspositionTabl
             } catch (IOException e) {
                e.printStackTrace();
             }
-                        
+
             if (result != null) {
-               if(this.whiteToMove) {
-                  if (this.bestResult == null
-                        || this.bestResult.score.intValue() >= result.score
-                              .intValue()) {
-                     this.bestResult= result;
-                  }
-               } else {
-                  if (this.bestResult == null
-                        || this.bestResult.score.intValue() < result.score
-                              .intValue()) {
-                     this.bestResult= result;
-                  }
+               if (this.bestResult == null
+                     || this.bestResult.score.intValue() > result.score
+                           .intValue()) {
+                  this.bestResult= result;
                }
             }
          }
@@ -319,7 +311,8 @@ public class ParallelIterativDeepeningAlphaBetaWithQuiescentAndTranspositionTabl
                      + this.lastWorkerId
                      + "...");
 
-         AlphaBetaWithQuiescentAndTranspositionTableSearch search= (AlphaBetaWithQuiescentAndTranspositionTableSearch) this.worker.getSearch();
+         AlphaBetaWithQuiescentAndTranspositionTableSearch search= (AlphaBetaWithQuiescentAndTranspositionTableSearch) this.worker
+               .getSearch();
 
          for (int localPly= this.workerSearchedToPly.intValue() + 1; localPly <= this.ply
                .intValue(); localPly++) {

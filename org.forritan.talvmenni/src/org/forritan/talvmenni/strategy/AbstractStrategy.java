@@ -151,6 +151,8 @@ public abstract class AbstractStrategy implements Strategy {
       }
 
       time+= System.currentTimeMillis();
+      
+      System.err.println("Movetime in millis: " + time);
 
       if (time < TalvMenni.MINIMUM_MOVE_DELAY) {
          try {

@@ -228,18 +228,10 @@ public class ParallelIterativDeepeningAlphaBetaWithTranspositionTableStrategy
                e.printStackTrace();
             }
             if (result != null) {
-               if(this.whiteToMove) {
-                  if (this.bestResult == null
-                        || this.bestResult.score.intValue() >= result.score
-                              .intValue()) {
-                     this.bestResult= result;
-                  }
-               } else {
-                  if (this.bestResult == null
-                        || this.bestResult.score.intValue() < result.score
-                              .intValue()) {
-                     this.bestResult= result;
-                  }
+               if (this.bestResult == null
+                     || this.bestResult.score.intValue() > result.score
+                           .intValue()) {
+                  this.bestResult= result;
                }
             }
          }
@@ -317,7 +309,8 @@ public class ParallelIterativDeepeningAlphaBetaWithTranspositionTableStrategy
                      + this.lastWorkerId
                      + "...");
 
-         AlphaBetaWithTranspositionTableSearch search= (AlphaBetaWithTranspositionTableSearch) this.worker.getSearch();
+         AlphaBetaWithTranspositionTableSearch search= (AlphaBetaWithTranspositionTableSearch) this.worker
+               .getSearch();
 
          for (int localPly= this.workerSearchedToPly.intValue() + 1; localPly <= this.ply
                .intValue(); localPly++) {
