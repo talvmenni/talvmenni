@@ -1,13 +1,12 @@
 package org.forritan.talvmenni.core;
 
-import org.forritan.talvmenni.ui.IoWindow;
+import org.forritan.talvmenni.ui.DebugWindow;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.concurrent.Executors;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadFactory;
-
 
 public class ChessEngine implements Runnable {
 
@@ -18,7 +17,10 @@ public class ChessEngine implements Runnable {
    private LinkedBlockingQueue outMessages;
 
    public static ChessEngine create() {
-      new IoWindow();
+      if (TalvMenni.DEBUG_WINDOW) {
+         new DebugWindow();
+      }
+
       return new ChessEngine();
    }
 
@@ -105,7 +107,10 @@ public class ChessEngine implements Runnable {
 
                
                if (reply != null) {
-                  IoWindow.updateTekst("ToUI: "+reply);
+                  if (TalvMenni.DEBUG_WINDOW) {
+                     DebugWindow.updateTekst("ToUI: "+reply);
+                  }
+
                   ChessEngine.this.outMessages.add(reply);
                }
             } catch (InterruptedException e) {
@@ -156,7 +161,10 @@ public class ChessEngine implements Runnable {
             }
             if (inputMessage != null) {
                ChessEngine.this.inMessages.add(inputMessage);
-               IoWindow.updateTekst("FromUI: "+inputMessage);
+               if (TalvMenni.DEBUG_WINDOW) {
+                  DebugWindow.updateTekst("FromUI: "+inputMessage);
+               }
+               
             }
             inputMessage= null;
 
