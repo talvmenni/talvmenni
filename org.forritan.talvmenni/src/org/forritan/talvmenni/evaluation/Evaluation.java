@@ -18,6 +18,8 @@ public interface Evaluation {
 
    public static final int POSITION_GUARD_REWARD= 10;
    public static final int CHECK_REWARD = 30;
+   public static final int KINGS_SIDE_CASTLING_REWARD = 30;
+   public static final int QUEENS_SIDE_CASTLING_REWARD = 30;
 
    public int getScore(Position position);
    
