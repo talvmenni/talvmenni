@@ -2,7 +2,20 @@ package org.forritan.talvmenni.ui;
 
 public class XboardProtocol implements UiProtocol {
 
-   public String processInput(String theInput) {
+   private static XboardProtocol instance;
+
+   private XboardProtocol() {
+   }
+
+   public static XboardProtocol create() {
+      if (XboardProtocol.instance == null) {
+         XboardProtocol.instance= new XboardProtocol();
+      }
+      return XboardProtocol.instance;
+   }
+
+   public String processInput(
+         String theInput) {
       String theOutput= null;
 
       if (theInput.equalsIgnoreCase("protover 2")) {

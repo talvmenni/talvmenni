@@ -2,11 +2,21 @@ package org.forritan.talvmenni.ui;
 
 public class ConsoleProtocol implements UiProtocol {
 	private String prompt;
+   
+   private static ConsoleProtocol instance;
 
-	public ConsoleProtocol() {
+   private ConsoleProtocol() {
 		this.prompt = ":\\>";
 	}
 
+   public static ConsoleProtocol create() {
+      if(instance == null) {
+         instance= new ConsoleProtocol();
+      }
+      return instance;
+   }
+
+   
 	public String processInput(String theInput) {
 		String theOutput = null;
 

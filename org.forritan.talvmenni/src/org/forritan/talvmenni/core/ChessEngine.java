@@ -1,10 +1,5 @@
 package org.forritan.talvmenni.core;
 
-import org.forritan.talvmenni.ui.ConsoleProtocol;
-import org.forritan.talvmenni.ui.DebugWindow;
-import org.forritan.talvmenni.ui.UciProtocol;
-import org.forritan.talvmenni.ui.XboardProtocol;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -12,237 +7,247 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadFactory;
 
+import org.forritan.talvmenni.ui.ConsoleProtocol;
+import org.forritan.talvmenni.ui.DebugWindow;
+import org.forritan.talvmenni.ui.UciProtocol;
+import org.forritan.talvmenni.ui.UiProtocol;
+import org.forritan.talvmenni.ui.XboardProtocol;
+
+
 public class ChessEngine implements Runnable {
 
-	private boolean running;
+   private boolean             running;
 
-	private Protocol protocol;
+   private Protocol            protocol;
 
-	private ThreadFactory threadFactory;
+   private ThreadFactory       threadFactory;
 
-	private LinkedBlockingQueue inMessages;
+   private LinkedBlockingQueue inMessages;
 
-	private LinkedBlockingQueue outMessages;
+   private LinkedBlockingQueue outMessages;
 
-	public static ChessEngine create() {
-		if (TalvMenni.DEBUG_WINDOW) {
-			new DebugWindow();
-		}
+   public static ChessEngine create() {
+      ChessEngine engine= new ChessEngine();
 
-		return new ChessEngine();
-	}
+      if (TalvMenni.DEBUG_WINDOW) {
+         long time= -System.currentTimeMillis();
+         new DebugWindow();
+         time+= System.currentTimeMillis();
+         System.err.println("Used "
+               + time
+               + " millis in main thread to create DebugWindow");
+      }
 
-	private ChessEngine() {
+      return engine;
+   }
 
-		if (TalvMenni.CROUCHING_TIGER_HIDDEN_DEBUG) {
-			System.err.println("DEBUG: ChessEngine()");
-		}
+   private ChessEngine() {
 
-		this.running = false;
-		this.protocol = new Protocol();
-		this.threadFactory = Executors.defaultThreadFactory();
-		this.inMessages = new LinkedBlockingQueue();
-		this.outMessages = new LinkedBlockingQueue();
-	}
+      if (TalvMenni.CROUCHING_TIGER_HIDDEN_DEBUG) {
+         System.err.println("DEBUG: ChessEngine()");
+      }
 
-	public boolean isRunning() {
-		return this.running;
-	}
+      this.running= false;
+      this.protocol= new Protocol();
+      this.threadFactory= Executors.defaultThreadFactory();
+      this.inMessages= new LinkedBlockingQueue();
+      this.outMessages= new LinkedBlockingQueue();
+   }
 
-	public void setRunning(boolean running) {
-		this.running = running;
-	}
+   public boolean isRunning() {
+      return this.running;
+   }
 
-	public void run() {
-		if (TalvMenni.CROUCHING_TIGER_HIDDEN_DEBUG) {
-			System.err.println("DEBUG: ChessEngine.run()");
-		}
+   public void setRunning(
+         boolean running) {
+      this.running= running;
+   }
 
-		this.running = true;
-		this.threadFactory.newThread(new ProtocolHandler()).start();
-		this.threadFactory.newThread(new InStreamHandler()).start();
-		this.threadFactory.newThread(new OutStreamHandler()).start();
-	}
+   public void run() {
+      if (TalvMenni.CROUCHING_TIGER_HIDDEN_DEBUG) {
+         System.err.println("DEBUG: ChessEngine.run()");
+      }
 
-	private class Protocol {
-		private XboardProtocol XboardObject;
-		private UciProtocol UciObject;
-		private ConsoleProtocol ConsoleObject;
-		private int ActiveProtocol = 0;
+      this.running= true;
+      this.threadFactory.newThread(
+            new ProtocolHandler()).start();
+      this.threadFactory.newThread(
+            new InStreamHandler()).start();
+      this.threadFactory.newThread(
+            new OutStreamHandler()).start();
+   }
 
-		public Protocol() {
-			this.XboardObject = new XboardProtocol();
-			this.UciObject = new UciProtocol();
-			this.ConsoleObject = new ConsoleProtocol();
-		}
+   private class Protocol {
 
-		public String processInput(String theInput) {
+      private UiProtocol uiProtocol;
 
-			if (TalvMenni.CROUCHING_TIGER_HIDDEN_DEBUG) {
-				System.err
-						.println("DEBUG: ChessEngine.Protocol.processInput( = "
-								+ theInput + " )");
-			}
+      public String processInput(
+            String theInput) {
 
-			String theOutput = null;
+         if (TalvMenni.CROUCHING_TIGER_HIDDEN_DEBUG) {
+            System.err.println("DEBUG: ChessEngine.Protocol.processInput( = "
+                  + theInput
+                  + " )");
+         }
 
-			if (theInput.equalsIgnoreCase("xboard")) {
-				ActiveProtocol = 1; //Change protocol to XboardProtocol
-			} else if (theInput.equals("uci")) {
-				ActiveProtocol = 2; //Change protocol to UCIProtocol
-			} else if (theInput.equals("cmd")) {
-				ChessEngine.this.setRunning(false);
-				ActiveProtocol = 3; //Change protocol to ConsoleProtocol	
-			}
-			switch (ActiveProtocol) {
-			case 1:
-				theOutput = XboardObject.processInput(theInput);	
-				break;
-			case 2:
-				theOutput = UciObject.processInput(theInput);
-				break;
-			case 3:
-				theOutput = ConsoleObject.processInput(theInput);
-				break;
-			}
+         String theOutput= null;
 
-			return theOutput;
-		}
+         if (uiProtocol == null) {
+            if (theInput.equalsIgnoreCase("xboard")) {
+               uiProtocol= XboardProtocol.create(); //Change protocol to
+               // XboardProtocol
+            } else if (theInput.equals("uci")) {
+               uiProtocol= UciProtocol.create(); //Change protocol to
+               // UCIProtocol
+            } else if (theInput.equals("cmd")) {
+               ChessEngine.this.setRunning(false);
+               uiProtocol= ConsoleProtocol.create(); //Change protocol to
+               // ConsoleProtocol
+            }
+         }
 
-	}
+         if (uiProtocol != null) {
+            theOutput= uiProtocol.processInput(theInput);
+         }
 
-	private class ProtocolHandler implements Runnable {
+         return theOutput;
+      }
 
-		public void run() {
+   }
 
-			if (TalvMenni.CROUCHING_TIGER_HIDDEN_DEBUG) {
-				System.err.println("DEBUG: ChessEngine.ProtocolHandler.run()");
-			}
+   private class ProtocolHandler implements Runnable {
 
-			while (ChessEngine.this.isRunning()) {
+      public void run() {
 
-				if (TalvMenni.CROUCHING_TIGER_HIDDEN_DEBUG) {
-					System.err
-							.println("DEBUG: ChessEngine.ProtocolHandler.run() - start loop");
-				}
+         if (TalvMenni.CROUCHING_TIGER_HIDDEN_DEBUG) {
+            System.err.println("DEBUG: ChessEngine.ProtocolHandler.run()");
+         }
 
-				try {
-					String reply = ChessEngine.this.protocol
-							.processInput((String) ChessEngine.this.inMessages
-									.take());
+         while (ChessEngine.this.isRunning()) {
 
-					if (reply != null) {
-						if (TalvMenni.DEBUG_WINDOW) {
-							DebugWindow.updateTekst("ToUI: " + reply);
-						}
+            if (TalvMenni.CROUCHING_TIGER_HIDDEN_DEBUG) {
+               System.err
+                     .println("DEBUG: ChessEngine.ProtocolHandler.run() - start loop");
+            }
 
-						ChessEngine.this.outMessages.add(reply);
-					}
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
+            try {
+               String reply= ChessEngine.this.protocol
+                     .processInput((String) ChessEngine.this.inMessages.take());
 
-				if (TalvMenni.CROUCHING_TIGER_HIDDEN_DEBUG) {
-					System.err
-							.println("DEBUG: ChessEngine.ProtocolHandler.run() - end loop");
-				}
+               if (reply != null) {
+                  if (TalvMenni.DEBUG_WINDOW) {
+                     DebugWindow.updateTekst("ToUI: "
+                           + reply);
+                  }
 
-			}
+                  ChessEngine.this.outMessages.add(reply);
+               }
+            } catch (InterruptedException e) {
+               e.printStackTrace();
+            }
 
-			if (TalvMenni.CROUCHING_TIGER_HIDDEN_DEBUG) {
-				System.err
-						.println("DEBUG: ChessEngine.ProtocolHandler.run() - thread terminates");
-			}
+            if (TalvMenni.CROUCHING_TIGER_HIDDEN_DEBUG) {
+               System.err
+                     .println("DEBUG: ChessEngine.ProtocolHandler.run() - end loop");
+            }
 
-		}
+         }
 
-	}
+         if (TalvMenni.CROUCHING_TIGER_HIDDEN_DEBUG) {
+            System.err
+                  .println("DEBUG: ChessEngine.ProtocolHandler.run() - thread terminates");
+         }
 
-	private class InStreamHandler implements Runnable {
+      }
 
-		public void run() {
+   }
 
-			if (TalvMenni.CROUCHING_TIGER_HIDDEN_DEBUG) {
-				System.err.println("DEBUG: ChessEngine.InStreamHandler.run()");
-			}
+   private class InStreamHandler implements Runnable {
 
-			BufferedReader inReader = new BufferedReader(new InputStreamReader(
-					System.in));
+      public void run() {
 
-			String inputMessage = "";
+         if (TalvMenni.CROUCHING_TIGER_HIDDEN_DEBUG) {
+            System.err.println("DEBUG: ChessEngine.InStreamHandler.run()");
+         }
 
-			while (ChessEngine.this.isRunning()) {
+         BufferedReader inReader= new BufferedReader(
+               new InputStreamReader(
+                     System.in));
 
-				if (TalvMenni.CROUCHING_TIGER_HIDDEN_DEBUG) {
-					System.err
-							.println("DEBUG: ChessEngine.InStreamHandler.run() - start loop");
-				}
+         String inputMessage= "";
 
-				try {
-					inputMessage = inReader.readLine();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				if (inputMessage != null) {
-					ChessEngine.this.inMessages.add(inputMessage);
-					if (TalvMenni.DEBUG_WINDOW) {
-						DebugWindow.updateTekst("FromUI: " + inputMessage);
-					}
+         while (ChessEngine.this.isRunning()) {
 
-				}
-				inputMessage = null;
+            if (TalvMenni.CROUCHING_TIGER_HIDDEN_DEBUG) {
+               System.err
+                     .println("DEBUG: ChessEngine.InStreamHandler.run() - start loop");
+            }
 
-				if (TalvMenni.CROUCHING_TIGER_HIDDEN_DEBUG) {
-					System.err
-							.println("DEBUG: ChessEngine.InStreamHandler.run() - end loop");
-				}
+            try {
+               inputMessage= inReader.readLine();
+            } catch (IOException e) {
+               // TODO Auto-generated catch block
+               e.printStackTrace();
+            }
+            if (inputMessage != null) {
+               ChessEngine.this.inMessages.add(inputMessage);
+               if (TalvMenni.DEBUG_WINDOW) {
+                  DebugWindow.updateTekst("FromUI: "
+                        + inputMessage);
+               }
 
-			}
+            }
+            inputMessage= null;
 
-			if (TalvMenni.CROUCHING_TIGER_HIDDEN_DEBUG) {
-				System.err
-						.println("DEBUG: ChessEngine.InStreamHandler.run() - thread terminates");
-			}
+            if (TalvMenni.CROUCHING_TIGER_HIDDEN_DEBUG) {
+               System.err
+                     .println("DEBUG: ChessEngine.InStreamHandler.run() - end loop");
+            }
 
-		}
-	}
+         }
 
-	private class OutStreamHandler implements Runnable {
+         if (TalvMenni.CROUCHING_TIGER_HIDDEN_DEBUG) {
+            System.err
+                  .println("DEBUG: ChessEngine.InStreamHandler.run() - thread terminates");
+         }
 
-		public void run() {
+      }
+   }
 
-			if (TalvMenni.CROUCHING_TIGER_HIDDEN_DEBUG) {
-				System.err.println("DEBUG: ChessEngine.OutStreamHandler.run()");
-			}
+   private class OutStreamHandler implements Runnable {
 
-			while (ChessEngine.this.isRunning()) {
+      public void run() {
 
-				if (TalvMenni.CROUCHING_TIGER_HIDDEN_DEBUG) {
-					System.err
-							.println("DEBUG: ChessEngine.OutStreamHandler.run() - start loop");
-				}
+         if (TalvMenni.CROUCHING_TIGER_HIDDEN_DEBUG) {
+            System.err.println("DEBUG: ChessEngine.OutStreamHandler.run()");
+         }
 
-				try {
-					System.out.println((String) ChessEngine.this.outMessages
-							.take());
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
+         while (ChessEngine.this.isRunning()) {
 
-				if (TalvMenni.CROUCHING_TIGER_HIDDEN_DEBUG) {
-					System.err
-							.println("DEBUG: ChessEngine.OutStreamHandler.run() - end loop");
-				}
+            if (TalvMenni.CROUCHING_TIGER_HIDDEN_DEBUG) {
+               System.err
+                     .println("DEBUG: ChessEngine.OutStreamHandler.run() - start loop");
+            }
 
-			}
+            try {
+               System.out.println((String) ChessEngine.this.outMessages.take());
+            } catch (InterruptedException e) {
+               e.printStackTrace();
+            }
 
-			if (TalvMenni.CROUCHING_TIGER_HIDDEN_DEBUG) {
-				System.err
-						.println("DEBUG: ChessEngine.OutStreamHandler.run() - thread terminates");
-			}
+            if (TalvMenni.CROUCHING_TIGER_HIDDEN_DEBUG) {
+               System.err
+                     .println("DEBUG: ChessEngine.OutStreamHandler.run() - end loop");
+            }
 
-		}
+         }
 
-	}
+         if (TalvMenni.CROUCHING_TIGER_HIDDEN_DEBUG) {
+            System.err
+                  .println("DEBUG: ChessEngine.OutStreamHandler.run() - thread terminates");
+         }
+
+      }
+
+   }
 }

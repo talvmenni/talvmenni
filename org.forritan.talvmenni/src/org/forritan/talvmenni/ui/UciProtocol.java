@@ -1,13 +1,23 @@
 package org.forritan.talvmenni.ui;
 
-public class UciProtocol implements UiProtocol{
+public class UciProtocol implements UiProtocol {
 
-	/* (non-Javadoc)
-	 * @see org.forritan.talvmenni.ui.UiProtocol#processInput(java.lang.String)
-	 */
-	public String processInput(String input) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+   private static UciProtocol instance;
+
+   private UciProtocol() {
+   }
+
+   public static UciProtocol create() {
+      if (UciProtocol.instance == null) {
+         UciProtocol.instance= new UciProtocol();
+      }
+      return UciProtocol.instance;
+   }
+
+   public String processInput(
+         String input) {
+      // TODO Auto-generated method stub
+      return null;
+   }
 
 }
