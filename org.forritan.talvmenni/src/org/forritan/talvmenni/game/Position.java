@@ -44,16 +44,16 @@ public class Position {
 
    /**
     * 
-    * @param whiteKing
-    * @param whiteQueen
+    * @param whiteKings
+    * @param whiteQueens
     * @param whiteRooks
     * @param whiteBishops
     * @param whiteKnights
     * @param whitePawns
     * @param whiteCastling
     * @param whiteEnpassant
-    * @param blackKing
-    * @param blackQueen
+    * @param blackKings
+    * @param blackQueens
     * @param blackRooks
     * @param blackBishops
     * @param blackKnights
@@ -63,16 +63,16 @@ public class Position {
     * @return
     */
    public static Position create(
-         long whiteKing,
-         long whiteQueen,
+         long whiteKings,
+         long whiteQueens,
          long whiteRooks,
          long whiteBishops,
          long whiteKnights,
          long whitePawns,
          long whiteCastling,
          long whiteEnpassant,
-         long blackKing,
-         long blackQueen,
+         long blackKings,
+         long blackQueens,
          long blackRooks,
          long blackBishops,
          long blackKnights,
@@ -80,16 +80,16 @@ public class Position {
          long blackCastling,
          long blackEnpassant) {
       return new Position(
-            whiteKing,
-            whiteQueen,
+            whiteKings,
+            whiteQueens,
             whiteRooks,
             whiteBishops,
             whiteKnights,
             whitePawns,
             whiteCastling,
             whiteEnpassant,
-            blackKing,
-            blackQueen,
+            blackKings,
+            blackQueens,
             blackRooks,
             blackBishops,
             blackKnights,
@@ -100,16 +100,16 @@ public class Position {
 
    /**
     * 
-    * @param whiteKing
-    * @param whiteQueen
+    * @param whiteKings
+    * @param whiteQueens
     * @param whiteRooks
     * @param whiteBishops
     * @param whiteKnights
     * @param whitePawns
     * @param whiteCastling
     * @param whiteEnpassant
-    * @param blackKing
-    * @param blackQueen
+    * @param blackKings
+    * @param blackQueens
     * @param blackRooks
     * @param blackBishops
     * @param blackKnights
@@ -118,16 +118,16 @@ public class Position {
     * @param blackEnpassant
     */
    private Position(
-         long whiteKing,
-         long whiteQueen,
+         long whiteKings,
+         long whiteQueens,
          long whiteRooks,
          long whiteBishops,
          long whiteKnights,
          long whitePawns,
          long whiteCastling,
          long whiteEnpassant,
-         long blackKing,
-         long blackQueen,
+         long blackKings,
+         long blackQueens,
          long blackRooks,
          long blackBishops,
          long blackKnights,
@@ -136,8 +136,8 @@ public class Position {
          long blackEnpassant) {
 
       this.white= new Bitboard(
-            whiteKing,
-            whiteQueen,
+            whiteKings,
+            whiteQueens,
             whiteRooks,
             whiteBishops,
             whiteKnights,
@@ -145,8 +145,8 @@ public class Position {
             whiteCastling,
             whiteEnpassant);
       this.black= new Bitboard(
-            blackKing,
-            blackQueen,
+            blackKings,
+            blackQueens,
             blackRooks,
             blackBishops,
             blackKnights,
@@ -156,8 +156,8 @@ public class Position {
    }
 
    public class Bitboard {
-      public final long king;
-      public final long queen;
+      public final long kings;
+      public final long queens;
       public final long rooks;
       public final long bishops;
       public final long knights;
@@ -170,8 +170,8 @@ public class Position {
 
       /**
        * 
-       * @param king
-       * @param queen
+       * @param kings
+       * @param queens
        * @param rooks
        * @param bishops
        * @param knights
@@ -180,16 +180,16 @@ public class Position {
        * @param enpassant
        */
       public Bitboard(
-            long king,
-            long queen,
+            long kings,
+            long queens,
             long rooks,
             long bishops,
             long knights,
             long pawns,
             long castling,
             long enpassant) {
-         this.king= king;
-         this.queen= queen;
+         this.kings= kings;
+         this.queens= queens;
          this.rooks= rooks;
          this.bishops= bishops;
          this.knights= knights;
@@ -198,8 +198,8 @@ public class Position {
          this.castling= castling;
          this.enpassant= enpassant;
 
-         this.allPieces= this.king
-               | this.queen
+         this.allPieces= this.kings
+               | this.queens
                | this.rooks
                | this.bishops
                | this.knights
@@ -213,12 +213,12 @@ public class Position {
 
       public Iterator kingsIterator() {
          return new BitboardIterator(
-               this.king);
+               this.kings);
       }
 
       public Iterator queensIterator() {
          return new BitboardIterator(
-               this.queen);
+               this.queens);
       }
 
       public Iterator rooksIterator() {
@@ -246,11 +246,11 @@ public class Position {
       }
       
       public boolean isKing(long position) {
-         return ((this.king & position) != 0L);
+         return ((this.kings & position) != 0L);
       }
 
       public boolean isQueen(long position) {
-         return ((this.queen & position) != 0L);
+         return ((this.queens & position) != 0L);
       }
 
       public boolean isRook(long position) {

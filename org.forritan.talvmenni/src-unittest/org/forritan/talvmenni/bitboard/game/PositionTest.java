@@ -17,10 +17,10 @@ public class PositionTest extends TestCase {
       Position p= Position.createInitial();
       Assert.assertTrue(
             "White king should be on e1!",
-            ((p.white.king ^ Square._E1) == 0L));
+            ((p.white.kings ^ Square._E1) == 0L));
       Assert.assertTrue(
             "White queen should be on d1!",
-            ((p.white.queen ^ Square._D1) == 0L));
+            ((p.white.queens ^ Square._D1) == 0L));
       Assert.assertTrue(
             "White rooks should be on a1 and h1!",
             ((p.white.rooks ^ (Square._A1 | Square._H1)) == 0L));
@@ -36,10 +36,10 @@ public class PositionTest extends TestCase {
 
       Assert.assertTrue(
             "Black king should be on e8!",
-            ((p.black.king ^ Square._E8) == 0L));
+            ((p.black.kings ^ Square._E8) == 0L));
       Assert.assertTrue(
             "Black queen should be on d8!",
-            ((p.black.queen ^ Square._D8) == 0L));
+            ((p.black.queens ^ Square._D8) == 0L));
       Assert.assertTrue(
             "Black rooks should be on a8 and h8!",
             ((p.black.rooks ^ (Square._A8 | Square._H8)) == 0L));
