@@ -125,6 +125,7 @@ public abstract class AbstractStrategy implements Strategy {
       if (moves.size() == 1) {
          bestMoves= moves;
       } else {
+         this.search.getPrincipalVariation().clearBestLine();
          bestMoves= this.search(
                position,
                whiteToMove);

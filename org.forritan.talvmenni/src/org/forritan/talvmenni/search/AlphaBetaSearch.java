@@ -32,6 +32,10 @@ public class AlphaBetaSearch implements Search {
       this.ply= ply;
       this.pv.setDepth(ply);
    }
+   
+   public PrincipalVariation getPrincipalVariation() {
+      return this.pv;
+   }
 
    public Thinking getThinking() {
       return this.pv.getThinking();

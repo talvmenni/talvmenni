@@ -24,6 +24,8 @@ public interface Search {
          Evaluation e,
          boolean whiteMove);
 
+   public PrincipalVariation getPrincipalVariation();
+   
    public Thinking getThinking();
    public DebugInfo getDebugInfo();
 
@@ -39,4 +41,6 @@ public interface Search {
          this.moves= moves;
       }
    }
+   
+   
 }

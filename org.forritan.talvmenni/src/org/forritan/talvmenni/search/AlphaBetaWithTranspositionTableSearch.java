@@ -50,6 +50,10 @@ public class AlphaBetaWithTranspositionTableSearch implements Search {
       this.ply= ply;
       this.pv.setDepth(ply);
    }
+   
+   public PrincipalVariation getPrincipalVariation() {
+      return this.pv;
+   }
 
    public Thinking getThinking() {
       return this.pv.getThinking();
@@ -77,7 +81,7 @@ public class AlphaBetaWithTranspositionTableSearch implements Search {
       // If checkmate there is no need to search further...
       int beta= Evaluation.CHECKMATE_SCORE;
 
-      this.pv.clear();
+      this.pv.clearPrincipalVariation();
 
       int result= this.alphaBeta(
             p,

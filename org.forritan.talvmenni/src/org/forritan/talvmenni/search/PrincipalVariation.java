@@ -18,7 +18,9 @@ public interface PrincipalVariation {
 
    public List getBestMoveAsList();
 
-   public void clear();
+   public void clearPrincipalVariation();
+
+   public void clearBestLine();
 
    public void pop();
 
@@ -123,13 +125,17 @@ public interface PrincipalVariation {
       public void setDepth(
             int depth) {
          this.depth= depth;
-         this.clear();
+         this.clearPrincipalVariation();
       }
 
-      public void clear() {
+      public void clearPrincipalVariation() {
          this.pv.clear();
          this.currentBestLineAtPly= 0;
          this.lastExaminedLine.clear();
+      }
+
+      public void clearBestLine() {
+         this.currentBestLine.clear();
       }
 
    }

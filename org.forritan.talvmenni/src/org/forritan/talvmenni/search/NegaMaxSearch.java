@@ -34,6 +34,10 @@ public class NegaMaxSearch implements Search {
       this.ply= ply;
    }
 
+   public PrincipalVariation getPrincipalVariation() {
+      return this.pv;
+   }
+
    public Thinking getThinking() {
       return this.pv.getThinking();
    }
@@ -50,7 +54,7 @@ public class NegaMaxSearch implements Search {
       long time= -System.currentTimeMillis();
       this.movesSearched= 0;
       
-      this.pv.clear();
+      this.pv.clearPrincipalVariation();
 
       int result= this.negaMax(
             p,
