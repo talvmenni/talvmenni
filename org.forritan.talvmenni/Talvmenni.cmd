@@ -1,0 +1,1 @@
+Start %JAVA_HOME%\bin\java -Xms128M -Xmx396M  -DquiescentMaxDepth=100 -Dply=6 -Dstrategy=pidabqtt -Djava.security.policy=policy.all -Djava.rmi.server.codebase="http://latitude1:8080/talvmenni-dl.jar" -jar talvmenni.jar

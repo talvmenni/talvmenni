@@ -86,6 +86,11 @@ public class ParallelIterativDeepeningAlphaBetaWithQuiescentAndTranspositionTabl
          this.master.collectResults();
          result= new ArrayList();
          result.add(this.master.bestResult.move);
+         if (this.master.bestResult.score.intValue() > Evaluation.CHECKMATE_SCORE) {
+            System.err
+                  .println("Sending poison pill into space - [not implementet yet]");
+            break;
+         }
       }
       return result;
 
@@ -230,7 +235,7 @@ public class ParallelIterativDeepeningAlphaBetaWithQuiescentAndTranspositionTabl
                if (this.bestResult == null) {
                   this.bestResult= result;
                } else if (this.bestResult != null
-                     && this.bestResult.score.intValue() > result.score
+                     && this.bestResult.score.intValue() < result.score
                            .intValue()) {
                   this.bestResult= result;
                } else if (this.bestResult != null
@@ -239,6 +244,10 @@ public class ParallelIterativDeepeningAlphaBetaWithQuiescentAndTranspositionTabl
                      && result.movePriorityNumber.intValue() < this.bestResult.movePriorityNumber
                            .intValue()) {
                   this.bestResult= result;
+               }
+               if (this.bestResult.score.intValue() > Evaluation.CHECKMATE_SCORE) {
+                  System.err.println("Found checkmate move...");
+                  return;
                }
             }
          }
@@ -256,20 +265,18 @@ public class ParallelIterativDeepeningAlphaBetaWithQuiescentAndTranspositionTabl
 
    public static class Task extends ChessEngineTask {
 
-      public transient int lastScore;
+      public Position position            = null;
+      public Move     move                = null;
+      public Boolean  whiteToMove         = null;
+      public Integer  alpha               = null;
+      public Integer  beta                = null;
+      public Integer  ply                 = null;
+      public Integer  masterSearchedToPly = null;
+      public Integer  workerSearchedToPly = null;
+      public String   lastWorkerId        = null;
+      public Boolean  lastWorkerIdNull    = null;
 
-      public Position      position            = null;
-      public Move          move                = null;
-      public Boolean       whiteToMove         = null;
-      public Integer       alpha               = null;
-      public Integer       beta                = null;
-      public Integer       ply                 = null;
-      public Integer       masterSearchedToPly = null;
-      public Integer       workerSearchedToPly = null;
-      public String        lastWorkerId        = null;
-      public Boolean       lastWorkerIdNull    = null;
-
-      public Integer       movePriorityNumber  = null;
+      public Integer  movePriorityNumber  = null;
 
       public Task() {
       }
@@ -329,18 +336,19 @@ public class ParallelIterativDeepeningAlphaBetaWithQuiescentAndTranspositionTabl
             System.out.println("Setting local ply to: "
                   + localPly);
 
-            // Lookup possible better alpha-beta values in space...
-            this.updateAlphaBeta(
-                  localPly,
-                  this.alpha.intValue(),
-                  this.beta.intValue());
+            if (localPly >= (this.masterSearchedToPly.intValue())) {
+               // Lookup possible better alpha-beta values in space...
+               this.updateAlphaBeta(
+                     localPly,
+                     this.alpha.intValue(),
+                     this.beta.intValue());
+            }
 
             search.setPly(localPly);
             search.getBestMoves(
                   this.position.getMutable(),
                   this.worker.evaluation,
                   this.whiteToMove.booleanValue());
-            this.lastScore= search.getLastScore();
 
             time+= System.currentTimeMillis();
 
@@ -354,17 +362,14 @@ public class ParallelIterativDeepeningAlphaBetaWithQuiescentAndTranspositionTabl
 
             if (localPly >= (this.masterSearchedToPly.intValue())) {
 
-               //Lookup possible better alpha-beta values in space...
+               //Update possible better alpha-beta values into space...
                this.updateAlphaBeta(
                      localPly,
                      search.getFinalAlpha(),
                      search.getFinalBeta());
 
-               //first find possible task in space which hasn't been
-               // searched
-               // as
-               // at
-               // all yet
+               // first find possible task in space which hasn't been
+               // searched at all yet
 
                swapTemplate.lastWorkerIdNull= Boolean.TRUE;
                swapTask= this.getTaskFromSpace(swapTemplate);
@@ -420,7 +425,7 @@ public class ParallelIterativDeepeningAlphaBetaWithQuiescentAndTranspositionTabl
                result.ply= new Integer(
                      localPly + 1);
                result.score= new Integer(
-                     this.worker.getSearch().getLastScore());
+                     -this.worker.getSearch().getLastScore());
                result.move= this.move;
                result.movePriorityNumber= this.movePriorityNumber;
                result.principalVariation= this.worker.getSearch()

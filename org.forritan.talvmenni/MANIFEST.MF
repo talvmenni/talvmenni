@@ -1,0 +1,4 @@
+Manifest-Version: 1.0
+Class-Path: talvmenni-dl.jar generic-master-worker.jar emory-util.jar fiddler.jar jini-core.jar jini-ext.jar
+Main-Class: org.forritan.talvmenni.TalvMenni
+
