@@ -48,7 +48,8 @@ public class NewAlphaBetaSearch implements Search {
          Evaluation e,
          boolean whiteMove) {
 
-      int alpha= Integer.MIN_VALUE + 1; // Very important!!! Can't be
+      int alpha= Integer.MIN_VALUE + 1;
+      // Very important!!! Can't be
       // Integer.MIN_VALUE, because
       // Integer.MIN_VALUE ==
       // -Integer.MIN_VALUE
@@ -61,8 +62,10 @@ public class NewAlphaBetaSearch implements Search {
             this.ply,
             alpha,
             beta);
-      
-      return (result.b.size() > 0 ? result.b.subList(0,1) : result.b);
+
+      return (result.b.size() > 0 ? result.b.subList(
+            0,
+            1) : result.b);
    }
 
    private Tuple<Integer, List<Move>> alphaBeta(
@@ -124,6 +127,10 @@ public class NewAlphaBetaSearch implements Search {
                if (value.a.intValue() > best.a.intValue()) {
                   best= value;
                   if (ply == this.ply) {
+                     this.debugInfo.postCurrentBestMove(
+                           move,
+                           best.a.intValue(),
+                           (this.movesSearched - movesSearchedBefore));
                      this.thinking.postThinking(
                            ply,
                            best.a.intValue(),
@@ -138,7 +145,7 @@ public class NewAlphaBetaSearch implements Search {
             if (whiteMove ? p.getWhite().isChecked() : p.getBlack().isChecked()) {
                // Checkmate...
                result= new Tuple<Integer, List<Move>>(
-                     Integer.valueOf(((20000 + ply) * (whiteMove ? 1 : -1))),
+                     Integer.valueOf(((-20000 - ply))),
                      new ArrayList<Move>());
             } else {
                // Stalemate...
