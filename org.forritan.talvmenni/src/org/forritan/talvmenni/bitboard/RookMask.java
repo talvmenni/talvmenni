@@ -2,6 +2,18 @@ package org.forritan.talvmenni.bitboard;
 
 public interface RookMask {
 
+   public long getEast2WestMaskFrom(
+         long square);
+
+   public long getWest2EastMaskFrom(
+         long square);
+
+   public long getNorth2SouthMaskFrom(
+         long square);
+
+   public long getSouth2NorthMaskFrom(
+         long square);
+
    public static final long _WEST2EAST_FROM_FILE_A   = Square._FULL_BOARD;
    public static final long _WEST2EAST_FROM_FILE_B   = File._B
                                                            | File._C

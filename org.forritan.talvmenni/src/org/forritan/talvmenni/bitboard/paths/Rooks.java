@@ -1,23 +1,23 @@
 package org.forritan.talvmenni.bitboard.paths;
 
-public class Kings implements King {
+public class Rooks implements Rook {
 
-   private static Kings        instance;
+   private static Rooks        instance;
    private static final long[] bitmaps = new long[64];
 
-   public static King create() {
-      if (Kings.instance == null) {
-         Kings.instance= new Kings();
+   public static Rook create() {
+      if (Rooks.instance == null) {
+         Rooks.instance= new Rooks();
       }
-      return Kings.instance;
+      return Rooks.instance;
    }
 
-   private Kings() {
+   private Rooks() {
    }
 
    public long getPathsFrom(
          long square) {
-      return Kings.bitmaps[Long.numberOfLeadingZeros(square)];
+      return Rooks.bitmaps[Long.numberOfLeadingZeros(square)];
    }
 
    static {

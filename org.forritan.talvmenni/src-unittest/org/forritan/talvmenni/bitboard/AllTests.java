@@ -14,7 +14,11 @@ public class AllTests {
       suite.addTestSuite(FileTest.class);
       suite.addTestSuite(SquaresTest.class);
       suite.addTestSuite(RankTest.class);
+      suite.addTestSuite(RookMasksTest.class);
       suite.addTestSuite(RookMaskTest.class);
+      suite.addTestSuite(SlashDiagonalTest.class);
+      suite.addTestSuite(BackSlashDiagonalTest.class);
+      suite.addTestSuite(BishopMaskTest.class);
       //$JUnit-END$
 
       suite.addTest(org.forritan.talvmenni.bitboard.paths.AllTests.suite());

@@ -2,6 +2,7 @@ package org.forritan.talvmenni.bitboard.paths;
 
 import org.forritan.talvmenni.bitboard.Square;
 
+
 public interface WhitePawnMove extends Pawn {
 
    public static final long _PATHS_FROM_A1 = 0L;
@@ -65,7 +66,7 @@ public interface WhitePawnMove extends Pawn {
    public static final long _PATHS_FROM_F6 = Square._F7;
    public static final long _PATHS_FROM_G6 = Square._G7;
    public static final long _PATHS_FROM_H6 = Square._H7;
-   
+
    public static final long _PATHS_FROM_A7 = Square._A8;
    public static final long _PATHS_FROM_B7 = Square._B8;
    public static final long _PATHS_FROM_C7 = Square._C8;

@@ -26,7 +26,7 @@ public class QueenTest extends TestCase {
       super.tearDown();
    }
 
-   public void testKnightPathsFromA1() {
+   public void testQueenPathsFromA1() {
       Assert
             .assertEquals(""
                   + //

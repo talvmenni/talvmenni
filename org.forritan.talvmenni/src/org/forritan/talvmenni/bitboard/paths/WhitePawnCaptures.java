@@ -3,7 +3,7 @@ package org.forritan.talvmenni.bitboard.paths;
 public class WhitePawnCaptures implements WhitePawnCapture {
 
    private static WhitePawnCaptures instance;
-   private static final long[]   bitmaps = new long[64];
+   private static final long[]      bitmaps = new long[64];
 
    public static Pawn create() {
       if (WhitePawnCaptures.instance == null) {

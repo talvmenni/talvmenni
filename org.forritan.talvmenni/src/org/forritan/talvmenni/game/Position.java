@@ -2,6 +2,7 @@ package org.forritan.talvmenni.game;
 
 import java.util.Iterator;
 
+import org.forritan.talvmenni.bitboard.BitboardIterator;
 import org.forritan.talvmenni.bitboard.Rank;
 import org.forritan.talvmenni.bitboard.Square;
 import org.forritan.talvmenni.bitboard.Squares;
@@ -664,32 +665,6 @@ public class Position {
          }
 
          return result;
-      }
-
-      private class BitboardIterator implements Iterator {
-
-         private long bitboard;
-
-         private BitboardIterator(
-               long bitboard) {
-            this.bitboard= bitboard;
-         }
-
-         public boolean hasNext() {
-            return this.bitboard != 0L;
-         }
-
-         public Object next() {
-            long result= Long.lowestOneBit(this.bitboard);
-            this.bitboard= this.bitboard
-                  ^ result;
-            return Long.valueOf(result);
-         }
-
-         public void remove() {
-            throw new UnsupportedOperationException();
-         }
-
       }
    }
 

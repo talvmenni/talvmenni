@@ -24,15 +24,23 @@ public class DebugWindow {
       JFrame.setDefaultLookAndFeelDecorated(true);
 
       //Create and set up the window.
-      vindeyga= new JFrame("Talvmenni JFrame");
+      vindeyga= new JFrame(
+            "Talvmenni JFrame");
       vindeyga.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-      tekstur= new JTextArea("");
-      tekstur.setPreferredSize(new Dimension(300, 300));
-      vindeyga.getContentPane().add(tekstur, BorderLayout.CENTER);
+      tekstur= new JTextArea(
+            "");
+      tekstur.setPreferredSize(new Dimension(
+            300,
+            300));
+      vindeyga.getContentPane().add(
+            tekstur,
+            BorderLayout.CENTER);
 
       //Display the window.
-      vindeyga.setLocation(650, 50);
+      vindeyga.setLocation(
+            650,
+            50);
       vindeyga.pack();
       vindeyga.setVisible(true);
 
@@ -51,7 +59,8 @@ public class DebugWindow {
    /**
     * @param string
     */
-   public static void updateTekst(String message) {
+   public static void updateTekst(
+         String message) {
 
       tekstur.append(message
             + newline);
