@@ -40,5 +40,7 @@ public class FullSearchSimpleMaterialEvaluationChooseRandomlyBetweenBestMovesStr
       return this.search.getObservable();
    }
 
-
+   public Search getSearch() {
+      return this.search;
+   }
 }

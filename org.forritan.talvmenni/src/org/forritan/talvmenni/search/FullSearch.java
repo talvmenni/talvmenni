@@ -7,15 +7,22 @@ import java.util.Observable;
 import org.forritan.talvmenni.evaluation.Evaluation;
 import org.forritan.talvmenni.game.Position;
 import org.forritan.talvmenni.game.Position.Move;
+import org.forritan.talvmenni.search.Search.Thinking;
 
 public class FullSearch extends Observable implements Search {
    
+   private Thinking thinking;
    private int depth;
    
    private int movesSearched;
    
    public FullSearch(int depth) {
       this.depth= depth;
+      this.thinking= new Thinking();
+   }
+
+   public Thinking getThinking() {
+      return this.thinking;
    }
 
    public List<Move> getBestMoves(
@@ -37,14 +44,17 @@ public class FullSearch extends Observable implements Search {
       }
       
       for(Move move : moves) {
-         this.movesSearched++;
+         long moveTime= -System.currentTimeMillis();
+         int movesSearchedBeforeMove= this.movesSearched++;
          MoveScoreTuple score= this.getBestMove(p.move(move.from, move.to), e, !whiteMove, depth - 1);
          this.setChanged();
-         this.notifyObservers("[" + move.toString() + "] " + score.score + "    |    " + this.movesSearched + " searched...");
+         this.notifyObservers("[" + move.toString() + "] " + score.score + "    |    " + (this.movesSearched - movesSearchedBeforeMove) + " positions searched...");
          if(bestScore == null || (whiteMove ? score.score > bestScore.score : score.score < bestScore.score)) {
             bestScore= score;
             result.clear();
             result.add(move);
+            moveTime += System.currentTimeMillis();
+            this.thinking.postThinking(depth, bestScore.score, moveTime, this.movesSearched, bestScore.move.toString());
          }else if(bestScore != null && score.score == bestScore.score) {
             result.add(move);
          }
@@ -100,13 +110,13 @@ public class FullSearch extends Observable implements Search {
          } else {
             if(whiteMove){
                if(p.white.isChecked()) {
-                  result= new MoveScoreTuple(null, -39000); // Checkmate
+                  result= new MoveScoreTuple(null, - 20000 + depth); // Checkmate
                } else {
                   result= new MoveScoreTuple(null, 0);  // Stalemate
                }
              } else {
                if(p.black.isChecked()) {
-                  result= new MoveScoreTuple(null, 39000); // Checkmate
+                  result= new MoveScoreTuple(null, 20000 - depth); // Checkmate
                } else {
                   result= new MoveScoreTuple(null, 0);  // Stalemate
                }
@@ -135,13 +145,18 @@ public class FullSearch extends Observable implements Search {
          } else {
             if(whiteMove){
                if(p.white.isChecked()) {
-                  result= new MoveScoreTuple(null, bestScore - 3900); // Black wins by checkmate
+                  result= new MoveScoreTuple(null, bestScore - 20000 + depth); // Black
+                                                                      // wins by
+                                                                      // checkmate
                } else {
                   result= new MoveScoreTuple(null,  bestScore);  // Stalemate
                }
              } else {
                if(p.black.isChecked()) {
-                  result= new MoveScoreTuple(null,  bestScore + 3900); // White wins by checkmate
+                  result= new MoveScoreTuple(null,  bestScore + 20000 - depth); // White
+                                                                       // wins
+                                                                       // by
+                                                                       // checkmate
                } else {
                   result= new MoveScoreTuple(null,  bestScore);  // Stalemate
                }

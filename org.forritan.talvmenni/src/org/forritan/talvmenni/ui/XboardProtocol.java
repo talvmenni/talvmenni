@@ -44,9 +44,13 @@ public class XboardProtocol extends UiProtocolBase {
                + "\""
                + "done=1";
       } else if (theInput.toUpperCase().startsWith(
-            "SETBOARD")) {
+      "SETBOARD")) {
          String theFEN= theInput.substring(8);
          this.protocol.setPositionFromFEN(theFEN);
+      } else if (theInput.toUpperCase().equalsIgnoreCase("POST")) {
+         this.protocol.postThinking(true);
+      } else if (theInput.toUpperCase().equalsIgnoreCase("NOPOST")) {
+         this.protocol.postThinking(false);
       } else if (theInput.startsWith("usermove")) {
          String moveString= theInput.substring(
                8).trim();

@@ -5,6 +5,7 @@ import java.util.Observable;
 import java.util.Random;
 
 import org.forritan.talvmenni.game.Position.Move;
+import org.forritan.talvmenni.search.Search;
 
 public class RandomMoveStrategy extends Observable implements Strategy {
 
@@ -30,6 +31,10 @@ public class RandomMoveStrategy extends Observable implements Strategy {
 
    public Observable getObservable() {
       return this;
+   }
+
+   public Search getSearch() {
+      return null;
    }
 
 }

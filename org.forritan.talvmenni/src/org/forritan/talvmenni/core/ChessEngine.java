@@ -76,6 +76,7 @@ public class ChessEngine extends Observable implements Runnable {
       public boolean setGo(boolean go);
       public void newGame();
       public void stop();
+      public void postThinking(boolean observeIt);
       public void whiteToMove();
       public void blackToMove();
       public boolean isWhiteToMove();
@@ -299,6 +300,27 @@ public class ChessEngine extends Observable implements Runnable {
 
       public Strategy getStrategy() {
          return ChessEngine.this.strategy;
+      }
+
+      public void postThinking(
+            boolean observeIt) {
+         if(observeIt) {
+            ChessEngine.this.strategy.getSearch().getThinking().addObserver(new Observer() {
+               public void update(
+                     Observable o,
+                     Object arg) {
+                  if(arg instanceof String) {
+                     this.updateText((String)arg);
+                  }
+               }
+               private void updateText(
+                     String text) {
+                  ChessEngine.this.outMessages.add(text);                  
+               }
+            });
+         } else {
+            ChessEngine.this.strategy.getSearch().getThinking().deleteObservers();
+         }
       }
 
    }
