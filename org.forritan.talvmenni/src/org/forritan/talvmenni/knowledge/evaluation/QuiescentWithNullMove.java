@@ -21,7 +21,6 @@ public class QuiescentWithNullMove {
    private int              transpositionHits;
 
    public QuiescentWithNullMove(
-         PrincipalVariation pv,
          int maxDepth) {
       this.maxDepth= maxDepth;
       this.search= new AlphaBetaSearch();

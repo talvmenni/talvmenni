@@ -21,7 +21,7 @@ public class ImmutablePosition extends AbstractPosition {
     * @param blackCastling
     * @param blackEnpassant
     */
-   protected ImmutablePosition(
+   public ImmutablePosition(
          long auxiliaryState,
          long whiteKings,
          long whiteQueens,

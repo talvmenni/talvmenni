@@ -3,12 +3,14 @@ package org.forritan.talvmenni;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
 import org.forritan.talvmenni.knowledge.Draw;
 import org.forritan.talvmenni.knowledge.HistoryHeuristic;
+import org.forritan.talvmenni.knowledge.ImmutablePosition;
 import org.forritan.talvmenni.knowledge.Move;
 import org.forritan.talvmenni.knowledge.MoveHistory;
 import org.forritan.talvmenni.knowledge.Position;
@@ -181,14 +183,33 @@ public class ChessEngine extends Observable implements Runnable {
       }
 
       public synchronized void newGame() {
-         this.setCurrentPosition(Position.Factory.createInitial(
-               TalvMenni.PARTITION_SEARCH,
-               false));
-         MoveHistory.getInstance().reset();
-         HistoryHeuristic.getInstance().clear();
-         Draw.getInstance().clear();
-         this.whiteToMove= true;
-         this.go= true;
+         try {
+            this.setCurrentPosition(Position.Factory.createInitial(ImmutablePosition.class));
+            MoveHistory.getInstance().reset();
+            HistoryHeuristic.getInstance().clear();
+            Draw.getInstance().clear();
+            this.whiteToMove= true;
+            this.go= true;
+
+         } catch (IllegalArgumentException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+         } catch (SecurityException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+         } catch (InstantiationException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+         } catch (IllegalAccessException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+         } catch (InvocationTargetException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+         } catch (NoSuchMethodException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+         }
       }
 
       public synchronized void whiteToMove() {

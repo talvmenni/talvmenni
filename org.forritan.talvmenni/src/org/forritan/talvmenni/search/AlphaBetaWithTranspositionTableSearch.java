@@ -249,6 +249,7 @@ public class AlphaBetaWithTranspositionTableSearch implements Search {
                // Stalemate...
                result= 0;
             }
+            this.pv.updateLastExaminedLine();
          }
       }
 

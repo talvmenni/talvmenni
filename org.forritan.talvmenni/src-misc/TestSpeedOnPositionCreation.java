@@ -1,13 +1,18 @@
+import java.lang.reflect.InvocationTargetException;
+
 import org.forritan.talvmenni.knowledge.AbstractPosition;
 import org.forritan.talvmenni.knowledge.ImmutablePosition;
 import org.forritan.talvmenni.knowledge.Move;
 import org.forritan.talvmenni.knowledge.MoveHistory;
+import org.forritan.talvmenni.knowledge.MutablePosition;
 import org.forritan.talvmenni.knowledge.Position;
 
 
 public class TestSpeedOnPositionCreation {
    public static void main(
-         String[] args) {
+         String[] args) throws IllegalArgumentException, SecurityException,
+         InstantiationException, IllegalAccessException,
+         InvocationTargetException, NoSuchMethodException {
 
       int howMany= 1000000;
 
@@ -16,9 +21,8 @@ public class TestSpeedOnPositionCreation {
             + " mutable positions...");
 
       long time= -System.currentTimeMillis();
-      Position initialPosition= Position.Factory.createInitial(
-            false,
-            true);
+      Position initialPosition= Position.Factory
+            .createInitial(MutablePosition.class);
 
       for (int i= 0; i < howMany; i++) {
          long from= 1L << (i % 32);
@@ -58,9 +62,7 @@ public class TestSpeedOnPositionCreation {
             + " immutable positions...");
 
       time= -System.currentTimeMillis();
-      initialPosition= Position.Factory.createInitial(
-            false,
-            false);
+      initialPosition= Position.Factory.createInitial(ImmutablePosition.class);
 
       for (int i= 0; i < howMany; i++) {
          long from= 1L << (i % 32);

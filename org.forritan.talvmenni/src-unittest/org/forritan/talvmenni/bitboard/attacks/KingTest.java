@@ -1,5 +1,7 @@
 package org.forritan.talvmenni.bitboard.attacks;
 
+import java.lang.reflect.InvocationTargetException;
+
 import junit.framework.Assert;
 import junit.framework.TestCase;
 
@@ -23,10 +25,12 @@ public class KingTest extends TestCase {
       }
    }
 
-   public void testWhiteKingInitial() {
-      Position initialPosition= Position.Factory.createInitial(
-            false,
-            false);
+   public void testWhiteKingInitial() throws IllegalArgumentException,
+         SecurityException, InstantiationException, IllegalAccessException,
+         InvocationTargetException, NoSuchMethodException {
+      Position initialPosition= Position.Factory
+            .createInitial(ImmutablePosition.class);
+
       long kingAttacksFromE1= King.attacksFrom(
             Square._E1,
             initialPosition);
@@ -52,13 +56,13 @@ public class KingTest extends TestCase {
             (this.zeroPrefix[Long.toBinaryString(
                   kingAttacksFromE1).length() - 1] + Long
                   .toBinaryString(kingAttacksFromE1)));
-
    }
 
-   public void testWhiteKingAfterD2D4() {
+   public void testWhiteKingAfterD2D4() throws IllegalArgumentException,
+         SecurityException, InstantiationException, IllegalAccessException,
+         InvocationTargetException, NoSuchMethodException {
       Position p= Position.Factory.createInitial(
-            false,
-            false).move(
+            ImmutablePosition.class).move(
             new Position.Move(
                   Square._D2,
                   Square._D4,
@@ -91,10 +95,11 @@ public class KingTest extends TestCase {
 
    }
 
-   public void testWhiteKingAfterD2D4_E2E4() {
+   public void testWhiteKingAfterD2D4_E2E4() throws IllegalArgumentException,
+         SecurityException, InstantiationException, IllegalAccessException,
+         InvocationTargetException, NoSuchMethodException {
       Position p= Position.Factory.createInitial(
-            false,
-            false).move(
+            ImmutablePosition.class).move(
             new Position.Move(
                   Square._D2,
                   Square._D4,
@@ -131,10 +136,12 @@ public class KingTest extends TestCase {
 
    }
 
-   public void testWhiteKingAfterD2D3_E2E3_F2F4() {
+   public void testWhiteKingAfterD2D3_E2E3_F2F4()
+         throws IllegalArgumentException, SecurityException,
+         InstantiationException, IllegalAccessException,
+         InvocationTargetException, NoSuchMethodException {
       Position p= Position.Factory.createInitial(
-            false,
-            false).move(
+            ImmutablePosition.class).move(
             new Position.Move(
                   Square._D2,
                   Square._D3,
@@ -175,10 +182,11 @@ public class KingTest extends TestCase {
 
    }
 
-   public void testBlackKingInitial() {
-      Position initialPosition= Position.Factory.createInitial(
-            false,
-            false);
+   public void testBlackKingInitial() throws IllegalArgumentException,
+         SecurityException, InstantiationException, IllegalAccessException,
+         InvocationTargetException, NoSuchMethodException {
+      Position initialPosition= Position.Factory
+            .createInitial(ImmutablePosition.class);
       long kingAttacksFromE8= King.attacksFrom(
             Square._E8,
             initialPosition);
@@ -207,10 +215,11 @@ public class KingTest extends TestCase {
 
    }
 
-   public void testBlackKingAfterD7D5_F7F5() {
+   public void testBlackKingAfterD7D5_F7F5() throws IllegalArgumentException,
+         SecurityException, InstantiationException, IllegalAccessException,
+         InvocationTargetException, NoSuchMethodException {
       Position p= Position.Factory.createInitial(
-            false,
-            false).move(
+            ImmutablePosition.class).move(
             new Position.Move(
                   Square._D7,
                   Square._D5,
@@ -247,13 +256,15 @@ public class KingTest extends TestCase {
 
    }
 
-   public void testBlackKingAfterD7D5() {
+   public void testBlackKingAfterD7D5() throws IllegalArgumentException,
+         SecurityException, InstantiationException, IllegalAccessException,
+         InvocationTargetException, NoSuchMethodException {
       Position p= Position.Factory.createInitial(
-            false,
-            false).move( new Position.Move(
-            Square._D7,
-            Square._D5,
-            Position.PromotionPiece.NONE));
+            ImmutablePosition.class).move(
+            new Position.Move(
+                  Square._D7,
+                  Square._D5,
+                  Position.PromotionPiece.NONE));
       long kingAttacksFromE8= King.attacksFrom(
             Square._E8,
             p);
@@ -282,13 +293,15 @@ public class KingTest extends TestCase {
 
    }
 
-   public void testBlackKingAfterE7E5() {
+   public void testBlackKingAfterE7E5() throws IllegalArgumentException,
+         SecurityException, InstantiationException, IllegalAccessException,
+         InvocationTargetException, NoSuchMethodException {
       Position p= Position.Factory.createInitial(
-            false,
-            false).move( new Position.Move(
-            Square._E7,
-            Square._E5,
-            Position.PromotionPiece.NONE));
+            ImmutablePosition.class).move(
+            new Position.Move(
+                  Square._E7,
+                  Square._E5,
+                  Position.PromotionPiece.NONE));
       long kingAttacksFromE8= King.attacksFrom(
             Square._E8,
             p);

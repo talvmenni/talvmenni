@@ -60,7 +60,6 @@ public class AlphaBetaWithQuiescentAndNullMoveAndTranspositionTableSearch
       this.pv= pv;
       this.historyHeuristic= HistoryHeuristic.getInstance();
       this.quiescent= new QuiescentWithNullMove(
-            this.pv,
             quiescentMaxDepth);
    }
 
@@ -303,6 +302,7 @@ public List getBestMoves(
                // Stalemate...
                result= 0;
             }
+            this.pv.updateLastExaminedLine();
          }
       }
 

@@ -1,14 +1,16 @@
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import java.util.Random;
 
-import org.forritan.talvmenni.knowledge.AbstractPosition;
+import org.forritan.talvmenni.knowledge.ImmutablePosition;
+import org.forritan.talvmenni.knowledge.MutablePosition;
 import org.forritan.talvmenni.knowledge.Position;
 import org.forritan.talvmenni.knowledge.Position.Move;
 
 
 public class TestSpeedOnMakeRandomMove {
    public static void main(
-         String[] args) {
+         String[] args) throws IllegalArgumentException, SecurityException, InstantiationException, IllegalAccessException, InvocationTargetException, NoSuchMethodException {
            
       
       System.err.println("Warmup... ");
@@ -19,7 +21,7 @@ public class TestSpeedOnMakeRandomMove {
      
       Random rnd= new Random();
       
-      Position p= Position.Factory.createInitial(false, false);
+      Position p= Position.Factory.createInitial(ImmutablePosition.class);
       boolean whiteToMove= true;
       for (int i= 0; i < warmup; i++) {
          List moves= (whiteToMove ? p.getWhite().getPossibleMoves() : p.getBlack().getPossibleMoves());
@@ -27,7 +29,7 @@ public class TestSpeedOnMakeRandomMove {
             Move move= (Move) moves.get(rnd.nextInt(moves.size()));
             p= p.move(move);
          } else {
-            p= Position.Factory.createInitial(false, false);
+            p= Position.Factory.createInitial(ImmutablePosition.class);
          }
          whiteToMove= !whiteToMove;
       }
@@ -36,7 +38,7 @@ public class TestSpeedOnMakeRandomMove {
 //
 //      ___resetObjectCreationStats();
 
-      p= Position.Factory.createInitial(false, true);
+      p= Position.Factory.createInitial(MutablePosition.class);
       whiteToMove= true;
       for (int i= 0; i < warmup; i++) {
          List moves= (whiteToMove ? p.getWhite().getPossibleMoves() : p.getBlack().getPossibleMoves());
@@ -44,7 +46,7 @@ public class TestSpeedOnMakeRandomMove {
             Move move= (Move) moves.get(rnd.nextInt(moves.size()));
             p= p.move(move);
          } else {
-            p= Position.Factory.createInitial(false, true);
+            p= Position.Factory.createInitial(MutablePosition.class);
          }
          whiteToMove= !whiteToMove;
       }
@@ -54,7 +56,7 @@ public class TestSpeedOnMakeRandomMove {
 
       
       
-      p= Position.Factory.createInitial(false, false);
+      p= Position.Factory.createInitial(ImmutablePosition.class);
       whiteToMove= true;
       int howMany= 100000;
       System.out.println("Making "
@@ -69,7 +71,7 @@ public class TestSpeedOnMakeRandomMove {
             Move move= (Move) moves.get(new Random().nextInt(moves.size()));
             p= p.move(move);
          } else {
-            p= Position.Factory.createInitial(false, false);
+            p= Position.Factory.createInitial(ImmutablePosition.class);
             System.out.print(".");
          }
          whiteToMove= !whiteToMove;
@@ -84,7 +86,7 @@ public class TestSpeedOnMakeRandomMove {
 
  
    
-      p= Position.Factory.createInitial(false, true);
+      p= Position.Factory.createInitial(MutablePosition.class);
       whiteToMove= true;
       System.out.println("Making "
             + howMany
@@ -99,7 +101,7 @@ public class TestSpeedOnMakeRandomMove {
             p= p.move(move);
             p.popMove();
          } else {
-            p= Position.Factory.createInitial(false, true);
+            p= Position.Factory.createInitial(MutablePosition.class);
             System.out.print(".");
          }
          whiteToMove= !whiteToMove;

@@ -156,13 +156,13 @@ public class TalvMenni {
       //            PrincipalVariation.Factory.create(PLY),
       //            QUIESCENT_MAX_DEPTH));
 
-      //      .create(new IterativeDeepeningAlphaBetaWithTranspositionTableStrategy(
-      //            PLY,
-      //            new Transposition(
-      //                  MAX_TRANSPOSITION_ENTRIES),
-      //            false,
-      //            book,
-      //            PrincipalVariation.Factory.create(PLY)));
+      //            .create(new IterativeDeepeningAlphaBetaWithTranspositionTableStrategy(
+      //                  PLY,
+      //                  new Transposition(
+      //                        MAX_TRANSPOSITION_ENTRIES),
+      //                  false,
+      //                  book,
+      //                  PrincipalVariation.Factory.create(PLY)));
 
       //            .create(new IterativeDeepeningAlphaBetaStrategy(
       //                  PLY,
@@ -257,5 +257,4 @@ public class TalvMenni {
 
       chessEngine.run();
    }
-
 }

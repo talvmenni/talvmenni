@@ -1,5 +1,6 @@
 package org.forritan.talvmenni.bitboard.knowledge;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.Iterator;
 
 import junit.framework.Assert;
@@ -7,6 +8,8 @@ import junit.framework.TestCase;
 
 import org.forritan.talvmenni.bitboard.Rank;
 import org.forritan.talvmenni.bitboard.Square;
+import org.forritan.talvmenni.knowledge.ImmutablePosition;
+import org.forritan.talvmenni.knowledge.MutablePosition;
 import org.forritan.talvmenni.knowledge.Position;
 
 
@@ -24,10 +27,10 @@ public class PositionTest extends TestCase {
       }
    }
 
-   public void testCreateInitial() {
-      Position p= Position.Factory.createInitial(
-            false,
-            false);
+   public void testCreateInitial() throws IllegalArgumentException,
+         SecurityException, InstantiationException, IllegalAccessException,
+         InvocationTargetException, NoSuchMethodException {
+      Position p= Position.Factory.createInitial(ImmutablePosition.class);
       Assert.assertTrue(
             "White king should be on e1!",
             ((p.getWhite().kings ^ Square._E1) == 0L));
@@ -67,10 +70,10 @@ public class PositionTest extends TestCase {
             ((p.getBlack().pawns ^ Rank._7) == 0L));
    }
 
-   public void testAllPiecesIterator() {
-      Position p= Position.Factory.createInitial(
-            false,
-            false);
+   public void testAllPiecesIterator() throws IllegalArgumentException,
+         SecurityException, InstantiationException, IllegalAccessException,
+         InvocationTargetException, NoSuchMethodException {
+      Position p= Position.Factory.createInitial(ImmutablePosition.class);
       Iterator allWhitePieces= p.getWhite().allPiecesIterator();
       long piece;
 
@@ -238,10 +241,10 @@ public class PositionTest extends TestCase {
 
    }
 
-   public void testIsPawnAtInitialPosition() {
-      Position p= Position.Factory.createInitial(
-            false,
-            false);
+   public void testIsPawnAtInitialPosition() throws IllegalArgumentException,
+         SecurityException, InstantiationException, IllegalAccessException,
+         InvocationTargetException, NoSuchMethodException {
+      Position p= Position.Factory.createInitial(ImmutablePosition.class);
       Assert.assertTrue(
             "Should be white pawn",
             p.getWhite().isPawn(
@@ -308,10 +311,10 @@ public class PositionTest extends TestCase {
                   Square._H7));
    }
 
-   public void testIsKingAtInitialPosition() {
-      Position p= Position.Factory.createInitial(
-            false,
-            false);
+   public void testIsKingAtInitialPosition() throws IllegalArgumentException,
+         SecurityException, InstantiationException, IllegalAccessException,
+         InvocationTargetException, NoSuchMethodException {
+      Position p= Position.Factory.createInitial(ImmutablePosition.class);
       Assert.assertTrue(
             "Should be white king",
             p.getWhite().isKing(
@@ -330,10 +333,10 @@ public class PositionTest extends TestCase {
                   Square._A1));
    }
 
-   public void testIsQueenAtInitialPosition() {
-      Position p= Position.Factory.createInitial(
-            false,
-            false);
+   public void testIsQueenAtInitialPosition() throws IllegalArgumentException,
+         SecurityException, InstantiationException, IllegalAccessException,
+         InvocationTargetException, NoSuchMethodException {
+      Position p= Position.Factory.createInitial(ImmutablePosition.class);
       Assert.assertTrue(
             "Should be white queen",
             p.getWhite().isQueen(
@@ -352,10 +355,10 @@ public class PositionTest extends TestCase {
                   Square._A1));
    }
 
-   public void testIsRookAtInitialPosition() {
-      Position p= Position.Factory.createInitial(
-            false,
-            false);
+   public void testIsRookAtInitialPosition() throws IllegalArgumentException,
+         SecurityException, InstantiationException, IllegalAccessException,
+         InvocationTargetException, NoSuchMethodException {
+      Position p= Position.Factory.createInitial(ImmutablePosition.class);
       Assert.assertTrue(
             "Should be white rook",
             p.getWhite().isRook(
@@ -375,10 +378,8 @@ public class PositionTest extends TestCase {
                   Square._H8));
    }
 
-   public void testIsBishopAtInitialPosition() {
-      Position p= Position.Factory.createInitial(
-            false,
-            false);
+   public void testIsBishopAtInitialPosition() throws IllegalArgumentException, SecurityException, InstantiationException, IllegalAccessException, InvocationTargetException, NoSuchMethodException {
+      Position p= Position.Factory.createInitial(ImmutablePosition.class);
       Assert.assertTrue(
             "Should be white bishop",
             p.getWhite().isBishop(
@@ -398,10 +399,8 @@ public class PositionTest extends TestCase {
                   Square._F8));
    }
 
-   public void testIsKnightAtInitialPosition() {
-      Position p= Position.Factory.createInitial(
-            false,
-            false);
+   public void testIsKnightAtInitialPosition() throws IllegalArgumentException, SecurityException, InstantiationException, IllegalAccessException, InvocationTargetException, NoSuchMethodException {
+      Position p= Position.Factory.createInitial(ImmutablePosition.class);
       Assert.assertTrue(
             "Should be white knight",
             p.getWhite().isKnight(
@@ -421,10 +420,9 @@ public class PositionTest extends TestCase {
                   Square._G8));
    }
 
-   public void testEnpassantAfterA2A4() {
+   public void testEnpassantAfterA2A4() throws IllegalArgumentException, SecurityException, InstantiationException, IllegalAccessException, InvocationTargetException, NoSuchMethodException {
       Position p= Position.Factory.createInitial(
-            false,
-            false).move(
+            ImmutablePosition.class).move(
             new Position.Move(
                   Square._A2,
                   Square._A4,
@@ -439,10 +437,9 @@ public class PositionTest extends TestCase {
                   Square._A4));
    }
 
-   public void testEnpassantAfterB2B4() {
+   public void testEnpassantAfterB2B4() throws IllegalArgumentException, SecurityException, InstantiationException, IllegalAccessException, InvocationTargetException, NoSuchMethodException {
       Position p= Position.Factory.createInitial(
-            false,
-            false).move(
+            ImmutablePosition.class).move(
             new Position.Move(
                   Square._B2,
                   Square._B4,
@@ -457,10 +454,9 @@ public class PositionTest extends TestCase {
                   Square._B4));
    }
 
-   public void testEnpassantAfterC2C4() {
+   public void testEnpassantAfterC2C4() throws IllegalArgumentException, SecurityException, InstantiationException, IllegalAccessException, InvocationTargetException, NoSuchMethodException {
       Position p= Position.Factory.createInitial(
-            false,
-            false).move(
+            ImmutablePosition.class).move(
             new Position.Move(
                   Square._C2,
                   Square._C4,
@@ -475,10 +471,9 @@ public class PositionTest extends TestCase {
                   Square._C4));
    }
 
-   public void testEnpassantAfterD2D4() {
+   public void testEnpassantAfterD2D4() throws IllegalArgumentException, SecurityException, InstantiationException, IllegalAccessException, InvocationTargetException, NoSuchMethodException {
       Position p= Position.Factory.createInitial(
-            false,
-            false).move(
+            ImmutablePosition.class).move(
             new Position.Move(
                   Square._D2,
                   Square._D4,
@@ -493,10 +488,9 @@ public class PositionTest extends TestCase {
                   Square._D4));
    }
 
-   public void testEnpassantAfterE2E4() {
+   public void testEnpassantAfterE2E4() throws IllegalArgumentException, SecurityException, InstantiationException, IllegalAccessException, InvocationTargetException, NoSuchMethodException {
       Position p= Position.Factory.createInitial(
-            false,
-            false).move(
+            ImmutablePosition.class).move(
             new Position.Move(
                   Square._E2,
                   Square._E4,
@@ -511,10 +505,9 @@ public class PositionTest extends TestCase {
                   Square._E4));
    }
 
-   public void testEnpassantAfterF2F4() {
+   public void testEnpassantAfterF2F4() throws IllegalArgumentException, SecurityException, InstantiationException, IllegalAccessException, InvocationTargetException, NoSuchMethodException {
       Position p= Position.Factory.createInitial(
-            false,
-            false).move(
+            ImmutablePosition.class).move(
             new Position.Move(
                   Square._F2,
                   Square._F4,
@@ -529,10 +522,9 @@ public class PositionTest extends TestCase {
                   Square._F4));
    }
 
-   public void testEnpassantAfterG2G4() {
+   public void testEnpassantAfterG2G4() throws IllegalArgumentException, SecurityException, InstantiationException, IllegalAccessException, InvocationTargetException, NoSuchMethodException {
       Position p= Position.Factory.createInitial(
-            false,
-            false).move(
+            ImmutablePosition.class).move(
             new Position.Move(
                   Square._G2,
                   Square._G4,
@@ -547,10 +539,9 @@ public class PositionTest extends TestCase {
                   Square._G4));
    }
 
-   public void testEnpassantAfterH2H4() {
+   public void testEnpassantAfterH2H4() throws IllegalArgumentException, SecurityException, InstantiationException, IllegalAccessException, InvocationTargetException, NoSuchMethodException {
       Position p= Position.Factory.createInitial(
-            false,
-            false).move(
+            ImmutablePosition.class).move(
             new Position.Move(
                   Square._H2,
                   Square._H4,
@@ -565,10 +556,9 @@ public class PositionTest extends TestCase {
                   Square._H4));
    }
 
-   public void testEnpassantAfterA7A5() {
+   public void testEnpassantAfterA7A5() throws IllegalArgumentException, SecurityException, InstantiationException, IllegalAccessException, InvocationTargetException, NoSuchMethodException {
       Position p= Position.Factory.createInitial(
-            false,
-            false).move(
+            ImmutablePosition.class).move(
             new Position.Move(
                   Square._A7,
                   Square._A5,
@@ -583,10 +573,9 @@ public class PositionTest extends TestCase {
                   Square._A5));
    }
 
-   public void testEnpassantAfterB7B5() {
+   public void testEnpassantAfterB7B5() throws IllegalArgumentException, SecurityException, InstantiationException, IllegalAccessException, InvocationTargetException, NoSuchMethodException {
       Position p= Position.Factory.createInitial(
-            false,
-            false).move(
+            ImmutablePosition.class).move(
             new Position.Move(
                   Square._B7,
                   Square._B5,
@@ -601,10 +590,9 @@ public class PositionTest extends TestCase {
                   Square._B5));
    }
 
-   public void testEnpassantAfterC7C5() {
+   public void testEnpassantAfterC7C5() throws IllegalArgumentException, SecurityException, InstantiationException, IllegalAccessException, InvocationTargetException, NoSuchMethodException {
       Position p= Position.Factory.createInitial(
-            false,
-            false).move(
+            ImmutablePosition.class).move(
             new Position.Move(
                   Square._C7,
                   Square._C5,
@@ -619,10 +607,9 @@ public class PositionTest extends TestCase {
                   Square._C5));
    }
 
-   public void testEnpassantAfterD7D5() {
+   public void testEnpassantAfterD7D5() throws IllegalArgumentException, SecurityException, InstantiationException, IllegalAccessException, InvocationTargetException, NoSuchMethodException {
       Position p= Position.Factory.createInitial(
-            false,
-            false).move(
+            ImmutablePosition.class).move(
             new Position.Move(
                   Square._D7,
                   Square._D5,
@@ -637,10 +624,9 @@ public class PositionTest extends TestCase {
                   Square._D5));
    }
 
-   public void testEnpassantAfterE7E5() {
+   public void testEnpassantAfterE7E5() throws IllegalArgumentException, SecurityException, InstantiationException, IllegalAccessException, InvocationTargetException, NoSuchMethodException {
       Position p= Position.Factory.createInitial(
-            false,
-            false).move(
+            ImmutablePosition.class).move(
             new Position.Move(
                   Square._E7,
                   Square._E5,
@@ -655,43 +641,60 @@ public class PositionTest extends TestCase {
                   Square._E5));
    }
 
-public void testEnpassantAfterF7F5() {
-      Position p= Position.Factory.createInitial(false, false).move( new Position.Move(
-            Square._F7,
-            Square._F5,
-            Position.PromotionPiece.NONE));
+   public void testEnpassantAfterF7F5() throws IllegalArgumentException, SecurityException, InstantiationException, IllegalAccessException, InvocationTargetException, NoSuchMethodException {
+      Position p= Position.Factory.createInitial(
+            ImmutablePosition.class).move(
+            new Position.Move(
+                  Square._F7,
+                  Square._F5,
+                  Position.PromotionPiece.NONE));
       Assert.assertTrue(
             "Should be enpassant square",
-            p.getBlack().isEnpassant(Square._F6));
+            p.getBlack().isEnpassant(
+                  Square._F6));
       Assert.assertTrue(
             "Should be enpassant square",
-            p.getBlack().isEnpassant(Square._F5));
-   }public void testEnpassantAfterG7G5() {
-      Position p= Position.Factory.createInitial(false, false).move( new Position.Move(
-            Square._G7,
-            Square._G5,
-            Position.PromotionPiece.NONE));
+            p.getBlack().isEnpassant(
+                  Square._F5));
+   }
+
+   public void testEnpassantAfterG7G5() throws IllegalArgumentException, SecurityException, InstantiationException, IllegalAccessException, InvocationTargetException, NoSuchMethodException {
+      Position p= Position.Factory.createInitial(
+            ImmutablePosition.class).move(
+            new Position.Move(
+                  Square._G7,
+                  Square._G5,
+                  Position.PromotionPiece.NONE));
       Assert.assertTrue(
             "Should be enpassant square",
-            p.getBlack().isEnpassant(Square._G6));
+            p.getBlack().isEnpassant(
+                  Square._G6));
       Assert.assertTrue(
             "Should be enpassant square",
-            p.getBlack().isEnpassant(Square._G5));
-   }public void testEnpassantAfterH7H5() {
-      Position p= Position.Factory.createInitial(false, false).move( new Position.Move(
-            Square._H7,
-            Square._H5,
-            Position.PromotionPiece.NONE));
+            p.getBlack().isEnpassant(
+                  Square._G5));
+   }
+
+   public void testEnpassantAfterH7H5() throws IllegalArgumentException, SecurityException, InstantiationException, IllegalAccessException, InvocationTargetException, NoSuchMethodException {
+      Position p= Position.Factory.createInitial(
+            ImmutablePosition.class).move(
+            new Position.Move(
+                  Square._H7,
+                  Square._H5,
+                  Position.PromotionPiece.NONE));
       Assert.assertTrue(
             "Should be enpassant square",
-            p.getBlack().isEnpassant(Square._H6));
+            p.getBlack().isEnpassant(
+                  Square._H6));
       Assert.assertTrue(
             "Should be enpassant square",
-            p.getBlack().isEnpassant(Square._H5));
-   }public void testEnpassant() {
+            p.getBlack().isEnpassant(
+                  Square._H5));
+   }
+
+   public void testEnpassant() throws IllegalArgumentException, SecurityException, InstantiationException, IllegalAccessException, InvocationTargetException, NoSuchMethodException {
       Position p= Position.Factory.create(
-            false, 
-            false,
+            ImmutablePosition.class,
             Position.AuxiliaryState.NO_AUXILIARY_STATE,
             Square._H1, // whiteKings
             Square._EMPTY_BOARD, // whiteQueens
@@ -713,45 +716,54 @@ public void testEnpassantAfterF7F5() {
 
       Assert.assertTrue(
             "Should be white pawn",
-            p.getWhite().isPawn(Square._C5));
+            p.getWhite().isPawn(
+                  Square._C5));
       Assert.assertTrue(
             "Should be black pawn",
-            p.getBlack().isPawn(Square._D7));
+            p.getBlack().isPawn(
+                  Square._D7));
 
       Assert.assertTrue(
             "Should not be enpassant square",
-            !p.getBlack().isEnpassant(Square._D6));
+            !p.getBlack().isEnpassant(
+                  Square._D6));
       Assert.assertTrue(
             "Should not be enpassant square",
-            !p.getBlack().isEnpassant(Square._D5));
+            !p.getBlack().isEnpassant(
+                  Square._D5));
 
-      p= p.move( new Position.Move(
+      p= p.move(new Position.Move(
             Square._D7,
             Square._D5,
             Position.PromotionPiece.NONE));
 
       Assert.assertTrue(
             "Should be white pawn",
-            p.getWhite().isPawn(Square._C5));
+            p.getWhite().isPawn(
+                  Square._C5));
       Assert.assertTrue(
             "Should be black pawn",
-            p.getBlack().isPawn(Square._D5));
+            p.getBlack().isPawn(
+                  Square._D5));
 
       Assert.assertTrue(
             "Should be enpassant square",
-            p.getBlack().isEnpassant(Square._D6));
+            p.getBlack().isEnpassant(
+                  Square._D6));
       Assert.assertTrue(
             "Should be enpassant square",
-            p.getBlack().isEnpassant(Square._D5));
+            p.getBlack().isEnpassant(
+                  Square._D5));
 
-      p= p.move( new Position.Move(
+      p= p.move(new Position.Move(
             Square._C5,
             Square._D6,
             Position.PromotionPiece.NONE));
 
       Assert.assertTrue(
             "Should be white pawn",
-            p.getWhite().isPawn(Square._D6));
+            p.getWhite().isPawn(
+                  Square._D6));
 
       Assert.assertTrue(
             "Should be no black pawn left",
@@ -759,17 +771,22 @@ public void testEnpassantAfterF7F5() {
 
       Assert.assertTrue(
             "Should not be enpassant square",
-            !p.getBlack().isEnpassant(Square._D6));
+            !p.getBlack().isEnpassant(
+                  Square._D6));
       Assert.assertTrue(
             "Should not be enpassant square",
-            !p.getBlack().isEnpassant(Square._D5));
+            !p.getBlack().isEnpassant(
+                  Square._D5));
 
-   }   public void testAllAttackedSquaresInitialBoard() {
+   }
+
+   public void testAllAttackedSquaresInitialBoard()
+         throws IllegalArgumentException, SecurityException,
+         InstantiationException, IllegalAccessException,
+         InvocationTargetException, NoSuchMethodException {
 
       long attacks;
-      Position p= Position.Factory.createInitial(
-            false,
-            false);
+      Position p= Position.Factory.createInitial(ImmutablePosition.class);
 
       attacks= p.getWhite().getAllCaptureMovesAttackedSquares();
       Assert.assertEquals(
@@ -888,14 +905,12 @@ public void testEnpassantAfterF7F5() {
 
    }
 
-   public void testEquals() {
+   public void testEquals() throws IllegalArgumentException, SecurityException,
+         InstantiationException, IllegalAccessException,
+         InvocationTargetException, NoSuchMethodException {
 
-      Position p1= Position.Factory.createInitial(
-            false,
-            false);
-      Position p2= Position.Factory.createInitial(
-            false,
-            true);
+      Position p1= Position.Factory.createInitial(ImmutablePosition.class);
+      Position p2= Position.Factory.createInitial(MutablePosition.class);
 
       Assert.assertEquals(
             p1,

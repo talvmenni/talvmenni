@@ -145,6 +145,7 @@ public class NegaMaxSearch implements Search {
                // Stalemate...
                result= 0;
             }
+            this.pv.updateLastExaminedLine();
          }
       }
       return result;

@@ -30,7 +30,7 @@ public class MutablePosition extends AbstractPosition {
     * @param blackCastling
     * @param blackEnpassant
     */
-   protected MutablePosition(
+   public MutablePosition(
          long auxiliaryState,
          long whiteKings,
          long whiteQueens,

@@ -1,5 +1,7 @@
 package org.forritan.talvmenni.evaluation;
 
+import java.lang.reflect.InvocationTargetException;
+
 import org.forritan.talvmenni.bitboard.Rank;
 import org.forritan.talvmenni.bitboard.Square;
 import org.forritan.talvmenni.knowledge.AbstractPosition;
@@ -14,10 +16,10 @@ import junit.framework.TestCase;
 
 public class SimpleMaterialEvaluationTest extends TestCase {
 
-   public void testGetScoreOnInitialPosition() {
-      Position p= Position.Factory.createInitial(
-            false,
-            false);
+   public void testGetScoreOnInitialPosition() throws IllegalArgumentException,
+         SecurityException, InstantiationException, IllegalAccessException,
+         InvocationTargetException, NoSuchMethodException {
+      Position p= Position.Factory.createInitial(ImmutablePosition.class);
       Evaluation e= new SimpleMaterialEvaluation();
       Assert.assertEquals(
             0,

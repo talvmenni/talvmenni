@@ -1,11 +1,14 @@
 package org.forritan.talvmenni.evaluation;
 
+import java.lang.reflect.InvocationTargetException;
+
 import junit.framework.Assert;
 import junit.framework.TestCase;
 
 import org.forritan.talvmenni.bitboard.Rank;
 import org.forritan.talvmenni.bitboard.Square;
 import org.forritan.talvmenni.knowledge.Draw;
+import org.forritan.talvmenni.knowledge.ImmutablePosition;
 import org.forritan.talvmenni.knowledge.Position;
 import org.forritan.talvmenni.knowledge.evaluation.Evaluation;
 import org.forritan.talvmenni.knowledge.evaluation.SimpleMaterialAndPositionalEvaluation;
@@ -13,10 +16,10 @@ import org.forritan.talvmenni.knowledge.evaluation.SimpleMaterialAndPositionalEv
 
 public class SimpleMaterialAndPositionalEvaluationTest extends TestCase {
 
-   public void testGetScoreOnInitialPosition() {
-      Position p= Position.Factory.createInitial(
-            false,
-            false);
+   public void testGetScoreOnInitialPosition() throws IllegalArgumentException,
+         SecurityException, InstantiationException, IllegalAccessException,
+         InvocationTargetException, NoSuchMethodException {
+      Position p= Position.Factory.createInitial(ImmutablePosition.class);
       Evaluation e= new SimpleMaterialAndPositionalEvaluation();
       Assert.assertEquals(
             0,
@@ -96,20 +99,20 @@ public class SimpleMaterialAndPositionalEvaluationTest extends TestCase {
             Square._EMPTY_BOARD // blackEnpassant
             );
       Evaluation e= new SimpleMaterialAndPositionalEvaluation();
-      Assert.assertEquals(
-            -(8
-                  * Evaluation.PAWN
-                  + 2
-                  * Evaluation.KNIGHT
-                  + 2
-                  * Evaluation.BISHOP
-                  + 2
-                  * Evaluation.ROOK + Evaluation.QUEEN
-                  + 8
-                  * Evaluation.POSITION_OUTER_BORDER
-                  + 6
-                  * Evaluation.POSITION_MIDDLE_BORDER),
-            e.getScore(p));
+      Assert
+            .assertEquals(
+                  -(8
+                        * Evaluation.PAWN
+                        + 2
+                        * Evaluation.KNIGHT
+                        + 2
+                        * Evaluation.BISHOP
+                        + 2
+                        * Evaluation.ROOK
+                        + Evaluation.QUEEN
+                        + 8
+                        * Evaluation.POSITION_OUTER_BORDER + 6 * Evaluation.POSITION_MIDDLE_BORDER),
+                  e.getScore(p));
    }
 
 }

@@ -1,16 +1,21 @@
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
 import org.forritan.talvmenni.knowledge.AbstractPosition;
+import org.forritan.talvmenni.knowledge.ImmutablePosition;
+import org.forritan.talvmenni.knowledge.MutablePosition;
 import org.forritan.talvmenni.knowledge.Position;
 import org.forritan.talvmenni.knowledge.Position.Move;
 
 
 public class TestSpeedOnMakeRandomMoveUsingTransposition {
    public static void main(
-         String[] args) {
+         String[] args) throws IllegalArgumentException, SecurityException,
+         InstantiationException, IllegalAccessException,
+         InvocationTargetException, NoSuchMethodException {
 
       System.err.println("Warmup... ");
 
@@ -27,9 +32,7 @@ public class TestSpeedOnMakeRandomMoveUsingTransposition {
       Set hashCodes= new HashSet();
       Set positions= new HashSet();
 
-      Position p= Position.Factory.createInitial(
-            false,
-            false);
+      Position p= Position.Factory.createInitial(ImmutablePosition.class);
       boolean whiteToMove= true;
       for (int i= 0; i < warmup; i++) {
          List moves= (whiteToMove ? p.getWhite().getPossibleMoves() : p
@@ -49,9 +52,7 @@ public class TestSpeedOnMakeRandomMoveUsingTransposition {
                   p.hashCode()));
             positions.add(p);
          } else {
-            p= Position.Factory.createInitial(
-                  false,
-                  false);
+            p= Position.Factory.createInitial(ImmutablePosition.class);
             hashCodes.clear();
             positions.clear();
             System.err.println("There where "
@@ -93,9 +94,7 @@ public class TestSpeedOnMakeRandomMoveUsingTransposition {
       collisions= 0;
       total= 0;
 
-      p= Position.Factory.createInitial(
-            false,
-            true);
+      p= Position.Factory.createInitial(MutablePosition.class);
       whiteToMove= true;
       for (int i= 0; i < warmup; i++) {
          List moves= (whiteToMove ? p.getWhite().getPossibleMoves() : p
@@ -115,9 +114,7 @@ public class TestSpeedOnMakeRandomMoveUsingTransposition {
                   p.hashCode()));
             positions.add(p);
          } else {
-            p= Position.Factory.createInitial(
-                  false,
-                  true);
+            p= Position.Factory.createInitial(MutablePosition.class);
             hashCodes.clear();
             positions.clear();
             System.err.println("There where "
@@ -158,9 +155,7 @@ public class TestSpeedOnMakeRandomMoveUsingTransposition {
             + " mutable positions");
       //      ___printObjectCreationStats(System.err);
 
-      p= Position.Factory.createInitial(
-            false,
-            false);
+      p= Position.Factory.createInitial(ImmutablePosition.class);
       whiteToMove= true;
       int howMany= 100000;
       System.out.println("Making "
@@ -175,9 +170,7 @@ public class TestSpeedOnMakeRandomMoveUsingTransposition {
             Move move= (Move) moves.get(new Random().nextInt(moves.size()));
             p= p.move(move);
          } else {
-            p= Position.Factory.createInitial(
-                  false,
-                  false);
+            p= Position.Factory.createInitial(ImmutablePosition.class);
             System.out.print(".");
          }
          whiteToMove= !whiteToMove;
@@ -195,9 +188,7 @@ public class TestSpeedOnMakeRandomMoveUsingTransposition {
             / time
             + " pr. second.");
 
-      p= Position.Factory.createInitial(
-            false,
-            true);
+      p= Position.Factory.createInitial(MutablePosition.class);
       whiteToMove= true;
       System.out.println("Making "
             + howMany
@@ -212,9 +203,7 @@ public class TestSpeedOnMakeRandomMoveUsingTransposition {
             p= p.move(move);
             p.popMove();
          } else {
-            p= Position.Factory.createInitial(
-                  false,
-                  true);
+            p= Position.Factory.createInitial(MutablePosition.class);
             System.out.print(".");
          }
          whiteToMove= !whiteToMove;

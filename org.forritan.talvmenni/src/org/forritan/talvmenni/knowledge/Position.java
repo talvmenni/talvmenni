@@ -1,6 +1,8 @@
 package org.forritan.talvmenni.knowledge;
 
 import java.io.Serializable;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -35,15 +37,6 @@ public interface Position extends Serializable {
 
    public Position move(
          Move move);
-
-   //   public Position move(
-   //         long from,
-   //         long to);
-   //
-   //   public Position move(
-   //         long from,
-   //         long to,
-   //         int promotionPiece);
 
    public boolean isLegalMove(
          long from,
@@ -821,133 +814,124 @@ public interface Position extends Serializable {
    }
 
    public static class Factory {
+
       public static Position createInitial(
-            boolean partitionSearchPosition,
-            boolean mutable) {
-         if (mutable
-               && !partitionSearchPosition) {
-            return new MutablePosition(
-                  AuxiliaryState.NO_AUXILIARY_STATE,
-                  Square._E1, // whiteKings
-                  Square._D1, // whiteQueens
-                  Square._A1
-                        | Square._H1, // whiteRooks
-                  Square._C1
-                        | Square._F1, // whiteBishops
-                  Square._B1
-                        | Square._G1, // whiteKnights
-                  Rank._2, // whitePawns
-                  Square._A1
-                        | Square._E1
-                        | Square._H1, // whiteCastling
-                  Square._EMPTY_BOARD, // whiteEnpassant
-                  Square._E8, // blackKings
-                  Square._D8, // blackQueens
-                  Square._A8
-                        | Square._H8, // blackRooks
-                  Square._C8
-                        | Square._F8, // blackBishops
-                  Square._B8
-                        | Square._G8, // blackKnights
-                  Rank._7, // blackPawns
-                  Square._A8
-                        | Square._E8
-                        | Square._H8, // blackCastling
-                  Square._EMPTY_BOARD // blackEnpassant
-            );
-         } else if (!mutable
-               && !partitionSearchPosition) {
-            return new ImmutablePosition(
-                  AuxiliaryState.NO_AUXILIARY_STATE,
-                  Square._E1, // whiteKings
-                  Square._D1, // whiteQueens
-                  Square._A1
-                        | Square._H1, // whiteRooks
-                  Square._C1
-                        | Square._F1, // whiteBishops
-                  Square._B1
-                        | Square._G1, // whiteKnights
-                  Rank._2, // whitePawns
-                  Square._A1
-                        | Square._E1
-                        | Square._H1, // whiteCastling
-                  Square._EMPTY_BOARD, // whiteEnpassant
-                  Square._E8, // blackKings
-                  Square._D8, // blackQueens
-                  Square._A8
-                        | Square._H8, // blackRooks
-                  Square._C8
-                        | Square._F8, // blackBishops
-                  Square._B8
-                        | Square._G8, // blackKnights
-                  Rank._7, // blackPawns
-                  Square._A8
-                        | Square._E8
-                        | Square._H8, // blackCastling
-                  Square._EMPTY_BOARD // blackEnpassant
-            );
-         } else if (mutable
-               && partitionSearchPosition) {
-            return new MutablePartitionSearchPosition(
-                  AuxiliaryState.NO_AUXILIARY_STATE,
-                  Square._E1, // whiteKings
-                  Square._D1, // whiteQueens
-                  Square._A1
-                        | Square._H1, // whiteRooks
-                  Square._C1
-                        | Square._F1, // whiteBishops
-                  Square._B1
-                        | Square._G1, // whiteKnights
-                  Rank._2, // whitePawns
-                  Square._A1
-                        | Square._E1
-                        | Square._H1, // whiteCastling
-                  Square._EMPTY_BOARD, // whiteEnpassant
-                  Square._E8, // blackKings
-                  Square._D8, // blackQueens
-                  Square._A8
-                        | Square._H8, // blackRooks
-                  Square._C8
-                        | Square._F8, // blackBishops
-                  Square._B8
-                        | Square._G8, // blackKnights
-                  Rank._7, // blackPawns
-                  Square._A8
-                        | Square._E8
-                        | Square._H8, // blackCastling
-                  Square._EMPTY_BOARD // blackEnpassant
-            );
-         } else if (!mutable
-               && partitionSearchPosition) { return new ImmutablePartitionSearchPosition(
-               AuxiliaryState.NO_AUXILIARY_STATE,
-               Square._E1, // whiteKings
-               Square._D1, // whiteQueens
-               Square._A1
-                     | Square._H1, // whiteRooks
-               Square._C1
-                     | Square._F1, // whiteBishops
-               Square._B1
-                     | Square._G1, // whiteKnights
-               Rank._2, // whitePawns
-               Square._A1
-                     | Square._E1
-                     | Square._H1, // whiteCastling
-               Square._EMPTY_BOARD, // whiteEnpassant
-               Square._E8, // blackKings
-               Square._D8, // blackQueens
-               Square._A8
-                     | Square._H8, // blackRooks
-               Square._C8
-                     | Square._F8, // blackBishops
-               Square._B8
-                     | Square._G8, // blackKnights
-               Rank._7, // blackPawns
-               Square._A8
-                     | Square._E8
-                     | Square._H8, // blackCastling
-               Square._EMPTY_BOARD // blackEnpassant
-         ); }
-         return null;
+            Class positionClass) throws IllegalArgumentException,
+            InstantiationException, IllegalAccessException,
+            InvocationTargetException, SecurityException, NoSuchMethodException {
+
+         Constructor constructor= positionClass.getConstructor(new Class[] {
+               long.class,
+               long.class,
+               long.class,
+               long.class,
+               long.class,
+               long.class,
+               long.class,
+               long.class,
+               long.class,
+               long.class,
+               long.class,
+               long.class,
+               long.class,
+               long.class,
+               long.class,
+               long.class,
+               long.class});
+         return (Position) constructor.newInstance(
+               new Object[] { 
+               new Long(AuxiliaryState.NO_AUXILIARY_STATE),
+               new Long(Square._E1), // whiteKings
+               new Long(Square._D1), // whiteQueens
+               new Long(Square._A1
+                           | Square._H1), // whiteRooks
+               new Long(Square._C1
+                           | Square._F1), // whiteBishops
+               new Long(Square._B1
+                           | Square._G1), // whiteKnights
+               new Long(Rank._2), // whitePawns
+               new Long(Square._A1
+                           | Square._E1
+                           | Square._H1), // whiteCastling
+               new Long(Square._EMPTY_BOARD), // whiteEnpassant
+               new Long(Square._E8), // blackKings
+               new Long(Square._D8), // blackQueens
+               new Long(Square._A8
+                           | Square._H8), // blackRooks
+               new Long(Square._C8
+                           | Square._F8), // blackBishops
+               new Long(Square._B8
+                           | Square._G8), // blackKnights
+               new Long(Rank._7), // blackPawns
+               new Long(Square._A8
+                           | Square._E8
+                           | Square._H8), // blackCastling
+               new Long(Square._EMPTY_BOARD) // blackEnpassant
+               });
+
+      }
+
+      public static Position create(
+            Class positionClass,
+            long auxillaryState,
+            long whiteKings,
+            long whiteQueens,
+            long whiteRooks,
+            long whiteBishops,
+            long whiteKnights,
+            long whitePawns,
+            long whiteCastling,
+            long whiteEnpassant,
+            long blackKings,
+            long blackQueens,
+            long blackRooks,
+            long blackBishops,
+            long blackKnights,
+            long blackPawns,
+            long blackCastling,
+            long blackEnpassant) throws IllegalArgumentException,
+            InstantiationException, IllegalAccessException,
+            InvocationTargetException, SecurityException, NoSuchMethodException {
+
+         Constructor constructor= positionClass.getConstructor(new Class[] {
+               long.class,
+               long.class,
+               long.class,
+               long.class,
+               long.class,
+               long.class,
+               long.class,
+               long.class,
+               long.class,
+               long.class,
+               long.class,
+               long.class,
+               long.class,
+               long.class,
+               long.class,
+               long.class,
+               long.class});
+
+         return (Position) constructor.newInstance(
+               new Object[] { 
+               new Long(auxillaryState),
+               new Long(whiteKings), // whiteKings
+               new Long(whiteQueens), // whiteQueens
+               new Long(whiteRooks), // whiteRooks
+               new Long(whiteBishops), // whiteBishops
+               new Long(whiteKnights), // whiteKnights
+               new Long(whitePawns), // whitePawns
+               new Long(whiteCastling), // whiteCastling
+               new Long(whiteEnpassant), // whiteEnpassant
+               new Long(blackKings), // blackKings
+               new Long(blackKnights), // blackQueens
+               new Long(blackRooks), // blackRooks
+               new Long(blackBishops), // blackBishops
+               new Long(blackKnights), // blackKnights
+               new Long(blackPawns), // blackPawns
+               new Long(blackCastling), // blackCastling
+               new Long(blackEnpassant) // blackEnpassant
+               });
       }
 
       /**

@@ -269,6 +269,7 @@ public class AlphaBetaWithQuiescentAndTranspositionTableSearch implements
                // Stalemate...
                result= 0;
             }
+            this.pv.updateLastExaminedLine();
          }
       }
 

@@ -10,7 +10,6 @@ import org.forritan.talvmenni.knowledge.Transposition;
 import org.forritan.talvmenni.knowledge.Position.Move;
 import org.forritan.talvmenni.knowledge.Transposition.Entry;
 import org.forritan.talvmenni.knowledge.evaluation.Evaluation;
-import org.forritan.talvmenni.knowledge.evaluation.Quiescent;
 import org.forritan.talvmenni.knowledge.evaluation.QuiescentWithNullMove;
 import org.forritan.talvmenni.search.PrincipalVariation.DebugInfo;
 import org.forritan.talvmenni.search.PrincipalVariation.Thinking;
@@ -61,7 +60,6 @@ public class MTDfSearch implements Search {
       this.pv= pv;
       this.historyHeuristic= HistoryHeuristic.getInstance();
       this.quiescent= new QuiescentWithNullMove(
-            this.pv,
             quiescentMaxDepth);
    }
 
@@ -142,7 +140,27 @@ public class MTDfSearch implements Search {
             this.transpositionHits);
 
       this.lastResult= result;
-      return (pv.getBestMoveAsList());
+
+      List moves= (whiteMove ? p.getWhite().getPossibleMoves() : p.getBlack()
+            .getPossibleMoves());
+
+      List bestMoves= new ArrayList();
+
+      if (moves.size() > 1) {
+         bestMoves.addAll(moves.subList(
+               0,
+               1));
+         //         bestMoves.addAll(moves.subList(0, 1));
+         //         bestMoves.addAll(moves.subList(0, 1));
+         //         bestMoves.addAll(moves.subList(0, 1));
+         //         bestMoves.addAll(moves.subList(0, 2));
+      } else {
+         bestMoves.addAll(moves);
+      }
+
+      return bestMoves;
+
+      //      return (pv.getBestMoveAsList());
 
    }
 
@@ -275,6 +293,7 @@ public class MTDfSearch implements Search {
       }
 
       if (d == 0) { // leaf node
+      //         g= e.getScore(p);
          g= this.quiescent.search(
                p,
                e,
@@ -282,7 +301,6 @@ public class MTDfSearch implements Search {
                ply,
                alpha,
                beta);
-         ;
          this.pv.updateLastExaminedLine();
       } else {
          List moves;
@@ -336,11 +354,13 @@ public class MTDfSearch implements Search {
 
                   if (g > whiteBest) {
                      whiteBest= g;
-                     this.pv.updatePV(
-                           d,
-                           moveTime,
-                           (this.movesSearched - movesSearchedBefore),
-                           g);
+                     if (ply == this.ply) {
+                        this.pv.updatePV(
+                              d,
+                              moveTime,
+                              (this.movesSearched - movesSearchedBefore),
+                              g);
+                     }
                      if (this.useMoveOrdering) {
                         p.getWhite().betterMove(
                               move);
@@ -390,11 +410,13 @@ public class MTDfSearch implements Search {
 
                   if (g < blackBest) {
                      blackBest= g;
-                     this.pv.updatePV(
-                           d,
-                           moveTime,
-                           (this.movesSearched - movesSearchedBefore),
-                           g);
+                     if (ply == this.ply) {
+                        this.pv.updatePV(
+                              d,
+                              moveTime,
+                              (this.movesSearched - movesSearchedBefore),
+                              g);
+                     }
                      if (this.useMoveOrdering) {
                         p.getBlack().betterMove(
                               move);
@@ -444,6 +466,7 @@ public class MTDfSearch implements Search {
                // Stalemate...
                g= 0;
             }
+            this.pv.updateLastExaminedLine();
          }
       }
       return g;

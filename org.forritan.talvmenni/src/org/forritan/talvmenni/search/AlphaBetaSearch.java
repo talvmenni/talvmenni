@@ -188,6 +188,7 @@ public class AlphaBetaSearch implements Search {
                // Stalemate...
                result= 0;
             }
+            this.pv.updateLastExaminedLine();
          }
       }
 
