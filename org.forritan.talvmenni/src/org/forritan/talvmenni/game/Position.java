@@ -94,7 +94,7 @@ public class Position {
             blackCastling,
             blackEnpassant);
    }
-   
+
    /**
     * 
     * @param whiteKing
@@ -163,6 +163,8 @@ public class Position {
       public final long castling;
       public final long enpassant;
 
+      public final long allPieces;
+
       /**
        * 
        * @param king
@@ -189,10 +191,15 @@ public class Position {
          this.bishops= bishops;
          this.knights= knights;
          this.pawns= pawns;
+
          this.castling= castling;
          this.enpassant= enpassant;
+
+         this.allPieces= this.king
+               | this.queen
+               | this.rooks
+               | this.bishops
+               | this.pawns;
       }
-
    }
-
 }
