@@ -4,7 +4,7 @@ import org.forritan.talvmenni.bitboard.File;
 import org.forritan.talvmenni.bitboard.Rank;
 
 
-public interface Rook {
+public interface Rook extends Piece {
 
    public static final long _PATHS_FROM_A1 = File._A
                                                  ^ Rank._1;

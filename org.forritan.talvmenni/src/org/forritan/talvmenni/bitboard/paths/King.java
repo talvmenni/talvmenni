@@ -3,10 +3,8 @@ package org.forritan.talvmenni.bitboard.paths;
 import org.forritan.talvmenni.bitboard.Square;
 
 
-public interface King {
-   
-   public long getPathsFrom(long square);
-   
+public interface King extends Piece {
+      
    public static final long _PATHS_FROM_A1 = Square._B1
                                                  | Square._A2
                                                  | Square._B2;

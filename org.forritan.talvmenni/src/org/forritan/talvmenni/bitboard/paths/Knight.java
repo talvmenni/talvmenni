@@ -3,7 +3,7 @@ package org.forritan.talvmenni.bitboard.paths;
 import org.forritan.talvmenni.bitboard.Square;
 
 
-public interface Knight {
+public interface Knight extends Piece {
 
    public static final long _PATHS_FROM_A1 = Square._B3
                                                  | Square._C2;

@@ -1,6 +1,7 @@
 package org.forritan.talvmenni.bitboard.paths;
 
-public interface Queen {
+public interface Queen extends Piece {
+   
    public static final long _PATHS_FROM_A1 = Rook._PATHS_FROM_A1
                                                  | BlackBishop._PATHS_FROM_A1;
    public static final long _PATHS_FROM_A2 = Rook._PATHS_FROM_A2
