@@ -11,24 +11,27 @@ import org.forritan.talvmenni.game.PositionFactory;
 import org.forritan.talvmenni.game.Position.Move;
 import org.forritan.talvmenni.ui.ConsoleProtocol;
 
+
 public class AlphaBetaSearch implements Search {
-   
-   private Thinking thinking;
+
+   private Thinking  thinking;
    private DebugInfo debugInfo;
-   private int ply;
-   
-   private int movesSearched;
-   
+   private int       ply;
+
+   private int       movesSearched;
+
    public AlphaBetaSearch() {
-      this(0);
+      this(
+            0);
    }
-   
-   public AlphaBetaSearch(int ply) {
+
+   public AlphaBetaSearch(
+         int ply) {
       this.ply= ply;
       this.thinking= new Thinking();
       this.debugInfo= new DebugInfo();
    }
-   
+
    public void setPly(
          int ply) {
       this.ply= ply;
@@ -46,64 +49,98 @@ public class AlphaBetaSearch implements Search {
          Position p,
          Evaluation e,
          boolean whiteMove) {
-      
-      int alpha= Integer.MIN_VALUE + 1; // Very important!!! Can't be
-                                        // Integer.MIN_VALUE, because
-                                        // Integer.MIN_VALUE ==
-                                        // -Integer.MIN_VALUE
+
+      // Very important!!! Can't be Integer.MIN_VALUE, because
+      // Integer.MIN_VALUE == -Integer.MIN_VALUE
+      int alpha= Integer.MIN_VALUE + 1; 
       int beta= Integer.MAX_VALUE;
-            
+
       PositionFactory.nodes++;
-      
+
       long time= -System.currentTimeMillis();
       this.movesSearched= 0;
-      
+
       List<Move> result= new ArrayList<Move>();
       MoveScoreTuple bestScore= null;
-      
+
       List<Move> moves;
-      if(whiteMove) {
-         moves= p.getWhite().getPossibleMoves();         
+      if (whiteMove) {
+         moves= p.getWhite().getPossibleMoves();
       } else {
-         moves= p.getBlack().getPossibleMoves();         
+         moves= p.getBlack().getPossibleMoves();
       }
-      
-      for(Move move : moves) {
+
+      for (Move move : moves) {
          long moveTime= -System.currentTimeMillis();
          int movesSearchedBeforeMove= this.movesSearched++;
-         MoveScoreTuple score= this.getBestMove(p.move(move.from, move.to), e, !whiteMove, ply - 1, alpha, beta);
-         score.add(move, e.getScore(p));
-         this.debugInfo.postCurrentBestMove(move, score.getScore(), (this.movesSearched - movesSearchedBeforeMove));
-         if(bestScore == null || (whiteMove ? score.getScore() > bestScore.getScore() : score.getScore() < bestScore.getScore())) {
+         Position childPosition= p.move(
+               move.from,
+               move.to);
+         MoveScoreTuple score= this.getBestMove(
+               childPosition,
+               e,
+               !whiteMove,
+               this.ply - 1,
+               alpha,
+               beta);
+         score.add(
+               move,
+               score.score
+                     + e.getScore(childPosition));
+         this.debugInfo.postCurrentBestMove(
+               move,
+               score.getScore(),
+               (this.movesSearched - movesSearchedBeforeMove));
+         if (bestScore == null
+               || (whiteMove ? score.getScore() > bestScore.getScore() : score
+                     .getScore() < bestScore.getScore())) {
             bestScore= score;
             result.clear();
             result.add(move);
-            moveTime += System.currentTimeMillis();
-            this.thinking.postThinking(ply, bestScore.getScore(), moveTime, this.movesSearched, bestScore.getMoveList().toString());
-         }else if(bestScore != null && score.getScore() == bestScore.getScore()) {
+            moveTime+= System.currentTimeMillis();
+            this.thinking.postThinking(
+                  this.ply,
+                  bestScore.getScore(),
+                  moveTime,
+                  this.movesSearched,
+                  bestScore.getMoveList().toString());
+         } else if (bestScore != null
+               && score.getScore() == bestScore.getScore()) {
             bestScore= score;
             result.add(move);
-            this.thinking.postThinking(ply, bestScore.getScore(), moveTime, this.movesSearched, bestScore.getMoveList().toString());
+            this.thinking.postThinking(
+                  this.ply,
+                  bestScore.getScore(),
+                  moveTime,
+                  this.movesSearched,
+                  bestScore.getMoveList().toString());
          }
-         if(whiteMove) {
-            if(bestScore != null && bestScore.score > alpha) {
+         p.popMove();
+         if (whiteMove) {
+            if (bestScore != null
+                  && bestScore.score > alpha) {
                alpha= bestScore.score;
             }
          } else {
-            if(bestScore != null && bestScore.score < beta) {
+            if (bestScore != null
+                  && bestScore.score < beta) {
                beta= bestScore.score;
             }
          }
-         p.popMove();
-         this.debugInfo.postText("Alpha: " + alpha + " and Beta: " + beta);
+         this.debugInfo.postText("Alpha: "
+               + alpha
+               + " and Beta: "
+               + beta);
       }
-      
-      time += System.currentTimeMillis(); 
-      
-      this.debugInfo.postNodesPerSecond(time, this.movesSearched);
+
+      time+= System.currentTimeMillis();
+
+      this.debugInfo.postNodesPerSecond(
+            time,
+            this.movesSearched);
       this.debugInfo.postBestMoves(result);
       this.debugInfo.postPositionStatiscs();
-      
+
       return result;
    }
 
@@ -111,140 +148,187 @@ public class AlphaBetaSearch implements Search {
          Position p,
          Evaluation e,
          boolean whiteMove,
-         int depth,
+         int ply,
          int alpha,
          int beta) {
 
       PositionFactory.nodes++;
-      
-      MoveScoreTuple result= new MoveScoreTuple(null, 0);
-      if(depth > 1) {
-          List<Move> moves;
+
+      MoveScoreTuple result= new MoveScoreTuple(
+            null,
+            0);
+      if (ply > 1) {
+         List<Move> moves;
          MoveScoreTuple bestScore= null;
-         
-         if(whiteMove) {
-            moves= p.getWhite().getPossibleMoves();         
+
+         if (whiteMove) {
+            moves= p.getWhite().getPossibleMoves();
          } else {
-            moves= p.getBlack().getPossibleMoves();         
+            moves= p.getBlack().getPossibleMoves();
          }
-         
-         if(moves.size() > 0) {
+
+         if (moves.size() > 0) {
             Move currentBestMove= null;
-            for(Move move : moves) {
+            for (Move move : moves) {
                this.movesSearched++;
-               MoveScoreTuple score= this.getBestMove(p.move(move.from, move.to), e, !whiteMove, depth - 1, -beta, -alpha);
-               if(bestScore == null || (whiteMove ? score.getScore() > bestScore.getScore() : score.getScore() < bestScore.getScore())) {
+               Position childPosition= p.move(
+                     move.from,
+                     move.to);
+               MoveScoreTuple score= this.getBestMove(
+                     childPosition,
+                     e,
+                     !whiteMove,
+                     ply - 1,
+                     -beta,
+                     -alpha);
+               score.score+= e.getScore(childPosition);
+               p.popMove();
+               if (bestScore == null
+                     || (whiteMove ? score.getScore() > bestScore.getScore()
+                           : score.getScore() < bestScore.getScore())) {
                   bestScore= score;
                   currentBestMove= move;
                }
-               if(whiteMove) {
-                  if(bestScore != null && bestScore.score > alpha) {
+               if (whiteMove) {
+                  if (bestScore != null
+                        && bestScore.score > alpha) {
                      alpha= bestScore.score;
                   }
                } else {
-                  if(bestScore != null && bestScore.score < beta) {
+                  if (bestScore != null
+                        && bestScore.score < beta) {
                      beta= bestScore.score;
                   }
                }
-               if(alpha >= beta) {
+               if (alpha >= beta) {
                   break;
                }
-               p.popMove();
-            }         
+            }
             result= bestScore;
-            result.add(currentBestMove, e.getScore(p));
-//            result.add(currentBestMove, 0);
-            
+            result.add(
+                  currentBestMove,
+                  bestScore.score);
+
          } else {
-            if(whiteMove){
-               if(p.getWhite().isChecked()) {
-                  result= new MoveScoreTuple(null, -20000 + depth); // Checkmate
+            if (whiteMove) {
+               if (p.getWhite().isChecked()) {
+                  result= new MoveScoreTuple(
+                        null,
+                        -20000
+                              + ply); // Checkmate
                } else {
-                  result= new MoveScoreTuple(null, 0);  // Stalemate
+                  result= new MoveScoreTuple(
+                        null,
+                        0); // Stalemate
                }
-             } else {
-               if(p.getBlack().isChecked()) {
-                  result= new MoveScoreTuple(null, 20000 - depth); // Checkmate
+            } else {
+               if (p.getBlack().isChecked()) {
+                  result= new MoveScoreTuple(
+                        null,
+                        20000 - ply); // Checkmate
                } else {
-                  result= new MoveScoreTuple(null, 0);  // Stalemate
+                  result= new MoveScoreTuple(
+                        null,
+                        0); // Stalemate
                }
             }
          }
       } else {
          List<Move> moves;
-         int bestScore= 0;
-         if(whiteMove) {
+         int bestScore;
+         if (whiteMove) {
             moves= p.getWhite().getPossibleMoves();
+            bestScore= Integer.MIN_VALUE;
          } else {
-            moves= p.getBlack().getPossibleMoves();         
+            moves= p.getBlack().getPossibleMoves();
+            bestScore= Integer.MAX_VALUE;
          }
-         
-         if(moves.size() > 0) {
 
-            for(Move move : moves) {
+         if (moves.size() > 0) {
+
+            for (Move move : moves) {
                this.movesSearched++;
-               int score= e.getScore(p.move(move.from, move.to));
-               if((whiteMove ? score >= bestScore : score <= bestScore)) {
+               int score= e.getScore(p.move(
+                     move.from,
+                     move.to));
+               if ((whiteMove ? score > bestScore : score < bestScore)) {
                   bestScore= score;
-                  result= new MoveScoreTuple(move, score);
+                  result= new MoveScoreTuple(
+                        move,
+                        score);
                }
                p.popMove();
             }
          } else {
-            if(whiteMove){
-               if(p.getWhite().isChecked()) {
-                  result= new MoveScoreTuple(null, -20000 + depth); // Black
-                                                                      // wins by
-                                                                      // checkmate
+            if (whiteMove) {
+               if (p.getWhite().isChecked()) {
+                  result= new MoveScoreTuple(
+                        null,
+                        -20000
+                              + ply); // Black
+                  // wins by
+                  // checkmate
                } else {
-                  result= new MoveScoreTuple(null,  0);  // Stalemate
+                  result= new MoveScoreTuple(
+                        null,
+                        0); // Stalemate
                }
-             } else {
-               if(p.getBlack().isChecked()) {
-                  result= new MoveScoreTuple(null,  20000 - depth); // White
-                                                                       // wins
-                                                                       // by
-                                                                       // checkmate
+            } else {
+               if (p.getBlack().isChecked()) {
+                  result= new MoveScoreTuple(
+                        null,
+                        20000 - ply); // White
+                  // wins
+                  // by
+                  // checkmate
                } else {
-                  result= new MoveScoreTuple(null,  0);  // Stalemate
+                  result= new MoveScoreTuple(
+                        null,
+                        0); // Stalemate
                }
             }
          }
       }
-      
+
       return result;
    }
-      
+
    private static class MoveScoreTuple {
       private List<Move> moves;
-      private int score = 0;
-      
-      public MoveScoreTuple(Move move, int score) {
+      private int        score = 0;
+
+      public MoveScoreTuple(
+            Move move,
+            int score) {
          this.moves= new ArrayList<Move>();
-         if(move != null) {
+         if (move != null) {
             this.moves.add(move);
          }
          this.score= score;
       }
-      
-      public void add(Move move, int score) {
-         if(move != null) {
-            this.moves.add(0, move);
+
+      public void add(
+            Move move,
+            int score) {
+         if (move != null) {
+            this.moves.add(
+                  0,
+                  move);
          }
-         this.score += score;
+         this.score= score;
       }
-      
-      public List<Move> getMoveList(){
+
+      public List<Move> getMoveList() {
          return Collections.unmodifiableList(this.moves);
       }
-      
+
       public Move getMove() {
          return this.moves.get(0);
       }
-      
+
       public int getScore() {
          return this.score;
       }
-      
+
    }
 }

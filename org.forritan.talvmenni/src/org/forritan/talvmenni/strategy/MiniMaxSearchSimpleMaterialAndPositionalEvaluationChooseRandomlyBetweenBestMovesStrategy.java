@@ -23,7 +23,7 @@ public class MiniMaxSearchSimpleMaterialAndPositionalEvaluationChooseRandomlyBet
    }
    
    public Move getNextMove(Position position, boolean whiteToMove) {
-         List<Move> bestMoves= this.search.getBestMoves(position, this.evaluation, whiteToMove);
+         List<Move> bestMoves= this.search.getBestMoves(position.getImmutable(), this.evaluation, whiteToMove);
 
          if(!bestMoves.isEmpty()) {
             int chosenMoveIndex= new Random().nextInt(bestMoves.size());

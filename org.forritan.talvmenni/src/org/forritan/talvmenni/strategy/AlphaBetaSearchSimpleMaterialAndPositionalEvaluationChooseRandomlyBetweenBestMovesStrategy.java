@@ -22,7 +22,7 @@ public class AlphaBetaSearchSimpleMaterialAndPositionalEvaluationChooseRandomlyB
    }
    
    public Position.Move getNextMove(Position position, boolean whiteToMove) {
-         List<Position.Move> bestMoves= this.search.getBestMoves(position, this.evaluation, whiteToMove);
+         List<Position.Move> bestMoves= this.search.getBestMoves(position.getImmutable(), this.evaluation, whiteToMove);
 
          if(!bestMoves.isEmpty()) {
             int chosenMoveIndex= new Random().nextInt(bestMoves.size());
