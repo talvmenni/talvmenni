@@ -270,7 +270,7 @@ public class MTDfSearch implements Search {
                ply,
                alpha,
                beta);;
-//         this.pv.updateLastExaminedLine();
+         this.pv.updateLastExaminedLine();
       } else {
          List moves;
          int whiteBest= Integer.MIN_VALUE + 1;

@@ -173,7 +173,7 @@ public class AlphaBetaWithQuiescentAndTranspositionTableSearch implements
                ply,
                alpha,
                beta);
-//         this.pv.updateLastExaminedLine();
+         this.pv.updateLastExaminedLine();
       } else {
          List moves;
          int best= Integer.MIN_VALUE + 1;

@@ -14,7 +14,7 @@ import org.forritan.talvmenni.search.PrincipalVariation;
 
 public class Quiescent {
 
-   private PrincipalVariation pv;
+//   private PrincipalVariation pv;
    private HistoryHeuristic   historyHeuristic;
    private int                maxDepth;
    private AlphaBetaSearch    search;
@@ -27,7 +27,7 @@ public class Quiescent {
          int maxDepth) {
       this.maxDepth= maxDepth;
       this.search= new AlphaBetaSearch();
-      this.pv= pv;
+//      this.pv= pv;
       this.historyHeuristic= HistoryHeuristic.getInstance();
    }
 
@@ -68,7 +68,7 @@ public class Quiescent {
                   beta);
 
       int score= (e.getScore(p) * (whiteMove ? 1 : -1));
-      this.pv.updateLastExaminedLine();
+//      this.pv.updateLastExaminedLine();
 
       if ((this.maxDepth + ply) > 0) {
 
@@ -91,8 +91,8 @@ public class Quiescent {
          if (moves.size() > 0) {
             for (Iterator it= moves.iterator(); it.hasNext();) {
                Move move= (Move) it.next();
-               this.movesSearched++;
-               this.pv.push(move);
+//               this.movesSearched++;
+//               this.pv.push(move);
 
                p= p.move(
                      move.from,
@@ -108,7 +108,7 @@ public class Quiescent {
                      -beta,
                      -alpha);
 
-               this.pv.pop();
+//               this.pv.pop();
 
                p.popMove();
 
@@ -119,11 +119,11 @@ public class Quiescent {
                if (score > alpha) {
                   alpha= score;
 
-                  this.pv.updatePV(
-                        this.pv.getDepth() + (-ply),
-                        moveTime,
-                        (this.movesSearched - movesSearchedBefore),
-                        (alpha * (whiteMove ? 1 : -1)));
+//                  this.pv.updatePV(
+//                        this.pv.getDepth() + (-ply),
+//                        moveTime,
+//                        (this.movesSearched - movesSearchedBefore),
+//                        (alpha * (whiteMove ? 1 : -1)));
 
 //                  this.historyHeuristic.updateWithSufficient(
 //                        move,
