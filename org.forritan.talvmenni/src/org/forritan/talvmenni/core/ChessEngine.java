@@ -141,12 +141,13 @@ public class ChessEngine implements Runnable {
          currentRules= null;
          currentPosition= null;
          ChessEngine.this.setRunning(false);
+         this.go= false;
       }
 
       public void newGame() {
          this.currentPosition= Position.createInitial();
          this.WhiteToMove = true;
-         this.go= false;
+         this.go= true;
       }
       
       
