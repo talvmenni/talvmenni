@@ -251,11 +251,9 @@ public class ChessEngine implements Runnable {
             long fromSquare= pawns.next().longValue();
             long possibleMoves;
             if(isWhiteToMove()) {
-//               possibleMoves= WhitePawn.captureMoveAttacksFrom(fromSquare, this.currentPosition) | WhitePawn.moveAttacksFrom(fromSquare, this.currentPosition);
-               possibleMoves= WhitePawn.moveAttacksFrom(fromSquare, this.currentPosition);
+               possibleMoves= WhitePawn.captureMoveAttacksFrom(fromSquare, this.currentPosition) | WhitePawn.moveAttacksFrom(fromSquare, this.currentPosition);
             } else {
-//               possibleMoves= BlackPawn.captureMoveAttacksFrom(fromSquare, this.currentPosition) | BlackPawn.moveAttacksFrom(fromSquare, this.currentPosition);
-               possibleMoves= BlackPawn.moveAttacksFrom(fromSquare, this.currentPosition);
+               possibleMoves= BlackPawn.captureMoveAttacksFrom(fromSquare, this.currentPosition) | BlackPawn.moveAttacksFrom(fromSquare, this.currentPosition);
             }
             Iterator<Long> moves= new BitboardIterator(possibleMoves);
             while (moves.hasNext()) {
