@@ -237,7 +237,7 @@ public class Position {
                   | to;
             whiteEnpassant= Square._EMPTY_BOARD;
             blackEnpassant= Square._EMPTY_BOARD;
-            whiteCastling ^= from;
+            whiteCastling = ~(~whiteCastling | from);
          } else if (this.white.isBishop(from)) {
             whiteBishops= whiteBishops
                   ^ from
@@ -346,7 +346,7 @@ public class Position {
                   | to;
             whiteEnpassant= Square._EMPTY_BOARD;
             blackEnpassant= Square._EMPTY_BOARD;
-            blackCastling ^= from;
+            blackCastling = ~(~blackCastling | from);
          } else if (this.black.isBishop(from)) {
             blackBishops= blackBishops
                   ^ from

@@ -1,13 +1,14 @@
 package org.forritan.talvmenni.search;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Observable;
 
 import org.forritan.talvmenni.evaluation.Evaluation;
 import org.forritan.talvmenni.game.Position;
 import org.forritan.talvmenni.game.Position.Move;
-import org.forritan.talvmenni.search.Search.Thinking;
 
 public class FullSearch extends Observable implements Search {
    
@@ -48,15 +49,16 @@ public class FullSearch extends Observable implements Search {
          int movesSearchedBeforeMove= this.movesSearched++;
          MoveScoreTuple score= this.getBestMove(p.move(move.from, move.to), e, !whiteMove, depth - 1);
          this.setChanged();
-         this.notifyObservers("[" + move.toString() + "] " + score.score + "    |    " + (this.movesSearched - movesSearchedBeforeMove) + " positions searched...");
-         if(bestScore == null || (whiteMove ? score.score > bestScore.score : score.score < bestScore.score)) {
+         this.notifyObservers("[" + move.toString() + "] " + score.getScore() + " and there are " + (this.movesSearched - movesSearchedBeforeMove) + " positions searched...");
+         if(bestScore == null || (whiteMove ? score.getScore() > bestScore.getScore() : score.getScore() < bestScore.getScore())) {
             bestScore= score;
             result.clear();
             result.add(move);
             moveTime += System.currentTimeMillis();
-            this.thinking.postThinking(depth, bestScore.score, moveTime, this.movesSearched, bestScore.move.toString());
-         }else if(bestScore != null && score.score == bestScore.score) {
+            this.thinking.postThinking(depth, bestScore.getScore(), moveTime, this.movesSearched, bestScore.getMoveList().toString());
+         }else if(bestScore != null && score.getScore() == bestScore.getScore()) {
             result.add(move);
+            this.thinking.postThinking(depth, bestScore.getScore(), moveTime, this.movesSearched, bestScore.getMoveList().toString());
          }
       }
       
@@ -85,9 +87,10 @@ public class FullSearch extends Observable implements Search {
          Evaluation e,
          boolean whiteMove,
          int depth) {
-      MoveScoreTuple result= new MoveScoreTuple(null, 0);
+
+      MoveScoreTuple result= null;
       if(depth > 1) {
-         List<Move> moves;
+          List<Move> moves;
          MoveScoreTuple bestScore= null;
          
          if(whiteMove) {
@@ -101,16 +104,18 @@ public class FullSearch extends Observable implements Search {
             for(Move move : moves) {
                this.movesSearched++;
                MoveScoreTuple score= this.getBestMove(p.move(move.from, move.to), e, !whiteMove, depth - 1);
-               if(bestScore == null || (whiteMove ? score.score > bestScore.score : score.score < bestScore.score)) {
+               if(bestScore == null || (whiteMove ? score.getScore() > bestScore.getScore() : score.getScore() < bestScore.getScore())) {
                   bestScore= score;
                   currentBestMove= move;
                }
             }         
-            result= new MoveScoreTuple(currentBestMove, bestScore.score + e.getScore(p));
+            result= bestScore;
+            result.add(currentBestMove, e.getScore(p));
+            
          } else {
             if(whiteMove){
                if(p.white.isChecked()) {
-                  result= new MoveScoreTuple(null, - 20000 + depth); // Checkmate
+                  result= new MoveScoreTuple(null, -20000 + depth); // Checkmate
                } else {
                   result= new MoveScoreTuple(null, 0);  // Stalemate
                }
@@ -123,7 +128,6 @@ public class FullSearch extends Observable implements Search {
             }
          }
       } else {
-         
          List<Move> moves;
          int bestScore= 0;
          if(whiteMove) {
@@ -145,20 +149,20 @@ public class FullSearch extends Observable implements Search {
          } else {
             if(whiteMove){
                if(p.white.isChecked()) {
-                  result= new MoveScoreTuple(null, bestScore - 20000 + depth); // Black
+                  result= new MoveScoreTuple(null, -20000 + depth); // Black
                                                                       // wins by
                                                                       // checkmate
                } else {
-                  result= new MoveScoreTuple(null,  bestScore);  // Stalemate
+                  result= new MoveScoreTuple(null,  0);  // Stalemate
                }
              } else {
                if(p.black.isChecked()) {
-                  result= new MoveScoreTuple(null,  bestScore + 20000 - depth); // White
+                  result= new MoveScoreTuple(null,  20000 - depth); // White
                                                                        // wins
                                                                        // by
                                                                        // checkmate
                } else {
-                  result= new MoveScoreTuple(null,  bestScore);  // Stalemate
+                  result= new MoveScoreTuple(null,  0);  // Stalemate
                }
             }
          }
@@ -173,12 +177,34 @@ public class FullSearch extends Observable implements Search {
 
    
    private static class MoveScoreTuple {
-      public final Move move;
-      public final int score;
+      private List<Move> moves;
+      private int score = 0;
       
       public MoveScoreTuple(Move move, int score) {
-         this.move= move;
+         this.moves= new ArrayList<Move>();
+         if(move != null) {
+            this.moves.add(move);
+         }
          this.score= score;
+      }
+      
+      public void add(Move move, int score) {
+         if(move != null) {
+            this.moves.add(this.moves.size(), move);
+         }
+         this.score += score;
+      }
+      
+      public List<Move> getMoveList(){
+         return Collections.unmodifiableList(this.moves);
+      }
+      
+      public Move getMove() {
+         return this.moves.get(0);
+      }
+      
+      public int getScore() {
+         return this.score;
       }
       
    }
