@@ -26,8 +26,7 @@ public class FullSearchSimpleMaterialEvaluationChooseRandomlyBetweenBestMovesStr
 
          if(!bestMoves.isEmpty()) {
             int chosenMoveIndex= new Random().nextInt(bestMoves.size());
-            return bestMoves.get(chosenMoveIndex);
-             
+            return bestMoves.get(chosenMoveIndex);             
          } else {
             return null;
          }      

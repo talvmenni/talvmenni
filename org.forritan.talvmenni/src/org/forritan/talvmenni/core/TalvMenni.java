@@ -12,7 +12,6 @@ public class TalvMenni {
    public final static String NAME    = "Talvmenni";
    public final static String VERSION = "0.1";
 
-   public static boolean      TELLUSER_ALL_INPUT;
    public static String       DEBUG_NAME;
    
    public static int SEARCH_DEPTH= 2;
@@ -21,16 +20,14 @@ public class TalvMenni {
          String args[]) {
       ThreadFactory threadFactory= Executors.defaultThreadFactory();
 
-      TELLUSER_ALL_INPUT= Boolean
-            .getBoolean("org.forritan.talvmenni.telluser_all_input");
       DEBUG_NAME= System.getProperty("org.forritan.talvmenni.debug_name");
       if(DEBUG_NAME == null) {
          DEBUG_NAME= "";
       }
       
-      Integer ply= Integer.valueOf(System.getProperty("org.forritan.talvmenni.search_depth"));
-      if(ply != null) {
-         SEARCH_DEPTH= ply.intValue();
+      String searchDepth= System.getProperty("org.forritan.talvmenni.search_depth");
+      if(searchDepth != null) {
+         SEARCH_DEPTH= Integer.valueOf(searchDepth).intValue();
       }
       
       final ChessEngine chessEngine=
