@@ -6,11 +6,11 @@ import junit.framework.TestCase;
 import org.forritan.talvmenni.bitboard.Square;
 
 
-public class WhitePawnTest extends TestCase {
+public class WhitePawnMoveTest extends TestCase {
 
    private final String[] zeroPrefix = new String[64];
 
-   public WhitePawnTest() {
+   public WhitePawnMoveTest() {
       for (int i= 0, j= 64; i < zeroPrefix.length; i++, j--) {
          StringBuffer zeroes= new StringBuffer();
          for (int k= 1; k < j; k++) {
@@ -29,7 +29,7 @@ public class WhitePawnTest extends TestCase {
    }
 
    public void testWhitePawnPathsFromA1() {
-      Pawn pawn= WhitePawns.create();
+      Pawn pawnMove= WhitePawnMoves.create();
       Assert.assertEquals(
             ""
                   + //
@@ -49,12 +49,12 @@ public class WhitePawnTest extends TestCase {
                   + // A2-H2
                   "00000000", // A1-H1
             (this.zeroPrefix[Long.toBinaryString(
-                  pawn.getPathsFrom(Square._A1)).length() - 1] + Long
-                  .toBinaryString(pawn.getPathsFrom(Square._A1))));
+                  pawnMove.getPathsFrom(Square._A1)).length() - 1] + Long
+                  .toBinaryString(pawnMove.getPathsFrom(Square._A1))));
    }
 
    public void testWhitePawnPathsFromB1() {
-      Pawn pawn= WhitePawns.create();
+      Pawn pawn= WhitePawnMoves.create();
       Assert.assertEquals(
             ""
                   + //
@@ -79,7 +79,7 @@ public class WhitePawnTest extends TestCase {
    }
 
    public void testWhitePawnPathsFromC1() {
-      Pawn pawn= WhitePawns.create();
+      Pawn pawn= WhitePawnMoves.create();
       Assert.assertEquals(
             ""
                   + //
@@ -104,7 +104,7 @@ public class WhitePawnTest extends TestCase {
    }
 
    public void testWhitePawnPathsFromD1() {
-      Pawn pawn= WhitePawns.create();
+      Pawn pawn= WhitePawnMoves.create();
       Assert.assertEquals(
             ""
                   + //
@@ -129,7 +129,7 @@ public class WhitePawnTest extends TestCase {
    }
 
    public void testWhitePawnPathsFromE1() {
-      Pawn pawn= WhitePawns.create();
+      Pawn pawn= WhitePawnMoves.create();
       Assert.assertEquals(
             ""
                   + //
@@ -154,7 +154,7 @@ public class WhitePawnTest extends TestCase {
    }
 
    public void testWhitePawnPathsFromF1() {
-      Pawn pawn= WhitePawns.create();
+      Pawn pawn= WhitePawnMoves.create();
       Assert.assertEquals(
             ""
                   + //
@@ -179,7 +179,7 @@ public class WhitePawnTest extends TestCase {
    }
 
    public void testWhitePawnPathsFromG1() {
-      Pawn pawn= WhitePawns.create();
+      Pawn pawn= WhitePawnMoves.create();
       Assert.assertEquals(
             ""
                   + //
@@ -204,7 +204,7 @@ public class WhitePawnTest extends TestCase {
    }
 
    public void testWhitePawnPathsFromH1() {
-      Pawn pawn= WhitePawns.create();
+      Pawn pawn= WhitePawnMoves.create();
       Assert.assertEquals(
             ""
                   + //
@@ -229,7 +229,7 @@ public class WhitePawnTest extends TestCase {
    }
 
    public void testWhitePawnPathsFromA2() {
-      Pawn pawn= WhitePawns.create();
+      Pawn pawn= WhitePawnMoves.create();
       Assert.assertEquals(
             ""
                   + //
@@ -243,7 +243,7 @@ public class WhitePawnTest extends TestCase {
                   + // A5-H5
                   "10000000"
                   + // A4-H4
-                  "11000000"
+                  "10000000"
                   + // A3-H3
                   "00000000"
                   + // A2-H2
@@ -254,7 +254,7 @@ public class WhitePawnTest extends TestCase {
    }
 
    public void testWhitePawnPathsFromB2() {
-      Pawn pawn= WhitePawns.create();
+      Pawn pawn= WhitePawnMoves.create();
       Assert.assertEquals(
             ""
                   + //
@@ -268,7 +268,7 @@ public class WhitePawnTest extends TestCase {
                   + // A5-H5
                   "01000000"
                   + // A4-H4
-                  "11100000"
+                  "01000000"
                   + // A3-H3
                   "00000000"
                   + // A2-H2
@@ -279,7 +279,7 @@ public class WhitePawnTest extends TestCase {
    }
 
    public void testWhitePawnPathsFromC2() {
-      Pawn pawn= WhitePawns.create();
+      Pawn pawn= WhitePawnMoves.create();
       Assert.assertEquals(
             ""
                   + //
@@ -293,7 +293,7 @@ public class WhitePawnTest extends TestCase {
                   + // A5-H5
                   "00100000"
                   + // A4-H4
-                  "01110000"
+                  "00100000"
                   + // A3-H3
                   "00000000"
                   + // A2-H2
@@ -304,7 +304,7 @@ public class WhitePawnTest extends TestCase {
    }
 
    public void testWhitePawnPathsFromD2() {
-      Pawn pawn= WhitePawns.create();
+      Pawn pawn= WhitePawnMoves.create();
       Assert.assertEquals(
             ""
                   + //
@@ -318,7 +318,7 @@ public class WhitePawnTest extends TestCase {
                   + // A5-H5
                   "00010000"
                   + // A4-H4
-                  "00111000"
+                  "00010000"
                   + // A3-H3
                   "00000000"
                   + // A2-H2
@@ -329,7 +329,7 @@ public class WhitePawnTest extends TestCase {
    }
 
    public void testWhitePawnPathsFromE2() {
-      Pawn pawn= WhitePawns.create();
+      Pawn pawn= WhitePawnMoves.create();
       Assert.assertEquals(
             ""
                   + //
@@ -343,7 +343,7 @@ public class WhitePawnTest extends TestCase {
                   + // A5-H5
                   "00001000"
                   + // A4-H4
-                  "00011100"
+                  "00001000"
                   + // A3-H3
                   "00000000"
                   + // A2-H2
@@ -354,7 +354,7 @@ public class WhitePawnTest extends TestCase {
    }
 
    public void testWhitePawnPathsFromF2() {
-      Pawn pawn= WhitePawns.create();
+      Pawn pawn= WhitePawnMoves.create();
       Assert.assertEquals(
             ""
                   + //
@@ -368,7 +368,7 @@ public class WhitePawnTest extends TestCase {
                   + // A5-H5
                   "00000100"
                   + // A4-H4
-                  "00001110"
+                  "00000100"
                   + // A3-H3
                   "00000000"
                   + // A2-H2
@@ -379,7 +379,7 @@ public class WhitePawnTest extends TestCase {
    }
 
    public void testWhitePawnPathsFromG2() {
-      Pawn pawn= WhitePawns.create();
+      Pawn pawn= WhitePawnMoves.create();
       Assert.assertEquals(
             ""
                   + //
@@ -393,7 +393,7 @@ public class WhitePawnTest extends TestCase {
                   + // A5-H5
                   "00000010"
                   + // A4-H4
-                  "00000111"
+                  "00000010"
                   + // A3-H3
                   "00000000"
                   + // A2-H2
@@ -404,7 +404,7 @@ public class WhitePawnTest extends TestCase {
    }
 
    public void testWhitePawnPathsFromH2() {
-      Pawn pawn= WhitePawns.create();
+      Pawn pawn= WhitePawnMoves.create();
       Assert.assertEquals(
             ""
                   + //
@@ -418,7 +418,7 @@ public class WhitePawnTest extends TestCase {
                   + // A5-H5
                   "00000001"
                   + // A4-H4
-                  "00000011"
+                  "00000001"
                   + // A3-H3
                   "00000000"
                   + // A2-H2
@@ -429,7 +429,7 @@ public class WhitePawnTest extends TestCase {
    }
    
    public void testWhitePawnPathsFromA3() {
-      Pawn pawn= WhitePawns.create();
+      Pawn pawn= WhitePawnMoves.create();
       Assert.assertEquals(
             ""
                   + //
@@ -441,7 +441,7 @@ public class WhitePawnTest extends TestCase {
                   + // A6-H6
                   "00000000"
                   + // A5-H5
-                  "11000000"
+                  "10000000"
                   + // A4-H4
                   "00000000"
                   + // A3-H3
@@ -454,7 +454,7 @@ public class WhitePawnTest extends TestCase {
    }
 
    public void testWhitePawnPathsFromB3() {
-      Pawn pawn= WhitePawns.create();
+      Pawn pawn= WhitePawnMoves.create();
       Assert.assertEquals(
             ""
                   + //
@@ -466,7 +466,7 @@ public class WhitePawnTest extends TestCase {
                   + // A6-H6
                   "00000000"
                   + // A5-H5
-                  "11100000"
+                  "01000000"
                   + // A4-H4
                   "00000000"
                   + // A3-H3
@@ -479,7 +479,7 @@ public class WhitePawnTest extends TestCase {
    }
 
    public void testWhitePawnPathsFromC3() {
-      Pawn pawn= WhitePawns.create();
+      Pawn pawn= WhitePawnMoves.create();
       Assert.assertEquals(
             ""
                   + //
@@ -491,7 +491,7 @@ public class WhitePawnTest extends TestCase {
                   + // A6-H6
                   "00000000"
                   + // A5-H5
-                  "01110000"
+                  "00100000"
                   + // A4-H4
                   "00000000"
                   + // A3-H3
@@ -504,7 +504,7 @@ public class WhitePawnTest extends TestCase {
    }
 
    public void testWhitePawnPathsFromD3() {
-      Pawn pawn= WhitePawns.create();
+      Pawn pawn= WhitePawnMoves.create();
       Assert.assertEquals(
             ""
                   + //
@@ -516,7 +516,7 @@ public class WhitePawnTest extends TestCase {
                   + // A6-H6
                   "00000000"
                   + // A5-H5
-                  "00111000"
+                  "00010000"
                   + // A4-H4
                   "00000000"
                   + // A3-H3
@@ -529,7 +529,7 @@ public class WhitePawnTest extends TestCase {
    }
 
    public void testWhitePawnPathsFromE3() {
-      Pawn pawn= WhitePawns.create();
+      Pawn pawn= WhitePawnMoves.create();
       Assert.assertEquals(
             ""
                   + //
@@ -541,7 +541,7 @@ public class WhitePawnTest extends TestCase {
                   + // A6-H6
                   "00000000"
                   + // A5-H5
-                  "00011100"
+                  "00001000"
                   + // A4-H4
                   "00000000"
                   + // A3-H3
@@ -554,7 +554,7 @@ public class WhitePawnTest extends TestCase {
    }
 
    public void testWhitePawnPathsFromF3() {
-      Pawn pawn= WhitePawns.create();
+      Pawn pawn= WhitePawnMoves.create();
       Assert.assertEquals(
             ""
                   + //
@@ -566,7 +566,7 @@ public class WhitePawnTest extends TestCase {
                   + // A6-H6
                   "00000000"
                   + // A5-H5
-                  "00001110"
+                  "00000100"
                   + // A4-H4
                   "00000000"
                   + // A3-H3
@@ -579,7 +579,7 @@ public class WhitePawnTest extends TestCase {
    }
 
    public void testWhitePawnPathsFromG3() {
-      Pawn pawn= WhitePawns.create();
+      Pawn pawn= WhitePawnMoves.create();
       Assert.assertEquals(
             ""
                   + //
@@ -591,7 +591,7 @@ public class WhitePawnTest extends TestCase {
                   + // A6-H6
                   "00000000"
                   + // A5-H5
-                  "00000111"
+                  "00000010"
                   + // A4-H4
                   "00000000"
                   + // A3-H3
@@ -604,7 +604,7 @@ public class WhitePawnTest extends TestCase {
    }
 
    public void testWhitePawnPathsFromH3() {
-      Pawn pawn= WhitePawns.create();
+      Pawn pawn= WhitePawnMoves.create();
       Assert.assertEquals(
             ""
                   + //
@@ -616,7 +616,7 @@ public class WhitePawnTest extends TestCase {
                   + // A6-H6
                   "00000000"
                   + // A5-H5
-                  "00000011"
+                  "00000001"
                   + // A4-H4
                   "00000000"
                   + // A3-H3
@@ -629,7 +629,7 @@ public class WhitePawnTest extends TestCase {
    }
 
    public void testWhitePawnPathsFromA4() {
-      Pawn pawn= WhitePawns.create();
+      Pawn pawn= WhitePawnMoves.create();
       Assert.assertEquals(
             ""
                   + //
@@ -639,7 +639,7 @@ public class WhitePawnTest extends TestCase {
                   + // A7-H7
                   "00000000"
                   + // A6-H6
-                  "11000000"
+                  "10000000"
                   + // A5-H5
                   "00000000"
                   + // A4-H4
@@ -654,7 +654,7 @@ public class WhitePawnTest extends TestCase {
    }
 
    public void testWhitePawnPathsFromB4() {
-      Pawn pawn= WhitePawns.create();
+      Pawn pawn= WhitePawnMoves.create();
       Assert.assertEquals(
             ""
                   + //
@@ -664,7 +664,7 @@ public class WhitePawnTest extends TestCase {
                   + // A7-H7
                   "00000000"
                   + // A6-H6
-                  "11100000"
+                  "01000000"
                   + // A5-H5
                   "00000000"
                   + // A4-H4
@@ -679,7 +679,7 @@ public class WhitePawnTest extends TestCase {
    }
 
    public void testWhitePawnPathsFromC4() {
-      Pawn pawn= WhitePawns.create();
+      Pawn pawn= WhitePawnMoves.create();
       Assert.assertEquals(
             ""
                   + //
@@ -689,7 +689,7 @@ public class WhitePawnTest extends TestCase {
                   + // A7-H7
                   "00000000"
                   + // A6-H6
-                  "01110000"
+                  "00100000"
                   + // A5-H5
                   "00000000"
                   + // A4-H4
@@ -704,7 +704,7 @@ public class WhitePawnTest extends TestCase {
    }
 
    public void testWhitePawnPathsFromD4() {
-      Pawn pawn= WhitePawns.create();
+      Pawn pawn= WhitePawnMoves.create();
       Assert.assertEquals(
             ""
                   + //
@@ -714,7 +714,7 @@ public class WhitePawnTest extends TestCase {
                   + // A7-H7
                   "00000000"
                   + // A6-H6
-                  "00111000"
+                  "00010000"
                   + // A5-H5
                   "00000000"
                   + // A4-H4
@@ -729,7 +729,7 @@ public class WhitePawnTest extends TestCase {
    }
 
    public void testWhitePawnPathsFromE4() {
-      Pawn pawn= WhitePawns.create();
+      Pawn pawn= WhitePawnMoves.create();
       Assert.assertEquals(
             ""
                   + //
@@ -739,7 +739,7 @@ public class WhitePawnTest extends TestCase {
                   + // A7-H7
                   "00000000"
                   + // A6-H6
-                  "00011100"
+                  "00001000"
                   + // A5-H5
                   "00000000"
                   + // A4-H4
@@ -754,7 +754,7 @@ public class WhitePawnTest extends TestCase {
    }
 
    public void testWhitePawnPathsFromF4() {
-      Pawn pawn= WhitePawns.create();
+      Pawn pawn= WhitePawnMoves.create();
       Assert.assertEquals(
             ""
                   + //
@@ -764,7 +764,7 @@ public class WhitePawnTest extends TestCase {
                   + // A7-H7
                   "00000000"
                   + // A6-H6
-                  "00001110"
+                  "00000100"
                   + // A5-H5
                   "00000000"
                   + // A4-H4
@@ -779,7 +779,7 @@ public class WhitePawnTest extends TestCase {
    }
 
    public void testWhitePawnPathsFromG4() {
-      Pawn pawn= WhitePawns.create();
+      Pawn pawn= WhitePawnMoves.create();
       Assert.assertEquals(
             ""
                   + //
@@ -789,7 +789,7 @@ public class WhitePawnTest extends TestCase {
                   + // A7-H7
                   "00000000"
                   + // A6-H6
-                  "00000111"
+                  "00000010"
                   + // A5-H5
                   "00000000"
                   + // A4-H4
@@ -804,7 +804,7 @@ public class WhitePawnTest extends TestCase {
    }
 
    public void testWhitePawnPathsFromH4() {
-      Pawn pawn= WhitePawns.create();
+      Pawn pawn= WhitePawnMoves.create();
       Assert.assertEquals(
             ""
                   + //
@@ -814,7 +814,7 @@ public class WhitePawnTest extends TestCase {
                   + // A7-H7
                   "00000000"
                   + // A6-H6
-                  "00000011"
+                  "00000001"
                   + // A5-H5
                   "00000000"
                   + // A4-H4
@@ -829,7 +829,7 @@ public class WhitePawnTest extends TestCase {
    }
 
    public void testWhitePawnPathsFromA5() {
-      Pawn pawn= WhitePawns.create();
+      Pawn pawn= WhitePawnMoves.create();
       Assert.assertEquals(
             ""
                   + //
@@ -837,7 +837,7 @@ public class WhitePawnTest extends TestCase {
                   + // A8-H8
                   "00000000"
                   + // A7-H7
-                  "11000000"
+                  "10000000"
                   + // A6-H6
                   "00000000"
                   + // A5-H5
@@ -854,7 +854,7 @@ public class WhitePawnTest extends TestCase {
    }
 
    public void testWhitePawnPathsFromB5() {
-      Pawn pawn= WhitePawns.create();
+      Pawn pawn= WhitePawnMoves.create();
       Assert.assertEquals(
             ""
                   + //
@@ -862,7 +862,7 @@ public class WhitePawnTest extends TestCase {
                   + // A8-H8
                   "00000000"
                   + // A7-H7
-                  "11100000"
+                  "01000000"
                   + // A6-H6
                   "00000000"
                   + // A5-H5
@@ -879,7 +879,7 @@ public class WhitePawnTest extends TestCase {
    }
 
    public void testWhitePawnPathsFromC5() {
-      Pawn pawn= WhitePawns.create();
+      Pawn pawn= WhitePawnMoves.create();
       Assert.assertEquals(
             ""
                   + //
@@ -887,7 +887,7 @@ public class WhitePawnTest extends TestCase {
                   + // A8-H8
                   "00000000"
                   + // A7-H7
-                  "01110000"
+                  "00100000"
                   + // A6-H6
                   "00000000"
                   + // A5-H5
@@ -904,7 +904,7 @@ public class WhitePawnTest extends TestCase {
    }
 
    public void testWhitePawnPathsFromD5() {
-      Pawn pawn= WhitePawns.create();
+      Pawn pawn= WhitePawnMoves.create();
       Assert.assertEquals(
             ""
                   + //
@@ -912,7 +912,7 @@ public class WhitePawnTest extends TestCase {
                   + // A8-H8
                   "00000000"
                   + // A7-H7
-                  "00111000"
+                  "00010000"
                   + // A6-H6
                   "00000000"
                   + // A5-H5
@@ -929,7 +929,7 @@ public class WhitePawnTest extends TestCase {
    }
 
    public void testWhitePawnPathsFromE5() {
-      Pawn pawn= WhitePawns.create();
+      Pawn pawn= WhitePawnMoves.create();
       Assert.assertEquals(
             ""
                   + //
@@ -937,7 +937,7 @@ public class WhitePawnTest extends TestCase {
                   + // A8-H8
                   "00000000"
                   + // A7-H7
-                  "00011100"
+                  "00001000"
                   + // A6-H6
                   "00000000"
                   + // A5-H5
@@ -954,7 +954,7 @@ public class WhitePawnTest extends TestCase {
    }
 
    public void testWhitePawnPathsFromF5() {
-      Pawn pawn= WhitePawns.create();
+      Pawn pawn= WhitePawnMoves.create();
       Assert.assertEquals(
             ""
                   + //
@@ -962,7 +962,7 @@ public class WhitePawnTest extends TestCase {
                   + // A8-H8
                   "00000000"
                   + // A7-H7
-                  "00001110"
+                  "00000100"
                   + // A6-H6
                   "00000000"
                   + // A5-H5
@@ -979,7 +979,7 @@ public class WhitePawnTest extends TestCase {
    }
 
    public void testWhitePawnPathsFromG5() {
-      Pawn pawn= WhitePawns.create();
+      Pawn pawn= WhitePawnMoves.create();
       Assert.assertEquals(
             ""
                   + //
@@ -987,7 +987,7 @@ public class WhitePawnTest extends TestCase {
                   + // A8-H8
                   "00000000"
                   + // A7-H7
-                  "00000111"
+                  "00000010"
                   + // A6-H6
                   "00000000"
                   + // A5-H5
@@ -1004,7 +1004,7 @@ public class WhitePawnTest extends TestCase {
    }
 
    public void testWhitePawnPathsFromH5() {
-      Pawn pawn= WhitePawns.create();
+      Pawn pawn= WhitePawnMoves.create();
       Assert.assertEquals(
             ""
                   + //
@@ -1012,7 +1012,7 @@ public class WhitePawnTest extends TestCase {
                   + // A8-H8
                   "00000000"
                   + // A7-H7
-                  "00000011"
+                  "00000001"
                   + // A6-H6
                   "00000000"
                   + // A5-H5
@@ -1029,13 +1029,13 @@ public class WhitePawnTest extends TestCase {
    }
 
    public void testWhitePawnPathsFromA6() {
-      Pawn pawn= WhitePawns.create();
+      Pawn pawn= WhitePawnMoves.create();
       Assert.assertEquals(
             ""
                   + //
                   "00000000"
                   + // A8-H8
-                  "11000000"
+                  "10000000"
                   + // A7-H7
                   "00000000"
                   + // A6-H6
@@ -1054,13 +1054,13 @@ public class WhitePawnTest extends TestCase {
    }
 
    public void testWhitePawnPathsFromB6() {
-      Pawn pawn= WhitePawns.create();
+      Pawn pawn= WhitePawnMoves.create();
       Assert.assertEquals(
             ""
                   + //
                   "00000000"
                   + // A8-H8
-                  "11100000"
+                  "01000000"
                   + // A7-H7
                   "00000000"
                   + // A6-H6
@@ -1079,13 +1079,13 @@ public class WhitePawnTest extends TestCase {
    }
 
    public void testWhitePawnPathsFromC6() {
-      Pawn pawn= WhitePawns.create();
+      Pawn pawn= WhitePawnMoves.create();
       Assert.assertEquals(
             ""
                   + //
                   "00000000"
                   + // A8-H8
-                  "01110000"
+                  "00100000"
                   + // A7-H7
                   "00000000"
                   + // A6-H6
@@ -1104,13 +1104,13 @@ public class WhitePawnTest extends TestCase {
    }
 
    public void testWhitePawnPathsFromD6() {
-      Pawn pawn= WhitePawns.create();
+      Pawn pawn= WhitePawnMoves.create();
       Assert.assertEquals(
             ""
                   + //
                   "00000000"
                   + // A8-H8
-                  "00111000"
+                  "00010000"
                   + // A7-H7
                   "00000000"
                   + // A6-H6
@@ -1129,13 +1129,13 @@ public class WhitePawnTest extends TestCase {
    }
 
    public void testWhitePawnPathsFromE6() {
-      Pawn pawn= WhitePawns.create();
+      Pawn pawn= WhitePawnMoves.create();
       Assert.assertEquals(
             ""
                   + //
                   "00000000"
                   + // A8-H8
-                  "00011100"
+                  "00001000"
                   + // A7-H7
                   "00000000"
                   + // A6-H6
@@ -1154,13 +1154,13 @@ public class WhitePawnTest extends TestCase {
    }
 
    public void testWhitePawnPathsFromF6() {
-      Pawn pawn= WhitePawns.create();
+      Pawn pawn= WhitePawnMoves.create();
       Assert.assertEquals(
             ""
                   + //
                   "00000000"
                   + // A8-H8
-                  "00001110"
+                  "00000100"
                   + // A7-H7
                   "00000000"
                   + // A6-H6
@@ -1179,13 +1179,13 @@ public class WhitePawnTest extends TestCase {
    }
 
    public void testWhitePawnPathsFromG6() {
-      Pawn pawn= WhitePawns.create();
+      Pawn pawn= WhitePawnMoves.create();
       Assert.assertEquals(
             ""
                   + //
                   "00000000"
                   + // A8-H8
-                  "00000111"
+                  "00000010"
                   + // A7-H7
                   "00000000"
                   + // A6-H6
@@ -1204,13 +1204,13 @@ public class WhitePawnTest extends TestCase {
    }
 
    public void testWhitePawnPathsFromH6() {
-      Pawn pawn= WhitePawns.create();
+      Pawn pawn= WhitePawnMoves.create();
       Assert.assertEquals(
             ""
                   + //
                   "00000000"
                   + // A8-H8
-                  "00000011"
+                  "00000001"
                   + // A7-H7
                   "00000000"
                   + // A6-H6
@@ -1229,11 +1229,11 @@ public class WhitePawnTest extends TestCase {
    }
 
    public void testWhitePawnPathsFromA7() {
-      Pawn pawn= WhitePawns.create();
+      Pawn pawn= WhitePawnMoves.create();
       Assert.assertEquals(
             ""
                   + //
-                  "11000000"
+                  "10000000"
                   + // A8-H8
                   "00000000"
                   + // A7-H7
@@ -1254,11 +1254,11 @@ public class WhitePawnTest extends TestCase {
    }
 
    public void testWhitePawnPathsFromB7() {
-      Pawn pawn= WhitePawns.create();
+      Pawn pawn= WhitePawnMoves.create();
       Assert.assertEquals(
             ""
                   + //
-                  "11100000"
+                  "01000000"
                   + // A8-H8
                   "00000000"
                   + // A7-H7
@@ -1279,11 +1279,11 @@ public class WhitePawnTest extends TestCase {
    }
 
    public void testWhitePawnPathsFromC7() {
-      Pawn pawn= WhitePawns.create();
+      Pawn pawn= WhitePawnMoves.create();
       Assert.assertEquals(
             ""
                   + //
-                  "01110000"
+                  "00100000"
                   + // A8-H8
                   "00000000"
                   + // A7-H7
@@ -1304,11 +1304,11 @@ public class WhitePawnTest extends TestCase {
    }
 
    public void testWhitePawnPathsFromD7() {
-      Pawn pawn= WhitePawns.create();
+      Pawn pawn= WhitePawnMoves.create();
       Assert.assertEquals(
             ""
                   + //
-                  "00111000"
+                  "00010000"
                   + // A8-H8
                   "00000000"
                   + // A7-H7
@@ -1329,11 +1329,11 @@ public class WhitePawnTest extends TestCase {
    }
 
    public void testWhitePawnPathsFromE7() {
-      Pawn pawn= WhitePawns.create();
+      Pawn pawn= WhitePawnMoves.create();
       Assert.assertEquals(
             ""
                   + //
-                  "00011100"
+                  "00001000"
                   + // A8-H8
                   "00000000"
                   + // A7-H7
@@ -1354,11 +1354,11 @@ public class WhitePawnTest extends TestCase {
    }
 
    public void testWhitePawnPathsFromF7() {
-      Pawn pawn= WhitePawns.create();
+      Pawn pawn= WhitePawnMoves.create();
       Assert.assertEquals(
             ""
                   + //
-                  "00001110"
+                  "00000100"
                   + // A8-H8
                   "00000000"
                   + // A7-H7
@@ -1379,11 +1379,11 @@ public class WhitePawnTest extends TestCase {
    }
 
    public void testWhitePawnPathsFromG7() {
-      Pawn pawn= WhitePawns.create();
+      Pawn pawn= WhitePawnMoves.create();
       Assert.assertEquals(
             ""
                   + //
-                  "00000111"
+                  "00000010"
                   + // A8-H8
                   "00000000"
                   + // A7-H7
@@ -1404,11 +1404,11 @@ public class WhitePawnTest extends TestCase {
    }
 
    public void testWhitePawnPathsFromH7() {
-      Pawn pawn= WhitePawns.create();
+      Pawn pawn= WhitePawnMoves.create();
       Assert.assertEquals(
             ""
                   + //
-                  "00000011"
+                  "00000001"
                   + // A8-H8
                   "00000000"
                   + // A7-H7
@@ -1429,7 +1429,7 @@ public class WhitePawnTest extends TestCase {
    }
 
    public void testWhitePawnPathsFromA8() {
-      Pawn pawn= WhitePawns.create();
+      Pawn pawn= WhitePawnMoves.create();
       Assert.assertEquals(
             ""
                   + //
@@ -1454,7 +1454,7 @@ public class WhitePawnTest extends TestCase {
    }
 
    public void testWhitePawnPathsFromB8() {
-      Pawn pawn= WhitePawns.create();
+      Pawn pawn= WhitePawnMoves.create();
       Assert.assertEquals(
             ""
                   + //
@@ -1479,7 +1479,7 @@ public class WhitePawnTest extends TestCase {
    }
 
    public void testWhitePawnPathsFromC8() {
-      Pawn pawn= WhitePawns.create();
+      Pawn pawn= WhitePawnMoves.create();
       Assert.assertEquals(
             ""
                   + //
@@ -1504,7 +1504,7 @@ public class WhitePawnTest extends TestCase {
    }
 
    public void testWhitePawnPathsFromD8() {
-      Pawn pawn= WhitePawns.create();
+      Pawn pawn= WhitePawnMoves.create();
       Assert.assertEquals(
             ""
                   + //
@@ -1529,7 +1529,7 @@ public class WhitePawnTest extends TestCase {
    }
 
    public void testWhitePawnPathsFromE8() {
-      Pawn pawn= WhitePawns.create();
+      Pawn pawn= WhitePawnMoves.create();
       Assert.assertEquals(
             ""
                   + //
@@ -1554,7 +1554,7 @@ public class WhitePawnTest extends TestCase {
    }
 
    public void testWhitePawnPathsFromF8() {
-      Pawn pawn= WhitePawns.create();
+      Pawn pawn= WhitePawnMoves.create();
       Assert.assertEquals(
             ""
                   + //
@@ -1579,7 +1579,7 @@ public class WhitePawnTest extends TestCase {
    }
 
    public void testWhitePawnPathsFromG8() {
-      Pawn pawn= WhitePawns.create();
+      Pawn pawn= WhitePawnMoves.create();
       Assert.assertEquals(
             ""
                   + //
@@ -1604,7 +1604,7 @@ public class WhitePawnTest extends TestCase {
    }
 
    public void testWhitePawnPathsFromH8() {
-      Pawn pawn= WhitePawns.create();
+      Pawn pawn= WhitePawnMoves.create();
       Assert.assertEquals(
             ""
                   + //

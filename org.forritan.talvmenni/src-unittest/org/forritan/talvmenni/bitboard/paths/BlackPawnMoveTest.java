@@ -6,11 +6,11 @@ import junit.framework.TestCase;
 import org.forritan.talvmenni.bitboard.Square;
 
 
-public class BlackPawnTest extends TestCase {
+public class BlackPawnMoveTest extends TestCase {
 
    private final String[] zeroPrefix = new String[64];
 
-   public BlackPawnTest() {
+   public BlackPawnMoveTest() {
       for (int i= 0, j= 64; i < zeroPrefix.length; i++, j--) {
          StringBuffer zeroes= new StringBuffer();
          for (int k= 1; k < j; k++) {
@@ -29,7 +29,7 @@ public class BlackPawnTest extends TestCase {
    }
 
    public void testBlackPawnPathsFromA1() {
-      Pawn pawn= BlackPawns.create();
+      Pawn pawn= BlackPawnMoves.create();
       Assert.assertEquals(
             ""
                   + //
@@ -54,7 +54,7 @@ public class BlackPawnTest extends TestCase {
    }
 
    public void testBlackPawnPathsFromB1() {
-      Pawn pawn= BlackPawns.create();
+      Pawn pawn= BlackPawnMoves.create();
       Assert.assertEquals(
             ""
                   + //
@@ -79,7 +79,7 @@ public class BlackPawnTest extends TestCase {
    }
 
    public void testBlackPawnPathsFromC1() {
-      Pawn pawn= BlackPawns.create();
+      Pawn pawn= BlackPawnMoves.create();
       Assert.assertEquals(
             ""
                   + //
@@ -104,7 +104,7 @@ public class BlackPawnTest extends TestCase {
    }
 
    public void testBlackPawnPathsFromD1() {
-      Pawn pawn= BlackPawns.create();
+      Pawn pawn= BlackPawnMoves.create();
       Assert.assertEquals(
             ""
                   + //
@@ -129,7 +129,7 @@ public class BlackPawnTest extends TestCase {
    }
 
    public void testBlackPawnPathsFromE1() {
-      Pawn pawn= BlackPawns.create();
+      Pawn pawn= BlackPawnMoves.create();
       Assert.assertEquals(
             ""
                   + //
@@ -154,7 +154,7 @@ public class BlackPawnTest extends TestCase {
    }
 
    public void testBlackPawnPathsFromF1() {
-      Pawn pawn= BlackPawns.create();
+      Pawn pawn= BlackPawnMoves.create();
       Assert.assertEquals(
             ""
                   + //
@@ -179,7 +179,7 @@ public class BlackPawnTest extends TestCase {
    }
 
    public void testBlackPawnPathsFromG1() {
-      Pawn pawn= BlackPawns.create();
+      Pawn pawn= BlackPawnMoves.create();
       Assert.assertEquals(
             ""
                   + //
@@ -204,7 +204,7 @@ public class BlackPawnTest extends TestCase {
    }
 
    public void testBlackPawnPathsFromH1() {
-      Pawn pawn= BlackPawns.create();
+      Pawn pawn= BlackPawnMoves.create();
       Assert.assertEquals(
             ""
                   + //
@@ -229,7 +229,7 @@ public class BlackPawnTest extends TestCase {
    }
 
    public void testBlackPawnPathsFromA2() {
-      Pawn pawn= BlackPawns.create();
+      Pawn pawn= BlackPawnMoves.create();
       Assert.assertEquals(
             ""
                   + //
@@ -247,14 +247,14 @@ public class BlackPawnTest extends TestCase {
                   + // A3-H3
                   "00000000"
                   + // A2-H2
-                  "11000000", // A1-H1
+                  "10000000", // A1-H1
             (this.zeroPrefix[Long.toBinaryString(
                   pawn.getPathsFrom(Square._A2)).length() - 1] + Long
                   .toBinaryString(pawn.getPathsFrom(Square._A2))));
    }
 
    public void testBlackPawnPathsFromB2() {
-      Pawn pawn= BlackPawns.create();
+      Pawn pawn= BlackPawnMoves.create();
       Assert.assertEquals(
             ""
                   + //
@@ -272,14 +272,14 @@ public class BlackPawnTest extends TestCase {
                   + // A3-H3
                   "00000000"
                   + // A2-H2
-                  "11100000", // A1-H1
+                  "01000000", // A1-H1
             (this.zeroPrefix[Long.toBinaryString(
                   pawn.getPathsFrom(Square._B2)).length() - 1] + Long
                   .toBinaryString(pawn.getPathsFrom(Square._B2))));
    }
 
    public void testBlackPawnPathsFromC2() {
-      Pawn pawn= BlackPawns.create();
+      Pawn pawn= BlackPawnMoves.create();
       Assert.assertEquals(
             ""
                   + //
@@ -297,14 +297,14 @@ public class BlackPawnTest extends TestCase {
                   + // A3-H3
                   "00000000"
                   + // A2-H2
-                  "01110000", // A1-H1
+                  "00100000", // A1-H1
             (this.zeroPrefix[Long.toBinaryString(
                   pawn.getPathsFrom(Square._C2)).length() - 1] + Long
                   .toBinaryString(pawn.getPathsFrom(Square._C2))));
    }
 
    public void testBlackPawnPathsFromD2() {
-      Pawn pawn= BlackPawns.create();
+      Pawn pawn= BlackPawnMoves.create();
       Assert.assertEquals(
             ""
                   + //
@@ -322,14 +322,14 @@ public class BlackPawnTest extends TestCase {
                   + // A3-H3
                   "00000000"
                   + // A2-H2
-                  "00111000", // A1-H1
+                  "00010000", // A1-H1
             (this.zeroPrefix[Long.toBinaryString(
                   pawn.getPathsFrom(Square._D2)).length() - 1] + Long
                   .toBinaryString(pawn.getPathsFrom(Square._D2))));
    }
 
    public void testBlackPawnPathsFromE2() {
-      Pawn pawn= BlackPawns.create();
+      Pawn pawn= BlackPawnMoves.create();
       Assert.assertEquals(
             ""
                   + //
@@ -347,14 +347,14 @@ public class BlackPawnTest extends TestCase {
                   + // A3-H3
                   "00000000"
                   + // A2-H2
-                  "00011100", // A1-H1
+                  "00001000", // A1-H1
             (this.zeroPrefix[Long.toBinaryString(
                   pawn.getPathsFrom(Square._E2)).length() - 1] + Long
                   .toBinaryString(pawn.getPathsFrom(Square._E2))));
    }
 
    public void testBlackPawnPathsFromF2() {
-      Pawn pawn= BlackPawns.create();
+      Pawn pawn= BlackPawnMoves.create();
       Assert.assertEquals(
             ""
                   + //
@@ -372,14 +372,14 @@ public class BlackPawnTest extends TestCase {
                   + // A3-H3
                   "00000000"
                   + // A2-H2
-                  "00001110", // A1-H1
+                  "00000100", // A1-H1
             (this.zeroPrefix[Long.toBinaryString(
                   pawn.getPathsFrom(Square._F2)).length() - 1] + Long
                   .toBinaryString(pawn.getPathsFrom(Square._F2))));
    }
 
    public void testBlackPawnPathsFromG2() {
-      Pawn pawn= BlackPawns.create();
+      Pawn pawn= BlackPawnMoves.create();
       Assert.assertEquals(
             ""
                   + //
@@ -397,14 +397,14 @@ public class BlackPawnTest extends TestCase {
                   + // A3-H3
                   "00000000"
                   + // A2-H2
-                  "00000111", // A1-H1
+                  "00000010", // A1-H1
             (this.zeroPrefix[Long.toBinaryString(
                   pawn.getPathsFrom(Square._G2)).length() - 1] + Long
                   .toBinaryString(pawn.getPathsFrom(Square._G2))));
    }
 
    public void testBlackPawnPathsFromH2() {
-      Pawn pawn= BlackPawns.create();
+      Pawn pawn= BlackPawnMoves.create();
       Assert.assertEquals(
             ""
                   + //
@@ -422,14 +422,14 @@ public class BlackPawnTest extends TestCase {
                   + // A3-H3
                   "00000000"
                   + // A2-H2
-                  "00000011", // A1-H1
+                  "00000001", // A1-H1
             (this.zeroPrefix[Long.toBinaryString(
                   pawn.getPathsFrom(Square._H2)).length() - 1] + Long
                   .toBinaryString(pawn.getPathsFrom(Square._H2))));
    }
 
    public void testBlackPawnPathsFromA3() {
-      Pawn pawn= BlackPawns.create();
+      Pawn pawn= BlackPawnMoves.create();
       Assert.assertEquals(
             ""
                   + //
@@ -445,7 +445,7 @@ public class BlackPawnTest extends TestCase {
                   + // A4-H4
                   "00000000"
                   + // A3-H3
-                  "11000000"
+                  "10000000"
                   + // A2-H2
                   "00000000", // A1-H1
             (this.zeroPrefix[Long.toBinaryString(
@@ -454,7 +454,7 @@ public class BlackPawnTest extends TestCase {
    }
 
    public void testBlackPawnPathsFromB3() {
-      Pawn pawn= BlackPawns.create();
+      Pawn pawn= BlackPawnMoves.create();
       Assert.assertEquals(
             ""
                   + //
@@ -470,7 +470,7 @@ public class BlackPawnTest extends TestCase {
                   + // A4-H4
                   "00000000"
                   + // A3-H3
-                  "11100000"
+                  "01000000"
                   + // A2-H2
                   "00000000", // A1-H1
             (this.zeroPrefix[Long.toBinaryString(
@@ -479,7 +479,7 @@ public class BlackPawnTest extends TestCase {
    }
 
    public void testBlackPawnPathsFromC3() {
-      Pawn pawn= BlackPawns.create();
+      Pawn pawn= BlackPawnMoves.create();
       Assert.assertEquals(
             ""
                   + //
@@ -495,7 +495,7 @@ public class BlackPawnTest extends TestCase {
                   + // A4-H4
                   "00000000"
                   + // A3-H3
-                  "01110000"
+                  "00100000"
                   + // A2-H2
                   "00000000", // A1-H1
             (this.zeroPrefix[Long.toBinaryString(
@@ -504,7 +504,7 @@ public class BlackPawnTest extends TestCase {
    }
 
    public void testBlackPawnPathsFromD3() {
-      Pawn pawn= BlackPawns.create();
+      Pawn pawn= BlackPawnMoves.create();
       Assert.assertEquals(
             ""
                   + //
@@ -520,7 +520,7 @@ public class BlackPawnTest extends TestCase {
                   + // A4-H4
                   "00000000"
                   + // A3-H3
-                  "00111000"
+                  "00010000"
                   + // A2-H2
                   "00000000", // A1-H1
             (this.zeroPrefix[Long.toBinaryString(
@@ -529,7 +529,7 @@ public class BlackPawnTest extends TestCase {
    }
 
    public void testBlackPawnPathsFromE3() {
-      Pawn pawn= BlackPawns.create();
+      Pawn pawn= BlackPawnMoves.create();
       Assert.assertEquals(
             ""
                   + //
@@ -545,7 +545,7 @@ public class BlackPawnTest extends TestCase {
                   + // A4-H4
                   "00000000"
                   + // A3-H3
-                  "00011100"
+                  "00001000"
                   + // A2-H2
                   "00000000", // A1-H1
             (this.zeroPrefix[Long.toBinaryString(
@@ -554,7 +554,7 @@ public class BlackPawnTest extends TestCase {
    }
 
    public void testBlackPawnPathsFromF3() {
-      Pawn pawn= BlackPawns.create();
+      Pawn pawn= BlackPawnMoves.create();
       Assert.assertEquals(
             ""
                   + //
@@ -570,7 +570,7 @@ public class BlackPawnTest extends TestCase {
                   + // A4-H4
                   "00000000"
                   + // A3-H3
-                  "00001110"
+                  "00000100"
                   + // A2-H2
                   "00000000", // A1-H1
             (this.zeroPrefix[Long.toBinaryString(
@@ -579,7 +579,7 @@ public class BlackPawnTest extends TestCase {
    }
 
    public void testBlackPawnPathsFromG3() {
-      Pawn pawn= BlackPawns.create();
+      Pawn pawn= BlackPawnMoves.create();
       Assert.assertEquals(
             ""
                   + //
@@ -595,7 +595,7 @@ public class BlackPawnTest extends TestCase {
                   + // A4-H4
                   "00000000"
                   + // A3-H3
-                  "00000111"
+                  "00000010"
                   + // A2-H2
                   "00000000", // A1-H1
             (this.zeroPrefix[Long.toBinaryString(
@@ -604,7 +604,7 @@ public class BlackPawnTest extends TestCase {
    }
 
    public void testBlackPawnPathsFromH3() {
-      Pawn pawn= BlackPawns.create();
+      Pawn pawn= BlackPawnMoves.create();
       Assert.assertEquals(
             ""
                   + //
@@ -620,7 +620,7 @@ public class BlackPawnTest extends TestCase {
                   + // A4-H4
                   "00000000"
                   + // A3-H3
-                  "00000011"
+                  "00000001"
                   + // A2-H2
                   "00000000", // A1-H1
             (this.zeroPrefix[Long.toBinaryString(
@@ -629,7 +629,7 @@ public class BlackPawnTest extends TestCase {
    }
 
    public void testBlackPawnPathsFromA4() {
-      Pawn pawn= BlackPawns.create();
+      Pawn pawn= BlackPawnMoves.create();
       Assert.assertEquals(
             ""
                   + //
@@ -643,7 +643,7 @@ public class BlackPawnTest extends TestCase {
                   + // A5-H5
                   "00000000"
                   + // A4-H4
-                  "11000000"
+                  "10000000"
                   + // A3-H3
                   "00000000"
                   + // A2-H2
@@ -654,7 +654,7 @@ public class BlackPawnTest extends TestCase {
    }
 
    public void testBlackPawnPathsFromB4() {
-      Pawn pawn= BlackPawns.create();
+      Pawn pawn= BlackPawnMoves.create();
       Assert.assertEquals(
             ""
                   + //
@@ -668,7 +668,7 @@ public class BlackPawnTest extends TestCase {
                   + // A5-H5
                   "00000000"
                   + // A4-H4
-                  "11100000"
+                  "01000000"
                   + // A3-H3
                   "00000000"
                   + // A2-H2
@@ -679,7 +679,7 @@ public class BlackPawnTest extends TestCase {
    }
 
    public void testBlackPawnPathsFromC4() {
-      Pawn pawn= BlackPawns.create();
+      Pawn pawn= BlackPawnMoves.create();
       Assert.assertEquals(
             ""
                   + //
@@ -693,7 +693,7 @@ public class BlackPawnTest extends TestCase {
                   + // A5-H5
                   "00000000"
                   + // A4-H4
-                  "01110000"
+                  "00100000"
                   + // A3-H3
                   "00000000"
                   + // A2-H2
@@ -704,7 +704,7 @@ public class BlackPawnTest extends TestCase {
    }
 
    public void testBlackPawnPathsFromD4() {
-      Pawn pawn= BlackPawns.create();
+      Pawn pawn= BlackPawnMoves.create();
       Assert.assertEquals(
             ""
                   + //
@@ -718,7 +718,7 @@ public class BlackPawnTest extends TestCase {
                   + // A5-H5
                   "00000000"
                   + // A4-H4
-                  "00111000"
+                  "00010000"
                   + // A3-H3
                   "00000000"
                   + // A2-H2
@@ -729,7 +729,7 @@ public class BlackPawnTest extends TestCase {
    }
 
    public void testBlackPawnPathsFromE4() {
-      Pawn pawn= BlackPawns.create();
+      Pawn pawn= BlackPawnMoves.create();
       Assert.assertEquals(
             ""
                   + //
@@ -743,7 +743,7 @@ public class BlackPawnTest extends TestCase {
                   + // A5-H5
                   "00000000"
                   + // A4-H4
-                  "00011100"
+                  "00001000"
                   + // A3-H3
                   "00000000"
                   + // A2-H2
@@ -754,7 +754,7 @@ public class BlackPawnTest extends TestCase {
    }
 
    public void testBlackPawnPathsFromF4() {
-      Pawn pawn= BlackPawns.create();
+      Pawn pawn= BlackPawnMoves.create();
       Assert.assertEquals(
             ""
                   + //
@@ -768,7 +768,7 @@ public class BlackPawnTest extends TestCase {
                   + // A5-H5
                   "00000000"
                   + // A4-H4
-                  "00001110"
+                  "00000100"
                   + // A3-H3
                   "00000000"
                   + // A2-H2
@@ -779,7 +779,7 @@ public class BlackPawnTest extends TestCase {
    }
 
    public void testBlackPawnPathsFromG4() {
-      Pawn pawn= BlackPawns.create();
+      Pawn pawn= BlackPawnMoves.create();
       Assert.assertEquals(
             ""
                   + //
@@ -793,7 +793,7 @@ public class BlackPawnTest extends TestCase {
                   + // A5-H5
                   "00000000"
                   + // A4-H4
-                  "00000111"
+                  "00000010"
                   + // A3-H3
                   "00000000"
                   + // A2-H2
@@ -804,7 +804,7 @@ public class BlackPawnTest extends TestCase {
    }
 
    public void testBlackPawnPathsFromH4() {
-      Pawn pawn= BlackPawns.create();
+      Pawn pawn= BlackPawnMoves.create();
       Assert.assertEquals(
             ""
                   + //
@@ -818,7 +818,7 @@ public class BlackPawnTest extends TestCase {
                   + // A5-H5
                   "00000000"
                   + // A4-H4
-                  "00000011"
+                  "00000001"
                   + // A3-H3
                   "00000000"
                   + // A2-H2
@@ -829,7 +829,7 @@ public class BlackPawnTest extends TestCase {
    }
 
    public void testBlackPawnPathsFromA5() {
-      Pawn pawn= BlackPawns.create();
+      Pawn pawn= BlackPawnMoves.create();
       Assert.assertEquals(
             ""
                   + //
@@ -841,7 +841,7 @@ public class BlackPawnTest extends TestCase {
                   + // A6-H6
                   "00000000"
                   + // A5-H5
-                  "11000000"
+                  "10000000"
                   + // A4-H4
                   "00000000"
                   + // A3-H3
@@ -854,7 +854,7 @@ public class BlackPawnTest extends TestCase {
    }
 
    public void testBlackPawnPathsFromB5() {
-      Pawn pawn= BlackPawns.create();
+      Pawn pawn= BlackPawnMoves.create();
       Assert.assertEquals(
             ""
                   + //
@@ -866,7 +866,7 @@ public class BlackPawnTest extends TestCase {
                   + // A6-H6
                   "00000000"
                   + // A5-H5
-                  "11100000"
+                  "01000000"
                   + // A4-H4
                   "00000000"
                   + // A3-H3
@@ -879,7 +879,7 @@ public class BlackPawnTest extends TestCase {
    }
 
    public void testBlackPawnPathsFromC5() {
-      Pawn pawn= BlackPawns.create();
+      Pawn pawn= BlackPawnMoves.create();
       Assert.assertEquals(
             ""
                   + //
@@ -891,7 +891,7 @@ public class BlackPawnTest extends TestCase {
                   + // A6-H6
                   "00000000"
                   + // A5-H5
-                  "01110000"
+                  "00100000"
                   + // A4-H4
                   "00000000"
                   + // A3-H3
@@ -904,7 +904,7 @@ public class BlackPawnTest extends TestCase {
    }
 
    public void testBlackPawnPathsFromD5() {
-      Pawn pawn= BlackPawns.create();
+      Pawn pawn= BlackPawnMoves.create();
       Assert.assertEquals(
             ""
                   + //
@@ -916,7 +916,7 @@ public class BlackPawnTest extends TestCase {
                   + // A6-H6
                   "00000000"
                   + // A5-H5
-                  "00111000"
+                  "00010000"
                   + // A4-H4
                   "00000000"
                   + // A3-H3
@@ -929,7 +929,7 @@ public class BlackPawnTest extends TestCase {
    }
 
    public void testBlackPawnPathsFromE5() {
-      Pawn pawn= BlackPawns.create();
+      Pawn pawn= BlackPawnMoves.create();
       Assert.assertEquals(
             ""
                   + //
@@ -941,7 +941,7 @@ public class BlackPawnTest extends TestCase {
                   + // A6-H6
                   "00000000"
                   + // A5-H5
-                  "00011100"
+                  "00001000"
                   + // A4-H4
                   "00000000"
                   + // A3-H3
@@ -954,7 +954,7 @@ public class BlackPawnTest extends TestCase {
    }
 
    public void testBlackPawnPathsFromF5() {
-      Pawn pawn= BlackPawns.create();
+      Pawn pawn= BlackPawnMoves.create();
       Assert.assertEquals(
             ""
                   + //
@@ -966,7 +966,7 @@ public class BlackPawnTest extends TestCase {
                   + // A6-H6
                   "00000000"
                   + // A5-H5
-                  "00001110"
+                  "00000100"
                   + // A4-H4
                   "00000000"
                   + // A3-H3
@@ -979,7 +979,7 @@ public class BlackPawnTest extends TestCase {
    }
 
    public void testBlackPawnPathsFromG5() {
-      Pawn pawn= BlackPawns.create();
+      Pawn pawn= BlackPawnMoves.create();
       Assert.assertEquals(
             ""
                   + //
@@ -991,7 +991,7 @@ public class BlackPawnTest extends TestCase {
                   + // A6-H6
                   "00000000"
                   + // A5-H5
-                  "00000111"
+                  "00000010"
                   + // A4-H4
                   "00000000"
                   + // A3-H3
@@ -1004,7 +1004,7 @@ public class BlackPawnTest extends TestCase {
    }
 
    public void testBlackPawnPathsFromH5() {
-      Pawn pawn= BlackPawns.create();
+      Pawn pawn= BlackPawnMoves.create();
       Assert.assertEquals(
             ""
                   + //
@@ -1016,7 +1016,7 @@ public class BlackPawnTest extends TestCase {
                   + // A6-H6
                   "00000000"
                   + // A5-H5
-                  "00000011"
+                  "00000001"
                   + // A4-H4
                   "00000000"
                   + // A3-H3
@@ -1029,7 +1029,7 @@ public class BlackPawnTest extends TestCase {
    }
 
    public void testBlackPawnPathsFromA6() {
-      Pawn pawn= BlackPawns.create();
+      Pawn pawn= BlackPawnMoves.create();
       Assert.assertEquals(
             ""
                   + //
@@ -1039,7 +1039,7 @@ public class BlackPawnTest extends TestCase {
                   + // A7-H7
                   "00000000"
                   + // A6-H6
-                  "11000000"
+                  "10000000"
                   + // A5-H5
                   "00000000"
                   + // A4-H4
@@ -1054,7 +1054,7 @@ public class BlackPawnTest extends TestCase {
    }
 
    public void testBlackPawnPathsFromB6() {
-      Pawn pawn= BlackPawns.create();
+      Pawn pawn= BlackPawnMoves.create();
       Assert.assertEquals(
             ""
                   + //
@@ -1064,7 +1064,7 @@ public class BlackPawnTest extends TestCase {
                   + // A7-H7
                   "00000000"
                   + // A6-H6
-                  "11100000"
+                  "01000000"
                   + // A5-H5
                   "00000000"
                   + // A4-H4
@@ -1079,7 +1079,7 @@ public class BlackPawnTest extends TestCase {
    }
 
    public void testBlackPawnPathsFromC6() {
-      Pawn pawn= BlackPawns.create();
+      Pawn pawn= BlackPawnMoves.create();
       Assert.assertEquals(
             ""
                   + //
@@ -1089,7 +1089,7 @@ public class BlackPawnTest extends TestCase {
                   + // A7-H7
                   "00000000"
                   + // A6-H6
-                  "01110000"
+                  "00100000"
                   + // A5-H5
                   "00000000"
                   + // A4-H4
@@ -1104,7 +1104,7 @@ public class BlackPawnTest extends TestCase {
    }
 
    public void testBlackPawnPathsFromD6() {
-      Pawn pawn= BlackPawns.create();
+      Pawn pawn= BlackPawnMoves.create();
       Assert.assertEquals(
             ""
                   + //
@@ -1114,7 +1114,7 @@ public class BlackPawnTest extends TestCase {
                   + // A7-H7
                   "00000000"
                   + // A6-H6
-                  "00111000"
+                  "00010000"
                   + // A5-H5
                   "00000000"
                   + // A4-H4
@@ -1129,7 +1129,7 @@ public class BlackPawnTest extends TestCase {
    }
 
    public void testBlackPawnPathsFromE6() {
-      Pawn pawn= BlackPawns.create();
+      Pawn pawn= BlackPawnMoves.create();
       Assert.assertEquals(
             ""
                   + //
@@ -1139,7 +1139,7 @@ public class BlackPawnTest extends TestCase {
                   + // A7-H7
                   "00000000"
                   + // A6-H6
-                  "00011100"
+                  "00001000"
                   + // A5-H5
                   "00000000"
                   + // A4-H4
@@ -1154,7 +1154,7 @@ public class BlackPawnTest extends TestCase {
    }
 
    public void testBlackPawnPathsFromF6() {
-      Pawn pawn= BlackPawns.create();
+      Pawn pawn= BlackPawnMoves.create();
       Assert.assertEquals(
             ""
                   + //
@@ -1164,7 +1164,7 @@ public class BlackPawnTest extends TestCase {
                   + // A7-H7
                   "00000000"
                   + // A6-H6
-                  "00001110"
+                  "00000100"
                   + // A5-H5
                   "00000000"
                   + // A4-H4
@@ -1179,7 +1179,7 @@ public class BlackPawnTest extends TestCase {
    }
 
    public void testBlackPawnPathsFromG6() {
-      Pawn pawn= BlackPawns.create();
+      Pawn pawn= BlackPawnMoves.create();
       Assert.assertEquals(
             ""
                   + //
@@ -1189,7 +1189,7 @@ public class BlackPawnTest extends TestCase {
                   + // A7-H7
                   "00000000"
                   + // A6-H6
-                  "00000111"
+                  "00000010"
                   + // A5-H5
                   "00000000"
                   + // A4-H4
@@ -1204,7 +1204,7 @@ public class BlackPawnTest extends TestCase {
    }
 
    public void testBlackPawnPathsFromH6() {
-      Pawn pawn= BlackPawns.create();
+      Pawn pawn= BlackPawnMoves.create();
       Assert.assertEquals(
             ""
                   + //
@@ -1214,7 +1214,7 @@ public class BlackPawnTest extends TestCase {
                   + // A7-H7
                   "00000000"
                   + // A6-H6
-                  "00000011"
+                  "00000001"
                   + // A5-H5
                   "00000000"
                   + // A4-H4
@@ -1229,7 +1229,7 @@ public class BlackPawnTest extends TestCase {
    }
 
    public void testBlackPawnPathsFromA7() {
-      Pawn pawn= BlackPawns.create();
+      Pawn pawn= BlackPawnMoves.create();
       Assert.assertEquals(
             ""
                   + //
@@ -1237,7 +1237,7 @@ public class BlackPawnTest extends TestCase {
                   + // A8-H8
                   "00000000"
                   + // A7-H7
-                  "11000000"
+                  "10000000"
                   + // A6-H6
                   "10000000"
                   + // A5-H5
@@ -1254,7 +1254,7 @@ public class BlackPawnTest extends TestCase {
    }
 
    public void testBlackPawnPathsFromB7() {
-      Pawn pawn= BlackPawns.create();
+      Pawn pawn= BlackPawnMoves.create();
       Assert.assertEquals(
             ""
                   + //
@@ -1262,7 +1262,7 @@ public class BlackPawnTest extends TestCase {
                   + // A8-H8
                   "00000000"
                   + // A7-H7
-                  "11100000"
+                  "01000000"
                   + // A6-H6
                   "01000000"
                   + // A5-H5
@@ -1279,7 +1279,7 @@ public class BlackPawnTest extends TestCase {
    }
 
    public void testBlackPawnPathsFromC7() {
-      Pawn pawn= BlackPawns.create();
+      Pawn pawn= BlackPawnMoves.create();
       Assert.assertEquals(
             ""
                   + //
@@ -1287,7 +1287,7 @@ public class BlackPawnTest extends TestCase {
                   + // A8-H8
                   "00000000"
                   + // A7-H7
-                  "01110000"
+                  "00100000"
                   + // A6-H6
                   "00100000"
                   + // A5-H5
@@ -1304,7 +1304,7 @@ public class BlackPawnTest extends TestCase {
    }
 
    public void testBlackPawnPathsFromD7() {
-      Pawn pawn= BlackPawns.create();
+      Pawn pawn= BlackPawnMoves.create();
       Assert.assertEquals(
             ""
                   + //
@@ -1312,7 +1312,7 @@ public class BlackPawnTest extends TestCase {
                   + // A8-H8
                   "00000000"
                   + // A7-H7
-                  "00111000"
+                  "00010000"
                   + // A6-H6
                   "00010000"
                   + // A5-H5
@@ -1329,7 +1329,7 @@ public class BlackPawnTest extends TestCase {
    }
 
    public void testBlackPawnPathsFromE7() {
-      Pawn pawn= BlackPawns.create();
+      Pawn pawn= BlackPawnMoves.create();
       Assert.assertEquals(
             ""
                   + //
@@ -1337,7 +1337,7 @@ public class BlackPawnTest extends TestCase {
                   + // A8-H8
                   "00000000"
                   + // A7-H7
-                  "00011100"
+                  "00001000"
                   + // A6-H6
                   "00001000"
                   + // A5-H5
@@ -1354,7 +1354,7 @@ public class BlackPawnTest extends TestCase {
    }
 
    public void testBlackPawnPathsFromF7() {
-      Pawn pawn= BlackPawns.create();
+      Pawn pawn= BlackPawnMoves.create();
       Assert.assertEquals(
             ""
                   + //
@@ -1362,7 +1362,7 @@ public class BlackPawnTest extends TestCase {
                   + // A8-H8
                   "00000000"
                   + // A7-H7
-                  "00001110"
+                  "00000100"
                   + // A6-H6
                   "00000100"
                   + // A5-H5
@@ -1379,7 +1379,7 @@ public class BlackPawnTest extends TestCase {
    }
 
    public void testBlackPawnPathsFromG7() {
-      Pawn pawn= BlackPawns.create();
+      Pawn pawn= BlackPawnMoves.create();
       Assert.assertEquals(
             ""
                   + //
@@ -1387,7 +1387,7 @@ public class BlackPawnTest extends TestCase {
                   + // A8-H8
                   "00000000"
                   + // A7-H7
-                  "00000111"
+                  "00000010"
                   + // A6-H6
                   "00000010"
                   + // A5-H5
@@ -1404,7 +1404,7 @@ public class BlackPawnTest extends TestCase {
    }
 
    public void testBlackPawnPathsFromH7() {
-      Pawn pawn= BlackPawns.create();
+      Pawn pawn= BlackPawnMoves.create();
       Assert.assertEquals(
             ""
                   + //
@@ -1412,7 +1412,7 @@ public class BlackPawnTest extends TestCase {
                   + // A8-H8
                   "00000000"
                   + // A7-H7
-                  "00000011"
+                  "00000001"
                   + // A6-H6
                   "00000001"
                   + // A5-H5
@@ -1429,7 +1429,7 @@ public class BlackPawnTest extends TestCase {
    }
 
    public void testBlackPawnPathsFromA8() {
-      Pawn pawn= BlackPawns.create();
+      Pawn pawn= BlackPawnMoves.create();
       Assert.assertEquals(
             ""
                   + //
@@ -1454,7 +1454,7 @@ public class BlackPawnTest extends TestCase {
    }
 
    public void testBlackPawnPathsFromB8() {
-      Pawn pawn= BlackPawns.create();
+      Pawn pawn= BlackPawnMoves.create();
       Assert.assertEquals(
             ""
                   + //
@@ -1479,7 +1479,7 @@ public class BlackPawnTest extends TestCase {
    }
 
    public void testBlackPawnPathsFromC8() {
-      Pawn pawn= BlackPawns.create();
+      Pawn pawn= BlackPawnMoves.create();
       Assert.assertEquals(
             ""
                   + //
@@ -1504,7 +1504,7 @@ public class BlackPawnTest extends TestCase {
    }
 
    public void testBlackPawnPathsFromD8() {
-      Pawn pawn= BlackPawns.create();
+      Pawn pawn= BlackPawnMoves.create();
       Assert.assertEquals(
             ""
                   + //
@@ -1529,7 +1529,7 @@ public class BlackPawnTest extends TestCase {
    }
 
    public void testBlackPawnPathsFromE8() {
-      Pawn pawn= BlackPawns.create();
+      Pawn pawn= BlackPawnMoves.create();
       Assert.assertEquals(
             ""
                   + //
@@ -1554,7 +1554,7 @@ public class BlackPawnTest extends TestCase {
    }
 
    public void testBlackPawnPathsFromF8() {
-      Pawn pawn= BlackPawns.create();
+      Pawn pawn= BlackPawnMoves.create();
       Assert.assertEquals(
             ""
                   + //
@@ -1579,7 +1579,7 @@ public class BlackPawnTest extends TestCase {
    }
 
    public void testBlackPawnPathsFromG8() {
-      Pawn pawn= BlackPawns.create();
+      Pawn pawn= BlackPawnMoves.create();
       Assert.assertEquals(
             ""
                   + //
@@ -1604,7 +1604,7 @@ public class BlackPawnTest extends TestCase {
    }
 
    public void testBlackPawnPathsFromH8() {
-      Pawn pawn= BlackPawns.create();
+      Pawn pawn= BlackPawnMoves.create();
       Assert.assertEquals(
             ""
                   + //

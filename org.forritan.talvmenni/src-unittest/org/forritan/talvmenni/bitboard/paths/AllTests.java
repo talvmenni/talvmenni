@@ -9,10 +9,10 @@ public class AllTests {
       TestSuite suite = new TestSuite(
          "Test for org.forritan.shallowsenior.bitboard.attacks");
       //$JUnit-BEGIN$
-      suite.addTestSuite(BlackPawnTest.class);
+      suite.addTestSuite(BlackPawnMoveTest.class);
       suite.addTestSuite(RookTest.class);
       suite.addTestSuite(QueenTest.class);
-      suite.addTestSuite(WhitePawnTest.class);
+      suite.addTestSuite(WhitePawnMoveTest.class);
       suite.addTestSuite(BishopTest.class);
       suite.addTestSuite(KnightTest.class);
       suite.addTestSuite(KingTest.class);
