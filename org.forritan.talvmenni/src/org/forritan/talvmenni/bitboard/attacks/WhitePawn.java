@@ -1,7 +1,6 @@
 package org.forritan.talvmenni.bitboard.attacks;
 
-import org.forritan.talvmenni.bitboard.paths.BlackPawnCaptures;
-import org.forritan.talvmenni.bitboard.paths.BlackPawnMoves;
+import org.forritan.talvmenni.bitboard.Rank;
 import org.forritan.talvmenni.bitboard.paths.WhitePawnCaptures;
 import org.forritan.talvmenni.bitboard.paths.WhitePawnMoves;
 import org.forritan.talvmenni.game.Position;
@@ -28,6 +27,7 @@ public class WhitePawn {
             square);
       result &= ~p.black.allPieces;
       result &= ~p.white.allPieces;
+      result &= ~(((p.white.allPieces | p.black.allPieces)& Rank._3) << 8);
       return result; 
    }
 }
