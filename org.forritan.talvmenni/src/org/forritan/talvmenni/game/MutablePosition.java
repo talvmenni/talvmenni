@@ -65,6 +65,7 @@ public class MutablePosition extends PositionFactory {
             blackEnpassant);
       this.whiteBitboards= new Stack<Bitboard>();
       this.blackBitboards= new Stack<Bitboard>();
+      System.out.println("result 0-1 {created instance of MutablePosition}");
    }
 
    /**
@@ -79,6 +80,7 @@ public class MutablePosition extends PositionFactory {
             black);
       this.whiteBitboards= new Stack<Bitboard>();
       this.blackBitboards= new Stack<Bitboard>();
+      System.out.println("result 0-1 {created instance of MutablePosition}");
    }
 
    public Position pushMove(
