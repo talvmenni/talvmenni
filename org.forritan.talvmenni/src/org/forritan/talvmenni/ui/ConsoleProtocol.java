@@ -4,18 +4,20 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+import org.forritan.talvmenni.core.ChessEngine;
 
-public class ConsoleMode {
+
+public class ConsoleProtocol {
    private String  prompt;
    private boolean isRunning;
    ChessEngine     AChessEngine = new ChessEngine();
 
-   public ConsoleMode() {
+   public ConsoleProtocol() {
       isRunning= true;
       this.prompt= ":\\>";
    }
 
-   public void create() {
+   public void run() {
       welcomeMessage();
 
       while (this.isRunning) {

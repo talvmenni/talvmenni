@@ -2,17 +2,19 @@ package org.forritan.talvmenni.ui;
 
 import java.io.*;
 
+import org.forritan.talvmenni.core.ChessEngine;
 
-public class XboardMode {
+
+public class XboardProtocol {
 
    private boolean isRunning;
    ChessEngine     AChessEngine = new ChessEngine();
 
-   public XboardMode() {
+   public XboardProtocol() {
       isRunning= true;
    }
 
-   public void create() {
+   public void run() {
 
       BufferedReader inReader= new BufferedReader(new InputStreamReader(
             System.in));
