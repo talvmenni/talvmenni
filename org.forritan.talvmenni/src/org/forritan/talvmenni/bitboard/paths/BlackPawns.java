@@ -1,6 +1,5 @@
 package org.forritan.talvmenni.bitboard.paths;
 
-import org.forritan.talvmenni.bitboard.util.TigerLong;
 
 public class BlackPawns implements BlackPawn{
 
@@ -19,7 +18,7 @@ public class BlackPawns implements BlackPawn{
 
    public long getPathsFrom(
          long square) {
-      return BlackPawns.bitmaps[TigerLong.numberOfLeadingZeros(square)];
+      return BlackPawns.bitmaps[Long.numberOfLeadingZeros(square)];
    }
    
    static {

@@ -1,6 +1,5 @@
 package org.forritan.talvmenni.bitboard.paths;
 
-import org.forritan.talvmenni.bitboard.util.TigerLong;
 
 public class Kings implements King {
    
@@ -19,7 +18,7 @@ public class Kings implements King {
 
    public long getPathsFrom(
          long square) {
-      return Kings.bitmaps[TigerLong.numberOfLeadingZeros(square)];
+      return Kings.bitmaps[Long.numberOfLeadingZeros(square)];
    }
    
    static {

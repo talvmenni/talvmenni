@@ -1,7 +1,5 @@
 package org.forritan.talvmenni.bitboard.paths;
 
-import org.forritan.talvmenni.bitboard.util.TigerLong;
-
 public class WhitePawns implements WhitePawn{
 
    private static WhitePawns      instance;
@@ -19,7 +17,7 @@ public class WhitePawns implements WhitePawn{
 
    public long getPathsFrom(
          long square) {
-      return WhitePawns.bitmaps[TigerLong.numberOfLeadingZeros(square)];
+      return WhitePawns.bitmaps[Long.numberOfLeadingZeros(square)];
    }
    
    static {
