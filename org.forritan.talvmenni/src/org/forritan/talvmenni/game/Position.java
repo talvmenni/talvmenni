@@ -55,7 +55,6 @@ public class Position {
    }
 
    /**
-    * 
     * @param whiteKings
     * @param whiteQueens
     * @param whiteRooks
@@ -148,6 +147,7 @@ public class Position {
          long blackEnpassant) {
 
       this.white= new Bitboard(
+            true,
             this,
             whiteKings,
             whiteQueens,
@@ -158,6 +158,7 @@ public class Position {
             whiteCastling,
             whiteEnpassant);
       this.black= new Bitboard(
+            false,
             this,
             blackKings,
             blackQueens,
@@ -406,7 +407,7 @@ public class Position {
    private boolean isKingsSideCastlingLegal(
          Position p,
          boolean whiteToMove) {
-      
+
       boolean piecesNotMoved;
 
       if (whiteToMove) {
@@ -414,12 +415,14 @@ public class Position {
       } else {
          piecesNotMoved= ((p.black.castling & (Square._E8 | Square._H8)) ^ (Square._E8 | Square._H8)) == 0L;
       }
-      
-      if(piecesNotMoved) {
-         if(whiteToMove) {
-            return (p.black.getAllKillerMovesAttackedSquares(false) ^ (Square._E1 | Square._F1 | Square._G1)) == 0L; 
+
+      if (piecesNotMoved) {
+         if (whiteToMove) {
+            return (p.black.getAllKillerMovesAttackedSquares() ^ (Square._E1
+                  | Square._F1 | Square._G1)) == 0L;
          } else {
-            return (p.white.getAllKillerMovesAttackedSquares(true) ^ (Square._E8 | Square._F8 | Square._G8)) == 0L; 
+            return (p.white.getAllKillerMovesAttackedSquares() ^ (Square._E8
+                  | Square._F8 | Square._G8)) == 0L;
          }
       } else {
          return false;
@@ -445,45 +448,48 @@ public class Position {
       } else {
          piecesNotMoved= ((p.black.castling & (Square._A8 | Square._E8)) ^ (Square._A8 | Square._E8)) == 0L;
       }
-      
-      if(piecesNotMoved) {
-         if(whiteToMove) {
-            return (p.black.getAllKillerMovesAttackedSquares(false) ^ (Square._C1 | Square._D1 | Square._E1)) == 0L; 
+
+      if (piecesNotMoved) {
+         if (whiteToMove) {
+            return (p.black.getAllKillerMovesAttackedSquares() ^ (Square._C1
+                  | Square._D1 | Square._E1)) == 0L;
          } else {
-            return (p.white.getAllKillerMovesAttackedSquares(true) ^ (Square._C8 | Square._D8 | Square._E8)) == 0L; 
+            return (p.white.getAllKillerMovesAttackedSquares() ^ (Square._C8
+                  | Square._D8 | Square._E8)) == 0L;
          }
       } else {
          return false;
       }
 
    }
-   
+
    public long getAllSquaresAttackedByWhiteKillerMove() {
-      return this.white.getAllKillerMovesAttackedSquares(true);
+      return this.white.getAllKillerMovesAttackedSquares();
    }
 
    public long getAllSquaresAttackedByBlackKillerMove() {
-      return this.black.getAllKillerMovesAttackedSquares(false);
+      return this.black.getAllKillerMovesAttackedSquares();
    }
 
-
    public class Bitboard {
+      public final boolean  white;
       public final Position parent;
-      
-      public final long kings;
-      public final long queens;
-      public final long rooks;
-      public final long bishops;
-      public final long knights;
-      public final long pawns;
 
-      public final long castling;
-      public final long enpassant;
+      public final long     kings;
+      public final long     queens;
+      public final long     rooks;
+      public final long     bishops;
+      public final long     knights;
+      public final long     pawns;
 
-      public final long allPieces;
+      public final long     castling;
+      public final long     enpassant;
+
+      public final long     allPieces;
 
       /**
-       * 
+       * @param white
+       * @param parent
        * @param kings
        * @param queens
        * @param rooks
@@ -494,6 +500,7 @@ public class Position {
        * @param enpassant
        */
       public Bitboard(
+            boolean white,
             Position parent,
             long kings,
             long queens,
@@ -503,6 +510,7 @@ public class Position {
             long pawns,
             long castling,
             long enpassant) {
+         this.white= white;
          this.parent= parent;
          this.kings= kings;
          this.queens= queens;
@@ -596,52 +604,66 @@ public class Position {
             long position) {
          return ((this.enpassant & position) != 0L);
       }
-      
-      private long getAllKillerMovesAttackedSquares(boolean white) {
+
+      private long getAllKillerMovesAttackedSquares() {
          long result= Squares._EMPTY_BOARD;
-         
+
          Iterator kings= this.kingsIterator();
-         while(kings.hasNext()) {
-            long square= ((Long)kings.next()).longValue();
-            result |= King.attacksFrom(square, this.parent);
+         while (kings.hasNext()) {
+            long square= ((Long) kings.next()).longValue();
+            result|= King.attacksFrom(
+                  square,
+                  this.parent);
          }
-         
+
          Iterator queens= this.queensIterator();
-         while(queens.hasNext()) {
-            long square= ((Long)queens.next()).longValue();
-            result |= Queen.attacksFrom(square, this.parent);
+         while (queens.hasNext()) {
+            long square= ((Long) queens.next()).longValue();
+            result|= Queen.attacksFrom(
+                  square,
+                  this.parent);
          }
-            
+
          Iterator rooks= this.rooksIterator();
-         while(rooks.hasNext()) {
-            long square= ((Long)rooks.next()).longValue();
-            result |= Rook.attacksFrom(square, this.parent);
+         while (rooks.hasNext()) {
+            long square= ((Long) rooks.next()).longValue();
+            result|= Rook.attacksFrom(
+                  square,
+                  this.parent);
          }
-            
+
          Iterator bishops= this.bishopsIterator();
-         while(bishops.hasNext()) {
-            long square= ((Long)bishops.next()).longValue();
-            result |= Bishop.attacksFrom(square, this.parent);
+         while (bishops.hasNext()) {
+            long square= ((Long) bishops.next()).longValue();
+            result|= Bishop.attacksFrom(
+                  square,
+                  this.parent);
          }
-            
+
          Iterator knights= this.knightsIterator();
-         while(knights.hasNext()) {
-            long square= ((Long)knights.next()).longValue();
-            result |= Knight.attacksFrom(square, this.parent);
+         while (knights.hasNext()) {
+            long square= ((Long) knights.next()).longValue();
+            result|= Knight.attacksFrom(
+                  square,
+                  this.parent);
          }
 
          Iterator pawns= this.pawnsIterator();
-         while(pawns.hasNext()) {
-            if(white) {
-               long square= ((Long)pawns.next()).longValue();
-               result |= WhitePawn.killerMovesAttacksFrom(square, this.parent);
+         while (pawns.hasNext()) {
+            if (this.white) {
+               long square= ((Long) pawns.next()).longValue();
+               result|= WhitePawn.killerMovesAttacksFrom(
+                     square,
+                     this.parent);
             } else {
-               long square= ((Long)pawns.next()).longValue();
-               result |=  BlackPawn.killerMovesAttacksFrom(square, this.parent);
+               long square= ((Long) pawns.next()).longValue();
+               result|= BlackPawn.killerMovesAttacksFrom(
+                     square,
+                     this.parent);
             }
          }
-           
-         return result;         
+
+         return result;
       }
 
       private class BitboardIterator implements Iterator {
