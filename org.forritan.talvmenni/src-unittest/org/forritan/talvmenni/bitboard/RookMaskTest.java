@@ -454,8 +454,8 @@ public class RookMaskTest extends TestCase {
                   "11111111" // A1-H1
             ,
             (this.zeroPrefix[Long.toBinaryString(
-                  RookMask._NORHT2SOUTH_FROM_RANK_1).length() - 1] + Long
-                  .toBinaryString(RookMask._NORHT2SOUTH_FROM_RANK_1)));
+                  RookMask._NORTH2SOUTH_FROM_RANK_1).length() - 1] + Long
+                  .toBinaryString(RookMask._NORTH2SOUTH_FROM_RANK_1)));
    }
 
    public void test_North2SouthFromRank2() {
@@ -479,8 +479,8 @@ public class RookMaskTest extends TestCase {
                   "11111111" // A1-H1
             ,
             (this.zeroPrefix[Long.toBinaryString(
-                  RookMask._NORHT2SOUTH_FROM_RANK_2).length() - 1] + Long
-                  .toBinaryString(RookMask._NORHT2SOUTH_FROM_RANK_2)));
+                  RookMask._NORTH2SOUTH_FROM_RANK_2).length() - 1] + Long
+                  .toBinaryString(RookMask._NORTH2SOUTH_FROM_RANK_2)));
    }
 
    public void test_North2SouthFromRank3() {
@@ -504,8 +504,8 @@ public class RookMaskTest extends TestCase {
                   "11111111" // A1-H1
             ,
             (this.zeroPrefix[Long.toBinaryString(
-                  RookMask._NORHT2SOUTH_FROM_RANK_3).length() - 1] + Long
-                  .toBinaryString(RookMask._NORHT2SOUTH_FROM_RANK_3)));
+                  RookMask._NORTH2SOUTH_FROM_RANK_3).length() - 1] + Long
+                  .toBinaryString(RookMask._NORTH2SOUTH_FROM_RANK_3)));
    }
 
    public void test_North2SouthFromRank4() {
@@ -529,8 +529,8 @@ public class RookMaskTest extends TestCase {
                   "11111111" // A1-H1
             ,
             (this.zeroPrefix[Long.toBinaryString(
-                  RookMask._NORHT2SOUTH_FROM_RANK_4).length() - 1] + Long
-                  .toBinaryString(RookMask._NORHT2SOUTH_FROM_RANK_4)));
+                  RookMask._NORTH2SOUTH_FROM_RANK_4).length() - 1] + Long
+                  .toBinaryString(RookMask._NORTH2SOUTH_FROM_RANK_4)));
    }
 
    public void test_North2SouthFromRank5() {
@@ -554,8 +554,8 @@ public class RookMaskTest extends TestCase {
                   "11111111" // A1-H1
             ,
             (this.zeroPrefix[Long.toBinaryString(
-                  RookMask._NORHT2SOUTH_FROM_RANK_5).length() - 1] + Long
-                  .toBinaryString(RookMask._NORHT2SOUTH_FROM_RANK_5)));
+                  RookMask._NORTH2SOUTH_FROM_RANK_5).length() - 1] + Long
+                  .toBinaryString(RookMask._NORTH2SOUTH_FROM_RANK_5)));
    }
 
    public void test_North2SouthFromRank6() {
@@ -579,8 +579,8 @@ public class RookMaskTest extends TestCase {
                   "11111111" // A1-H1
             ,
             (this.zeroPrefix[Long.toBinaryString(
-                  RookMask._NORHT2SOUTH_FROM_RANK_6).length() - 1] + Long
-                  .toBinaryString(RookMask._NORHT2SOUTH_FROM_RANK_6)));
+                  RookMask._NORTH2SOUTH_FROM_RANK_6).length() - 1] + Long
+                  .toBinaryString(RookMask._NORTH2SOUTH_FROM_RANK_6)));
    }
 
    public void test_North2SouthFromRank7() {
@@ -604,8 +604,8 @@ public class RookMaskTest extends TestCase {
                   "11111111" // A1-H1
             ,
             (this.zeroPrefix[Long.toBinaryString(
-                  RookMask._NORHT2SOUTH_FROM_RANK_7).length() - 1] + Long
-                  .toBinaryString(RookMask._NORHT2SOUTH_FROM_RANK_7)));
+                  RookMask._NORTH2SOUTH_FROM_RANK_7).length() - 1] + Long
+                  .toBinaryString(RookMask._NORTH2SOUTH_FROM_RANK_7)));
    }
 
    public void test_North2SouthFromRank8() {
@@ -629,8 +629,8 @@ public class RookMaskTest extends TestCase {
                   "11111111" // A1-H1
             ,
             (this.zeroPrefix[Long.toBinaryString(
-                  RookMask._NORHT2SOUTH_FROM_RANK_8).length() - 1] + Long
-                  .toBinaryString(RookMask._NORHT2SOUTH_FROM_RANK_8)));
+                  RookMask._NORTH2SOUTH_FROM_RANK_8).length() - 1] + Long
+                  .toBinaryString(RookMask._NORTH2SOUTH_FROM_RANK_8)));
    }
 
    public void test_South2NorthFromRank1() {
@@ -654,8 +654,8 @@ public class RookMaskTest extends TestCase {
                   "11111111" // A1-H1
             ,
             (this.zeroPrefix[Long.toBinaryString(
-                  RookMask._SOUTH2NORHT_FROM_RANK_1).length() - 1] + Long
-                  .toBinaryString(RookMask._SOUTH2NORHT_FROM_RANK_1)));
+                  RookMask._SOUTH2NORTH_FROM_RANK_1).length() - 1] + Long
+                  .toBinaryString(RookMask._SOUTH2NORTH_FROM_RANK_1)));
    }
 
    public void test_South2NorthFromRank2() {
@@ -679,8 +679,8 @@ public class RookMaskTest extends TestCase {
                   "00000000" // A1-H1
             ,
             (this.zeroPrefix[Long.toBinaryString(
-                  RookMask._SOUTH2NORHT_FROM_RANK_2).length() - 1] + Long
-                  .toBinaryString(RookMask._SOUTH2NORHT_FROM_RANK_2)));
+                  RookMask._SOUTH2NORTH_FROM_RANK_2).length() - 1] + Long
+                  .toBinaryString(RookMask._SOUTH2NORTH_FROM_RANK_2)));
    }
 
    public void test_South2NorthFromRank3() {
@@ -704,8 +704,8 @@ public class RookMaskTest extends TestCase {
                   "00000000" // A1-H1
             ,
             (this.zeroPrefix[Long.toBinaryString(
-                  RookMask._SOUTH2NORHT_FROM_RANK_3).length() - 1] + Long
-                  .toBinaryString(RookMask._SOUTH2NORHT_FROM_RANK_3)));
+                  RookMask._SOUTH2NORTH_FROM_RANK_3).length() - 1] + Long
+                  .toBinaryString(RookMask._SOUTH2NORTH_FROM_RANK_3)));
    }
 
    public void test_South2NorthFromRank4() {
@@ -729,8 +729,8 @@ public class RookMaskTest extends TestCase {
                   "00000000" // A1-H1
             ,
             (this.zeroPrefix[Long.toBinaryString(
-                  RookMask._SOUTH2NORHT_FROM_RANK_4).length() - 1] + Long
-                  .toBinaryString(RookMask._SOUTH2NORHT_FROM_RANK_4)));
+                  RookMask._SOUTH2NORTH_FROM_RANK_4).length() - 1] + Long
+                  .toBinaryString(RookMask._SOUTH2NORTH_FROM_RANK_4)));
    }
 
    public void test_South2NorthFromRank5() {
@@ -754,8 +754,8 @@ public class RookMaskTest extends TestCase {
                   "00000000" // A1-H1
             ,
             (this.zeroPrefix[Long.toBinaryString(
-                  RookMask._SOUTH2NORHT_FROM_RANK_5).length() - 1] + Long
-                  .toBinaryString(RookMask._SOUTH2NORHT_FROM_RANK_5)));
+                  RookMask._SOUTH2NORTH_FROM_RANK_5).length() - 1] + Long
+                  .toBinaryString(RookMask._SOUTH2NORTH_FROM_RANK_5)));
    }
 
    public void test_South2NorthFromRank6() {
@@ -779,8 +779,8 @@ public class RookMaskTest extends TestCase {
                   "00000000" // A1-H1
             ,
             (this.zeroPrefix[Long.toBinaryString(
-                  RookMask._SOUTH2NORHT_FROM_RANK_6).length() - 1] + Long
-                  .toBinaryString(RookMask._SOUTH2NORHT_FROM_RANK_6)));
+                  RookMask._SOUTH2NORTH_FROM_RANK_6).length() - 1] + Long
+                  .toBinaryString(RookMask._SOUTH2NORTH_FROM_RANK_6)));
    }
 
    public void test_South2NorthFromRank7() {
@@ -804,8 +804,8 @@ public class RookMaskTest extends TestCase {
                   "00000000" // A1-H1
             ,
             (this.zeroPrefix[Long.toBinaryString(
-                  RookMask._SOUTH2NORHT_FROM_RANK_7).length() - 1] + Long
-                  .toBinaryString(RookMask._SOUTH2NORHT_FROM_RANK_7)));
+                  RookMask._SOUTH2NORTH_FROM_RANK_7).length() - 1] + Long
+                  .toBinaryString(RookMask._SOUTH2NORTH_FROM_RANK_7)));
    }
 
    public void test_South2NorthFromRank8() {
@@ -829,8 +829,8 @@ public class RookMaskTest extends TestCase {
                   "00000000" // A1-H1
             ,
             (this.zeroPrefix[Long.toBinaryString(
-                  RookMask._SOUTH2NORHT_FROM_RANK_8).length() - 1] + Long
-                  .toBinaryString(RookMask._SOUTH2NORHT_FROM_RANK_8)));
+                  RookMask._SOUTH2NORTH_FROM_RANK_8).length() - 1] + Long
+                  .toBinaryString(RookMask._SOUTH2NORTH_FROM_RANK_8)));
    }
 
    

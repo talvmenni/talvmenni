@@ -74,65 +74,65 @@ public interface RookMask {
                                                            | File._G;
    public static final long _EAST2WEST_FROM_FILE_H   = Square._FULL_BOARD;
 
-   public static final long _NORHT2SOUTH_FROM_RANK_1 = Rank._1;
-   public static final long _NORHT2SOUTH_FROM_RANK_2 = Rank._1
+   public static final long _NORTH2SOUTH_FROM_RANK_1 = Rank._1;
+   public static final long _NORTH2SOUTH_FROM_RANK_2 = Rank._1
                                                            | Rank._2;
-   public static final long _NORHT2SOUTH_FROM_RANK_3 = Rank._1
+   public static final long _NORTH2SOUTH_FROM_RANK_3 = Rank._1
                                                            | Rank._2
                                                            | Rank._3;
-   public static final long _NORHT2SOUTH_FROM_RANK_4 = Rank._1
+   public static final long _NORTH2SOUTH_FROM_RANK_4 = Rank._1
                                                            | Rank._2
                                                            | Rank._3
                                                            | Rank._4;
-   public static final long _NORHT2SOUTH_FROM_RANK_5 = Rank._1
+   public static final long _NORTH2SOUTH_FROM_RANK_5 = Rank._1
                                                            | Rank._2
                                                            | Rank._3
                                                            | Rank._4
                                                            | Rank._5;
-   public static final long _NORHT2SOUTH_FROM_RANK_6 = Rank._1
+   public static final long _NORTH2SOUTH_FROM_RANK_6 = Rank._1
                                                            | Rank._2
                                                            | Rank._3
                                                            | Rank._4
                                                            | Rank._5
                                                            | Rank._6;
-   public static final long _NORHT2SOUTH_FROM_RANK_7 = Rank._1
+   public static final long _NORTH2SOUTH_FROM_RANK_7 = Rank._1
                                                            | Rank._2
                                                            | Rank._3
                                                            | Rank._4
                                                            | Rank._5
                                                            | Rank._6
                                                            | Rank._7;
-   public static final long _NORHT2SOUTH_FROM_RANK_8 = Square._FULL_BOARD;
+   public static final long _NORTH2SOUTH_FROM_RANK_8 = Square._FULL_BOARD;
 
-   public static final long _SOUTH2NORHT_FROM_RANK_1 = Square._FULL_BOARD;
+   public static final long _SOUTH2NORTH_FROM_RANK_1 = Square._FULL_BOARD;
 
-   public static final long _SOUTH2NORHT_FROM_RANK_2 = Rank._2
+   public static final long _SOUTH2NORTH_FROM_RANK_2 = Rank._2
                                                            | Rank._3
                                                            | Rank._4
                                                            | Rank._5
                                                            | Rank._6
                                                            | Rank._7
                                                            | Rank._8;
-   public static final long _SOUTH2NORHT_FROM_RANK_3 = Rank._3
+   public static final long _SOUTH2NORTH_FROM_RANK_3 = Rank._3
                                                            | Rank._4
                                                            | Rank._5
                                                            | Rank._6
                                                            | Rank._7
                                                            | Rank._8;
-   public static final long _SOUTH2NORHT_FROM_RANK_4 = Rank._4
+   public static final long _SOUTH2NORTH_FROM_RANK_4 = Rank._4
                                                            | Rank._5
                                                            | Rank._6
                                                            | Rank._7
                                                            | Rank._8;
-   public static final long _SOUTH2NORHT_FROM_RANK_5 = Rank._5
+   public static final long _SOUTH2NORTH_FROM_RANK_5 = Rank._5
                                                            | Rank._6
                                                            | Rank._7
                                                            | Rank._8;
-   public static final long _SOUTH2NORHT_FROM_RANK_6 = Rank._6
+   public static final long _SOUTH2NORTH_FROM_RANK_6 = Rank._6
                                                            | Rank._7
                                                            | Rank._8;
-   public static final long _SOUTH2NORHT_FROM_RANK_7 = Rank._7
+   public static final long _SOUTH2NORTH_FROM_RANK_7 = Rank._7
                                                            | Rank._8;
-   public static final long _SOUTH2NORHT_FROM_RANK_8 = Rank._8;
+   public static final long _SOUTH2NORTH_FROM_RANK_8 = Rank._8;
 
 }

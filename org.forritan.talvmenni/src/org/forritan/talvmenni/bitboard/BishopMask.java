@@ -1,6 +1,18 @@
 package org.forritan.talvmenni.bitboard;
 
 public interface BishopMask {
+   
+   public long getNorthWest2SouthEastMaskFrom(
+         long square);
+
+   public long getNorthEast2SouthWestMaskFrom(
+         long square);
+
+   public long getSouthEast2NorthWestMaskFrom(
+         long square);
+
+   public long getSouthWest2NorthEastMaskFrom(
+         long square);
 
    public static final long _NORTHWEST2SOUTHEAST_FROM_DIAGONAL_A8A8 = Square._FULL_BOARD;
    public static final long _NORTHWEST2SOUTHEAST_FROM_DIAGONAL_A7B8 = SlashDiagonal._A7B8

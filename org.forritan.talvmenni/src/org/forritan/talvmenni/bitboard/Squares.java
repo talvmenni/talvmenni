@@ -171,7 +171,6 @@ public class Squares implements Square {
 
    public long getSquare(
          int squareNumber) {
-      //XXX: Maybe no no test is better... for speed.
       if(squareNumber < 0 || squareNumber > 63) {
          return 0L;
       } else {
