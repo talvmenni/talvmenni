@@ -582,72 +582,87 @@ public class Position {
       }
       
       public List<Move> getPossibleMoves() {
+         
          if(this.possibleMoves == null) {
-            
-         this.possibleMoves= new ArrayList<Move>();
+            this.possibleMoves= new ArrayList<Move>();
 
-         Iterator<Long> kings= this.kingsIterator();
-         while (kings.hasNext()) {
-            long fromSquare= kings.next().longValue();
-            findMoves(
+            Iterator<Long> kings= this.kingsIterator();
+            while (kings.hasNext()) {
+                long fromSquare= kings.next().longValue();
+                findMoves(
                   this.possibleMoves,
                   fromSquare,
                   new BitboardIterator(King.attacksFrom(fromSquare, this.parent)));            
-         }
+            }
+
+            if(this.isQueensSideCastlingLegal()) {
+               if(this.white) {
+                  this.possibleMoves.add(new Position.Move(Square._E1, Square._C1));
+               } else {
+                  this.possibleMoves.add(new Position.Move(Square._E8, Square._C8));
+               }
+            }
+
+            if(this.isKingsSideCastlingLegal()) {
+               if(this.white) {
+                  this.possibleMoves.add(new Position.Move(Square._E1, Square._G1));
+               } else {
+                  this.possibleMoves.add(new Position.Move(Square._E8, Square._G8));
+               }               
+            }
          
-         Iterator<Long> queens= this.queensIterator(); 
-         while (queens.hasNext()) {
-            long fromSquare= queens.next().longValue();
-            findMoves(
-                  this.possibleMoves,
-                  fromSquare,
-                  new BitboardIterator(Queen.attacksFrom(fromSquare, this.parent)));            
-         }
+            Iterator<Long> queens= this.queensIterator(); 
+            while (queens.hasNext()) {
+                long fromSquare= queens.next().longValue();
+                findMoves(
+                        this.possibleMoves,
+                        fromSquare,
+                        new BitboardIterator(Queen.attacksFrom(fromSquare, this.parent)));            
+            }
          
-         Iterator<Long> rooks= this.rooksIterator(); 
-         while (rooks.hasNext()) {
-            long fromSquare= rooks.next().longValue();
-            findMoves(
-                  this.possibleMoves,
-                  fromSquare,
-                  new BitboardIterator(Rook.attacksFrom(fromSquare, this.parent)));            
-         }
+            Iterator<Long> rooks= this.rooksIterator(); 
+            while (rooks.hasNext()) {
+                long fromSquare= rooks.next().longValue();
+                findMoves(
+                        this.possibleMoves,
+                        fromSquare,
+                        new BitboardIterator(Rook.attacksFrom(fromSquare, this.parent)));            
+            }
          
-         Iterator<Long> bishops= this.bishopsIterator(); 
-         while (bishops.hasNext()) {
-            long fromSquare= bishops.next().longValue();
-            findMoves(
+            Iterator<Long> bishops= this.bishopsIterator(); 
+            while (bishops.hasNext()) {
+                long fromSquare= bishops.next().longValue();
+                findMoves(
                   this.possibleMoves,
                   fromSquare,
                   new BitboardIterator(Bishop.attacksFrom(fromSquare, this.parent)));
-         }
+            }
          
-         Iterator<Long> knights= this.knightsIterator(); 
-         while (knights.hasNext()) {
-            long fromSquare= knights.next().longValue();
-            findMoves(
+            Iterator<Long> knights= this.knightsIterator(); 
+            while (knights.hasNext()) {
+                long fromSquare= knights.next().longValue();
+                findMoves(
                   this.possibleMoves,
                   fromSquare,
                   new BitboardIterator(Knight.attacksFrom(fromSquare, this.parent)));            
-         }
+            }
          
-         Iterator<Long> pawns= this.pawnsIterator();
-         while (pawns.hasNext()) {
-            long fromSquare= pawns.next().longValue();
+            Iterator<Long> pawns= this.pawnsIterator();
+            while (pawns.hasNext()) {
+                long fromSquare= pawns.next().longValue();
 
-            if(this.white) {
-               findMoves(
+                if(this.white) {
+                    findMoves(
                      this.possibleMoves,
                      fromSquare,
                      new BitboardIterator(WhitePawn.captureMoveAttacksFrom(fromSquare, this.parent) | WhitePawn.moveAttacksFrom(fromSquare, this.parent)));            
-               } else {
+                } else {
                   findMoves(
                         this.possibleMoves,
                         fromSquare,
                         new BitboardIterator(BlackPawn.captureMoveAttacksFrom(fromSquare, this.parent) | BlackPawn.moveAttacksFrom(fromSquare, this.parent)));            
+                }
             }
-         }
-
          }
          return this.possibleMoves;          
       }
@@ -680,9 +695,9 @@ public class Position {
          boolean piecesNotMoved;
 
          if (white) {
-            piecesNotMoved= (~this.castling & (Square._E1 | Square._H1)) == Square._EMPTY_BOARD;
+            piecesNotMoved= (this.castling ^ (this.castling & (Square._E1 | Square._H1))) == Square._EMPTY_BOARD;
          } else {
-            piecesNotMoved= (~this.castling & (Square._E8 | Square._H8)) == Square._EMPTY_BOARD;
+            piecesNotMoved= (this.castling ^ (this.castling & (Square._E8 | Square._H8))) == Square._EMPTY_BOARD;
          }
 
          if (piecesNotMoved) {
@@ -707,9 +722,9 @@ public class Position {
          boolean piecesNotMoved;
 
          if (white) {
-            piecesNotMoved= (~this.castling & (Square._A1 | Square._E1)) == Square._EMPTY_BOARD;
+            piecesNotMoved= (this.castling ^ (this.castling & (Square._A1 | Square._E1))) == Square._EMPTY_BOARD;
          } else {
-            piecesNotMoved= (~this.castling & (Square._A8 | Square._E8)) == Square._EMPTY_BOARD;
+            piecesNotMoved= (this.castling ^ (this.castling & (Square._A8 | Square._E8))) == Square._EMPTY_BOARD;
          }
 
          if (piecesNotMoved) {
