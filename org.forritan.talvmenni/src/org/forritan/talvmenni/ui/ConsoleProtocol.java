@@ -10,21 +10,26 @@ import org.forritan.talvmenni.game.Rules;
 public class ConsoleProtocol extends UiProtocolBase {
 
    private static ConsoleProtocol instance;
-   private static int             moveCounter;
-   private static String          moves = "";
+   private int                    moveCounter;
+   private String                 history = "";
 
-   private ConsoleProtocol(Protocol protocol) {
-      super(protocol);
+   private ConsoleProtocol(
+         Protocol protocol) {
+      super(
+            protocol);
    }
 
-   public static ConsoleProtocol create(Protocol protocol) {
+   public static ConsoleProtocol create(
+         Protocol protocol) {
       if (ConsoleProtocol.instance == null) {
-         ConsoleProtocol.instance= new ConsoleProtocol(protocol);
+         ConsoleProtocol.instance= new ConsoleProtocol(
+               protocol);
       }
       return ConsoleProtocol.instance;
    }
 
-   public String processInput(String theInput) {
+   public String processInput(
+         String theInput) {
       String theOutput= null;
 
       if ("cmd".equalsIgnoreCase(theInput)) {
@@ -39,21 +44,25 @@ public class ConsoleProtocol extends UiProtocolBase {
       }
 
       if ("new".equalsIgnoreCase(theInput)) {
-         theOutput= "Setting up a new game";
-         moves = "";
-         moveCounter = 0;
+         this.history= "";
+         this.moveCounter= 0;
          this.protocol.newGame();
+         theOutput= "Setting up a new game...\n\n"
+               + this.getBoardPosition()
+               + "\n";
       }
 
-      if (theInput.toUpperCase().startsWith("MOVE")) {
-         String theMove= theInput.substring(4).trim();
+      if (theInput.toUpperCase().startsWith(
+            "MOVE")) {
+         String theMove= theInput.substring(
+               4).trim();
 
          theOutput= makeMove(theMove);
 
       }
 
       if ("position".equalsIgnoreCase(theInput)) {
-         theOutput= boardPosition();
+         theOutput= getBoardPosition();
       }
       if ("white".equalsIgnoreCase(theInput)) {
          if (this.protocol.isWhiteToMove())
@@ -84,7 +93,7 @@ public class ConsoleProtocol extends UiProtocolBase {
       return theOutput;
    }
 
-   private String boardPosition() {
+   private String getBoardPosition() {
       String positionString= "    ---------------\n";
       Square square= Squares.create();
       long sq;
@@ -110,50 +119,63 @@ public class ConsoleProtocol extends UiProtocolBase {
             + "    a b c d e f g h\n";
       positionString= positionString
             + "    ["
-            + whoisToMove()
+            + getWhoIsToMove()
             + " to move]";
 
       return positionString;
 
    }
 
-   private String whoisToMove() {
+   private String getWhoIsToMove() {
       if (this.protocol.isWhiteToMove())
          return "White";
       else
          return "Black";
    }
 
-   private String makeMove(String theMove) {
+   private String makeMove(
+         String theMove) {
 
-      String fromSquare= theMove.substring(0, 1).concat(
-            Integer.toString(Integer.valueOf(theMove.substring(1, 2))
-                  .intValue())).toUpperCase();
+      String fromSquare= theMove.substring(
+            0,
+            1).concat(
+            Integer.toString(Integer.valueOf(
+                  theMove.substring(
+                        1,
+                        2)).intValue())).toUpperCase();
 
-      String toSquare= theMove.substring(2, 3).concat(
-            Integer.toString(Integer.valueOf(theMove.substring(3, 4))
-                  .intValue())).toUpperCase();
+      String toSquare= theMove.substring(
+            2,
+            3).concat(
+            Integer.toString(Integer.valueOf(
+                  theMove.substring(
+                        3,
+                        4)).intValue())).toUpperCase();
 
       Square square= Squares.create();
       Rules currentRules= this.protocol.getCurrentRules();
       Position currentPosition= this.protocol.getCurrentPosition();
 
-      if (currentRules.isMoveLegal(currentPosition, square
-            .getSquare(fromSquare), square.getSquare(toSquare), this.protocol
-            .isWhiteToMove())) {
-         this.protocol.makeMove(square.getSquare(fromSquare), square
-               .getSquare(toSquare));
+      if (Rules.isMoveLegal(
+            currentPosition,
+            square.getSquare(fromSquare),
+            square.getSquare(toSquare),
+            this.protocol.isWhiteToMove())) {
+         this.protocol.makeMove(
+               square.getSquare(fromSquare),
+               square.getSquare(toSquare));
 
          if (!this.protocol.isWhiteToMove()) {
-            moveCounter++;
-            this.moves+= moveCounter
-                  + "."+theMove;
+            this.history+= ++this.moveCounter
+                  + "."
+                  + theMove;
          } else {
-            this.moves+= " "
-            + theMove + "\n";
+            this.history+= " "
+                  + theMove
+                  + "\n";
          }
 
-         return boardPosition();
+         return getBoardPosition();
       } else
          return "Illegal Move: "
                + theMove;
@@ -222,11 +244,11 @@ public class ConsoleProtocol extends UiProtocolBase {
    }
 
    private String printHistory() {
-      String theHistory= this.moves;
-      return theHistory;
+      return this.history;
    }
 
-   public String getStringPiece(long square) {
+   public String getStringPiece(
+         long square) {
       Position currentPosition= this.protocol.getCurrentPosition();
       if (currentPosition != null) {
          if (currentPosition.white.isPawn(square))
