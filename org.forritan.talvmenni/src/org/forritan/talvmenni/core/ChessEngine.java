@@ -50,11 +50,11 @@ public class ChessEngine extends Observable implements Runnable {
       this.outMessages= new LinkedBlockingQueue<String>();
    }
 
-   public boolean isRunning() {
+   public synchronized boolean isRunning() {
       return this.running;
    }
 
-   public void run() {
+   public synchronized void run() {
       this.running= true;
       this.protocolHandler= new ProtocolHandler();
       this.threadFactory.newThread(this.protocolHandler).start();
@@ -62,7 +62,7 @@ public class ChessEngine extends Observable implements Runnable {
       this.threadFactory.newThread(new OutStreamHandler()).start();
    }
 
-   public Protocol getProtocol() {
+   public synchronized Protocol getProtocol() {
       return this.protocol;
    }
   
@@ -110,15 +110,15 @@ public class ChessEngine extends Observable implements Runnable {
          this.objectCreationStatistics= new ObjectCreationStatistics();
       }
 
-      public ObjectCreationStatistics getObjectCreationStatistics() {
+      public synchronized ObjectCreationStatistics getObjectCreationStatistics() {
          return this.objectCreationStatistics;
       }
 
-      public DebugInfo getDebugInfo() {
+      public synchronized DebugInfo getDebugInfo() {
          return this.debugInfo;
       }
 
-      public String processInput(String theInput) {
+      public synchronized String processInput(String theInput) {
          String theOutput= null;
          if (uiProtocol == null) {
             if (theInput.equalsIgnoreCase("xboard")) {
@@ -138,7 +138,7 @@ public class ChessEngine extends Observable implements Runnable {
          return theOutput;
       }
 
-      public void stop() {
+      public synchronized void stop() {
          currentRules= null;
          this.setCurrentPosition(null);
          this.go= false;
@@ -150,7 +150,7 @@ public class ChessEngine extends Observable implements Runnable {
 //         } catch (IOException e) {} // just exit quietly...
       }
 
-      public void newGame() {
+      public synchronized void newGame() {
          this.setCurrentPosition(PositionFactory.createInitialImmutable());
          MoveHistory.getInstance().reset();
          this.WhiteToMove = true;
@@ -158,15 +158,15 @@ public class ChessEngine extends Observable implements Runnable {
       }
       
       
-      public void whiteToMove() {
+      public synchronized void whiteToMove() {
          this.WhiteToMove= true;
       }
 
-      public void blackToMove() {
+      public synchronized void blackToMove() {
          this.WhiteToMove= false;
       }
 
-      public boolean isWhiteToMove() {
+      public synchronized boolean isWhiteToMove() {
          return this.WhiteToMove;
       }
 
@@ -194,7 +194,7 @@ public class ChessEngine extends Observable implements Runnable {
          return this.makeMove(fromSquare, toSquare, ChessEngine.this.strategy.getPromotionPiece());
       }
       
-      public void setPositionFromFEN(String FENString)
+      public synchronized void setPositionFromFEN(String FENString)
       {
          long whiteKings = 0L;
          long whiteQueens= 0L; 
@@ -219,7 +219,8 @@ public class ChessEngine extends Observable implements Runnable {
          StringTokenizer st = new StringTokenizer(FENString);
         
          String positionString = st.nextToken();
-         System.out.println(positionString);
+         
+         this.debugInfo.postText(positionString);
 
          int y = 0;
          int x = 0;      
@@ -325,7 +326,7 @@ public class ChessEngine extends Observable implements Runnable {
 
          
       
-      public Move makeMove(long fromSquare, long toSquare, int promotionPiece) {
+      public synchronized Move makeMove(long fromSquare, long toSquare, int promotionPiece) {
          this.objectCreationStatistics.post("ChessEngine.ProtocolImpl.makeMove(...)");
          this.objectCreationStatistics.post(ObjectCreationStatistics.ResetObjectCreationStats);
          Move move= new Move(this.getCurrentPosition(), fromSquare, toSquare, promotionPiece);
@@ -336,7 +337,7 @@ public class ChessEngine extends Observable implements Runnable {
          return move;
       }
       
-      public Move makeNextMove() {
+      public synchronized Move makeNextMove() {
          this.objectCreationStatistics.post("ChessEngine.ProtocolImpl.makeNextMove()");
          this.objectCreationStatistics.post(ObjectCreationStatistics.ResetObjectCreationStats);
          Position.Move nextMove= ChessEngine.this.strategy.getNextMove(this.getCurrentPosition(), this.WhiteToMove);
@@ -352,19 +353,19 @@ public class ChessEngine extends Observable implements Runnable {
       }
 
 
-      public boolean isGo() {
+      public synchronized boolean isGo() {
          return this.go;
       }
 
-      public boolean setGo(boolean go) {
+      public synchronized boolean setGo(boolean go) {
          return this.go= go;
       }
 
-      public Strategy getStrategy() {
+      public synchronized Strategy getStrategy() {
          return ChessEngine.this.strategy;
       }
 
-      public void postThinking(
+      public synchronized void postThinking(
             boolean observeIt) {
          if(observeIt) {
             ChessEngine.this.strategy.getSearch().getThinking().addObserver(new Observer() {
@@ -455,6 +456,11 @@ public class ChessEngine extends Observable implements Runnable {
                + " possible moves for "
                + (ChessEngine.this.protocol.isWhiteToMove() ? "white: " : "black: ") 
                + moves.toString());
+      }
+      
+      public void postText(String text) {
+         this.setChanged();
+         this.notifyObservers(text);
       }
 
    }

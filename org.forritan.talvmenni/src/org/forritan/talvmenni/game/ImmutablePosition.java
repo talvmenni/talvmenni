@@ -84,11 +84,11 @@ public class ImmutablePosition extends PositionFactory {
       return this;
    }
 
-   public Position getImmutable() {
+   public synchronized Position getImmutable() {
       return this;
    }
 
-   public Position getMutable() {
+   public synchronized Position getMutable() {
       return PositionFactory.createMutable(this.getWhite(), this.getBlack());
    }
 }

@@ -14,6 +14,7 @@ import org.forritan.talvmenni.bitboard.attacks.Knight;
 import org.forritan.talvmenni.bitboard.attacks.Queen;
 import org.forritan.talvmenni.bitboard.attacks.Rook;
 import org.forritan.talvmenni.bitboard.attacks.WhitePawn;
+import org.forritan.talvmenni.core.ChessEngine;
 import org.forritan.talvmenni.ui.ConsoleProtocol;
 
 
@@ -167,10 +168,6 @@ public interface Position {
       }
       
       public List<Move> getPossibleMoves() {
-         //crap starts here
-         System.out.println(ConsoleProtocol.getStringBoard(this.parent, "fuck"));
-         //crap ends here
-
          //         if(this.possibleMoves == null) {
          List<Move> result= new ArrayList<Move>(); 
 //            this.possibleMoves= new ArrayList<Move>();

@@ -7,9 +7,6 @@ import org.forritan.talvmenni.bitboard.paths.BlackPawnCaptures;
 import org.forritan.talvmenni.bitboard.paths.BlackPawnMoves;
 import org.forritan.talvmenni.bitboard.paths.WhitePawnCaptures;
 import org.forritan.talvmenni.bitboard.paths.WhitePawnMoves;
-import org.forritan.talvmenni.game.Position.Bitboard;
-import org.forritan.talvmenni.game.Position.Move;
-import org.forritan.talvmenni.game.Position.PromotionPiece;
 
 
 public abstract class PositionFactory implements Position {
@@ -70,8 +67,28 @@ public abstract class PositionFactory implements Position {
          Bitboard white,
          Bitboard black) {
       this();
-      this.white= white;
-      this.black= black;
+      this.white= new Bitboard(
+            true,
+            this,
+            white.kings,
+            white.queens,
+            white.rooks,
+            white.bishops,
+            white.knights,
+            white.pawns,
+            white.castling,
+            white.enpassant);
+      this.black= new Bitboard(
+            false,
+            this,
+            black.kings,
+            black.queens,
+            black.rooks,
+            black.bishops,
+            black.knights,
+            black.pawns,
+            black.castling,
+            black.enpassant);
    }
 
    public static Position createInitialImmutable() {
@@ -270,11 +287,11 @@ public abstract class PositionFactory implements Position {
 
    public abstract Position popMove();
 
-   public Bitboard getBlack() {
+   public synchronized Bitboard getBlack() {
       return this.black;
    }
 
-   public Bitboard getWhite() {
+   public synchronized Bitboard getWhite() {
       return this.white;
    }
 

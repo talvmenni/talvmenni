@@ -9,6 +9,7 @@ import org.forritan.talvmenni.game.ImmutablePosition;
 import org.forritan.talvmenni.game.Position;
 import org.forritan.talvmenni.game.PositionFactory;
 import org.forritan.talvmenni.game.Position.Move;
+import org.forritan.talvmenni.ui.ConsoleProtocol;
 
 public class AlphaBetaSearch implements Search {
    

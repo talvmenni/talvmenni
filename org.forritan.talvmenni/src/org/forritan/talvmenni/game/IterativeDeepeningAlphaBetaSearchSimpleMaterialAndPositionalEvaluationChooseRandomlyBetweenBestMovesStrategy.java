@@ -12,18 +12,18 @@ public class IterativeDeepeningAlphaBetaSearchSimpleMaterialAndPositionalEvaluat
 
    private Search search;
    private Evaluation evaluation;
-   private int searchDepth;
+   private int ply;
    
-   public IterativeDeepeningAlphaBetaSearchSimpleMaterialAndPositionalEvaluationChooseRandomlyBetweenBestMovesStrategy(int searchDepth) {
+   public IterativeDeepeningAlphaBetaSearchSimpleMaterialAndPositionalEvaluationChooseRandomlyBetweenBestMovesStrategy(int ply) {
       this.search= new AlphaBetaSearch();
       this.evaluation= new SimpleMaterialAndPositionalEvaluation();
-      this.searchDepth= searchDepth;
+      this.ply= ply;
    }
    
    public Position.Move getNextMove(Position position, boolean whiteToMove) {
             
       List<Position.Move> bestMoves= null;
-         for (int i= 0; i <= this.searchDepth * 2; i++) {
+         for (int i= 0; i <= this.ply; i++) {
             this.search.setPly(i);
             bestMoves= this.search.getBestMoves(position, this.evaluation, whiteToMove);            
          }

@@ -16,11 +16,11 @@ public class TalvMenni {
 
    public static String       DEBUG_NAME;
 
-   public static int          SEARCH_DEPTH = 2;          // Minimum for being
+   public static int          PLY = 4;                   // Minimum for being
                                                          // able to detect that
                                                          // we are getting
                                                          // checkmated...
-
+   
    public static void main(
          String args[]) {
 
@@ -31,15 +31,16 @@ public class TalvMenni {
          DEBUG_NAME= "";
       }
 
-      String searchDepth= System.getProperty("search_depth");
+      String searchDepth= System.getProperty("ply");
       if (searchDepth != null) {
-         SEARCH_DEPTH= Integer.valueOf(
+         PLY= Integer.valueOf(
                searchDepth).intValue();
       }
 
       final ChessEngine chessEngine= ChessEngine
-            .create(new IterativeDeepeningAlphaBetaSearchSimpleMaterialAndPositionalEvaluationChooseRandomlyBetweenBestMovesStrategy(
-                  SEARCH_DEPTH));
+            .create(
+                  new IterativeDeepeningAlphaBetaSearchSimpleMaterialAndPositionalEvaluationChooseRandomlyBetweenBestMovesStrategy(
+                  PLY));
 
       if (Boolean.getBoolean("exception_logging_window")) {
          Thread windowThread= threadFactory.newThread(new Runnable() {

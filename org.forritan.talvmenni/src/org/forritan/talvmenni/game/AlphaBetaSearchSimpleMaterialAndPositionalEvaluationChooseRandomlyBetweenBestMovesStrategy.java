@@ -13,8 +13,8 @@ public class AlphaBetaSearchSimpleMaterialAndPositionalEvaluationChooseRandomlyB
    private Search search;
    private Evaluation evaluation;
    
-   public AlphaBetaSearchSimpleMaterialAndPositionalEvaluationChooseRandomlyBetweenBestMovesStrategy(int searchDepth) {
-      this.search= new AlphaBetaSearch(searchDepth * 2);
+   public AlphaBetaSearchSimpleMaterialAndPositionalEvaluationChooseRandomlyBetweenBestMovesStrategy(int ply) {
+      this.search= new AlphaBetaSearch(ply);
       this.evaluation= new SimpleMaterialAndPositionalEvaluation();
    }
    
