@@ -36,7 +36,7 @@ public class TalvMenni {
    /**
     * Default QUIESCENT_MAX_DEPTH = 16 - ply seems like a resonable value ;-)
     */
-   public static int                 QUIESCENT_MAX_DEPTH           = 16 - PLY;
+   public static int                 QUIESCENT_MAX_DEPTH           = 8 - PLY;
 
    /**
     * Default reduction of depth in NullMove search: NULL_MOVE_REDUCTION = 2
