@@ -4,6 +4,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
 
 import org.forritan.talvmenni.game.Transposition;
+import org.forritan.talvmenni.strategy.IterativeDeepeningAlphaBetaSearchUsingKillerMoveOrderingAndTranpositionTableSimpleMaterialAndPositionalEvaluationChooseRandomlyBetweenBestMovesStrategy;
 import org.forritan.talvmenni.strategy.IterativeDeepeningAlphaBetaSearchUsingKillerMoveOrderingSimpleMaterialAndPositionalEvaluationChooseRandomlyBetweenBestMovesStrategy;
 import org.forritan.talvmenni.ui.DebugWindow;
 import org.forritan.util.debug.ExceptionLoggingWindowHandler;
@@ -40,9 +41,9 @@ public class TalvMenni {
 
       final ChessEngine chessEngine= ChessEngine
             .create(
-                  new IterativeDeepeningAlphaBetaSearchUsingKillerMoveOrderingSimpleMaterialAndPositionalEvaluationChooseRandomlyBetweenBestMovesStrategy(
-                  PLY),
-                  new Transposition());
+                  new IterativeDeepeningAlphaBetaSearchUsingKillerMoveOrderingAndTranpositionTableSimpleMaterialAndPositionalEvaluationChooseRandomlyBetweenBestMovesStrategy(
+                  PLY,
+                  new Transposition()));
 
       if (Boolean.getBoolean("exception_logging_window")) {
          Thread windowThread= threadFactory.newThread(new Runnable() {

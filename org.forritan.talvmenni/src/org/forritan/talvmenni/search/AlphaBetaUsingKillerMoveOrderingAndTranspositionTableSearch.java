@@ -5,22 +5,24 @@ import java.util.Collections;
 import java.util.List;
 
 import org.forritan.talvmenni.evaluation.Evaluation;
-import org.forritan.talvmenni.game.ImmutablePosition;
 import org.forritan.talvmenni.game.Position;
 import org.forritan.talvmenni.game.PositionFactory;
+import org.forritan.talvmenni.game.Transposition;
 import org.forritan.talvmenni.game.Position.Move;
 
 public class AlphaBetaUsingKillerMoveOrderingAndTranspositionTableSearch implements Search {
    
+   private Transposition transposition;
    private Thinking thinking;
    private DebugInfo debugInfo;
    private int ply= 0;
    
    private int movesSearched;
    
-   public AlphaBetaUsingKillerMoveOrderingAndTranspositionTableSearch() {
+   public AlphaBetaUsingKillerMoveOrderingAndTranspositionTableSearch(Transposition transposition) {
       this.thinking= new Thinking();
       this.debugInfo= new DebugInfo();
+      this.transposition= transposition;
    }
 
    public void setPly(
@@ -65,7 +67,6 @@ public class AlphaBetaUsingKillerMoveOrderingAndTranspositionTableSearch impleme
          MoveScoreTuple score= this.getBestMove(p.move(move.from, move.to), e, !whiteMove, ply - 1, alpha, beta);
          p.popMove();
          score.add(move, e.getScore(p));
-//         score.add(move, 0);
          this.debugInfo.postCurrentBestMove(move, score.getScore(), (this.movesSearched - movesSearchedBeforeMove));
          if(bestScore == null || (whiteMove ? score.getScore() > bestScore.getScore() : score.getScore() < bestScore.getScore())) {
             bestScore= score;
@@ -114,15 +115,27 @@ public class AlphaBetaUsingKillerMoveOrderingAndTranspositionTableSearch impleme
          Position p,
          Evaluation e,
          boolean whiteMove,
-         int depth,
+         int ply,
          int alpha,
          int beta) {
 
       PositionFactory.nodes++;
       
       MoveScoreTuple result= new MoveScoreTuple(null, 0);
-      if(depth > 1) {
-          List<Move> moves;
+      if(ply > 1) {
+         
+         if(this.transposition.contains(p)) {
+            Transposition.Entry entry= this.transposition.get(p);
+            if(entry.ply >= ply) {
+//               System.err.println("Transposition got p");
+//               System.err.println("ply= " + ply + " and entry.ply= " + entry.ply);
+//               System.err.println("entry.score= " + entry.score);
+               result.update(entry.moves, entry.score);
+               return result;
+            }            
+         }
+                
+         List<Move> moves;
          MoveScoreTuple bestScore= null;
          
          if(whiteMove) {
@@ -135,7 +148,7 @@ public class AlphaBetaUsingKillerMoveOrderingAndTranspositionTableSearch impleme
             Move currentBestMove= null;
             for(Move move : moves) {
                this.movesSearched++;
-               MoveScoreTuple score= this.getBestMove(p.move(move.from, move.to), e, !whiteMove, depth - 1, -beta, -alpha);
+               MoveScoreTuple score= this.getBestMove(p.move(move.from, move.to), e, !whiteMove, ply - 1, -beta, -alpha);
                p.popMove();
                if(bestScore == null || (whiteMove ? score.getScore() > bestScore.getScore() : score.getScore() < bestScore.getScore())) {
                   bestScore= score;
@@ -158,18 +171,17 @@ public class AlphaBetaUsingKillerMoveOrderingAndTranspositionTableSearch impleme
 
             result= bestScore;
             result.add(currentBestMove, e.getScore(p));
-//            result.add(currentBestMove, 0);
             
          } else {
             if(whiteMove){
                if(p.getWhite().isChecked()) {
-                  result= new MoveScoreTuple(null, -20000 + depth); // Checkmate
+                  result= new MoveScoreTuple(null, -20000 + ply); // Checkmate
                } else {
                   result= new MoveScoreTuple(null, 0);  // Stalemate
                }
              } else {
                if(p.getBlack().isChecked()) {
-                  result= new MoveScoreTuple(null, 20000 - depth); // Checkmate
+                  result= new MoveScoreTuple(null, 20000 - ply); // Checkmate
                } else {
                   result= new MoveScoreTuple(null, 0);  // Stalemate
                }
@@ -205,7 +217,7 @@ public class AlphaBetaUsingKillerMoveOrderingAndTranspositionTableSearch impleme
          } else {
             if(whiteMove){
                if(p.getWhite().isChecked()) {
-                  result= new MoveScoreTuple(null, -20000 + depth); // Black
+                  result= new MoveScoreTuple(null, -20000 + ply); // Black
                                                                       // wins by
                                                                       // checkmate
                } else {
@@ -213,7 +225,7 @@ public class AlphaBetaUsingKillerMoveOrderingAndTranspositionTableSearch impleme
                }
              } else {
                if(p.getBlack().isChecked()) {
-                  result= new MoveScoreTuple(null,  20000 - depth); // White
+                  result= new MoveScoreTuple(null,  20000 - ply); // White
                                                                        // wins
                                                                        // by
                                                                        // checkmate
@@ -223,6 +235,8 @@ public class AlphaBetaUsingKillerMoveOrderingAndTranspositionTableSearch impleme
             }
          }
       }
+      
+      this.transposition.update(p, result.moves, result.score, ply);
       
       return result;
    }
@@ -242,6 +256,14 @@ public class AlphaBetaUsingKillerMoveOrderingAndTranspositionTableSearch impleme
       public void add(Move move, int score) {
          if(move != null) {
             this.moves.add(0, move);
+         }
+         this.score += score;
+      }
+
+      public void update(List<Move> moves, int score) {
+         if(moves != null) {
+            this.moves.clear();
+            this.moves.addAll(moves);
          }
          this.score += score;
       }
