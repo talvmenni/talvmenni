@@ -24,7 +24,6 @@ public class SimpleMaterialAndPositionalEvaluation extends AbstractEvaluation {
 
    public int getOpeningGameScore(
          Position position) {
-      
       int result= 0;
       
       // White
@@ -54,19 +53,19 @@ public class SimpleMaterialAndPositionalEvaluation extends AbstractEvaluation {
          result += Evaluation.PAWN_IN_OPENING_GAME;         
       }
       
-      for (Iterator it= new BitboardIterator(((position.getWhite().allPieces & ~(position.getWhite().kings | position.getWhite().queens )) & Board._CORE)); it.hasNext();) {
+      for (Iterator it= new BitboardIterator(((position.getWhite().allPieces & ~(position.getWhite().kings | position.getWhite().queens | position.getWhite().pawns )) & Board._CORE)); it.hasNext();) {
          it.next();
          result += Evaluation.POSITION_CORE_IN_OPENING_GAME;         
       }
-      for (Iterator it= new BitboardIterator(((position.getWhite().allPieces & ~(position.getWhite().kings | position.getWhite().queens )) & Board._INNER_BORDER)); it.hasNext();) {
+      for (Iterator it= new BitboardIterator(((position.getWhite().allPieces & ~(position.getWhite().kings | position.getWhite().queens | position.getWhite().pawns )) & Board._INNER_BORDER)); it.hasNext();) {
          it.next();
          result += Evaluation.POSITION_INNER_BORDER_IN_OPENING_GAME;         
       }
-      for (Iterator it= new BitboardIterator(((position.getWhite().allPieces & ~(position.getWhite().kings | position.getWhite().queens )) & Board._MIDDLE_BORDER)); it.hasNext();) {
+      for (Iterator it= new BitboardIterator(((position.getWhite().allPieces & ~(position.getWhite().kings | position.getWhite().queens | position.getWhite().pawns )) & Board._MIDDLE_BORDER)); it.hasNext();) {
          it.next();
          result += Evaluation.POSITION_MIDDLE_BORDER_IN_OPENING_GAME;         
       }
-      for (Iterator it= new BitboardIterator(((position.getWhite().allPieces & ~(position.getWhite().kings | position.getWhite().queens )) & Board._OUTER_BORDER)); it.hasNext();) {
+      for (Iterator it= new BitboardIterator(((position.getWhite().allPieces & ~(position.getWhite().kings | position.getWhite().queens | position.getWhite().pawns )) & Board._OUTER_BORDER)); it.hasNext();) {
          it.next();
          result += Evaluation.POSITION_OUTER_BORDER_IN_OPENING_GAME;         
       }
@@ -112,19 +111,19 @@ public class SimpleMaterialAndPositionalEvaluation extends AbstractEvaluation {
          result -= Evaluation.PAWN_IN_OPENING_GAME;         
       }
       
-      for (Iterator it= new BitboardIterator(((position.getBlack().allPieces & ~(position.getBlack().kings | position.getBlack().queens )) & Board._CORE)); it.hasNext();) {
+      for (Iterator it= new BitboardIterator(((position.getBlack().allPieces & ~(position.getBlack().kings | position.getBlack().queens | position.getBlack().pawns )) & Board._CORE)); it.hasNext();) {
          it.next();
          result -= Evaluation.POSITION_CORE_IN_OPENING_GAME;         
       }
-      for (Iterator it= new BitboardIterator(((position.getBlack().allPieces & ~(position.getBlack().kings | position.getBlack().queens )) & Board._INNER_BORDER)); it.hasNext();) {
+      for (Iterator it= new BitboardIterator(((position.getBlack().allPieces & ~(position.getBlack().kings | position.getBlack().queens | position.getBlack().pawns )) & Board._INNER_BORDER)); it.hasNext();) {
          it.next();
          result -= Evaluation.POSITION_INNER_BORDER_IN_OPENING_GAME;         
       }
-      for (Iterator it= new BitboardIterator(((position.getBlack().allPieces & ~(position.getBlack().kings | position.getBlack().queens )) & Board._MIDDLE_BORDER)); it.hasNext();) {
+      for (Iterator it= new BitboardIterator(((position.getBlack().allPieces & ~(position.getBlack().kings | position.getBlack().queens | position.getBlack().pawns )) & Board._MIDDLE_BORDER)); it.hasNext();) {
          it.next();
          result -= Evaluation.POSITION_MIDDLE_BORDER_IN_OPENING_GAME;         
       }
-      for (Iterator it= new BitboardIterator(((position.getBlack().allPieces & ~(position.getBlack().kings | position.getBlack().queens )) & Board._OUTER_BORDER)); it.hasNext();) {
+      for (Iterator it= new BitboardIterator(((position.getBlack().allPieces & ~(position.getBlack().kings | position.getBlack().queens | position.getBlack().pawns )) & Board._OUTER_BORDER)); it.hasNext();) {
          it.next();
          result -= Evaluation.POSITION_OUTER_BORDER_IN_OPENING_GAME;         
       }
