@@ -6,8 +6,8 @@ import org.forritan.talvmenni.bitboard.Square;
 
 public class Position {
 
-   public final BasePosition white;
-   public final BasePosition black;
+   public final Bitboard white;
+   public final Bitboard black;
 
    public static Position createInitial() {
       return new Position(
@@ -20,6 +20,10 @@ public class Position {
             Square._B1
                   | Square._G1,
             Rank._2,
+            Square._A1
+                  | Square._E1
+                  | Square._H1,
+            0L,
             Square._E8,
             Square._D8,
             Square._A8
@@ -28,7 +32,11 @@ public class Position {
                   | Square._F8,
             Square._B8
                   | Square._G8,
-            Rank._7);
+            Rank._7,
+            Square._A8
+                  | Square._E8
+                  | Square._H8,
+            0L);
    }
 
    /**
@@ -39,12 +47,16 @@ public class Position {
     * @param whiteBishops
     * @param whiteKnights
     * @param whitePawns
+    * @param whiteCastling
+    * @param whiteEnpassant
     * @param blackKing
     * @param blackQueen
     * @param blackRooks
     * @param blackBishops
     * @param blackKnights
     * @param blackPawns
+    * @param blackCastling
+    * @param blackEnpassant
     * @return
     */
    public static Position create(
@@ -54,12 +66,16 @@ public class Position {
          long whiteBishops,
          long whiteKnights,
          long whitePawns,
+         long whiteCastling,
+         long whiteEnpassant,
          long blackKing,
          long blackQueen,
          long blackRooks,
          long blackBishops,
          long blackKnights,
-         long blackPawns) {
+         long blackPawns,
+         long blackCastling,
+         long blackEnpassant) {
       return new Position(
             whiteKing,
             whiteQueen,
@@ -67,14 +83,18 @@ public class Position {
             whiteBishops,
             whiteKnights,
             whitePawns,
+            whiteCastling,
+            whiteEnpassant,
             blackKing,
             blackQueen,
             blackRooks,
             blackBishops,
             blackKnights,
-            blackPawns);
+            blackPawns,
+            blackCastling,
+            blackEnpassant);
    }
-
+   
    /**
     * 
     * @param whiteKing
@@ -83,12 +103,16 @@ public class Position {
     * @param whiteBishops
     * @param whiteKnights
     * @param whitePawns
+    * @param whiteCastling
+    * @param whiteEnpassant
     * @param blackKing
     * @param blackQueen
     * @param blackRooks
     * @param blackBishops
     * @param blackKnights
     * @param blackPawns
+    * @param blackCastling
+    * @param blackEnpassant
     */
    private Position(
          long whiteKing,
@@ -97,30 +121,38 @@ public class Position {
          long whiteBishops,
          long whiteKnights,
          long whitePawns,
+         long whiteCastling,
+         long whiteEnpassant,
          long blackKing,
          long blackQueen,
          long blackRooks,
          long blackBishops,
          long blackKnights,
-         long blackPawns) {
+         long blackPawns,
+         long blackCastling,
+         long blackEnpassant) {
 
-      this.white= new BasePosition(
+      this.white= new Bitboard(
             whiteKing,
             whiteQueen,
             whiteRooks,
             whiteBishops,
             whiteKnights,
-            whitePawns);
-      this.black= new BasePosition(
+            whitePawns,
+            whiteCastling,
+            whiteEnpassant);
+      this.black= new Bitboard(
             blackKing,
             blackQueen,
             blackRooks,
             blackBishops,
             blackKnights,
-            blackPawns);
+            blackPawns,
+            blackCastling,
+            blackEnpassant);
    }
 
-   public class BasePosition {
+   public class Bitboard {
       public final long king;
       public final long queen;
       public final long rooks;
@@ -128,27 +160,37 @@ public class Position {
       public final long knights;
       public final long pawns;
 
+      public final long castling;
+      public final long enpassant;
+
       /**
+       * 
        * @param king
        * @param queen
+       * @param rooks
        * @param bishops
        * @param knights
-       * @param rooks
        * @param pawns
+       * @param castling
+       * @param enpassant
        */
-      public BasePosition(
+      public Bitboard(
             long king,
             long queen,
             long rooks,
             long bishops,
             long knights,
-            long pawns) {
+            long pawns,
+            long castling,
+            long enpassant) {
          this.king= king;
          this.queen= queen;
          this.rooks= rooks;
          this.bishops= bishops;
          this.knights= knights;
          this.pawns= pawns;
+         this.castling= castling;
+         this.enpassant= enpassant;
       }
 
    }

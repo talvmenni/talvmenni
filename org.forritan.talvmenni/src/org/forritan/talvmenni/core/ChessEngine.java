@@ -27,6 +27,7 @@ public class ChessEngine implements Runnable {
       }
 
       this.running= false;
+      this.protocol= new Protocol();
       this.threadFactory= Executors.defaultThreadFactory();
       this.inMessages= new LinkedBlockingQueue();
       this.outMessages= new LinkedBlockingQueue();
@@ -47,7 +48,6 @@ public class ChessEngine implements Runnable {
       }
 
       this.running= true;
-      this.protocol= new Protocol();
       this.threadFactory.newThread(
             new ProtocolHandler()).start();
       this.threadFactory.newThread(
