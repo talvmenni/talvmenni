@@ -48,7 +48,7 @@ public class ChessEngine implements Runnable {
       }
 
       this.running= false;
-      this.protocol= new Protocol();
+      this.protocol= new ProtocolImpl();
       this.threadFactory= Executors.defaultThreadFactory();
       this.inMessages= new LinkedBlockingQueue();
       this.outMessages= new LinkedBlockingQueue();
@@ -77,7 +77,12 @@ public class ChessEngine implements Runnable {
             new OutStreamHandler()).start();
    }
 
-   private class Protocol {
+   public interface Protocol {
+      public String processInput(String input);
+      public void stop();
+   }
+   
+   private class ProtocolImpl implements Protocol {
 
       private UiProtocol uiProtocol;
 
@@ -94,13 +99,13 @@ public class ChessEngine implements Runnable {
 
          if (uiProtocol == null) {
             if (theInput.equalsIgnoreCase("xboard")) {
-               uiProtocol= XboardProtocol.create(); //Change protocol to
+               uiProtocol= XboardProtocol.create(this); //Change protocol to
                // XboardProtocol
             } else if (theInput.equals("uci")) {
-               uiProtocol= UciProtocol.create(); //Change protocol to
+               uiProtocol= UciProtocol.create(this); //Change protocol to
                // UCIProtocol
             } else if (theInput.equals("cmd")) {
-               uiProtocol= ConsoleProtocol.create(); //Change protocol to
+               uiProtocol= ConsoleProtocol.create(this); //Change protocol to
                // ConsoleProtocol
             }
          }
@@ -110,6 +115,10 @@ public class ChessEngine implements Runnable {
          }
 
          return theOutput;
+      }
+
+      public void stop() {
+         ChessEngine.this.setRunning(false);
       }
 
    }

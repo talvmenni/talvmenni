@@ -1,15 +1,18 @@
 package org.forritan.talvmenni.ui;
 
-public class ConsoleProtocol implements UiProtocol {
+import org.forritan.talvmenni.core.ChessEngine.Protocol;
+
+public class ConsoleProtocol extends UiProtocolBase {
 
    private static ConsoleProtocol instance;
 
-   private ConsoleProtocol() {
+   private ConsoleProtocol(Protocol protocol) {
+      super(protocol);
    }
 
-   public static ConsoleProtocol create() {
+   public static ConsoleProtocol create(Protocol protocol) {
       if (ConsoleProtocol.instance == null) {
-         ConsoleProtocol.instance= new ConsoleProtocol();
+         ConsoleProtocol.instance= new ConsoleProtocol(protocol);
       }
       return ConsoleProtocol.instance;
    }
@@ -24,6 +27,7 @@ public class ConsoleProtocol implements UiProtocol {
       if ("quit".equalsIgnoreCase(theInput)) // quit and exit
       {
          theOutput= "bye";
+         this.protocol.stop();
       }
 
       return theOutput;

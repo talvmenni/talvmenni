@@ -1,15 +1,18 @@
 package org.forritan.talvmenni.ui;
 
-public class UciProtocol implements UiProtocol {
+import org.forritan.talvmenni.core.ChessEngine.Protocol;
+
+public class UciProtocol extends UiProtocolBase {
 
    private static UciProtocol instance;
 
-   private UciProtocol() {
+   private UciProtocol(Protocol protocol) {
+      super(protocol);
    }
 
-   public static UciProtocol create() {
+   public static UciProtocol create(Protocol protocol) {
       if (UciProtocol.instance == null) {
-         UciProtocol.instance= new UciProtocol();
+         UciProtocol.instance= new UciProtocol(protocol);
       }
       return UciProtocol.instance;
    }

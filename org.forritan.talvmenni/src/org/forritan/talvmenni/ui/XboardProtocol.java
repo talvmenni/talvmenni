@@ -1,15 +1,18 @@
 package org.forritan.talvmenni.ui;
 
-public class XboardProtocol implements UiProtocol {
+import org.forritan.talvmenni.core.ChessEngine;
+
+public class XboardProtocol extends UiProtocolBase {
 
    private static XboardProtocol instance;
 
-   private XboardProtocol() {
+   private XboardProtocol(ChessEngine.Protocol protocol) {
+      super(protocol);
    }
 
-   public static XboardProtocol create() {
+   public static XboardProtocol create(ChessEngine.Protocol protocol) {
       if (XboardProtocol.instance == null) {
-         XboardProtocol.instance= new XboardProtocol();
+         XboardProtocol.instance= new XboardProtocol(protocol);
       }
       return XboardProtocol.instance;
    }
