@@ -66,9 +66,9 @@ public abstract class AbstractEvaluation implements Evaluation {
          result+= PAWN_IN_OPENING_GAME;
       }
 
-      if (END_GAME_WHEN_BELOW > result) {
+      if (END_GAME_WHEN_BELOW < result) {
          return Evaluation.GameFase.END_GAME;
-      } else if (MIDDLE_GAME_WHEN_BELOW > result) {
+      } else if (MIDDLE_GAME_WHEN_BELOW < result) {
          return Evaluation.GameFase.MIDDLE_GAME;
       } else {
          return Evaluation.GameFase.OPENING_GAME;

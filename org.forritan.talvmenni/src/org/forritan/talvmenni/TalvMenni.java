@@ -6,6 +6,7 @@ import org.forritan.talvmenni.knowledge.TheoryBook;
 import org.forritan.talvmenni.knowledge.Transposition;
 import org.forritan.talvmenni.search.PrincipalVariation;
 import org.forritan.talvmenni.strategy.IterativeDeepeningAlphaBetaWithQuiescentAndNullMoveAndTranspositionTableStrategy;
+import org.forritan.talvmenni.strategy.IterativeDeepeningAlphaBetaWithQuiescentAndTranspositionTableStrategy;
 import org.forritan.talvmenni.ui.DebugWindow;
 
 import edu.emory.mathcs.util.concurrent.PlainThreadFactory;
@@ -137,24 +138,24 @@ public class TalvMenni {
             //                  PrincipalVariation.Factory.create(PLY),
             //                  QUIESCENT_MAX_DEPTH));
 
-            .create(new IterativeDeepeningAlphaBetaWithQuiescentAndNullMoveAndTranspositionTableStrategy(
+            //            .create(new
+            // IterativeDeepeningAlphaBetaWithQuiescentAndNullMoveAndTranspositionTableStrategy(
+            //                  PLY,
+            //                  new Transposition(
+            //                        MAX_TRANSPOSITION_ENTRIES),
+            //                  true,
+            //                  book,
+            //                  PrincipalVariation.Factory.create(PLY),
+            //                  QUIESCENT_MAX_DEPTH));
+
+            .create(new IterativeDeepeningAlphaBetaWithQuiescentAndTranspositionTableStrategy(
                   PLY,
                   new Transposition(
                         MAX_TRANSPOSITION_ENTRIES),
-                  true,
+                  false,
                   book,
                   PrincipalVariation.Factory.create(PLY),
                   QUIESCENT_MAX_DEPTH));
-
-      //      .create(new
-      // IterativeDeepeningAlphaBetaWithQuiescentAndTranspositionTableStrategy(
-      //            PLY,
-      //            new Transposition(
-      //                  MAX_TRANSPOSITION_ENTRIES),
-      //            false,
-      //            book,
-      //            PrincipalVariation.Factory.create(PLY),
-      //            QUIESCENT_MAX_DEPTH));
 
       //            .create(new IterativeDeepeningAlphaBetaWithTranspositionTableStrategy(
       //                  PLY,
