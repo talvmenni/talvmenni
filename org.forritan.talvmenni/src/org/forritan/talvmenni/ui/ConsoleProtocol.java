@@ -51,16 +51,26 @@ public class ConsoleProtocol extends UiProtocolBase {
                + this.getBoardPosition()
                + "\n";
       }
-
+   if (theInput.equalsIgnoreCase("go")) {
+      this.protocol.setGo(true);
+      theOutput= "Computer-thinking on\n";}
+    if (theInput.equalsIgnoreCase("force")) {
+      this.protocol.setGo(false );
+      theOutput= "Computer-thinking off\n";}      
+      
       if (theInput.toUpperCase().startsWith(
             "MOVE")) {
          String theMove= theInput.substring(
                4).trim();
 
-         theOutput= makeMove(theMove);
-
+         theOutput= makeMove(theMove); // usermove
       }
 
+      if ((theInput.equalsIgnoreCase("?")) && (this.protocol.isGo())) {
+         Move move= this.protocol.makeRandomMove();          
+         theOutput = getBoardPosition();                  
+      }
+      
       if ("position".equalsIgnoreCase(theInput)) {
          theOutput= getBoardPosition();
       }
@@ -120,7 +130,7 @@ public class ConsoleProtocol extends UiProtocolBase {
       positionString= positionString
             + "    ["
             + getWhoIsToMove()
-            + " to move]";
+            + " to move]\n";
 
       return positionString;
 
@@ -151,16 +161,17 @@ public class ConsoleProtocol extends UiProtocolBase {
                   theMove.substring(
                         3,
                         4)).intValue())).toUpperCase();
-
+      
       Square square= Squares.create();
       Rules currentRules= this.protocol.getCurrentRules();
       Position currentPosition= this.protocol.getCurrentPosition();
-
+      
       if (Rules.isMoveLegal(
             currentPosition,
             square.getSquare(fromSquare),
             square.getSquare(toSquare),
-            this.protocol.isWhiteToMove())) {
+            this.protocol.isWhiteToMove())
+            ) {
          this.protocol.makeMove(
                square.getSquare(fromSquare),
                square.getSquare(toSquare));
@@ -198,6 +209,8 @@ public class ConsoleProtocol extends UiProtocolBase {
             + "- NEW: Start a new game \n";
       message= message
             + "- MOVE: Make move. Format: 'MOVE fftt' \n";
+      message= message
+      + "- ?: Ask computer to move now \n";
       message= message
             + "- WHITE: Give white the move \n";
       message= message
@@ -251,29 +264,29 @@ public class ConsoleProtocol extends UiProtocolBase {
       Position currentPosition= this.protocol.getCurrentPosition();
       if (currentPosition != null) {
          if (currentPosition.white.isPawn(square))
-            return "P";
-         else if (currentPosition.black.isPawn(square))
             return "p";
+         else if (currentPosition.black.isPawn(square))
+            return "P";
          else if (currentPosition.white.isRook(square))
-            return "R";
-         else if (currentPosition.black.isRook(square))
             return "r";
+         else if (currentPosition.black.isRook(square))
+            return "R";
          else if (currentPosition.white.isBishop(square))
-            return "B";
-         else if (currentPosition.black.isBishop(square))
             return "b";
+         else if (currentPosition.black.isBishop(square))
+            return "B";
          else if (currentPosition.white.isKnight(square))
-            return "N";
-         else if (currentPosition.black.isKnight(square))
             return "n";
+         else if (currentPosition.black.isKnight(square))
+            return "N";
          else if (currentPosition.white.isQueen(square))
-            return "Q";
-         else if (currentPosition.black.isQueen(square))
             return "q";
+         else if (currentPosition.black.isQueen(square))
+            return "Q";
          else if (currentPosition.white.isKing(square))
-            return "K";
-         else if (currentPosition.black.isKing(square))
             return "k";
+         else if (currentPosition.black.isKing(square))
+            return "K";
          else
             return ".";
       } else

@@ -21,7 +21,11 @@ public class MoveHistory {
       }
       
       public void add(Move move) {
-         this.history.add(move);
+         this.history.add(move);         
+      }
+
+      public void reset() {
+         this.history.clear();         
       }
       
       public List<Move> getHistory(){
