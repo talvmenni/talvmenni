@@ -1,29 +1,10 @@
 package org.forritan.talvmenni.game;
 
+import org.forritan.talvmenni.game.Position.Bitboard;
 
+public class ImmutablePartitionSearchPosition extends ImmutablePosition {
 
-public class ImmutablePosition extends AbstractPosition {
-
-   /**
-    * 
-    * @param whiteKings
-    * @param whiteQueens
-    * @param whiteRooks
-    * @param whiteBishops
-    * @param whiteKnights
-    * @param whitePawns
-    * @param whiteCastling
-    * @param whiteEnpassant
-    * @param blackKings
-    * @param blackQueens
-    * @param blackRooks
-    * @param blackBishops
-    * @param blackKnights
-    * @param blackPawns
-    * @param blackCastling
-    * @param blackEnpassant
-    */
-   protected ImmutablePosition(
+   public ImmutablePartitionSearchPosition(
          long whiteKings,
          long whiteQueens,
          long whiteRooks,
@@ -59,11 +40,7 @@ public class ImmutablePosition extends AbstractPosition {
             blackEnpassant);
    }
 
-   /**
-    * @param white
-    * @param black
-    */
-   protected ImmutablePosition(
+   public ImmutablePartitionSearchPosition(
          Bitboard white,
          Bitboard black) {
       super(
@@ -71,25 +48,35 @@ public class ImmutablePosition extends AbstractPosition {
             black);
    }
 
+   public int hashCode() {
+      return this.getWhite().partitionSearchHashCode()
+            ^ this.getBlack().partitionSearchHashCode();
+   }
+
+   public boolean equals(
+         Object o) {
+      if (o instanceof Position) {
+         return this.getWhite().partitionSearchEquals(
+               ((Position) o).getWhite())
+               && this.getBlack().partitionSearchEquals(
+                     ((Position) o).getBlack());
+      } else {
+         return false;
+      }
+   }
+
    public Position pushMove(
          Bitboard white,
          Bitboard black) {
       return Position.Factory.create(
-            false,
+            true,
             false,
             white,
             black);
    }
 
-   public Position popMove() {
-      return this;
-   }
-
-   public synchronized Position getImmutable() {
-      return this;
-   }
-
    public synchronized Position getMutable() {
-      return Position.Factory.create(false, true, this.getWhite(), this.getBlack());
+      return Position.Factory.create(true, true, this.getWhite(), this.getBlack());
    }
+
 }

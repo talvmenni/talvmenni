@@ -12,13 +12,14 @@ import junit.framework.TestCase;
 public class SimpleMaterialAndPositionalEvaluationTest extends TestCase {
 
    public void testGetScoreOnInitialPosition() {
-      Position p= Position.Factory.createInitial(false);
+      Position p= Position.Factory.createInitial(false, false);
       Evaluation e= new SimpleMaterialAndPositionalEvaluation();
       Assert.assertEquals(0, e.getScore(p));
    }
    
    public void testGetScoreAllWhitePiecesOnlyBlackKing() {
       Position p= Position.Factory.create(
+            false, 
             false,
             Square._E1, // whiteKings
             Square._D1, // whiteQueens
@@ -48,6 +49,7 @@ public class SimpleMaterialAndPositionalEvaluationTest extends TestCase {
    
    public void testGetScoreAllBlackPiecesOnlyWhiteKing() {
       Position p= Position.Factory.create(
+            false, 
             false,
             Square._E1, // whiteKings
             Square._EMPTY_BOARD, // whiteQueens

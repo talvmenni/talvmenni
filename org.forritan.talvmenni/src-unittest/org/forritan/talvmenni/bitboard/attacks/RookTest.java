@@ -27,6 +27,7 @@ public class RookTest extends TestCase {
    public void testRookAttacks1() {
       Position p= Position.Factory.create(
             false,
+            false,
             Square._E1, // whiteKings
             Square._G4, // whiteQueens
             Square._A1

@@ -17,6 +17,7 @@ public class TestSpeedOnQueenAttacks {
 
       long time= -System.currentTimeMillis();
       Position p= Position.Factory.create(
+            false, 
             false,
             Square._E1, // whiteKings
             Square._G4, // whiteQueens

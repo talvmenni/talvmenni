@@ -92,8 +92,8 @@ public class SimpleOneLevelAlphaBetaParallelStrategy extends
             moves= this.position.getBlack().getPossibleMoves();
          }
 
-         numberOfTasks= moves.size();
-         if (numberOfTasks > 0) {
+         this.numberOfTasks= moves.size();
+         if (this.numberOfTasks > 0) {
             for (Iterator it= moves.iterator(); it.hasNext();) {
                Move move= (Move) it.next();
                Position childPosition= this.position.move(

@@ -99,7 +99,7 @@ public class MutablePosition extends AbstractPosition {
    }
 
    public Position getImmutable() {
-      return Position.Factory.create(false, this.getWhite(), this.getBlack());
+      return Position.Factory.create(false, false, this.getWhite(), this.getBlack());
    }
 
    public Position getMutable() {

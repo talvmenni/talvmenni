@@ -27,7 +27,7 @@ public class TestSpeedOnMakeRandomMoveUsingTransposition {
       Set hashCodes= new HashSet();
       Set positions= new HashSet();
 
-      Position p= Position.Factory.createInitial(false);
+      Position p= Position.Factory.createInitial(false, false);
       boolean whiteToMove= true;
       for (int i= 0; i < warmup; i++) {
          List moves= (whiteToMove ? p.getWhite().getPossibleMoves() : p
@@ -47,7 +47,7 @@ public class TestSpeedOnMakeRandomMoveUsingTransposition {
             hashCodes.add(new Integer(p.hashCode()));
             positions.add(p);
          } else {
-            p= Position.Factory.createInitial(false);
+            p= Position.Factory.createInitial(false, false);
             hashCodes.clear();
             positions.clear();
             System.err.println("There where "
@@ -89,7 +89,7 @@ public class TestSpeedOnMakeRandomMoveUsingTransposition {
       collisions= 0;
       total= 0;
 
-      p= Position.Factory.createInitial(true);
+      p= Position.Factory.createInitial(false, true);
       whiteToMove= true;
       for (int i= 0; i < warmup; i++) {
          List moves= (whiteToMove ? p.getWhite().getPossibleMoves() : p
@@ -109,7 +109,7 @@ public class TestSpeedOnMakeRandomMoveUsingTransposition {
             hashCodes.add(new Integer(p.hashCode()));
             positions.add(p);
          } else {
-            p= Position.Factory.createInitial(true);
+            p= Position.Factory.createInitial(false, true);
             hashCodes.clear();
             positions.clear();
             System.err.println("There where "
@@ -153,7 +153,7 @@ public class TestSpeedOnMakeRandomMoveUsingTransposition {
 
       
       
-      p= Position.Factory.createInitial(false);
+      p= Position.Factory.createInitial(false, false);
       whiteToMove= true;
       int howMany= 100000;
       System.out.println("Making "
@@ -170,7 +170,7 @@ public class TestSpeedOnMakeRandomMoveUsingTransposition {
                   move.from,
                   move.to);
          } else {
-            p= Position.Factory.createInitial(false);
+            p= Position.Factory.createInitial(false, false);
             System.out.print(".");
          }
          whiteToMove= !whiteToMove;
@@ -188,7 +188,7 @@ public class TestSpeedOnMakeRandomMoveUsingTransposition {
             / time
             + " pr. second.");
 
-      p= Position.Factory.createInitial(true);
+      p= Position.Factory.createInitial(false, true);
       whiteToMove= true;
       System.out.println("Making "
             + howMany
@@ -205,7 +205,7 @@ public class TestSpeedOnMakeRandomMoveUsingTransposition {
                   move.to);
             p.popMove();
          } else {
-            p= Position.Factory.createInitial(true);
+            p= Position.Factory.createInitial(false, true);
             System.out.print(".");
          }
          whiteToMove= !whiteToMove;

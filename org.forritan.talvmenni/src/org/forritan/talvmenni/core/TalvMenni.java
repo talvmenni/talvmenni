@@ -3,8 +3,9 @@ package org.forritan.talvmenni.core;
 import java.io.IOException;
 
 import org.forritan.talvmenni.game.TheoryBook;
+import org.forritan.talvmenni.game.Transposition;
 import org.forritan.talvmenni.search.PrincipalVariation;
-import org.forritan.talvmenni.strategy.SimpleOneLevelAlphaBetaParallelStrategy;
+import org.forritan.talvmenni.strategy.IterativeDeepeningAlphaBetaWithTranspositionTableStrategy;
 import org.forritan.talvmenni.ui.DebugWindow;
 
 import edu.emory.mathcs.util.concurrent.PlainThreadFactory;
@@ -30,7 +31,15 @@ public class TalvMenni {
     * MAX_TRANSPOSITION_ENTRIES is reached the eldest entry will be removed
     * before a new entry is added.
     */
-   public static int                 MAX_TRANSPOSITION_ENTRIES = 30000;
+   public static int                 MAX_TRANSPOSITION_ENTRIES = 42000;
+
+   /**
+    * Very experimental :)
+    * Partition search - Entries in transposition will evaluate as equal if the
+    * pieces - excluding pawns - are equal and the _number_ of pawns/enpassant-bit is
+    * the same...  
+    */
+   public static final boolean       PARTITION_SEARCH          = false;
 
    private static PlainThreadFactory threadFactory;
 
@@ -69,22 +78,23 @@ public class TalvMenni {
 
       final ChessEngine chessEngine= ChessEngine
 
-      // Choose strategy
+            // Choose strategy
 
             //      .create(new
             // RandomMoveStrategy(PrincipalVariation.Factory.create(0)));
 
-            .create(new SimpleOneLevelAlphaBetaParallelStrategy(
-                  PLY,
-                  book,
-                  PrincipalVariation.Factory.create(PLY - 1)));
+            //            .create(new SimpleOneLevelAlphaBetaParallelStrategy(
+            //                  PLY,
+            //                  book,
+            //                  PrincipalVariation.Factory.create(PLY - 1)));
 
-      //      .create(new IterativeDeepeningAlphaBetaWithTranspositionTableStrategy(
-      //            PLY,
-      //            new Transposition(
-      //                  MAX_TRANSPOSITION_ENTRIES),
-      //            true,
-      //            book));
+            .create(new IterativeDeepeningAlphaBetaWithTranspositionTableStrategy(
+                  PLY,
+                  new Transposition(
+                        MAX_TRANSPOSITION_ENTRIES),
+                  true,
+                  book,
+                  PrincipalVariation.Factory.create(PLY)));
 
       //            .create(new IterativeDeepeningAndReductionAlphaBetaStrategy(
       //                  PLY,

@@ -12,7 +12,7 @@ import junit.framework.TestCase;
 public class RulesTest extends TestCase {
 
    public void testLegalPawnMovesFromInitialPosition() {
-      Position p= Position.Factory.createInitial(false);
+      Position p= Position.Factory.createInitial(false, false);
       Assert.assertTrue(
             "Should be legal to move pawn at initial position A2 to A3",
             Rules.isMoveLegal(
@@ -128,23 +128,23 @@ public class RulesTest extends TestCase {
    }
 
    public void testLegalRookMovesFromInitialPosition() {
-      Position p= Position.Factory.createInitial(false);
+      Position p= Position.Factory.createInitial(false, false);
    }
 
    public void testLegalBishopMovesFromInitialPosition() {
-      Position p= Position.Factory.createInitial(false);
+      Position p= Position.Factory.createInitial(false, false);
    }
 
    public void testLegalQueenMovesFromInitialPosition() {
-      Position p= Position.Factory.createInitial(false);
+      Position p= Position.Factory.createInitial(false, false);
    }
 
    public void testLegalKingMovesFromInitialPosition() {
-      Position p= Position.Factory.createInitial(false);
+      Position p= Position.Factory.createInitial(false, false);
    }
 
    public void testLegalKnightMovesFromInitialPosition() {
-      Position p= Position.Factory.createInitial(false);
+      Position p= Position.Factory.createInitial(false, false);
       Assert
             .assertTrue(
                   "Should be legal to move white knight at initial position B1 to A3",

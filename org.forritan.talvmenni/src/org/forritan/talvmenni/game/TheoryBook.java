@@ -48,6 +48,7 @@ public class TheoryBook {
             try {
                p= Position.Factory.createPositionFromFEN(
                      false,
+                     false,
                      line);
 
                if (this.containsKey(

@@ -21,9 +21,9 @@ import org.forritan.talvmenni.bitboard.paths.WhitePawnMoves;
 
 
 public interface Position extends Serializable {
-   
-   public static final long serialVersionUID = 1L; 
-   
+
+   public static final long serialVersionUID = 1L;
+
    public Bitboard getBlack();
 
    public Bitboard getWhite();
@@ -54,38 +54,38 @@ public interface Position extends Serializable {
          Bitboard black);
 
    public Position popMove();
-   
 
    public class Bitboard implements Serializable {
 
       public static final long serialVersionUID = 1L;
 
-      public final static int SEED         = 17;
-      public final static int PRIME_FACTOR = 37;
+      public final static int  SEED             = 17;
+      public final static int  PRIME_FACTOR     = 37;
 
-      public final int        hashCode;
+      public final int         hashCode;
+      public final int         partitionSearchHashCode;
 
-      public final boolean    whiteBoard;
-      public final Position   parent;
+      public final boolean     whiteBoard;
+      public final Position    parent;
 
-      public final long       kings;
-      public final long       queens;
-      public final long       rooks;
-      public final long       bishops;
-      public final long       knights;
-      public final long       pawns;
+      public final long        kings;
+      public final long        queens;
+      public final long        rooks;
+      public final long        bishops;
+      public final long        knights;
+      public final long        pawns;
 
-      public final long       castling;
-      public final long       enpassant;
+      public final long        castling;
+      public final long        enpassant;
 
-      public final long       allPieces;
+      public final long        allPieces;
 
-      private List            possibleMoves;
-      private List            betterOrderMoves;
-      private long            allCaptureMovesAttackedSquares;
-      private boolean         allCaptureMovesAttackedSquaresInitialized;
-      private Boolean         kingsSideCastlingLegal;
-      private Boolean         queensSideCastlingLegal;
+      private List             possibleMoves;
+      private List             betterOrderMoves;
+      private long             allCaptureMovesAttackedSquares;
+      private boolean          allCaptureMovesAttackedSquaresInitialized;
+      private Boolean          kingsSideCastlingLegal;
+      private Boolean          queensSideCastlingLegal;
 
       /**
        * @param white
@@ -147,19 +147,48 @@ public interface Position extends Serializable {
                + ((int) (this.knights ^ (this.knights >>> 32)));
          hash= PRIME_FACTOR
                * hash
-               + ((int) (this.pawns ^ (this.pawns >>> 32)));
-         hash= PRIME_FACTOR
-               * hash
-               + ((int) (this.enpassant ^ (this.enpassant >>> 32)));
-         hash= PRIME_FACTOR
-               * hash
                + ((int) (this.castling ^ (this.castling >>> 32)));
          hash= PRIME_FACTOR
                * hash
                + (whiteBoard ? 0 : 1);
 
+         int partitionSearchHash= hash;
+
+         partitionSearchHash= PRIME_FACTOR
+               * partitionSearchHash
+               + Bitboard.populationCount(pawns);
+
+         partitionSearchHash= PRIME_FACTOR
+               * partitionSearchHash
+               + Bitboard.populationCount(enpassant);
+
+         this.partitionSearchHashCode= partitionSearchHash;
+
+         hash= PRIME_FACTOR
+               * hash
+               + ((int) (this.pawns ^ (this.pawns >>> 32)));
+         hash= PRIME_FACTOR
+               * hash
+               + ((int) (this.enpassant ^ (this.enpassant >>> 32)));
+
          this.hashCode= hash;
-         
+
+      }
+
+      public static int populationCount(
+            long i) {
+         i= i
+               - ((i >>> 1) & 0x5555555555555555L);
+         i= (i & 0x3333333333333333L)
+               + ((i >>> 2) & 0x3333333333333333L);
+         i= (i + (i >>> 4)) & 0x0f0f0f0f0f0f0f0fL;
+         i= i
+               + (i >>> 8);
+         i= i
+               + (i >>> 16);
+         i= i
+               + (i >>> 32);
+         return (int) i & 0x7f;
       }
 
       public boolean equals(
@@ -179,8 +208,31 @@ public interface Position extends Serializable {
          }
       }
 
+      public boolean partitionSearchEquals(
+            Object o) {
+         if (o instanceof Bitboard) {
+            return (Bitboard.populationCount(this.pawns) == Bitboard
+                  .populationCount(((Bitboard) o).pawns))
+                  && (Bitboard.populationCount(this.enpassant) == Bitboard
+                        .populationCount(((Bitboard) o).enpassant))
+                  && (this.whiteBoard == ((Bitboard) o).whiteBoard)
+                  && (this.kings == ((Bitboard) o).kings)
+                  && (this.queens == ((Bitboard) o).queens)
+                  && (this.rooks == ((Bitboard) o).rooks)
+                  && (this.bishops == ((Bitboard) o).bishops)
+                  && (this.knights == ((Bitboard) o).knights)
+                  && (this.castling == ((Bitboard) o).castling);
+         } else {
+            return false;
+         }
+      }
+
       public int hashCode() {
          return this.hashCode;
+      }
+
+      public int partitionSearchHashCode() {
+         return this.partitionSearchHashCode;
       }
 
       public void betterMove(
@@ -341,9 +393,7 @@ public interface Position extends Serializable {
             if (this.parent.isPromotionMove(
                   fromSquare,
                   toSquare)) {
-               for (int promoteTo= PromotionPiece.QUEEN;
-                        promoteTo <= PromotionPiece.KNIGHT;
-                        promoteTo++) {
+               for (int promoteTo= PromotionPiece.QUEEN; promoteTo <= PromotionPiece.KNIGHT; promoteTo++) {
                   newPosition= this.parent.move(
                         fromSquare,
                         toSquare,
@@ -383,7 +433,7 @@ public interface Position extends Serializable {
             List result,
             long fromSquare,
             long toSquare,
-            int  promotionPiece,
+            int promotionPiece,
             Position newPosition) {
          if (this.whiteBoard) {
             if (!newPosition.getWhite().isChecked()) {
@@ -638,31 +688,35 @@ public interface Position extends Serializable {
    }
 
    public static interface PromotionPiece extends Serializable {
-      
-      public static final long serialVersionUID = 1L; 
-      
-      public final static int      NONE    = 4;
-      
-      public final static int      QUEEN   = 0;
-      public final static int      ROOK    = 1;
-      public final static int      BISHOP  = 2;
-      public final static int      KNIGHT  = 3;
-      public final static String[] STRINGS = new String[] { "q", "r", "b", "n", ""};
+
+      public static final long     serialVersionUID = 1L;
+
+      public final static int      NONE             = 4;
+
+      public final static int      QUEEN            = 0;
+      public final static int      ROOK             = 1;
+      public final static int      BISHOP           = 2;
+      public final static int      KNIGHT           = 3;
+      public final static String[] STRINGS          = new String[] {
+                                                          "q",
+                                                          "r",
+                                                          "b",
+                                                          "n",
+                                                          ""};
    }
 
    public static class Move implements Serializable {
 
       public static final long serialVersionUID = 1L;
-      
-      public final static int SEED         = 17;
-      public final static int PRIME_FACTOR = 37;
 
-      public final long from;
-      public final long to;
-      public final int  promotionPiece;
-      
-      public final int        hashCode;
+      public final static int  SEED             = 17;
+      public final static int  PRIME_FACTOR     = 37;
 
+      public final long        from;
+      public final long        to;
+      public final int         promotionPiece;
+
+      public final int         hashCode;
 
       public Move(
             long from,
@@ -671,11 +725,15 @@ public interface Position extends Serializable {
          this.from= from;
          this.to= to;
          this.promotionPiece= promotionPiece;
-         
+
          int hash= SEED;
-         hash= PRIME_FACTOR * hash + ((int) ( this.from ^ ( this.from >>> 32)));
-         hash= PRIME_FACTOR * hash + ((int) (this.to ^ (this.to >>> 32)));         
-         this.hashCode= hash;         
+         hash= PRIME_FACTOR
+               * hash
+               + ((int) (this.from ^ (this.from >>> 32)));
+         hash= PRIME_FACTOR
+               * hash
+               + ((int) (this.to ^ (this.to >>> 32)));
+         this.hashCode= hash;
       }
 
       public String toString() {
@@ -707,7 +765,7 @@ public interface Position extends Serializable {
             return false;
          }
       }
-      
+
       public int hashCode() {
          return this.hashCode;
       }
@@ -716,8 +774,10 @@ public interface Position extends Serializable {
 
    public static class Factory {
       public static Position createInitial(
+            boolean partitionSearchPosition,
             boolean mutable) {
-         if (mutable) {
+         if (mutable
+               && !partitionSearchPosition) {
             return new MutablePosition(
                   Square._E1, // whiteKings
                   Square._D1, // whiteQueens
@@ -746,7 +806,8 @@ public interface Position extends Serializable {
                         | Square._H8, // blackCastling
                   Square._EMPTY_BOARD // blackEnpassant
             );
-         } else {
+         } else if (!mutable
+               && !partitionSearchPosition) {
             return new ImmutablePosition(
                   Square._E1, // whiteKings
                   Square._D1, // whiteQueens
@@ -775,7 +836,66 @@ public interface Position extends Serializable {
                         | Square._H8, // blackCastling
                   Square._EMPTY_BOARD // blackEnpassant
             );
-         }
+         } else if (mutable
+               && partitionSearchPosition) {
+            return new MutablePartitionSearchPosition(
+                  Square._E1, // whiteKings
+                  Square._D1, // whiteQueens
+                  Square._A1
+                        | Square._H1, // whiteRooks
+                  Square._C1
+                        | Square._F1, // whiteBishops
+                  Square._B1
+                        | Square._G1, // whiteKnights
+                  Rank._2, // whitePawns
+                  Square._A1
+                        | Square._E1
+                        | Square._H1, // whiteCastling
+                  Square._EMPTY_BOARD, // whiteEnpassant
+                  Square._E8, // blackKings
+                  Square._D8, // blackQueens
+                  Square._A8
+                        | Square._H8, // blackRooks
+                  Square._C8
+                        | Square._F8, // blackBishops
+                  Square._B8
+                        | Square._G8, // blackKnights
+                  Rank._7, // blackPawns
+                  Square._A8
+                        | Square._E8
+                        | Square._H8, // blackCastling
+                  Square._EMPTY_BOARD // blackEnpassant
+            );
+         } else if (!mutable
+               && partitionSearchPosition) { return new ImmutablePartitionSearchPosition(
+               Square._E1, // whiteKings
+               Square._D1, // whiteQueens
+               Square._A1
+                     | Square._H1, // whiteRooks
+               Square._C1
+                     | Square._F1, // whiteBishops
+               Square._B1
+                     | Square._G1, // whiteKnights
+               Rank._2, // whitePawns
+               Square._A1
+                     | Square._E1
+                     | Square._H1, // whiteCastling
+               Square._EMPTY_BOARD, // whiteEnpassant
+               Square._E8, // blackKings
+               Square._D8, // blackQueens
+               Square._A8
+                     | Square._H8, // blackRooks
+               Square._C8
+                     | Square._F8, // blackBishops
+               Square._B8
+                     | Square._G8, // blackKnights
+               Rank._7, // blackPawns
+               Square._A8
+                     | Square._E8
+                     | Square._H8, // blackCastling
+               Square._EMPTY_BOARD // blackEnpassant
+         ); }
+         return null;
       }
 
       /**
@@ -799,6 +919,7 @@ public interface Position extends Serializable {
        * @return
        */
       public static Position create(
+            boolean partitionSearchPosition,
             boolean mutable,
             long whiteKings,
             long whiteQueens,
@@ -816,7 +937,8 @@ public interface Position extends Serializable {
             long blackPawns,
             long blackCastling,
             long blackEnpassant) {
-         if (mutable) {
+         if (mutable
+               && !partitionSearchPosition) {
             return new MutablePosition(
                   whiteKings,
                   whiteQueens,
@@ -834,7 +956,8 @@ public interface Position extends Serializable {
                   blackPawns,
                   blackCastling,
                   blackEnpassant);
-         } else {
+         } else if (!mutable
+               && !partitionSearchPosition) {
             return new ImmutablePosition(
                   whiteKings,
                   whiteQueens,
@@ -852,26 +975,79 @@ public interface Position extends Serializable {
                   blackPawns,
                   blackCastling,
                   blackEnpassant);
-         }
+         } else if (mutable
+               && partitionSearchPosition) {
+            return new MutablePartitionSearchPosition(
+                  whiteKings,
+                  whiteQueens,
+                  whiteRooks,
+                  whiteBishops,
+                  whiteKnights,
+                  whitePawns,
+                  whiteCastling,
+                  whiteEnpassant,
+                  blackKings,
+                  blackQueens,
+                  blackRooks,
+                  blackBishops,
+                  blackKnights,
+                  blackPawns,
+                  blackCastling,
+                  blackEnpassant);
+         } else if (!mutable
+               && partitionSearchPosition) { return new ImmutablePartitionSearchPosition(
+               whiteKings,
+               whiteQueens,
+               whiteRooks,
+               whiteBishops,
+               whiteKnights,
+               whitePawns,
+               whiteCastling,
+               whiteEnpassant,
+               blackKings,
+               blackQueens,
+               blackRooks,
+               blackBishops,
+               blackKnights,
+               blackPawns,
+               blackCastling,
+               blackEnpassant); }
+         return null;
       }
 
       public static Position create(
+            boolean partitionSearchPosition,
             boolean mutable,
             Bitboard white,
             Bitboard black) {
-         if (mutable) {
+         if (mutable
+               && !partitionSearchPosition) {
             return new MutablePosition(
                   white,
                   black);
-         } else {
+         } else if (!mutable
+               && !partitionSearchPosition) {
             return new ImmutablePosition(
                   white,
                   black);
+         } else if (mutable
+               && partitionSearchPosition) {
+            return new MutablePartitionSearchPosition(
+                  white,
+                  black);
+         } else if (!mutable
+               && partitionSearchPosition) {
+            return new ImmutablePartitionSearchPosition(
+               white,
+               black);
          }
+         
+         return null;
 
       }
 
       public static ColorPosition createPositionFromFEN(
+            boolean partitionSearchPosition,
             boolean mutable,
             String FENString) {
 
@@ -1007,6 +1183,7 @@ public interface Position extends Serializable {
          }
 
          Position fenPosition= Position.Factory.create(
+               partitionSearchPosition,
                mutable,
                whiteKings,
                whiteQueens,
@@ -1035,8 +1212,8 @@ public interface Position extends Serializable {
 
       public static final long serialVersionUID = 1L;
 
-      public Position position;
-      public Boolean  whiteToMove;
+      public Position          position;
+      public Boolean           whiteToMove;
 
       public ColorPosition(
             Position position,
