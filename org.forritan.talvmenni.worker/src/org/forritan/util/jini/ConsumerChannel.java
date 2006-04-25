@@ -1,25 +1,20 @@
 /**
- * talvmenni - A distributed chess-engine implemented in Java(TM) and against
- * Sun Microsystems Jini/JavaSpaces(TM).
+ * talvmenni - A distributed chess-engine implemented in Java(TM)
+ * and against Sun Microsystems Jini/JavaSpaces(TM).
  *  
- * Copyright (C) 2004  Eyðun Lamhauge and Eyðun Nielsen
- *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 2.1 of the License, or (at your option) any later version.
+ * Copyright (C) 2004-2006 Eyðun Lamhauge and Eyðun Nielsen
  * 
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
  * 
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *      http://www.apache.org/licenses/LICENSE-2.0
  * 
- * Or you can see it at the Free Software Foundation website on the
- * following url: http://www.fsf.org/licenses/lgpl.html
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
+ * implied. See the License for the specific language governing
+ * permissions and limitations under the License. 
  */
 
 package org.forritan.util.jini;
@@ -37,7 +32,7 @@ import net.jini.space.JavaSpace;
 
 public class ConsumerChannel {
 
-   private static Map channels= new HashMap();
+   private static Map<String, Integer> channels= new HashMap<String, Integer>();
 
    private JavaSpace space;
    private String name;
@@ -53,7 +48,7 @@ public class ConsumerChannel {
       if (Boolean.getBoolean("deedjinn.debug.verbose")) {
          Integer numberOfChannels;
          if (channels.containsKey(name)) {
-            numberOfChannels= (Integer) channels.get(name);
+            numberOfChannels= channels.get(name);
             numberOfChannels= new Integer(numberOfChannels.intValue() + 1);
             channels.put(name, numberOfChannels);
          }
@@ -247,6 +242,9 @@ public class ConsumerChannel {
    }
 
    public static class Element implements Entry {
+
+      private static final long serialVersionUID = 1L;
+
       public String name;
       public Integer index;
       public Object data;
@@ -262,11 +260,17 @@ public class ConsumerChannel {
    }
 
    public static class Start extends Index {
+
+      private static final long serialVersionUID = 1L;
+
       public Start() {
       }
    }
 
    public static class End extends Index {
+
+      private static final long serialVersionUID = 1L;
+
       public End() {
       }
    }
