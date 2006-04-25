@@ -1,3 +1,22 @@
+/**
+ * talvmenni - A distributed chess-engine implemented in Java(TM)
+ * and against Sun Microsystems Jini/JavaSpaces(TM).
+ *  
+ * Copyright (C) 2004-2006 Eyðun Lamhauge and Eyðun Nielsen
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
+ * implied. See the License for the specific language governing
+ * permissions and limitations under the License. 
+ */
+
 package org.forritan.talvmenni.knowledge;
 
 import java.io.BufferedReader;
@@ -17,13 +36,13 @@ import org.forritan.talvmenni.knowledge.Position.Move;
 
 public class TheoryBook {
 
-   private Table whiteBook;
-   private Table blackBook;
+   private Table<Integer, List<TupleMoveWeight>> whiteBook;
+   private Table<Integer, List<TupleMoveWeight>> blackBook;
 
    public TheoryBook(
          int maxBookEntries) {
-      this.whiteBook= new Table(maxBookEntries);
-      this.blackBook= new Table(maxBookEntries);
+      this.whiteBook= new Table<Integer, List<TupleMoveWeight>>(maxBookEntries);
+      this.blackBook= new Table<Integer, List<TupleMoveWeight>>(maxBookEntries);
    }
 
    public void loadBook(
@@ -40,7 +59,7 @@ public class TheoryBook {
       boolean fenStringLine= true;
       String line= null;
       ColorPosition p= null;
-      List bookMoves= null;
+      List<TupleMoveWeight> bookMoves= null;
 
       while ((line= reader.readLine()) != null) {
          lineNumber++;
@@ -69,7 +88,7 @@ public class TheoryBook {
                         new Integer(p.position.hashCode()),
                         p.whiteToMove.booleanValue());
                } else {
-                  bookMoves= new ArrayList();
+                  bookMoves= new ArrayList<TupleMoveWeight>();
                }
             } catch (IllegalArgumentException e) {
                fenStringLine= !fenStringLine; //try to read new fenString next
@@ -187,20 +206,20 @@ public class TheoryBook {
 
    public List put(
          Integer key,
-         List value,
+         List<TupleMoveWeight> value,
          boolean whiteBook) {
       if (whiteBook) {
-         return (List) this.whiteBook.put(
+         return this.whiteBook.put(
                key,
                value);
       } else {
-         return (List) this.blackBook.put(
+         return this.blackBook.put(
                key,
                value);
       }
    }
 
-   public List get(
+   public List<TupleMoveWeight> get(
          Position key,
          boolean whiteBook) {
       return this.get(
@@ -208,13 +227,13 @@ public class TheoryBook {
             whiteBook);
    }
 
-   public List get(
+   public List<TupleMoveWeight> get(
          Integer key,
          boolean whiteBook) {
       if (whiteBook) {
-         return (List) this.whiteBook.get(key);
+         return this.whiteBook.get(key);
       } else {
-         return (List) this.blackBook.get(key);
+         return this.blackBook.get(key);
       }
    }
 
@@ -227,7 +246,7 @@ public class TheoryBook {
       }
    }
 
-   private static class Table extends LinkedHashMap {
+   private static class Table<K, V> extends LinkedHashMap<K, V> {
       private static final long serialVersionUID = 1L;
       private final int         maxEntries;
 

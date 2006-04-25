@@ -1,3 +1,22 @@
+/**
+ * talvmenni - A distributed chess-engine implemented in Java(TM)
+ * and against Sun Microsystems Jini/JavaSpaces(TM).
+ *  
+ * Copyright (C) 2004-2006 Eyðun Lamhauge and Eyðun Nielsen
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
+ * implied. See the License for the specific language governing
+ * permissions and limitations under the License. 
+ */
+
 package org.forritan.talvmenni.strategy;
 
 import java.io.IOException;
@@ -31,6 +50,8 @@ import org.forritan.util.jini.ServiceLocator;
 public class ParallelIterativDeepeningAlphaBetaWithQuiescentAndTranspositionTableStrategy
       extends AbstractParallelStrategy {
 
+   private static final long serialVersionUID = 1L;
+
    private Master master;
    private int    masterSearchToPly;
 
@@ -57,11 +78,11 @@ public class ParallelIterativDeepeningAlphaBetaWithQuiescentAndTranspositionTabl
       this.masterSearchToPly= masterSearchToPly;
    }
 
-   protected List search(
+   protected List<Move> search(
          Position position,
          boolean whiteToMove) {
 
-      List result= null;
+      List<Move> result= null;
 
       // First we do a fast 3 or 4-ply iterative deepening search to get better
       // moveordering
@@ -84,7 +105,7 @@ public class ParallelIterativDeepeningAlphaBetaWithQuiescentAndTranspositionTabl
       for (int i= this.masterSearchToPly + 1; i <= this.ply; i++) {
          this.master.collectAtPly= i;
          this.master.collectResults();
-         result= new ArrayList();
+         result= new ArrayList<Move>();
          result.add(this.master.bestResult.move);
          if (this.master.bestResult.score.intValue() > Evaluation.CHECKMATE_SCORE) {
             System.err
@@ -265,6 +286,8 @@ public class ParallelIterativDeepeningAlphaBetaWithQuiescentAndTranspositionTabl
 
    public static class Task extends ChessEngineTask {
 
+      private static final long serialVersionUID = 1L;
+
       public Position position            = null;
       public Move     move                = null;
       public Boolean  whiteToMove         = null;
@@ -415,6 +438,7 @@ public class ParallelIterativDeepeningAlphaBetaWithQuiescentAndTranspositionTabl
 
             if (localPly > (this.masterSearchedToPly.intValue())) {
 
+               @SuppressWarnings("unused")
                List bestMoves= this.worker.getSearch().getBestMoves(
                      this.position.getMutable(),
                      this.worker.evaluation,
@@ -630,6 +654,8 @@ public class ParallelIterativDeepeningAlphaBetaWithQuiescentAndTranspositionTabl
 
    public static class TaskResult extends Result {
 
+      private static final long serialVersionUID = 1L;
+
       public Integer ply                = null;
       public Integer score              = null;
       public Move    move               = null;
@@ -643,6 +669,8 @@ public class ParallelIterativDeepeningAlphaBetaWithQuiescentAndTranspositionTabl
    }
 
    public static class AlphaBetaEntry implements Entry {
+
+      private static final long serialVersionUID = 1L;
 
       public Integer ply;
       public Integer alpha;

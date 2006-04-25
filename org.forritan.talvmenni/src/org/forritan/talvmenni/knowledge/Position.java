@@ -1,3 +1,22 @@
+/**
+ * talvmenni - A distributed chess-engine implemented in Java(TM)
+ * and against Sun Microsystems Jini/JavaSpaces(TM).
+ *  
+ * Copyright (C) 2004-2006 Eyðun Lamhauge and Eyðun Nielsen
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
+ * implied. See the License for the specific language governing
+ * permissions and limitations under the License. 
+ */
+
 package org.forritan.talvmenni.knowledge;
 
 import java.io.Serializable;
@@ -77,9 +96,9 @@ public interface Position extends Serializable {
 
       public final long        allPieces;
 
-      private List             possibleMoves;
-      private List             possibleCaptureMoves;
-      private List             betterOrderMoves;
+      private List<Move>             possibleMoves;
+      private List<Move>             possibleCaptureMoves;
+      private List<Move>             betterOrderMoves;
       private long             allCaptureMovesAttackedSquares;
       private boolean          allCaptureMovesAttackedSquaresInitialized;
       private Boolean          kingsSideCastlingLegal;
@@ -238,7 +257,7 @@ public interface Position extends Serializable {
       public void betterMove(
             Move move) {
          if (this.betterOrderMoves == null) {
-            this.betterOrderMoves= new ArrayList();
+            this.betterOrderMoves= new ArrayList<Move>();
          }
          this.betterOrderMoves.add(
                0,
@@ -250,9 +269,9 @@ public interface Position extends Serializable {
 
          if (this.possibleMoves != null
                && this.betterOrderMoves != null) {
-            List currentPossibleMoves= new ArrayList();
+            List<Move> currentPossibleMoves= new ArrayList<Move>();
             currentPossibleMoves.addAll(this.possibleMoves);
-            this.possibleMoves= new ArrayList();
+            this.possibleMoves= new ArrayList<Move>();
             this.possibleMoves.addAll(this.betterOrderMoves);
             currentPossibleMoves.removeAll(this.betterOrderMoves);
             this.possibleMoves.addAll(currentPossibleMoves);
@@ -266,18 +285,18 @@ public interface Position extends Serializable {
 
          if (this.possibleMoves != null
                && this.possibleCaptureMoves != null) {
-            List currentPossibleMoves= new ArrayList();
+            List<Move> currentPossibleMoves= new ArrayList<Move>();
             currentPossibleMoves.addAll(this.possibleMoves);
-            this.possibleMoves= new ArrayList();
+            this.possibleMoves= new ArrayList<Move>();
             this.possibleMoves.addAll(this.possibleCaptureMoves);
             currentPossibleMoves.removeAll(this.possibleCaptureMoves);
             this.possibleMoves.addAll(currentPossibleMoves);
          }
       }
 
-      public List getPossibleCaptureMoves() {
+      public List<Move> getPossibleCaptureMoves() {
          if (this.possibleCaptureMoves == null) {
-            this.possibleCaptureMoves= new ArrayList();
+            this.possibleCaptureMoves= new ArrayList<Move>();
 
             long allPossibleOpponentCaptures= this
                   .getAllCaptureMovesAttackedSquares();
@@ -288,8 +307,8 @@ public interface Position extends Serializable {
                allPossibleOpponentCaptures&= this.parent.getWhite().allPieces;
             }
 
-            for (Iterator it= this.getPossibleMoves().iterator(); it.hasNext();) {
-               Move move= (Move) it.next();
+            for (Iterator<Move> it= this.getPossibleMoves().iterator(); it.hasNext();) {
+               Move move= it.next();
                if ((move.to & allPossibleOpponentCaptures) != Square._EMPTY_BOARD) {
                   this.possibleCaptureMoves.add(
                         0,
@@ -300,9 +319,9 @@ public interface Position extends Serializable {
          return this.possibleCaptureMoves;
       }
 
-      public List getPossibleMoves() {
+      public List<Move> getPossibleMoves() {
          if (this.possibleMoves == null) {
-            this.possibleMoves= new ArrayList();
+            this.possibleMoves= new ArrayList<Move>();
 
             BitboardIterator rooks= this.rooksIterator();
             while (rooks.hasNext()) {
@@ -425,7 +444,7 @@ public interface Position extends Serializable {
       }
 
       private void findMoves(
-            List result,
+            List<Move> result,
             long fromSquare,
             BitboardIterator moves) {
          while (moves.hasNext()) {
@@ -471,7 +490,7 @@ public interface Position extends Serializable {
        * @param newPosition
        */
       private void addMoveToResultIfNotInCheck(
-            List result,
+            List<Move> result,
             long fromSquare,
             long toSquare,
             int promotionPiece,

@@ -1,10 +1,28 @@
+/**
+ * talvmenni - A distributed chess-engine implemented in Java(TM)
+ * and against Sun Microsystems Jini/JavaSpaces(TM).
+ *  
+ * Copyright (C) 2004-2006 Eyðun Lamhauge and Eyðun Nielsen
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
+ * implied. See the License for the specific language governing
+ * permissions and limitations under the License. 
+ */
+
 package org.forritan.talvmenni.bitboard.knowledge;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
-import junit.framework.Assert;
 import junit.framework.TestCase;
 
 import org.forritan.talvmenni.bitboard.Square;
@@ -72,7 +90,7 @@ public class HistoryHeuristicTest extends TestCase {
       Position.Bitboard whiteBoard= Position.Factory.createInitial(
             MutablePosition.class).getWhite();
 
-      List originalMoveList= new ArrayList();
+      List<Move> originalMoveList= new ArrayList<Move>();
 
       originalMoveList.addAll(whiteBoard.getPossibleMoves());
 
@@ -89,14 +107,17 @@ public class HistoryHeuristicTest extends TestCase {
             Square._E4,
             Position.PromotionPiece.NONE);
 
+      @SuppressWarnings("unused")
       Move a2a4= new Move(
             Square._A2,
             Square._A4,
             Position.PromotionPiece.NONE);
+      @SuppressWarnings("unused")
       Move b2b3= new Move(
             Square._B2,
             Square._B3,
             Position.PromotionPiece.NONE);
+      @SuppressWarnings("unused")
       Move b2b4= new Move(
             Square._B2,
             Square._B4,
@@ -124,7 +145,7 @@ public class HistoryHeuristicTest extends TestCase {
 
       hh.sortMoveList(whiteBoard);
 
-      List orderedList= new ArrayList();
+      List<Move> orderedList= new ArrayList<Move>();
       orderedList.addAll(originalMoveList);
       orderedList.remove(b1c3);
       orderedList.remove(a2a3);

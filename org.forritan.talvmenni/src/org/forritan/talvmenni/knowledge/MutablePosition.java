@@ -1,15 +1,34 @@
+/**
+ * talvmenni - A distributed chess-engine implemented in Java(TM)
+ * and against Sun Microsystems Jini/JavaSpaces(TM).
+ *  
+ * Copyright (C) 2004-2006 Eyðun Lamhauge and Eyðun Nielsen
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
+ * implied. See the License for the specific language governing
+ * permissions and limitations under the License. 
+ */
+
 package org.forritan.talvmenni.knowledge;
 
 import java.util.Stack;
 
-import org.forritan.talvmenni.knowledge.Position.Bitboard;
-
 
 public class MutablePosition extends AbstractPosition {
 
-   Stack auxiliaryStates;
-   Stack whiteBitboards;
-   Stack blackBitboards;
+   private static final long serialVersionUID = 1L;
+
+   Stack<Long> auxiliaryStates;
+   Stack<Bitboard> whiteBitboards;
+   Stack<Bitboard> blackBitboards;
 
    /**
     * 
@@ -66,9 +85,9 @@ public class MutablePosition extends AbstractPosition {
             blackPawns,
             blackCastling,
             blackEnpassant);
-      this.auxiliaryStates= new Stack();
-      this.whiteBitboards= new Stack();
-      this.blackBitboards= new Stack();
+      this.auxiliaryStates= new Stack<Long>();
+      this.whiteBitboards= new Stack<Bitboard>();
+      this.blackBitboards= new Stack<Bitboard>();
    }
 
    /**
@@ -83,9 +102,9 @@ public class MutablePosition extends AbstractPosition {
             auxiliaryState,
             white,
             black);
-      this.auxiliaryStates= new Stack();
-      this.whiteBitboards= new Stack();
-      this.blackBitboards= new Stack();
+      this.auxiliaryStates= new Stack<Long>();
+      this.whiteBitboards= new Stack<Bitboard>();
+      this.blackBitboards= new Stack<Bitboard>();
    }
 
    public Position pushMove(
@@ -103,9 +122,9 @@ public class MutablePosition extends AbstractPosition {
    }
 
    public Position popMove() {
-      this.auxiliaryState= ((Long)this.auxiliaryStates.pop()).longValue();
-      this.white= (Bitboard) this.whiteBitboards.pop();
-      this.black= (Bitboard) this.blackBitboards.pop();
+      this.auxiliaryState= this.auxiliaryStates.pop().longValue();
+      this.white= this.whiteBitboards.pop();
+      this.black= this.blackBitboards.pop();
       return this;
    }
 

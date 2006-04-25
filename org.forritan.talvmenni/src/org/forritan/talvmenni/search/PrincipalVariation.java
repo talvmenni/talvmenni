@@ -1,3 +1,22 @@
+/**
+ * talvmenni - A distributed chess-engine implemented in Java(TM)
+ * and against Sun Microsystems Jini/JavaSpaces(TM).
+ *  
+ * Copyright (C) 2004-2006 Eyðun Lamhauge and Eyðun Nielsen
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
+ * implied. See the License for the specific language governing
+ * permissions and limitations under the License. 
+ */
+
 package org.forritan.talvmenni.search;
 
 import java.io.Serializable;
@@ -19,9 +38,9 @@ public interface PrincipalVariation extends Serializable {
    
    public int getDepth();
 
-   public List getCurrentBestLine();
+   public List<Move> getCurrentBestLine();
 
-   public List getBestMoveAsList();
+   public List<Move> getBestMoveAsList();
 
    public void clearPrincipalVariation();
 
@@ -46,6 +65,8 @@ public interface PrincipalVariation extends Serializable {
 
    public static class Factory implements PrincipalVariation {
 
+      private static final long serialVersionUID = 1L;
+
       public static PrincipalVariation create(
             int depth) {
          return new Factory(
@@ -53,19 +74,19 @@ public interface PrincipalVariation extends Serializable {
       }
 
       private int       depth;
-      private Stack     pv;
+      private Stack<Move>     pv;
       private int       currentBestLineAtPly;
-      private List      currentBestLine;
-      private List      lastExaminedLine;
+      private List<Move>      currentBestLine;
+      private List<Move>      lastExaminedLine;
       private DebugInfo debugInfo;
       private Thinking  thinking;
 
       private Factory(
             int depth) {
-         this.pv= new Stack();
-         this.lastExaminedLine= new ArrayList(
+         this.pv= new Stack<Move>();
+         this.lastExaminedLine= new ArrayList<Move>(
                depth);
-         this.currentBestLine= new ArrayList(
+         this.currentBestLine= new ArrayList<Move>(
                depth);
          this.currentBestLineAtPly= 0;
          this.debugInfo= new DebugInfo();
@@ -80,11 +101,11 @@ public interface PrincipalVariation extends Serializable {
          return this.debugInfo;
       }
 
-      public List getCurrentBestLine() {
+      public List<Move> getCurrentBestLine() {
          return this.currentBestLine;
       }
 
-      public List getBestMoveAsList() {
+      public List<Move> getBestMoveAsList() {
          return (this.currentBestLine.size() > 1 ? this.currentBestLine
                .subList(
                      0,

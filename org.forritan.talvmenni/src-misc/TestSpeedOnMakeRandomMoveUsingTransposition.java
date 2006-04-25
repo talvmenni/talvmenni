@@ -1,10 +1,28 @@
+/**
+ * talvmenni - A distributed chess-engine implemented in Java(TM)
+ * and against Sun Microsystems Jini/JavaSpaces(TM).
+ *  
+ * Copyright (C) 2004-2006 Eyðun Lamhauge and Eyðun Nielsen
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
+ * implied. See the License for the specific language governing
+ * permissions and limitations under the License. 
+ */
+
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
-import org.forritan.talvmenni.knowledge.AbstractPosition;
 import org.forritan.talvmenni.knowledge.ImmutablePosition;
 import org.forritan.talvmenni.knowledge.MutablePosition;
 import org.forritan.talvmenni.knowledge.Position;
@@ -29,16 +47,16 @@ public class TestSpeedOnMakeRandomMoveUsingTransposition {
       int collisions= 0;
       int total= 0;
 
-      Set hashCodes= new HashSet();
-      Set positions= new HashSet();
+      Set<Integer> hashCodes= new HashSet<Integer>();
+      Set<Position> positions= new HashSet<Position>();
 
       Position p= Position.Factory.createInitial(ImmutablePosition.class);
       boolean whiteToMove= true;
       for (int i= 0; i < warmup; i++) {
-         List moves= (whiteToMove ? p.getWhite().getPossibleMoves() : p
+         List<Move> moves= (whiteToMove ? p.getWhite().getPossibleMoves() : p
                .getBlack().getPossibleMoves());
          if (!moves.isEmpty()) {
-            Move move= (Move) moves.get(rnd.nextInt(moves.size()));
+            Move move= moves.get(rnd.nextInt(moves.size()));
             total++;
             p= p.move(move);
             if (hashCodes.contains(new Integer(
@@ -97,10 +115,10 @@ public class TestSpeedOnMakeRandomMoveUsingTransposition {
       p= Position.Factory.createInitial(MutablePosition.class);
       whiteToMove= true;
       for (int i= 0; i < warmup; i++) {
-         List moves= (whiteToMove ? p.getWhite().getPossibleMoves() : p
+         List<Move> moves= (whiteToMove ? p.getWhite().getPossibleMoves() : p
                .getBlack().getPossibleMoves());
          if (!moves.isEmpty()) {
-            Move move= (Move) moves.get(rnd.nextInt(moves.size()));
+            Move move= moves.get(rnd.nextInt(moves.size()));
             p= p.move(move);
             total++;
             if (hashCodes.contains(new Integer(
@@ -164,10 +182,10 @@ public class TestSpeedOnMakeRandomMoveUsingTransposition {
 
       long time= -System.currentTimeMillis();
       for (int i= 0; i < howMany; i++) {
-         List moves= (whiteToMove ? p.getWhite().getPossibleMoves() : p
+         List<Move> moves= (whiteToMove ? p.getWhite().getPossibleMoves() : p
                .getBlack().getPossibleMoves());
          if (!moves.isEmpty()) {
-            Move move= (Move) moves.get(new Random().nextInt(moves.size()));
+            Move move= moves.get(new Random().nextInt(moves.size()));
             p= p.move(move);
          } else {
             p= Position.Factory.createInitial(ImmutablePosition.class);
@@ -196,10 +214,10 @@ public class TestSpeedOnMakeRandomMoveUsingTransposition {
 
       time= -System.currentTimeMillis();
       for (int i= 0; i < howMany; i++) {
-         List moves= (whiteToMove ? p.getWhite().getPossibleMoves() : p
+         List<Move> moves= (whiteToMove ? p.getWhite().getPossibleMoves() : p
                .getBlack().getPossibleMoves());
          if (!moves.isEmpty()) {
-            Move move= (Move) moves.get(new Random().nextInt(moves.size()));
+            Move move= moves.get(new Random().nextInt(moves.size()));
             p= p.move(move);
             p.popMove();
          } else {

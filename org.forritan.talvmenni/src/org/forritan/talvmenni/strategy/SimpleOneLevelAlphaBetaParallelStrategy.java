@@ -1,3 +1,22 @@
+/**
+ * talvmenni - A distributed chess-engine implemented in Java(TM)
+ * and against Sun Microsystems Jini/JavaSpaces(TM).
+ *  
+ * Copyright (C) 2004-2006 Eyðun Lamhauge and Eyðun Nielsen
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
+ * implied. See the License for the specific language governing
+ * permissions and limitations under the License. 
+ */
+
 package org.forritan.talvmenni.strategy;
 
 import java.io.IOException;
@@ -5,7 +24,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.forritan.talvmenni.knowledge.Draw;
 import org.forritan.talvmenni.knowledge.Position;
 import org.forritan.talvmenni.knowledge.TheoryBook;
 import org.forritan.talvmenni.knowledge.Position.Move;
@@ -18,6 +36,8 @@ import org.forritan.talvmenni.search.PrincipalVariation;
 
 public class SimpleOneLevelAlphaBetaParallelStrategy extends
       AbstractParallelStrategy {
+
+   private static final long serialVersionUID = 1L;
 
    private SimpleOneLevelAlphaBetaMaster master;
 
@@ -42,10 +62,11 @@ public class SimpleOneLevelAlphaBetaParallelStrategy extends
       }
    }
 
-   protected List search(
+   protected List<Move> search(
          Position position,
          boolean whiteToMove) {
 
+      @SuppressWarnings("unused")
       int alpha= Integer.MIN_VALUE + 1;
       // Very important!!! Can't be
       // Integer.MIN_VALUE, because
@@ -53,6 +74,7 @@ public class SimpleOneLevelAlphaBetaParallelStrategy extends
       // -Integer.MIN_VALUE
       // int beta= Integer.MAX_VALUE;
       // If checkmate there is no need to search further...
+      @SuppressWarnings("unused")
       int beta= Evaluation.CHECKMATE_SCORE;
 
       this.master.position= position;
@@ -61,7 +83,7 @@ public class SimpleOneLevelAlphaBetaParallelStrategy extends
 
       this.master.run();
 
-      List result= new ArrayList();
+      List<Move> result= new ArrayList<Move>();
       result.add(this.master.bestResult.move);
       return result;
 
@@ -138,6 +160,9 @@ public class SimpleOneLevelAlphaBetaParallelStrategy extends
    }
 
    public static class SimpleOneLevelAlphaBetaTask extends ChessEngineTask {
+      
+      private static final long serialVersionUID = 1L;
+
       public Position position;
       public Move     move;
       public Boolean  whiteToMove;
@@ -194,6 +219,7 @@ public class SimpleOneLevelAlphaBetaParallelStrategy extends
                alpha,
                beta);
 
+         @SuppressWarnings("unused")
          List bestMoves= this.worker.getSearch().getBestMoves(
                this.position,
                this.worker.evaluation,
@@ -211,6 +237,8 @@ public class SimpleOneLevelAlphaBetaParallelStrategy extends
    }
 
    public static class SimpleOneLevelAlphaBetaResult extends Result {
+
+      private static final long serialVersionUID = 1L;
 
       public Integer score;
       public Move    move;

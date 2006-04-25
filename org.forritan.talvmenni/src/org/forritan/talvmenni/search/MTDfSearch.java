@@ -1,3 +1,22 @@
+/**
+ * talvmenni - A distributed chess-engine implemented in Java(TM)
+ * and against Sun Microsystems Jini/JavaSpaces(TM).
+ *  
+ * Copyright (C) 2004-2006 Eyðun Lamhauge and Eyðun Nielsen
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
+ * implied. See the License for the specific language governing
+ * permissions and limitations under the License. 
+ */
+
 package org.forritan.talvmenni.search;
 
 import java.util.ArrayList;
@@ -16,6 +35,8 @@ import org.forritan.talvmenni.search.PrincipalVariation.Thinking;
 
 
 public class MTDfSearch implements Search {
+
+   private static final long serialVersionUID = 1L;
 
    private int lastScore;
 
@@ -90,7 +111,7 @@ public class MTDfSearch implements Search {
       return this.pv.getDebugInfo();
    }
 
-   public List getBestMoves(
+   public List<Move> getBestMoves(
          Position p,
          Evaluation e,
          boolean whiteMove) {
@@ -141,10 +162,10 @@ public class MTDfSearch implements Search {
 
       this.lastResult= result;
 
-      List moves= (whiteMove ? p.getWhite().getPossibleMoves() : p.getBlack()
+      List<Move> moves= (whiteMove ? p.getWhite().getPossibleMoves() : p.getBlack()
             .getPossibleMoves());
 
-      List bestMoves= new ArrayList();
+      List<Move> bestMoves= new ArrayList<Move>();
 
       if (moves.size() > 1) {
          bestMoves.addAll(moves.subList(
@@ -375,7 +396,7 @@ public class MTDfSearch implements Search {
 
                // g= 2 * Evaluation.CHECKMATE_SCORE;
                g= Integer.MAX_VALUE;
-               int best= g;
+//               int best= g;
                int b= beta; // save original alpha value
 
                Iterator it= moves.iterator();
